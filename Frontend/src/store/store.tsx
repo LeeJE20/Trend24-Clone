@@ -1,13 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
+//store.tsx
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer from "./slices/counterSlice";
 
 const store = configureStore({
   reducer: {
+    counter: counterReducer, // slice 생성후 추가 해줘야 함
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>; 
-//Redux 스토어의 state를 나타내는 타입
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-// Redux 액션을 dispatch하는 함수의 타입
 
 export default store;
