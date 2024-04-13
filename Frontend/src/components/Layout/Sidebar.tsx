@@ -140,17 +140,17 @@ const linksArray = [
   {
     label: "Dashboard",
     icon: <RxDashboard />,
-    to: "/",
+    to: "/main/page1",
   },
   {
     label: "Trending Keywords",
     icon: <RxDashboard />,
-    to: "/page2",
+    to: "/main/page2",
   },
   {
     label: "Daily Key Reads",
     icon: <RxDashboard />,
-    to: "/page3",
+    to: "/main/page3",
   },
 ];
 
