@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import SidebarToggleBtn from "../components/Button/SidebarToggleBtn";
+
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -10,6 +12,7 @@ const Login = () => {
 
   return (
     <LoginContainer>
+      <SidebarToggleBtn />
       {isChecked ? (
         <Checkbox onClick={handleCheckbox}>Sign Up</Checkbox>
       ) : (
