@@ -6,14 +6,11 @@ import { AiOutlineHome, AiOutlineFund, AiOutlineBook } from "react-icons/ai";
 import { gsap } from "gsap";
 
 const SidebarContainer = styled.div`
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
-  padding: 2rem 2rem;
-  width: 15rem;
-  height: 100%;
+  padding: 30px 30px;
   background-color: white;
-  transition: width 0.5s ease;
   box-shadow: 1px 0px 5px 1px #67676755;
 `;
 
@@ -30,16 +27,16 @@ const Logo = styled.div`
   }
 `;
 
+
 const CloseButtonContainer = styled.div`
-  background-color: #a2a2a2;
   position: absolute;
-  right: -20px;
   top: 110px;
+  right: -20px;
+  background-color: #a2a2a2;
   width: 40px;
   height: 40px;
   border-radius: 2rem;
   z-index: 1;
-
   text-align: center;
   align-content: center;
 `;
@@ -55,6 +52,7 @@ const ProfileContainer = styled.div`
   }
 `;
 const ProfileInfo = styled.div`
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 50px;
@@ -104,6 +102,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const location = useLocation();
   const logoTextRef = useRef(null);
   const sidebarRef = useRef(null);
+  const closeButtonRef = useRef(null);
   const profileTextRef = useRef(null);
   const sideLinkLabelRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -114,17 +113,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       profileTextRef.current,
       ...sideLinkLabelRefs.current,
     ];
-
     if (sidebarOpen) {
-      tl.to(sidebarRef.current, { width: "15rem", duration: 0.01 })
-        .to(logoTextRef.current, {})
+      tl.to(sidebarRef.current, { width: 300, ease:"ease" })
         .set(list, { display: "block" })
         .to(list, { opacity: 1 });
     } else {
       tl.to(list, { opacity: 0, duration: 0.01 })
         .set(list, { display: "none" })
-        .to(sidebarRef.current, { width: "2rem" })
-        .totalDuration(0.01);
+        .to(sidebarRef.current, { width: 30, ease:"ease"})
     }
   }, [sidebarOpen]);
 
@@ -134,7 +130,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <img src={logoImg} />
         <h2 ref={logoTextRef}>프로젝트이름</h2>
       </Logo>
-      <CloseButtonContainer onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <CloseButtonContainer ref={closeButtonRef} onClick={() => setSidebarOpen(!sidebarOpen)}>
         {sidebarOpen ? "X" : "-"}
       </CloseButtonContainer>
       <ProfileContainer>

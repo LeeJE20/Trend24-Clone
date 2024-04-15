@@ -1,25 +1,39 @@
-import { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Layout/Sidebar";
 import styled from "styled-components";
+import {gsap} from "gsap";
 
-const Main = styled.main<{ sidebarOpen: boolean }>`
-  padding: 5px ${(props) => (props.sidebarOpen ? "350px" : "150px")}; /* 사이드바가 닫혔을 때 메인 컨텐츠의 패딩을 줄입니다. */
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
+
+
+const Main = styled.main<{$sidebarOpen: boolean}>`
   background-color: #d5d5d5;
+  padding: 30px;
   height: 100vh;
-  transition: padding 0.5s ease; /* 패딩에 대한 트랜지션 효과 추가 */
+  width: 100%;
+  transition: padding 0.5s ease;
 `;
 
 function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(true); // 사이드바의 상태를 추적하는 useState 훅
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const mainRef = useRef(null);
+  
+  useEffect(()=>{
+    gsap.to(mainRef, {});
+  },[sidebarOpen])
 
   return (
-    <div>
+    <Container>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <Main sidebarOpen={sidebarOpen}>
+      <Main ref={mainRef} $sidebarOpen={sidebarOpen}>
         <Outlet />
       </Main>
-    </div>
+    </Container>
   );
 }
 
