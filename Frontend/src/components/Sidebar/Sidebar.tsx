@@ -4,14 +4,18 @@ import logoImg from "../../assets/react.svg";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineHome, AiOutlineFund, AiOutlineBook } from "react-icons/ai";
 import { gsap } from "gsap";
+import Toggle from "../Button/SidebarToggleBtn";
 
 const SidebarContainer = styled.div`
   position: relative;
   top: 0;
   left: 0;
   padding: 30px 30px;
-  background-color: white;
+  width: 300px;
+  background-color: #091A52;
+  color: white;
   box-shadow: 1px 0px 5px 1px #67676755;
+  box-sizing: border-box;
 `;
 
 const Logo = styled.div`
@@ -32,14 +36,17 @@ const CloseButtonContainer = styled.div`
   position: absolute;
   top: 110px;
   right: -20px;
-  background-color: #a2a2a2;
+  background-color: #e0e0e0;
   width: 40px;
   height: 40px;
   border-radius: 2rem;
+  padding: 5px;
   z-index: 1;
   text-align: center;
   align-content: center;
+
 `;
+
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -68,7 +75,7 @@ const SideLinkContainer = styled.div`
   align-items: center;
   color: #949494;
   :hover {
-    color: black;
+    color: #b8b8b8;
   }
 `;
 
@@ -77,7 +84,7 @@ const SideLink = styled(Link)<{ $isActive: boolean }>`
   align-items: center;
   text-decoration: none;
   width: 100%;
-  color: ${(props) => (props.$isActive ? "black" : "inherit")};
+  color: ${(props) => (props.$isActive ? "white" : "inherit")};
   font-size: 16px;
 `;
 
@@ -114,13 +121,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       ...sideLinkLabelRefs.current,
     ];
     if (sidebarOpen) {
-      tl.to(sidebarRef.current, { width: 300, ease:"ease" })
+      tl.to(sidebarRef.current, { width: "300px", ease:"ease" })
         .set(list, { display: "block" })
         .to(list, { opacity: 1 });
     } else {
       tl.to(list, { opacity: 0, duration: 0.01 })
         .set(list, { display: "none" })
-        .to(sidebarRef.current, { width: 30, ease:"ease"})
+        .to(sidebarRef.current, { width: "90px", ease:"ease"})
     }
   }, [sidebarOpen]);
 
@@ -131,7 +138,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <h2 ref={logoTextRef}>프로젝트이름</h2>
       </Logo>
       <CloseButtonContainer ref={closeButtonRef} onClick={() => setSidebarOpen(!sidebarOpen)}>
-        {sidebarOpen ? "X" : "-"}
+        <Toggle />
       </CloseButtonContainer>
       <ProfileContainer>
         <img src={logoImg}></img>

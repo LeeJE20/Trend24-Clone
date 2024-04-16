@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Layout/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 import styled from "styled-components";
 import {gsap} from "gsap";
 
@@ -12,11 +12,12 @@ const Container = styled.div`
 
 
 const Main = styled.main<{$sidebarOpen: boolean}>`
-  background-color: #d5d5d5;
+  background-color: #EFF3FC;
   padding: 30px;
   height: 100vh;
-  width: 100%;
+  width: ${(props) => (props.$sidebarOpen)? "calc(100% - 300px)": "calc(100% - 90px)"};
   transition: padding 0.5s ease;
+  transition: width 0.5s ease;
 `;
 
 function Dashboard() {
