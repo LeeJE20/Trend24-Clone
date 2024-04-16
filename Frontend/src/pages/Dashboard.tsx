@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
 import styled from "styled-components";
@@ -10,12 +10,12 @@ const Container = styled.div`
   height: 100%;
 `;
 
-
 const Main = styled.main<{$sidebarOpen: boolean}>`
   background-color: #EFF3FC;
   padding: 30px;
   height: 100vh;
   width: ${(props) => (props.$sidebarOpen)? "calc(100% - 300px)": "calc(100% - 90px)"};
+  box-sizing: border-box;
   transition: padding 0.5s ease;
   transition: width 0.5s ease;
 `;
