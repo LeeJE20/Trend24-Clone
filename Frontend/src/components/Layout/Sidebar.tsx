@@ -27,7 +27,6 @@ const Logo = styled.div`
   }
 `;
 
-
 const CloseButtonContainer = styled.div`
   position: absolute;
   top: 110px;
@@ -114,13 +113,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       ...sideLinkLabelRefs.current,
     ];
     if (sidebarOpen) {
-      tl.to(sidebarRef.current, { width: 300, ease:"ease" })
+      tl.to(sidebarRef.current, { width: 300, ease: "ease" })
         .set(list, { display: "block" })
         .to(list, { opacity: 1 });
     } else {
       tl.to(list, { opacity: 0, duration: 0.01 })
         .set(list, { display: "none" })
-        .to(sidebarRef.current, { width: 30, ease:"ease"})
+        .to(sidebarRef.current, { width: 30, ease: "ease" });
     }
   }, [sidebarOpen]);
 
@@ -130,7 +129,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <img src={logoImg} />
         <h2 ref={logoTextRef}>프로젝트이름</h2>
       </Logo>
-      <CloseButtonContainer ref={closeButtonRef} onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <CloseButtonContainer
+        ref={closeButtonRef}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
         {sidebarOpen ? "X" : "-"}
       </CloseButtonContainer>
       <ProfileContainer>
@@ -167,12 +169,12 @@ const linksArray = [
   {
     label: "Trending Keywords",
     icon: <AiOutlineFund />,
-    to: "/main/page2",
+    to: "/main/UserPage",
   },
   {
     label: "Daily Key Reads",
     icon: <AiOutlineBook />,
-    to: "/main/page3",
+    to: "/main/KeywordPage",
   },
 ];
 
