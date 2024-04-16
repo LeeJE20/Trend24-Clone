@@ -6,6 +6,8 @@ import BookRecPage from "./pages/BookRecPage";
 import Page2 from "./pages/page2";
 import Page3 from "./pages/page3";
 
+import Practice from "./pages/Practice";
+
 import NotFound from "./pages/Notfound";
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
         <Route path="page2" element={<Page2 />} />
         <Route path="page3" element={<Page3 />} />
       </Route>
+      <Route path="practice" element={<Practice />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
