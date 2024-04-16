@@ -5,11 +5,7 @@ import { SubColor } from "../constants/Color";
 
 import react from "../assets/react.svg";
 
-const Login: React.FC = () => {
-  const handleLogin = () => {
-    console.log("login");
-  };
-
+const Practice: React.FC = () => {
   return (
     <LoginPageContainer>
       <LoginContainer>
@@ -32,11 +28,11 @@ const Login: React.FC = () => {
         </LoginImageWrapper>
         <LoginFormWrapper>
           <LoginForm>
-            <LoginTitle>Login</LoginTitle>
+            <Login>Login</Login>
             <LoginSmall>welcome to office</LoginSmall>
             <LoginInput placeholder="Id" />
             <LoginInput placeholder="Password" />
-            <LoginButton onClick={handleLogin}>Login</LoginButton>
+            <LoginButton>Login</LoginButton>
             <LoginOptions>
               <RememberCheckBox>
                 <CheckBox></CheckBox>
@@ -135,7 +131,7 @@ const LoginForm = styled.div`
   align-items: center;
 `;
 
-const LoginTitle = styled.h1`
+const Login = styled.h1`
   font-size: 2rem;
 `;
 
@@ -164,15 +160,14 @@ const LoginOptions = styled.div`
 `;
 
 const RememberCheckBox = styled.div`
-  flex-direction: column;
   background-color: #000;
   color: #fff;
   border: none;
 `;
 
 const CheckBox = styled.div`
-  width: 10%;
-  height: 10%;
+  width: 20px;
+  height: 20px;
   background-color: #6c7d8f;
   border: none;
   cursor: pointer;
@@ -189,4 +184,4 @@ const ForgotPassword = styled.button`
 
 const Empty = styled.div``;
 
-export default Login;
+export default Practice;
