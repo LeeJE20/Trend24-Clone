@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
 import styled from "styled-components";
-import {gsap} from "gsap";
+import { gsap } from "gsap";
 
 const Container = styled.div`
   display: flex;
@@ -10,23 +10,24 @@ const Container = styled.div`
   height: 100%;
 `;
 
-
-const Main = styled.main<{$sidebarOpen: boolean}>`
-  background-color: #EFF3FC;
+const Main = styled.main<{ $sidebarOpen: boolean }>`
+  background-color: #eff3fc;
   padding: 30px;
   height: 100vh;
-  width: ${(props) => (props.$sidebarOpen)? "calc(100% - 300px)": "calc(100% - 90px)"};
+  width: ${(props) =>
+    props.$sidebarOpen ? "calc(100% - 300px)" : "calc(100% - 90px)"};
   transition: padding 0.5s ease;
+  box-sizing: border-box;
   transition: width 0.5s ease;
 `;
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const mainRef = useRef(null);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     gsap.to(mainRef, {});
-  },[sidebarOpen])
+  }, [sidebarOpen]);
 
   return (
     <Container>

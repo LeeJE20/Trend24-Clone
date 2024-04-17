@@ -12,7 +12,7 @@ const SidebarContainer = styled.div`
   left: 0;
   padding: 30px 30px;
   width: 300px;
-  background-color: #091A52;
+  background-color: #091a52;
   color: white;
   box-shadow: 1px 0px 5px 1px #67676755;
   box-sizing: border-box;
@@ -31,7 +31,6 @@ const Logo = styled.div`
   }
 `;
 
-
 const CloseButtonContainer = styled.div`
   position: absolute;
   top: 110px;
@@ -44,9 +43,7 @@ const CloseButtonContainer = styled.div`
   z-index: 1;
   text-align: center;
   align-content: center;
-
 `;
-
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -121,13 +118,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       ...sideLinkLabelRefs.current,
     ];
     if (sidebarOpen) {
-      tl.to(sidebarRef.current, { width: "300px", ease:"ease" })
+      tl.to(sidebarRef.current, { width: "300px", ease: "ease" })
         .set(list, { display: "block" })
         .to(list, { opacity: 1 });
     } else {
       tl.to(list, { opacity: 0, duration: 0.01 })
         .set(list, { display: "none" })
-        .to(sidebarRef.current, { width: "90px", ease:"ease"})
+        .to(sidebarRef.current, { width: "90px", ease: "ease" });
     }
   }, [sidebarOpen]);
 
@@ -137,7 +134,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <img src={logoImg} />
         <h2 ref={logoTextRef}>프로젝트이름</h2>
       </Logo>
-      <CloseButtonContainer ref={closeButtonRef} onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <CloseButtonContainer
+        ref={closeButtonRef}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
         <Toggle />
       </CloseButtonContainer>
       <ProfileContainer>
@@ -174,12 +174,12 @@ const linksArray = [
   {
     label: "Trending Keywords",
     icon: <AiOutlineFund />,
-    to: "/main/page2",
+    to: "/main/UserPage",
   },
   {
     label: "Daily Key Reads",
     icon: <AiOutlineBook />,
-    to: "/main/page3",
+    to: "/main/KeywordPage",
   },
 ];
 
