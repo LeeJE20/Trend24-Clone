@@ -1,5 +1,7 @@
-import CategoryList from "../components/bookRecommendation/CategoryList";
 import styled from "styled-components";
+import CategoryList from "../components/bookRecommendation/CategoryList";
+import CategoryKeyword from "../components/bookRecommendation/CategoryKeyword";
+import KeywordBookList from "../components/bookRecommendation/KeywordBookList";
 import { categoryListData } from "../constants/DummyData";
 import { Mobile } from "../constants/Display";
 
@@ -9,8 +11,12 @@ const BookRecPage = () => {
       <CategoryListContainer>
         <CategoryList listData={categoryListData} />
       </CategoryListContainer>
-      <CategoryKeywordContainer></CategoryKeywordContainer>
-      <BookListContainer></BookListContainer>
+      <CategoryKeywordContainer>
+        <CategoryKeyword />
+      </CategoryKeywordContainer>
+      <BookListContainer>
+        <KeywordBookList />
+      </BookListContainer>
     </Body>
   );
 };
