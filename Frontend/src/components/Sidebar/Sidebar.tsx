@@ -1,33 +1,32 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import logoImg from "../../assets/react.svg";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineHome, AiOutlineFund, AiOutlineBook } from "react-icons/ai";
 import { gsap } from "gsap";
 import Toggle from "../Button/SidebarToggleBtn";
 
 const SidebarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   top: 0;
   left: 0;
   padding: 30px 30px;
   width: 300px;
-  background-color: #091A52;
-  color: white;
+  background-color: white;
+  color: #121753;
   box-shadow: 1px 0px 5px 1px #67676755;
   box-sizing: border-box;
 `;
 
 const Logo = styled.div`
   display: flex;
-  margin-bottom: 4rem;
-  height: 100px;
+  margin-bottom: 50%;
+  box-sizing: border-box;
   align-items: center;
   img {
-    width: 30px;
-  }
-  h2 {
-    margin-left: 15px;
+    margin-top: 20%;
+    width: 100%;
   }
 `;
 
@@ -84,7 +83,7 @@ const SideLink = styled(Link)<{ $isActive: boolean }>`
   align-items: center;
   text-decoration: none;
   width: 100%;
-  color: ${(props) => (props.$isActive ? "white" : "inherit")};
+  color: ${(props) => (props.$isActive ? "" : "inherit")};
   font-size: 16px;
 `;
 
@@ -107,7 +106,6 @@ interface SidebarProps {
 
 function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const location = useLocation();
-  const logoTextRef = useRef(null);
   const sidebarRef = useRef(null);
   const closeButtonRef = useRef(null);
   const profileTextRef = useRef(null);
@@ -116,7 +114,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   useEffect(() => {
     const tl = gsap.timeline();
     const list = [
-      logoTextRef.current,
       profileTextRef.current,
       ...sideLinkLabelRefs.current,
     ];
@@ -134,14 +131,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   return (
     <SidebarContainer ref={sidebarRef}>
       <Logo>
-        <img src={logoImg} />
-        <h2 ref={logoTextRef}>프로젝트이름</h2>
+        <img src="../../../public/Image/Logo/Logo.png" />
       </Logo>
       <CloseButtonContainer ref={closeButtonRef} onClick={() => setSidebarOpen(!sidebarOpen)}>
         <Toggle />
       </CloseButtonContainer>
       <ProfileContainer>
-        <img src={logoImg}></img>
+        <img src="../../../public/Image/Logo/Logo.png"></img>
         <ProfileInfo ref={profileTextRef}>
           <div>UserName</div>
           <div>YES24 중고서점 목동점</div>

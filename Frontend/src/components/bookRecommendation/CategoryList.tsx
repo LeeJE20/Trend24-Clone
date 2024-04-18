@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { IoSearchSharp } from "react-icons/io5";
 
 const CategoryList = ({ listData }: { listData: string[] }) => {
-  console.log(listData);
+  const DateOptions = [
+    { value: "1", name: "지난 1시간" },
+    { value: "12", name: "지난 12시간" },
+    { value: "24", name: "지난 1일" },
+  ];
 
   return (
     <Container>
@@ -13,7 +17,16 @@ const CategoryList = ({ listData }: { listData: string[] }) => {
           <IoSearchSharp />
         </button>
       </SearchBox>
-      <FilterBox></FilterBox>
+      <SelectBox>
+        {DateOptions.map((option, index) => (
+          <option key={index} value={option.value}>{option.name}</option>
+        ))}
+      </SelectBox>
+      <Category>
+        {listData.map((li, idx) => (
+          <div key={idx}>{li}</div>
+        ))}
+      </Category>
     </Container>
   );
 };
@@ -30,6 +43,7 @@ const SearchBox = styled.div`
   height: 50px;
   border: 2px solid black;
   border-radius: 15px;
+  margin-bottom: 10px;
   input {
     height: 100%;
     width: 80%;
@@ -52,12 +66,25 @@ const SearchBox = styled.div`
   }
 `;
 
-const FilterBox = styled.div`
+const SelectBox = styled.select`
   display: flex;
   width: 100%;
   height: 50px;
   border: 2px solid black;
   border-radius: 15px;
+  margin-bottom: 20px;
+`;
+
+const Category = styled.div`
+
+  div{
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    border-top: solid 1px gray;
+    width: inherit;
+    box-sizing: border-box;
+  }
 `;
 
 export default CategoryList;
