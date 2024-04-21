@@ -11,7 +11,7 @@ const SidebarContainer = styled.div`
   position: relative;
   top: 0;
   left: 0;
-  padding: 30px 30px;
+  padding: 15px;
   width: 300px;
   background-color: white;
   color: #121753;
@@ -25,11 +25,9 @@ const Logo = styled.div`
   box-sizing: border-box;
   align-items: center;
   img {
-    margin-top: 20%;
-    width: 100%;
+    width: 50px;
   }
 `;
-
 
 const CloseButtonContainer = styled.div`
   position: absolute;
@@ -43,9 +41,7 @@ const CloseButtonContainer = styled.div`
   z-index: 1;
   text-align: center;
   align-content: center;
-
 `;
-
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -113,31 +109,31 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
 
   useEffect(() => {
     const tl = gsap.timeline();
-    const list = [
-      profileTextRef.current,
-      ...sideLinkLabelRefs.current,
-    ];
+    const list = [profileTextRef.current, ...sideLinkLabelRefs.current];
     if (sidebarOpen) {
-      tl.to(sidebarRef.current, { width: "300px", ease:"ease" })
+      tl.to(sidebarRef.current, { width: "300px", ease: "ease" })
         .set(list, { display: "block" })
         .to(list, { opacity: 1 });
     } else {
       tl.to(list, { opacity: 0, duration: 0.01 })
         .set(list, { display: "none" })
-        .to(sidebarRef.current, { width: "90px", ease:"ease"})
+        .to(sidebarRef.current, { width: "90px", ease: "ease" });
     }
   }, [sidebarOpen]);
 
   return (
     <SidebarContainer ref={sidebarRef}>
       <Logo>
-        <img src="../../../public/Image/Logo/Logo.png" />
+        <img src="/Image/Logo/Logo.png" />
       </Logo>
-      <CloseButtonContainer ref={closeButtonRef} onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <CloseButtonContainer
+        ref={closeButtonRef}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
         <Toggle />
       </CloseButtonContainer>
       <ProfileContainer>
-        <img src="../../../public/Image/Logo/Logo.png"></img>
+        <img src="/Image/Logo/Logo.png"></img>
         <ProfileInfo ref={profileTextRef}>
           <div>UserName</div>
           <div>YES24 중고서점 목동점</div>

@@ -1,37 +1,30 @@
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar2";
 import styled from "styled-components";
-import {gsap} from "gsap";
+import { Mobile, Tablet } from "../constants/Display";
 
 const Container = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 `;
 
-const Main = styled.main<{$sidebarOpen: boolean}>`
-  background-color: #EFF3FC;
+const Main = styled.main<{ $sidebarOpen: boolean }>`
+  background-color: #eff3fc;
   padding: 30px;
-  height: 100vh;
-  width: ${(props) => (props.$sidebarOpen)? "calc(100% - 300px)": "calc(100% - 90px)"};
+  height: 100%;
+  flex: 1;
   box-sizing: border-box;
-  transition: padding 0.5s ease;
-  transition: width 0.5s ease;
 `;
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const mainRef = useRef(null);
-  
-  useEffect(()=>{
-    gsap.to(mainRef, {});
-  },[sidebarOpen])
 
   return (
     <Container>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <Main ref={mainRef} $sidebarOpen={sidebarOpen}>
+      <Main $sidebarOpen={sidebarOpen}>
         <Outlet />
       </Main>
     </Container>
