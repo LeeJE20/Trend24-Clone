@@ -166,12 +166,12 @@ const linksArray = [
   {
     label: "Trending Keywords",
     icon: <AiOutlineFund />,
-    to: "/main/page2",
+    to: "/main/UserPage",
   },
   {
     label: "Daily Key Reads",
     icon: <AiOutlineBook />,
-    to: "/main/page3",
+    to: "/main/KeywordPage",
   },
 ];
 
