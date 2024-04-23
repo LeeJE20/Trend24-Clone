@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar2";
 import styled from "styled-components";
-import { Mobile, Tablet } from "../constants/Display";
 
 const Container = styled.div`
   display: flex;

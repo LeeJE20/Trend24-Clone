@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineHome, AiOutlineFund, AiOutlineBook } from "react-icons/ai";
 import { BiMenu, BiMenuAltRight, BiLogOut } from "react-icons/bi";
 import gsap from "gsap";
@@ -12,6 +12,8 @@ interface SidebarProps {
 }
 
 function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
+  const navigate = useNavigate();
+
   const sidebarRef = useRef(null);
   const profileWrapperRef = useRef(null);
   const logoRef = useRef(null);
@@ -57,6 +59,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const changePage = (to:string) => {
+    navigate(to);
+  }
+
   return (
     <SidebarWrapper ref={sidebarRef}>
       <LogoDetails>
@@ -70,8 +76,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       </LogoDetails>
       <NavList>
         {linksArray.map(({ icon, label, to }, index) => (
-          <NavItem key={label}>
-            <LinkWrapper to={to} $isActive={location.pathname === to}>
+          <NavItem key={label} onClick={() => changePage(to)}>
+            <LinkWrapper $isActive={location.pathname === to}>
               <i>{icon}</i>
               <span ref={(ref) => (sideLinkLabelRefs.current[index] = ref)}>
                 {label}
@@ -108,12 +114,12 @@ const linksArray = [
   {
     label: "Trending Keywords",
     icon: <AiOutlineFund />,
-    to: "/main/page2",
+    to: "/main/UserPage",
   },
   {
     label: "Daily Key Reads",
     icon: <AiOutlineBook />,
-    to: "/main/page3",
+    to: "/main/KeywordPage",
   },
 ];
 
@@ -193,7 +199,7 @@ const NavItem = styled.li`
   }
 `;
 
-const LinkWrapper = styled(Link)<{ $isActive: boolean }>`
+const LinkWrapper = styled.div<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -201,6 +207,7 @@ const LinkWrapper = styled(Link)<{ $isActive: boolean }>`
   color: ${({ $isActive }) => ($isActive ? "#11101d" : "#fff")};
   border-radius: 12px;
   padding: 15px;
+  
 
   &:hover {
     background-color: #fff;

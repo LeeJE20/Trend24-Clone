@@ -15,7 +15,7 @@ const BookRecPage = () => {
     setCategory(categoryListData);
     setKeyword(categoryKeywordData);
     setBookList(bookListData);
-  })
+  },[])
 
   return (
     <Body>
