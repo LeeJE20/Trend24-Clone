@@ -1,13 +1,12 @@
 // import React from "react";
 import styled from "styled-components";
-import { categoryKeywordData } from "../../constants/DummyData";
 
-const CategoryKeyword = () => {
+const CategoryKeyword = ({keyword}: {keyword: string[]}) => {
   return (
     <Container>
       <Title>IT</Title>
       <Keyword>
-        {categoryKeywordData.map((data, idx) => {
+        {keyword.map((data, idx) => {
           return <div key={idx}># {data}</div>;
         })}
       </Keyword>

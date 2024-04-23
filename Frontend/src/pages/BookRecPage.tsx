@@ -1,21 +1,32 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CategoryList from "../components/bookRecommendation/CategoryList";
 import CategoryKeyword from "../components/bookRecommendation/CategoryKeyword";
 import KeywordBookList from "../components/bookRecommendation/KeywordBookList";
-import { categoryListData } from "../constants/DummyData";
+import { categoryListData, categoryKeywordData, bookListData, Book } from "../constants/DummyData";
 import { Mobile } from "../constants/Display";
 
 const BookRecPage = () => {
+  const [category, setCategory] = useState<string[]>([]);
+  const [keyword, setKeyword] = useState<string[]>([]);
+  const [bookList, setBookList] = useState<Book[]>([]);
+  
+  useEffect (()=>{
+    setCategory(categoryListData);
+    setKeyword(categoryKeywordData);
+    setBookList(bookListData);
+  })
+
   return (
     <Body>
       <CategoryListContainer>
-        <CategoryList listData={categoryListData} />
+        <CategoryList listData={category} />
       </CategoryListContainer>
       <CategoryKeywordContainer>
-        <CategoryKeyword />
+        <CategoryKeyword keyword={keyword} />
       </CategoryKeywordContainer>
       <BookListContainer>
-        <KeywordBookList />
+        <KeywordBookList bookList={bookList}/>
       </BookListContainer>
     </Body>
   );
@@ -31,6 +42,7 @@ const Body = styled.div`
   gap: 20px;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 
   ${Mobile} {
     grid-template-columns: 1fr;
@@ -61,6 +73,7 @@ const BookListContainer = styled.div`
   background-color: #ffffff;
   box-shadow: 1px 0px 5px 1px #67676755;
   border-radius: 20px;
+  overflow-y: auto;
 `;
 
 export default BookRecPage;

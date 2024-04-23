@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import styled from "styled-components";
 import { IoSearchSharp } from "react-icons/io5";
 
@@ -8,6 +7,12 @@ const CategoryList = ({ listData }: { listData: string[] }) => {
     { value: "12", name: "지난 12시간" },
     { value: "24", name: "지난 1일" },
   ];
+
+  const categoryClick = (li : string) => {
+    console.log(li);
+    return;
+  };
+
 
   return (
     <Container>
@@ -24,7 +29,7 @@ const CategoryList = ({ listData }: { listData: string[] }) => {
       </SelectBox>
       <Category>
         {listData.map((li, idx) => (
-          <div key={idx}>{li}</div>
+          <div key={idx} onClick={() => categoryClick(li)}>{li}</div>
         ))}
       </Category>
     </Container>
