@@ -1,7 +1,16 @@
+import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { IoSearchSharp } from "react-icons/io5";
 
-const CategoryList = ({ listData }: { listData: string[] }) => {
+
+interface PropsType {
+  listData: string[];
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const CategoryList = (props:PropsType) => {
+  const [searchText, setSearchText] = useState("");
+
   const DateOptions = [
     { value: "1", name: "지난 1시간" },
     { value: "12", name: "지난 12시간" },
@@ -9,15 +18,18 @@ const CategoryList = ({ listData }: { listData: string[] }) => {
   ];
 
   const categoryClick = (li : string) => {
-    console.log(li);
-    return;
+    props.setSelectedCategory(li);
   };
+  const handleSearchText = (event: ChangeEvent<HTMLInputElement>) =>{
+    setSearchText(event.target.value);
+    console.log(searchText);
+  }
 
 
   return (
     <Container>
       <SearchBox>
-        <input />
+        <input onChange={handleSearchText}/>
         <button>
           <IoSearchSharp />
         </button>
@@ -28,7 +40,7 @@ const CategoryList = ({ listData }: { listData: string[] }) => {
         ))}
       </SelectBox>
       <Category>
-        {listData.map((li, idx) => (
+        {props.listData.map((li, idx) => (
           <div key={idx} onClick={() => categoryClick(li)}>{li}</div>
         ))}
       </Category>

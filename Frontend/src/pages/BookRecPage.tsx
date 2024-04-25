@@ -8,6 +8,7 @@ import { Mobile } from "../constants/Display";
 
 const BookRecPage = () => {
   const [category, setCategory] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("IT");
   const [keyword, setKeyword] = useState<string[]>([]);
   const [bookList, setBookList] = useState<Book[]>([]);
   
@@ -17,13 +18,19 @@ const BookRecPage = () => {
     setBookList(bookListData);
   },[])
 
+  useEffect(()=>{
+    console.log(selectedCategory);
+    // 해시태그 api 호출
+
+  },[selectedCategory])
+
   return (
     <Body>
       <CategoryListContainer>
-        <CategoryList listData={category} />
+        <CategoryList listData={category} setSelectedCategory={setSelectedCategory} />
       </CategoryListContainer>
       <CategoryKeywordContainer>
-        <CategoryKeyword keyword={keyword} />
+        <CategoryKeyword keyword={keyword} category={selectedCategory}/>
       </CategoryKeywordContainer>
       <BookListContainer>
         <KeywordBookList bookList={bookList}/>
