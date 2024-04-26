@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import CustomComponentList from "../components/Modal/CustomComponentList";
-import Item from "../components/Customize/Item";
-import { RootState } from "../store/store";
+import CustomComponentList from "../../../common/modal/CustomComponentList";
+import Item from "./Item";
+import { RootState } from "../../../../store/store";
 
 const DummyItems = ["컴포넌트 1", "컴포넌트 2", "컴포넌트 3", "컴포넌트 4"];
 

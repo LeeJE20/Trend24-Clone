@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
-import Login from "./pages/Login";
+import Login from "./pages/Authorization";
 import Dashboard from "./pages/Dashboard";
-import BookRecPage from "./pages/BookRecPage";
-import UserPage from "./pages/UserPage";
-import KeywordPage from "./pages/KeywordPage";
-import UserCustomizePage from "./pages/UserCustomizePage";
+import BookRecPage from "./pages/TrendSearch";
+import UserPage from "./pages/UserActivity";
+import KeywordPage from "./pages/HowTrend";
+import UserCustomizePage from "./components/pages/useractivity/customize/UserCustomizePage";
 
 import NotFound from "./pages/Notfound";
 

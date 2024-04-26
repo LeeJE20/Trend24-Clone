@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import CategoryList from "../components/bookRecommendation/CategoryList";
-import CategoryKeyword from "../components/bookRecommendation/CategoryKeyword";
-import KeywordBookList from "../components/bookRecommendation/KeywordBookList";
-import { categoryListData, categoryKeywordData, bookListData, Book } from "../constants/DummyData";
+import CategoryList from "../components/pages/trendsearch/CategoryList";
+import CategoryKeyword from "../components/pages/trendsearch/CategoryKeyword";
+import KeywordBookList from "../components/pages/trendsearch/KeywordBookList";
+import {
+  categoryListData,
+  categoryKeywordData,
+  bookListData,
+  Book,
+} from "../constants/DummyData";
 import { Mobile } from "../constants/Display";
 
 const BookRecPage = () => {
@@ -11,29 +16,31 @@ const BookRecPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("IT");
   const [keyword, setKeyword] = useState<string[]>([]);
   const [bookList, setBookList] = useState<Book[]>([]);
-  
-  useEffect (()=>{
+
+  useEffect(() => {
     setCategory(categoryListData);
     setKeyword(categoryKeywordData);
     setBookList(bookListData);
-  },[])
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(selectedCategory);
     // 해시태그 api 호출
-
-  },[selectedCategory])
+  }, [selectedCategory]);
 
   return (
     <Body>
       <CategoryListContainer>
-        <CategoryList listData={category} setSelectedCategory={setSelectedCategory} />
+        <CategoryList
+          listData={category}
+          setSelectedCategory={setSelectedCategory}
+        />
       </CategoryListContainer>
       <CategoryKeywordContainer>
-        <CategoryKeyword keyword={keyword} category={selectedCategory}/>
+        <CategoryKeyword keyword={keyword} category={selectedCategory} />
       </CategoryKeywordContainer>
       <BookListContainer>
-        <KeywordBookList bookList={bookList}/>
+        <KeywordBookList bookList={bookList} />
       </BookListContainer>
     </Body>
   );

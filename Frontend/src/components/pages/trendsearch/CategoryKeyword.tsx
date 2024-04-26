@@ -1,13 +1,13 @@
-import {useState} from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import Modal from "../modal/Modal";
+import Modal from "../../common/modal/Modal";
 
 interface PropsType {
   keyword: string[];
   category: string;
 }
 
-const CategoryKeyword = (props:PropsType) => {
+const CategoryKeyword = (props: PropsType) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -67,7 +67,7 @@ const KeywordSourceBtn = styled.button`
   height: 50px;
   border-radius: 50%;
   border: transparent;
-  background-color: #091A52;
+  background-color: #091a52;
   color: white;
   cursor: pointer;
 `;
