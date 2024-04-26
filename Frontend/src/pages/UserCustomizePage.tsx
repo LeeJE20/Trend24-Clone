@@ -1,14 +1,31 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
+import CustomComponentList from "../components/Modal/CustomComponentList";
+import Item from "../components/Customize/Item";
+import { RootState } from "../store/store";
 
 const DummyItems = ["컴포넌트 1", "컴포넌트 2", "컴포넌트 3", "컴포넌트 4"];
 
+const initialListItems = Array.from({ length: 36 }, (_, index) => {
+  const row = Math.floor(index / 6) + 1; // 행 번호 계산 (1 ~ 6)
+  const col = (index % 6) + 1; // 열 번호 계산 (1 ~ 6)
+  return `Item L${col} R${col + 1} T${row} B${row + 1}`; // 아이템 문자열 생성
+});
+
 const UserCustomizePage = () => {
-  const [listItems, setListItems] = useState(new Array(36).fill("Item"));
   const draggingItemIndex = useRef(null);
   const draggingOverItemIndex = useRef(null);
 
   const [showList, setShowList] = useState(false);
+  const [listItems, setListItems] = useState(new Array(36).fill("⬜"));
+
+  const dispatch = useDispatch();
+
+  const coordinate = useSelector<RootState>(
+    (state) => state.customize.coordinate
+  );
 
   const showComponentLists = () => {
     setShowList(!showList);
@@ -20,20 +37,27 @@ const UserCustomizePage = () => {
       copyListItems[index] = item;
     });
     setListItems(copyListItems);
+    console.log("listItems", listItems);
   }, []);
 
   const onDragStart = (e, index) => {
     draggingItemIndex.current = index;
     e.target.classList.add("grabbing");
+    console.log("draggingItemIndex", draggingItemIndex.current);
   };
 
   const onDragEnter = (e, index) => {
     draggingOverItemIndex.current = index;
     const copyListItems = [...listItems];
-    const dragItemContent = copyListItems[draggingItemIndex.current];
-    if (listItems[index] === copyListItems[draggingItemIndex.current]) return;
-    copyListItems.splice(draggingItemIndex.current, 1);
-    copyListItems.splice(draggingOverItemIndex.current, 0, dragItemContent);
+    const dragItemContent = copyListItems[draggingItemIndex.current.index];
+    if (listItems[index] === copyListItems[draggingItemIndex.current.index])
+      return;
+    copyListItems.splice(draggingItemIndex.current.index, 1);
+    copyListItems.splice(
+      draggingOverItemIndex.current.index,
+      0,
+      dragItemContent
+    );
     draggingItemIndex.current = draggingOverItemIndex.current;
     draggingOverItemIndex.current = null;
     setListItems(copyListItems);
@@ -41,6 +65,14 @@ const UserCustomizePage = () => {
 
   const onDragEnd = (e) => {
     e.target.classList.remove("grabbing");
+  };
+
+  const handleRowSizeChange = (num) => {
+    console.log("handleRowSizeChange", num);
+  };
+
+  const handleColumnSizeChange = (num) => {
+    console.log("handleSizeChange", num);
   };
 
   return (
@@ -56,17 +88,31 @@ const UserCustomizePage = () => {
       </EditContainer>
       <ListContainer>
         {listItems.map((item, index) => (
-          <ListItem
+          <Item
             key={index}
-            draggable
-            onDragStart={(e) => onDragStart(e, index)}
-            onDragEnter={(e) => onDragEnter(e, index)}
+            item={item}
+            coordinate={{
+              index: index,
+              L: (index % 6) + 1,
+              R: (index % 6) + 2,
+              T: Math.floor(index / 6) + 1,
+              B: Math.floor(index / 6) + 2,
+            }}
+            onDragStart={onDragStart}
+            onDragEnter={onDragEnter}
             onDragEnd={onDragEnd}
-          >
-            {item}
-          </ListItem>
+            handleRowSizeChange={(num) => {
+              handleRowSizeChange(num);
+            }}
+            handleColumnSizeChange={(num) => {
+              handleColumnSizeChange(num);
+            }}
+          />
         ))}
       </ListContainer>
+      {showList && (
+        <CustomComponentList items={DummyItems} onClose={showComponentLists} />
+      )}
     </PageContainer>
   );
 };
@@ -108,21 +154,6 @@ const ListContainer = styled.div`
   background-color: #ffffff;
   padding: 10px;
   box-sizing: border-box;
-`;
-
-const ListItem = styled.div`
-  padding: 10px;
-  background-color: #f0f0f0;
-  margin-bottom: 5px;
-  cursor: grab;
-
-  &:hover {
-    background-color: #e0e0e0;
-  }
-
-  &.grabbing {
-    cursor: grabbing;
-  }
 `;
 
 export default UserCustomizePage;
