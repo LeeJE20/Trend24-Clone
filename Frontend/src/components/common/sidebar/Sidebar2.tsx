@@ -1,8 +1,11 @@
 import { useRef } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { AiOutlineHome, AiOutlineFund, AiOutlineBook } from "react-icons/ai";
 import { BiMenu, BiMenuAltRight, BiLogOut } from "react-icons/bi";
+import { TbDeviceDesktopSearch } from "react-icons/tb";
+import { FaChartBar, FaChartLine } from "react-icons/fa";
+import { PiBooksDuotone } from "react-icons/pi";
+import { RiArchiveDrawerFill } from "react-icons/ri";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -59,9 +62,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const changePage = (to:string) => {
+  const changePage = (to: string) => {
     navigate(to);
-  }
+  };
 
   return (
     <SidebarWrapper ref={sidebarRef}>
@@ -107,19 +110,34 @@ export default Sidebar;
 
 const linksArray = [
   {
-    label: "Dashboard",
-    icon: <AiOutlineHome />,
+    label: "인기 트렌드",
+    icon: <FaChartLine />,
     to: "/main",
   },
   {
-    label: "Trending Keywords",
-    icon: <AiOutlineFund />,
-    to: "/main/UserPage",
+    label: "트렌드 검색",
+    icon: <TbDeviceDesktopSearch />,
+    to: "/main/trendSearch",
   },
   {
-    label: "Daily Key Reads",
-    icon: <AiOutlineBook />,
-    to: "/main/KeywordPage",
+    label: "유저 통계",
+    icon: <FaChartBar />,
+    to: "/main/userActivity",
+  },
+  {
+    label: "도서 검색",
+    icon: <PiBooksDuotone />,
+    to: "/main/bookSearch",
+  },
+  {
+    label: "서랍",
+    icon: <RiArchiveDrawerFill />,
+    to: "/main/bookDrawer",
+  },
+  {
+    label: "커스텀페이지",
+    icon: <RiArchiveDrawerFill />,
+    to: "/main/userCustomizePage",
   },
 ];
 
@@ -207,7 +225,6 @@ const LinkWrapper = styled.div<{ $isActive: boolean }>`
   color: ${({ $isActive }) => ($isActive ? "#11101d" : "#fff")};
   border-radius: 12px;
   padding: 15px;
-  
 
   &:hover {
     background-color: #fff;

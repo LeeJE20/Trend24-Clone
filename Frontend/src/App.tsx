@@ -2,9 +2,12 @@ import { Route, Routes } from "react-router-dom";
 
 import Login from "./pages/Authorization";
 import Dashboard from "./pages/Dashboard";
-import BookRecPage from "./pages/TrendSearch";
-import UserPage from "./pages/UserActivity";
-import KeywordPage from "./pages/HowTrend";
+import HowTrend from "./pages/HowTrend";
+import TrendSearch from "./pages/TrendSearch";
+import UserActivity from "./pages/UserActivity";
+import BookSearch from "./pages/BookSearch";
+import BookDrawer from "./pages/BookDrawer";
+
 import UserCustomizePage from "./components/pages/useractivity/customize/UserCustomizePage";
 
 import NotFound from "./pages/Notfound";
@@ -14,10 +17,12 @@ function App() {
     <Routes>
       <Route path="" element={<Login />} />
       <Route path="/main" element={<Dashboard />}>
-        <Route path="" element={<BookRecPage />} />
-        <Route path="UserPage" element={<UserPage />} />
-        <Route path="KeywordPage" element={<KeywordPage />} />
-        <Route path="UserCustomizePage" element={<UserCustomizePage />} />
+        <Route path="" element={<HowTrend />} />
+        <Route path="trendSearch" element={<TrendSearch />} />
+        <Route path="userActivity" element={<UserActivity />} />
+        <Route path="bookSearch" element={<BookSearch />} />
+        <Route path="bookDrawer" element={<BookDrawer />} />
+        <Route path="userCustomizePage" element={<UserCustomizePage />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

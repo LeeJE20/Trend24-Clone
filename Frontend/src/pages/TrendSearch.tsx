@@ -11,7 +11,7 @@ import {
 } from "../constants/DummyData";
 import { Mobile } from "../constants/Display";
 
-const BookRecPage = () => {
+const TrendSearch = () => {
   const [category, setCategory] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("IT");
   const [keyword, setKeyword] = useState<string[]>([]);
@@ -90,4 +90,4 @@ const BookListContainer = styled.div`
   overflow-y: auto;
 `;
 
-export default BookRecPage;
+export default TrendSearch;

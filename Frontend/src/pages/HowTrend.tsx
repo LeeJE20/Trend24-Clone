@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const KeywordPage = () => {
-  return <KeywordPageContainer></KeywordPageContainer>;
+const HowTrend = () => {
+  return <HowTrendContainer>HowTrend</HowTrendContainer>;
 };
 
-const KeywordPageContainer = styled.div`
+const HowTrendContainer = styled.div`
   height: 100%;
   width: 100%;
   display: grid;
@@ -12,4 +12,4 @@ const KeywordPageContainer = styled.div`
   grid-template-rows: repeat(6, 1fr);
 `;
 
-export default KeywordPage;
+export default HowTrend;

@@ -4,7 +4,7 @@ import UserDataGraph from "../components/pages/useractivity/user/UserDataGraph";
 import UserStayTimeGraph from "../components/pages/useractivity/user/UserStayTimeGraph";
 import ClickDataChart from "../components/common/chart/ClickDataChart";
 
-const UserPage = () => {
+const UserActivity = () => {
   return (
     <PageContainer>
       <UserDataGraph />
@@ -22,4 +22,4 @@ const PageContainer = styled.div`
   grid-template-rows: repeat(6, 1fr);
 `;
 
-export default UserPage;
+export default UserActivity;
