@@ -1,14 +1,24 @@
 import styled from "styled-components";
 
-const CustomComponentList = ({ items, onClose }) => {
+const DummyItems = ["컴포넌트 1", "컴포넌트 2", "컴포넌트 3", "컴포넌트 4"];
+
+const CustomComponentList = ({ onClose, saveList }) => {
+  const items = DummyItems;
+
   const handleClose = () => {
     onClose();
+  };
+
+  const handleSave = (item) => {
+    saveList(item);
   };
 
   return (
     <CustomComponentListContainer>
       {items.map((item, index) => (
-        <div key={index}>{item}</div>
+        <div key={index} onClick={() => handleSave(item)}>
+          {item}
+        </div>
       ))}
       <button onClick={handleClose}>닫기</button>
     </CustomComponentListContainer>
