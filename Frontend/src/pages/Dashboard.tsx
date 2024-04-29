@@ -10,12 +10,11 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-
 const Main = styled.main<{ $sidebarOpen: boolean }>`
   background-color: #eff3fc;
   padding: 30px;
   height: 100%;
-  flex: 1 0 auto;
+  flex: 1;
   box-sizing: border-box;
 `;
 
@@ -25,7 +24,6 @@ function Dashboard() {
   return (
     <Container>
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
       <Main $sidebarOpen={sidebarOpen}>
         <Outlet />
       </Main>
