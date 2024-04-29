@@ -8,7 +8,7 @@ export const categoryListData: string[] = [
   "취미 & 레저",
 ];
 
-export const categoryKeywordData: string[] = [
+export const categoryData: string[] = [
   "인공지능",
   "IoT",
   "블록체인",
@@ -16,24 +16,53 @@ export const categoryKeywordData: string[] = [
   "IT",
   "빅데이터",
 ];
-export const c: object[] = [
-  {"it" : [
+
+interface CategoryKeywordData {
+  [category: string]: string[];
+}
+
+export const categoryKeywordData: CategoryKeywordData = {
+  "it" : [
     "인공지능",
     "IoT",
     "블록체인",
     "자동화",
     "IT",
     "빅데이터"
-  ]},
-  {"부동산" : [
-    "인공지능",
+  ],
+  "부동산" : [
+    "부동산 키워드",
     "IoT",
     "블록체인",
     "자동화",
     "IT",
     "빅데이터"
-  ]},
-];
+  ],
+  "금융" : [
+    "금융 키워드",
+    "IoT",
+    "블록체인",
+    "자동화",
+    "IT",
+    "빅데이터"
+  ],
+  "건강" : [
+    "건강 키워드",
+    "IoT",
+    "블록체인",
+    "자동화",
+    "IT",
+    "빅데이터"
+  ],
+  "취미" : [
+    "취미 키워드",
+    "IoT",
+    "블록체인",
+    "자동화",
+    "IT",
+    "빅데이터"
+  ],
+};
 
 export interface Book {
   product_id: number;

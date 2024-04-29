@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/common/sidebar/Sidebar2";
+import Sidebar from "../components/common/sidebar/Sidebar";
 import styled from "styled-components";
 
 const Container = styled.div`

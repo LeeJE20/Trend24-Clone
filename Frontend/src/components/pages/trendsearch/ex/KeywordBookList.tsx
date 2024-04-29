@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Book } from "../../../constants/DummyData";
-import { Tablet } from "../../../constants/Display";
+import { Book } from "../../../../constants/DummyData";
+import { Tablet } from "../../../../constants/Display";
 import { GrFormNextLink } from "react-icons/gr";
 
 const KeywordBookList = ({ bookList }: { bookList: Book[] }) => {

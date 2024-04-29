@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Modal from "../../common/modal/Modal";
+import Modal from "../../../common/modal/Modal";
 
 interface PropsType {
   keyword: string[];
