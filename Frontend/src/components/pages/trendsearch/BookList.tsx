@@ -4,7 +4,7 @@ import { Book } from "../../../constants/DummyData";
 import { Tablet } from "../../../constants/Display";
 import { GrFormNextLink } from "react-icons/gr";
 
-const KeywordBookList = ({ bookList }: { bookList: Book[] }) => {
+const BookList = ({ bookList }: { bookList: Book[] }) => {
   const [expandedBookIndices, setExpandedBookIndices] = useState<boolean[]>([]);
 
   const toggleBookContent = (index: number) => {
@@ -52,7 +52,8 @@ const KeywordBookList = ({ bookList }: { bookList: Book[] }) => {
 };
 
 const Container = styled.div`
-  padding: 30px;
+  border: solid 1px black;
+  margin: 5px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -104,4 +105,4 @@ const NextBtn = styled.button`
   right: 20px;
 `;
 
-export default KeywordBookList;
+export default BookList;
