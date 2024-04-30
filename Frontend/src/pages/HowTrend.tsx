@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import KeywordRank from "../components/pages/howtrend/KeywordRank";
-import Table from "../components/common/table/Table";
+import Table from "../components/pages/howtrend/Table";
 
 const HowTrend = () => {
   return (
