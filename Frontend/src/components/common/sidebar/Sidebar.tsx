@@ -36,7 +36,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       ...sideLinkLabelRefs.current,
     ];
     if (sidebarOpen) {
-      tl.to([sidebarRef.current, profileWrapperRef.current], { width: "250px" })
+      tl.to([sidebarRef.current, profileWrapperRef.current], {
+        width: "250px",
+        minWidth: "250px",
+      })
         .set(
           [toggleButtonRef.current, logoutBtnRef.current],
           { textAlign: "right" },
@@ -45,7 +48,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         .set(list, { display: "" })
         .to(list, { opacity: 1 });
     } else {
-      tl.to([sidebarRef.current, profileWrapperRef.current], { width: "78px" })
+      tl.to([sidebarRef.current, profileWrapperRef.current], {
+        width: "78px",
+        minWidth: "78px",
+      })
         .to(list, { opacity: 0, duration: 0.3 }, "<")
         .set(
           [toggleButtonRef.current, logoutBtnRef.current],
