@@ -1,12 +1,31 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import KeywordChart from "./KeywordChart";
+import KeywordSource from "./KeywordSource";
+import BookList from "../trendsearch/BookList";
+
+import { bookListData, Book } from "../../../constants/DummyData";
 
 const KeywordDetail = () => {
+  const [bookList, setBookList] = useState<Book[]>([]);
+
+  useEffect(() => {
+    setBookList(bookListData);
+  }, []);
+
   return (
     <Container>
-      <BookContainer>BookContainer</BookContainer>
-      <KeywordChart>KeywordChart</KeywordChart>
-      <KeywordSource>KeywordSource</KeywordSource>
+      <BookWrapper>
+        <BookList bookList={bookList} />
+      </BookWrapper>
+
+      <KeywordChartWrapper>
+        <KeywordChart />
+      </KeywordChartWrapper>
+
+      <KeywordSourceWrapper>
+        <KeywordSource />
+      </KeywordSourceWrapper>
     </Container>
   );
 };
@@ -24,17 +43,18 @@ const Container = styled.div`
     "chart source";
 `;
 
-const BookContainer = styled.div`
+const BookWrapper = styled.div`
   grid-area: book;
   border: 1px solid black;
+  overflow-y: auto;
 `;
 
-const KeywordChart = styled.div`
+const KeywordChartWrapper = styled.div`
   grid-area: chart;
   border: 1px solid black;
 `;
 
-const KeywordSource = styled.div`
+const KeywordSourceWrapper = styled.div`
   grid-area: source;
   border: 1px solid black;
 `;
