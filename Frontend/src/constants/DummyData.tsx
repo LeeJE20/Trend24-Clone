@@ -99,6 +99,34 @@ export const bookListData: Book[] = [
   },
 ];
 
+export interface CustomizedComponentList {
+  componentName: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+}
+
+export const customizedComponentListData: CustomizedComponentList[] = [
+  {
+    componentName: "userWeeklyActivity",
+    position: { x: 100, y: 500 },
+    size: { width: 400, height: 400 },
+  },
+  {
+    componentName: "userMonthlyActivity",
+    position: { x: 200, y: 100 },
+    size: { width: 400, height: 400 },
+  },
+  {
+    componentName: "userDailyActivity",
+    position: { x: 300, y: 200 },
+    size: { width: 400, height: 600 },
+  },
+];
+
+export const emptyListData = [];
+
+export const emptyData = "";
+
 interface HotTrendType {
   [date: string]: string[];
 }
@@ -113,3 +141,34 @@ export const hotTrend: HotTrendType = {
   "2024/04/24": ["테슬라 중국 자율주행", "청년내일저축계좌", "남영희", "식케이", "엔화", "황우여", "제시 마치", "근로자의 날", "김진경", "유재환", "중국 광저우 토네이도", "멘시티", "영수회담", "수능 6등급 교대 합격", "박성훈"],
   "2024/04/25": ["테슬라 중국 자율주행", "청년내일저축계좌", "남영희", "식케이", "엔화", "황우여", "제시 마치", "근로자의 날", "김진경", "유재환", "중국 광저우 토네이도", "멘시티", "영수회담", "수능 6등급 교대 합격", "박성훈"],
 };
+
+interface trendCalendarType{
+
+}
+
+export const trendCalendar: trendCalendarType = [
+  {
+    date: "2024-04-25",
+    rank: 4,
+  },
+  {
+    date: "2024-04-24",
+    rank: 3,
+  },
+  {
+    date: "2024-04-25",
+    rank: 4,
+  },
+  {
+    date: "2024-04-24",
+    rank: 3,
+  },
+  {
+    date: "2024-04-25",
+    rank: 4,
+  },
+  {
+    date: "2024-04-24",
+    rank: 3,
+  },
+];

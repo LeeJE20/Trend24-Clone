@@ -45,18 +45,27 @@ const Container = styled.div`
 
 const BookWrapper = styled.div`
   grid-area: book;
-  border: 1px solid black;
   overflow-y: auto;
+  box-shadow: 1px 0px 5px 1px #67676755;
+  box-sizing: border-box;
+  margin: 5px 10px;
+  border-radius: 10px;
 `;
 
 const KeywordChartWrapper = styled.div`
   grid-area: chart;
-  border: 1px solid black;
+  box-shadow: 1px 0px 5px 1px #67676755;
+  box-sizing: border-box;
+  margin: 10px;
+  border-radius: 10px;
 `;
 
 const KeywordSourceWrapper = styled.div`
   grid-area: source;
-  border: 1px solid black;
+  box-shadow: 1px 0px 5px 1px #67676755;
+  box-sizing: border-box;
+  margin: 10px;
+  border-radius: 10px;
 `;
 
 export default KeywordDetail;

@@ -6,9 +6,9 @@ const KeywordChart = () => {
   return (
     <Container>
       <Title>
-        키워드 <br /> <br />
-        {now.getFullYear()}년 {now.getMonth() + 1}월
+        키워드
       </Title>
+      <div>{now.getFullYear()}년 {now.getMonth() + 1}월</div>
       <CalendarWrapper>
         <div className="day"></div>
       </CalendarWrapper>
@@ -20,6 +20,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   margin: 5px;
+  padding: 10px;
   box-sizing: border-box;
 `;
 

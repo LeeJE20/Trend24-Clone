@@ -24,7 +24,7 @@ const HowTrend = () => {
   };
   return (
     <HowTrendContainer>
-      <h2>인기 트렌드</h2>
+      <h1>인기 트렌드</h1>
       <Content>
         {Object.keys(hotTrend).map(
           (date, idx) =>
@@ -53,20 +53,32 @@ const HowTrendContainer = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  border: 1px solid black;
+  background-color: white;
+  border-radius: 20px;
+  padding: 0px 20px 20px 20px;
+  box-sizing: border-box;
 `;
 
 const Content = styled.div`
   flex: 1;
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
   display: flex;
   overflow: hidden;
 `;
 
 const TableWrapper = styled.div`
   overflow: auto;
+  
+  &:first-child{
+    box-shadow: 1px 0px 5px 1px #67676755;
+    border-radius: 20px;
+  }
+
+  &:last-child{
+    box-shadow: 1px 0px 5px 1px #67676755;
+    border-radius: 0px 20px 20px 0px;
+  }
 `;
 
 export default HowTrend;
