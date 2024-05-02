@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const KeywordChart = () => {
+const KeywordCalendar = () => {
   const now = new Date();
   const todayWeek = now.getDay();
   const today = now.getDate();
@@ -149,4 +149,4 @@ const DayList = styled.div`
   }
 `;
 
-export default KeywordChart;
+export default KeywordCalendar;

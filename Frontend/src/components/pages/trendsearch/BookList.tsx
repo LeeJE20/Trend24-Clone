@@ -57,8 +57,8 @@ const BookList = (prop: BookProps) => {
 };
 
 const Container = styled.div`
-  border: solid 1px black;
   margin: 5px;
+  padding: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -76,7 +76,6 @@ const Title = styled.div`
 const BookContainer = styled.div`
   position: relative;
   display: flex;
-  border: 1px solid black;
   flex: 1 1 50%;
   padding: 10px;
   box-sizing: border-box;
