@@ -32,7 +32,7 @@ const TrendSearch = () => {
         />
       </FilterContainer>
       <BookListContainer>
-        <BookList bookList={bookList} />
+        <BookList bookList={bookList} title="추천 책 도서" />
       </BookListContainer>
     </Body>
   );
