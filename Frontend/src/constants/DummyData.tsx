@@ -3,18 +3,14 @@ interface CategoryKeywordData {
   [category: string]: string[];
 }
 
-export const categoryKeywordData: string[] = [
-  "인공지능",
-  "IoT",
-  "블록체인",
-  "자동화",
-  "IT",
-  "빅데이터",
-];
-export const c: object[] = [
-  { it: ["인공지능", "IoT", "블록체인", "자동화", "IT", "빅데이터"] },
-  { 부동산: ["인공지능", "IoT", "블록체인", "자동화", "IT", "빅데이터"] },
-];
+export const categoryKeywordData: CategoryKeywordData = {
+  it: ["인공지능", "IoT", "블록체인", "자동화", "IT", "빅데이터"],
+  부동산: ["부동산 키워드", "IoT", "블록체인", "자동화", "IT", "빅데이터"],
+  금융: ["금융 키워드", "IoT", "블록체인", "자동화", "IT", "빅데이터"],
+  건강: ["건강 키워드", "IoT", "블록체인", "자동화", "IT", "빅데이터"],
+  취미: ["취미 키워드", "IoT", "블록체인", "자동화", "IT", "빅데이터"],
+};
+
 
 // 도서 목록 더미 데이터
 export interface Book {
