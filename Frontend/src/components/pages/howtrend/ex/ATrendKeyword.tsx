@@ -11,8 +11,6 @@ const ATrendKeyword = () => {
 const ATrendKeywordContainer = styled.div`
   width: 100%;
   height: 100%;
-  grid-column: 1 / 4;
-  grid-row: 3 / 7;
   border: 1px solid #000;
 `;
 
