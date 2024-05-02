@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import KeywordChart from "./KeywordChart";
+import KeywordCalendar from "./KeywordCalendar";
 import KeywordSource from "./KeywordSource";
 import BookList from "../trendsearch/BookList";
 
@@ -19,9 +19,9 @@ const KeywordDetail = ({ keyword }: { keyword: string }) => {
         <BookList bookList={bookList} title={"# " + keyword} />
       </BookWrapper>
 
-      <KeywordChartWrapper>
-        <KeywordChart />
-      </KeywordChartWrapper>
+      <KeywordCalendarWrapper>
+        <KeywordCalendar />
+      </KeywordCalendarWrapper>
 
       <KeywordSourceWrapper>
         <KeywordSource />
@@ -34,7 +34,6 @@ const Container = styled.div`
   flex: 1;
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 3fr 2fr;
@@ -49,7 +48,7 @@ const BookWrapper = styled.div`
   overflow-y: auto;
 `;
 
-const KeywordChartWrapper = styled.div`
+const KeywordCalendarWrapper = styled.div`
   grid-area: chart;
   border: 1px solid black;
 `;

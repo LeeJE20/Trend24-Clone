@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import KeywordRank from "../components/pages/howtrend/ex/KeywordRank";
-import Table from "../components/pages/howtrend/Table";
+import Table from "../components/pages/hottrend/Table";
 import { hotTrend } from "../constants/DummyData";
 import { useState } from "react";
-import KeywordDetail from "../components/pages/howtrend/KeywordDetail";
+import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
 
-const HowTrend = () => {
+const HotTrend = () => {
   const [keyword, setKeyword] = useState("");
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
 
@@ -22,6 +21,7 @@ const HowTrend = () => {
     console.log(key);
     setKeyword(key);
   };
+  
   return (
     <HowTrendContainer>
       <h2>인기 트렌드</h2>
@@ -69,4 +69,4 @@ const TableWrapper = styled.div`
   overflow: auto;
 `;
 
-export default HowTrend;
+export default HotTrend;

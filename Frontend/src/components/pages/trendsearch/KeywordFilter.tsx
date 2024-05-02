@@ -73,7 +73,7 @@ const Container = styled.div`
   height: 100%;
   flex-flow: column;
   box-sizing: border-box;
-  background-color: white;
+  
 `;
 
 const SelectedKeyword = styled.div`
@@ -90,8 +90,7 @@ const SelectedKeyword = styled.div`
     color: white;
     align-content: center;
     text-align: center;
-    border-radius: 0px 10px 10px 0px;
-    border-bottom: solid 1px white;
+    border-radius: 20px 10px 10px 0px;
     margin-right: 10px;
   }
 
@@ -104,7 +103,6 @@ const SelectedKeyword = styled.div`
     div{
       margin: 0px 5px;
       padding: 10px 15px;
-      border: solid 1px black;
       border-radius: 30px;
 
       &:hover{
@@ -184,7 +182,6 @@ const KeywordList = styled.div`
 const KeywordItem = styled.div<{ selected: boolean }>`
   margin: 0px 5px;
   padding: 10px 15px;
-  border: solid 1px black;
   border-radius: 30px;
   cursor: pointer;
   background-color: ${(props) => (props.selected ? "gray" : "initial")};
