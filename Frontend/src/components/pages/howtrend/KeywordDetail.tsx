@@ -6,17 +6,17 @@ import BookList from "../trendsearch/BookList";
 
 import { bookListData, Book } from "../../../constants/DummyData";
 
-const KeywordDetail = () => {
+const KeywordDetail = ({ keyword }: { keyword: string }) => {
   const [bookList, setBookList] = useState<Book[]>([]);
 
   useEffect(() => {
     setBookList(bookListData);
-  }, []);
+  }, [keyword]);
 
   return (
     <Container>
       <BookWrapper>
-        <BookList bookList={bookList} />
+        <BookList bookList={bookList} title={"# " + keyword} />
       </BookWrapper>
 
       <KeywordChartWrapper>

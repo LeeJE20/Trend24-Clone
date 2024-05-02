@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Table from "./Table";
-import KeywordDetail from "./KeywordDetail";
-import { hotTrend } from "../../../constants/DummyData";
+import Table from "../Table";
+import KeywordDetail from "../KeywordDetail";
+import { hotTrend } from "../../../../constants/DummyData";
 import { useState } from "react";
 
 const KeywordRank = () => {
@@ -39,7 +39,7 @@ const KeywordRank = () => {
             </TableContainer>
           )
       )}
-      {selectedTable !== null && <KeywordDetail />}
+      {selectedTable !== null && <KeywordDetail keyword={keyword} />}
     </Container>
   );
 };

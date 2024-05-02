@@ -4,11 +4,16 @@ import { Book } from "../../../constants/DummyData";
 import { Tablet } from "../../../constants/Display";
 import { GrFormNextLink } from "react-icons/gr";
 
-const BookList = ({ bookList }: { bookList: Book[] }) => {
+interface BookProps {
+  title: string;
+  bookList: Book[];
+}
+
+const BookList = (prop: BookProps) => {
   const [expandedBookIndices, setExpandedBookIndices] = useState<boolean[]>([]);
 
   const toggleBookContent = (index: number) => {
-    console.log(bookList);
+    console.log(prop.bookList);
     console.log(expandedBookIndices);
 
     setExpandedBookIndices((prevState) =>
@@ -17,12 +22,12 @@ const BookList = ({ bookList }: { bookList: Book[] }) => {
   };
 
   useEffect(() => {
-    setExpandedBookIndices(Array(bookList.length).fill(false));
-  }, [bookList]);
+    setExpandedBookIndices(Array(prop.bookList.length).fill(false));
+  }, [prop.bookList]);
   return (
     <Container>
-      <Title>추천 책 리스트</Title>
-      {bookList.map((book: Book, index: number) => (
+      <Title>{prop.title}</Title>
+      {prop.bookList.map((book: Book, index: number) => (
         <BookContainer key={index}>
           <img
             src={`https://image.yes24.com/goods/${book.product_id}/XL`}
