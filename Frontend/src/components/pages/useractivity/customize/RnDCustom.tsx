@@ -4,19 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../../store/store";
 import { setCompleteList } from "../../../../store/slices/customizeSlice";
-
 import { Rnd } from "react-rnd";
 import CustomComponentList from "../../../common/modal/CustomComponentList";
 
-import {
-  CustomizedComponentList,
-  customizedComponentListData,
-} from "../../../../constants/DummyData";
+interface CustomizedComponentList {
+  componentName: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+}
 
 const RnDCustom = () => {
-  const [savedListItems, setSavedListItems] = useState<
-    CustomizedComponentList[]
-  >([]);
+  const [addedList, setAddedList] = useState<CustomizedComponentList[]>([]);
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
 
@@ -25,20 +23,30 @@ const RnDCustom = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
 
-  const [size, setSize] = useState({ width: 200, height: 200 });
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    setAddedList([...componentList]);
+  }, [componentList]);
 
-  const handleDragStop = (e, d) => {
-    setPosition({ x: d.x, y: d.y });
+  const handleDragStop = (e, d, index) => {
+    setAddedList(
+      addedList.map((item, i) =>
+        i === index ? { ...item, position: { x: d.x, y: d.y } } : item
+      )
+    );
   };
 
-  const handleResizeStop = (e, direction, ref, delta, position) => {
-    setSize({
-      width: parseInt(ref.style.width),
-      height: parseInt(ref.style.height),
-    });
-    setPosition({ x: position.x, y: position.y });
-    console.log(ref);
+  const handleResizeStop = (e, direction, ref, delta, position, index) => {
+    setAddedList(
+      addedList.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              size: { width: ref.offsetWidth, height: ref.offsetHeight },
+              position: { x: position.x, y: position.y },
+            }
+          : item
+      )
+    );
   };
 
   const toggleModal = () => {
@@ -46,13 +54,16 @@ const RnDCustom = () => {
   };
 
   const cancelChange = () => {
-    setSavedListItems([...componentList]);
+    navigate("/main/UserCustomizePage");
   };
 
   const compleCustomize = () => {
-    setSavedListItems([...componentList]);
-    dispatch(setCompleteList(savedListItems));
+    dispatch(setCompleteList(addedList));
     navigate("/main/UserCustomizePage");
+  };
+
+  const makeTempList = (item) => {
+    setAddedList([...addedList, item]);
   };
 
   return (
@@ -64,13 +75,15 @@ const RnDCustom = () => {
         <button onClick={compleCustomize}>완료</button>
       </TitleContainer>
       <DragContainer>
-        {savedListItems.map((item, index) => (
+        {addedList.map((item, index) => (
           <Rnd
             key={index}
-            size={size}
-            position={position}
-            onDragStop={handleDragStop}
-            onResizeStop={handleResizeStop}
+            size={{ width: item.size.width, height: item.size.height }}
+            position={{ x: item.position.x, y: item.position.y }}
+            onDragStop={(e, d) => handleDragStop(e, d, index)}
+            onResizeStop={(e, direction, ref, delta, position) =>
+              handleResizeStop(e, direction, ref, delta, position, index)
+            }
             resizeGrid={[20, 20]}
             dragGrid={[20, 20]}
             bounds={"parent"}
@@ -88,7 +101,10 @@ const RnDCustom = () => {
         ))}
       </DragContainer>
       {toggleListModal && (
-        <CustomComponentList saveList={saveList} onClose={toggleModal} />
+        <CustomComponentList
+          makeTempList={makeTempList}
+          onClose={toggleModal}
+        />
       )}
     </Container>
   );

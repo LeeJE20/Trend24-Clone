@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+import {
+  customizedComponentListData,
+  emptyListData,
+} from "../../constants/DummyData";
+
 interface CustomizedComponentList {
   componentName: string;
   position: { x: number; y: number };
@@ -9,12 +14,14 @@ interface CustomizedComponentList {
 
 interface CustomizeState {
   completeList: CustomizedComponentList[];
+  componentList: CustomizedComponentList[];
 }
 
 const customizeSlice = createSlice({
   name: "customize",
   initialState: {
     completeList: [],
+    componentList: [...customizedComponentListData],
   } as CustomizeState, // 초기 상태를 CustomizeState로 명시
   reducers: {
     setCompleteList: (
@@ -23,8 +30,14 @@ const customizeSlice = createSlice({
     ) => {
       state.completeList = action.payload;
     },
+    setComponentList: (
+      state,
+      action: PayloadAction<CustomizedComponentList[]>
+    ) => {
+      state.componentList = action.payload;
+    },
   },
 });
 
-export const { setCompleteList } = customizeSlice.actions;
+export const { setCompleteList, setComponentList } = customizeSlice.actions;
 export default customizeSlice.reducer;

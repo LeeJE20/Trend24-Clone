@@ -1,23 +1,27 @@
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
-const DummyItems = ["컴포넌트 1", "컴포넌트 2", "컴포넌트 3", "컴포넌트 4"];
+import { RootState, AppDispatch } from "../../../store/store";
 
-const CustomComponentList = ({ onClose, saveList }) => {
-  const items = DummyItems;
+const CustomComponentList = ({ onClose, makeTempList }) => {
+  const items = useSelector(
+    (state: RootState) => state.customize.componentList
+  );
 
   const handleClose = () => {
     onClose();
   };
 
   const handleSave = (item) => {
-    saveList(item);
+    makeTempList(item);
+    onClose();
   };
 
   return (
     <CustomComponentListContainer>
       {items.map((item, index) => (
         <div key={index} onClick={() => handleSave(item)}>
-          {item}
+          {item.componentName}
         </div>
       ))}
       <button onClick={handleClose}>닫기</button>

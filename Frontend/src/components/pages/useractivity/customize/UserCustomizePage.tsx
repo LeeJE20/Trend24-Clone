@@ -8,6 +8,10 @@ import {
 } from "../../../../constants/DummyData";
 import { Rnd } from "react-rnd";
 
+import UserActivityDaily from "../../../googleanalytics/UserActivityDaily";
+import UserActivityWeekly from "../../../googleanalytics/UserActivityWeekly";
+import UserActivityMonthly from "../../../googleanalytics/UserActivityMonthly";
+
 const UserCustomizePage = () => {
   const navigate = useNavigate();
   const [componentList, setComponentList] = useState<CustomizedComponentList[]>(
@@ -23,12 +27,13 @@ const UserCustomizePage = () => {
     navigate("/main/custom");
   };
 
-  // // 각 componentName에 대응하는 컴포넌트를 정의합니다.
-  // const componentMap: { [key: string]: JSX.Element } = {
-  //   ComponentA: <ComponentA />,
-  //   ComponentB: <ComponentB />,
-  //   // 필요한 만큼 componentName에 대응하는 컴포넌트를 추가합니다.
-  // };
+  // 각 componentName에 대응하는 컴포넌트를 정의합니다.
+  const componentMap: { [key: string]: JSX.Element } = {
+    UserActivityDaily: <UserActivityDaily />,
+    UserActivityWeekly: <UserActivityWeekly />,
+    UserActivityMonthly: <UserActivityMonthly />,
+    // 필요한 만큼 componentName에 대응하는 컴포넌트를 추가합니다.
+  };
 
   return (
     <Container>
@@ -68,8 +73,8 @@ const UserCustomizePage = () => {
                   topRight: false,
                 }}
               >
-                <Box>{item.componentName}</Box>
-                {/* {componentMap[item.componentName]} */}
+                {/* <Box>{item.componentName}</Box> */}
+                {componentMap[item.componentName]}
               </Rnd>
             ))}
           </>
