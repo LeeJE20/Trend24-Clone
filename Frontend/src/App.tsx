@@ -9,6 +9,7 @@ import BookSearch from "./pages/BookSearch";
 import BookDrawer from "./pages/BookDrawer";
 
 import UserCustomizePage from "./components/pages/useractivity/customize/UserCustomizePage";
+import RnDCustom from "./components/pages/useractivity/customize/RnDCustom";
 
 import NotFound from "./pages/Notfound";
 
@@ -22,7 +23,9 @@ function App() {
         <Route path="userActivity" element={<UserActivity />} />
         <Route path="bookSearch" element={<BookSearch />} />
         <Route path="bookDrawer" element={<BookDrawer />} />
+
         <Route path="userCustomizePage" element={<UserCustomizePage />} />
+        <Route path="custom" element={<RnDCustom />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
