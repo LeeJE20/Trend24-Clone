@@ -2,27 +2,31 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../../../store";
-import { setComponentName } from "../../../../store/slices/editpageSlice";
+import { RootState, AppDispatch } from "../../../../store/store";
+import { setCompleteList } from "../../../../store/slices/customizeSlice";
 
 import { Rnd } from "react-rnd";
 import CustomComponentList from "../../../common/modal/CustomComponentList";
 
+import {
+  CustomizedComponentList,
+  customizedComponentListData,
+} from "../../../../constants/DummyData";
+
 const RnDCustom = () => {
-  const [listItems, setListItems] = useState([]);
-  const [savedListItems, setSavedListItems] = useState([
-    useSelector((state: RootState) => state.editPage.componentName),
-  ]);
+  const [savedListItems, setSavedListItems] = useState<
+    CustomizedComponentList[]
+  >([]);
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
+
+  const componentList = useSelector(
+    (state: RootState) => state.customize.completeList
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const [size, setSize] = useState({ width: 200, height: 200 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    setPosition({ x: 100, y: 100 });
-  }, []);
 
   const handleDragStop = (e, d) => {
     setPosition({ x: d.x, y: d.y });
@@ -34,24 +38,20 @@ const RnDCustom = () => {
       height: parseInt(ref.style.height),
     });
     setPosition({ x: position.x, y: position.y });
+    console.log(ref);
   };
 
   const toggleModal = () => {
     setToggleListModal(!toggleListModal);
   };
 
-  const saveList = () => {
-    setListItems([...savedListItems]);
-    dispatch(setComponentName(savedListItems));
-  };
-
   const cancelChange = () => {
-    setSavedListItems([...listItems]);
+    setSavedListItems([...componentList]);
   };
 
   const compleCustomize = () => {
-    setListItems([...listItems]);
-    dispatch(setComponentName(savedListItems));
+    setSavedListItems([...componentList]);
+    dispatch(setCompleteList(savedListItems));
     navigate("/main/UserCustomizePage");
   };
 
@@ -59,13 +59,12 @@ const RnDCustom = () => {
     <Container>
       <TitleContainer>
         드래그앤드롭 커스텀
-        <button onClick={toggleModal}>추가</button>
-        <button onClick={saveList}>저장</button>
-        <button onClick={cancelChange}>취소</button>
+        <button onClick={toggleModal}>추가</button> |
+        <button onClick={cancelChange}>취소</button> |
         <button onClick={compleCustomize}>완료</button>
       </TitleContainer>
       <DragContainer>
-        {listItems.map((item, index) => (
+        {savedListItems.map((item, index) => (
           <Rnd
             key={index}
             size={size}
@@ -75,8 +74,16 @@ const RnDCustom = () => {
             resizeGrid={[20, 20]}
             dragGrid={[20, 20]}
             bounds={"parent"}
+            minWidth={"20%"}
+            minHeight={"20%"}
+            maxHeight={"200%"}
+            maxWidth={"200%"}
           >
-            <Item>{item}</Item>
+            <Item>
+              {item.componentName}
+              {item.position.x}
+              {item.position.y}
+            </Item>
           </Rnd>
         ))}
       </DragContainer>
@@ -109,6 +116,7 @@ const DragContainer = styled.div`
   display: grid;
   justify-content: center;
   align-items: center;
+  position: relative;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   width: 100%;
