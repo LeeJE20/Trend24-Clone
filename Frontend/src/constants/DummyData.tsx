@@ -11,7 +11,6 @@ export const categoryKeywordData: CategoryKeywordData = {
   취미: ["취미 키워드", "IoT", "블록체인", "자동화", "IT", "빅데이터"],
 };
 
-
 // 도서 목록 더미 데이터
 export interface Book {
   product_id: number;
@@ -108,17 +107,17 @@ export interface CustomizedComponentList {
 
 export const customizedComponentListData: CustomizedComponentList[] = [
   {
-    componentName: "userWeeklyActivity",
+    componentName: "UserActivityWeekly",
     position: { x: 100, y: 500 },
     size: { width: 400, height: 200 },
   },
   {
-    componentName: "userMonthlyActivity",
+    componentName: "UserActivityMonthly",
     position: { x: 200, y: 100 },
     size: { width: 400, height: 200 },
   },
   {
-    componentName: "userDailyActivity",
+    componentName: "UserActivityDaily",
     position: { x: 300, y: 200 },
     size: { width: 400, height: 300 },
   },

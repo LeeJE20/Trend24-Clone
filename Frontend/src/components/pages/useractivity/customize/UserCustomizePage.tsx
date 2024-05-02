@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AppDispatch, RootState } from "../../../../store/store";
 import { emptyListData } from "../../../../constants/DummyData";
 import {
   customizedComponentListData,
@@ -11,16 +12,27 @@ import { Rnd } from "react-rnd";
 import UserActivityDaily from "../../../googleanalytics/UserActivityDaily";
 import UserActivityWeekly from "../../../googleanalytics/UserActivityWeekly";
 import UserActivityMonthly from "../../../googleanalytics/UserActivityMonthly";
+import { useSelector, useDispatch } from "react-redux";
+import { setCompleteList } from "../../../../store/slices/customizeSlice";
+import { setComponentList } from "../../../../store/slices/customizeSlice";
 
 const UserCustomizePage = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [componentList, setComponentList] = useState<CustomizedComponentList[]>(
-    []
+  // const [componentList, setComponentList] = useState<CustomizedComponentList[]>(
+  //   []
+  // );
+
+  const completeList = useSelector(
+    (state: RootState) => state.customize.completeList
+  );
+  const componentList = useSelector(
+    (state: RootState) => state.customize.componentList
   );
 
   useEffect(() => {
     // setComponentList(emptyListData);
-    setComponentList(customizedComponentListData);
+    console.log("componentList", componentList);
   }, []);
 
   const showEditPage = () => {
@@ -58,7 +70,7 @@ const UserCustomizePage = () => {
           <>
             {componentList.map((item, index) => (
               <Rnd
-                key={index}
+                key={item.componentName}
                 size={{ width: item.size.width, height: item.size.height }}
                 position={{ x: item.position.x, y: item.position.y }}
                 disableDragging={true}
@@ -73,8 +85,16 @@ const UserCustomizePage = () => {
                   topRight: false,
                 }}
               >
-                {/* <Box>{item.componentName}</Box> */}
-                {componentMap[item.componentName]}
+                <Box
+                  onClick={() => {
+                    console.log(item);
+                    console.log(item.componentName);
+                    console.log(componentMap[item.componentName]);
+                    console.log(componentMap);
+                  }}
+                >
+                  {componentMap[item.componentName]}
+                </Box>
               </Rnd>
             ))}
           </>
@@ -133,6 +153,10 @@ const AddComponentButton = styled.button`
 const Box = styled.div`
   border: 1px solid #000;
   border-radius: 10px;
+  margin: 10px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 `;
 
 export default UserCustomizePage;
