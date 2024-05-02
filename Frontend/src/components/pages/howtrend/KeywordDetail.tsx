@@ -24,7 +24,7 @@ const KeywordDetail = ({ keyword }: { keyword: string }) => {
       </KeywordChartWrapper>
 
       <KeywordSourceWrapper>
-        <KeywordSource />
+        <KeywordSource type="youtube" originData={bookList} />
       </KeywordSourceWrapper>
     </Container>
   );
