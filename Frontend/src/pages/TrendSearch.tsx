@@ -47,14 +47,17 @@ const Body = styled.div`
 `;
 
 const FilterContainer = styled.div`
-  border: 1px solid black;
   width: 100%;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  background-color: white;
 `;
 
 const BookListContainer = styled.div`
-  border: 1px solid black;
   width: 100%;
   overflow-y: auto;
+  background-color: white;
+  border-radius: 20px;
 `;
 
 export default TrendSearch;

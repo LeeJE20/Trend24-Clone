@@ -148,7 +148,9 @@ const linksArray = [
 ];
 
 const SidebarWrapper = styled.div`
-  background: #11101d;
+  margin: 10px;
+  border-radius: 20px;
+  background: white;
   padding: 6px 14px;
   width: 250px;
   z-index: 99;
@@ -158,12 +160,12 @@ const SidebarWrapper = styled.div`
 const Logo = styled.div`
   display: flex;
   flex-direction: row;
+  margin-left: 10px;
   img {
     width: 60px;
     margin-right: 15px;
   }
   div {
-    color: #fff;
     font-size: 20px;
     font-weight: 600;
   }
@@ -183,7 +185,6 @@ const ToggleButton = styled.i`
   top: 30%;
   right: 0;
   min-width: 50px;
-  color: white;
   font-size: 23px;
   text-align: right;
   cursor: pointer;
@@ -200,7 +201,6 @@ const Tooltip = styled.span`
   top: 10px;
   left: calc(100% + 15px);
   z-index: 3;
-  background: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   padding: 6px 12px;
   border-radius: 4px;
@@ -221,6 +221,7 @@ const NavItem = styled.li`
     display: block;
     opacity: 1;
     transform: translateY(0);
+    background-color: white;
   }
 `;
 
@@ -228,17 +229,18 @@ const LinkWrapper = styled.div<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   text-decoration: none;
-  background: ${({ $isActive }) => ($isActive ? "#fff" : "transparent")};
-  color: ${({ $isActive }) => ($isActive ? "#11101d" : "#fff")};
+  background: ${({ $isActive }) => ($isActive ? "#11101d" : "transparent")};
+  color: ${({ $isActive }) => ($isActive ? "#fff" : "#11101d")};
   border-radius: 12px;
   padding: 15px;
 
   &:hover {
-    background-color: #fff;
-    transition: background-color 0.8s ease;
+    background-color: #11101d;
+    color: #fff;
+    transition: background-color 0.5s ease;
     span,
     i {
-      color: #11101d;
+      color: #fff;
     }
   }
 
@@ -263,6 +265,8 @@ const ProfileWrapper = styled.div`
   height: 70px;
   width: 250px;
   box-sizing: border-box;
+  border-radius: 0px 0px 20px 20px;
+  margin: 10px;
 `;
 
 const ProfileDetails = styled.div`

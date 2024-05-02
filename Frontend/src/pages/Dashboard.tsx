@@ -3,21 +3,6 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../components/common/sidebar/Sidebar";
 import styled from "styled-components";
 
-const Container = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-`;
-
-const Main = styled.main<{ $sidebarOpen: boolean }>`
-  background-color: #eff3fc;
-  padding: 30px;
-  height: 100%;
-  flex: 1;
-  box-sizing: border-box;
-`;
-
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -30,5 +15,20 @@ function Dashboard() {
     </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #EAEDF2;
+`;
+
+const Main = styled.main<{ $sidebarOpen: boolean }>`
+  padding: 10px 20px 10px 10px;
+  height: 100%;
+  flex: 1;
+  box-sizing: border-box;
+`;
 
 export default Dashboard;

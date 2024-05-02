@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const KeywordChart = () => {
+const KeywordCalendar = () => {
   const now = new Date();
 
   return (
@@ -37,4 +37,4 @@ const CalendarWrapper = styled.div`
   display: flex;
 `;
 
-export default KeywordChart;
+export default KeywordCalendar;
