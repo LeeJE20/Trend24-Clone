@@ -1,6 +1,7 @@
 spring:
   profiles:
-    active: prod
+    active: dev # 개발용
+#    active: prod # 배포용
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_HOST}:${HOST_PORT}/${MYSQL_DATABASE}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
@@ -31,7 +32,9 @@ server:
 
 logging:
   level:
-    root: info
+    root: INFO
+  config: classpath:logback-spring.xml
+
 
 springdoc:
   swagger-ui:
@@ -46,6 +49,3 @@ DOMAIN:
   BACK: ${BACK_DOMAIN} # http://localhost:8080
 
 secretKeyPlain: ${SECURE_KEY_PLAIN} # 시큐리티 키
-
-mattermost:
-  webhook: ${MATTERMOST_WEBHOOK}
