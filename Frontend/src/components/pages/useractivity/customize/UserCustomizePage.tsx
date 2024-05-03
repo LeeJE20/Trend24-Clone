@@ -19,9 +19,9 @@ import { setComponentList } from "../../../../store/slices/customizeSlice";
 const UserCustomizePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  // const [componentList, setComponentList] = useState<CustomizedComponentList[]>(
-  //   []
-  // );
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [title, setTitle] = useState("Customize Page");
+  const [tempTitle, setTempTitle] = useState("Customize Page");
 
   const completeList = useSelector(
     (state: RootState) => state.customize.completeList
@@ -47,10 +47,46 @@ const UserCustomizePage = () => {
     // 필요한 만큼 componentName에 대응하는 컴포넌트를 추가합니다.
   };
 
+  const sendTitleEdit = (newTitle: string) => {
+    setTitle(newTitle);
+    setTempTitle(newTitle);
+    setIsTitleEditing(false);
+  };
+
+  const handleCancelTitleEdit = () => {
+    setTitle(tempTitle);
+    setIsTitleEditing(false);
+  };
+
+  const showEditTitle = () => {
+    setIsTitleEditing(true);
+    setTitle("");
+  };
+
   return (
     <Container>
       <TitleContainer>
-        사용자 커스터마이징
+        {isTitleEditing ? (
+          <>
+            <input
+              type="text"
+              placeholder={`${tempTitle}`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                sendTitleEdit(title);
+              }}
+            >
+              확인
+            </button>
+            <button onClick={handleCancelTitleEdit}>취소</button>
+          </>
+        ) : (
+          <Title> {title} </Title>
+        )}
+        {isTitleEditing ? null : <button onClick={showEditTitle}>편집</button>}
         {componentList.length === 0 ? null : (
           <button onClick={showEditPage}>편집</button>
         )}
@@ -120,6 +156,10 @@ const TitleContainer = styled.div`
   width: 100%;
   height: 10%;
   border: 1px solid #000;
+`;
+
+const Title = styled.div`
+  font-size: 24px;
 `;
 
 const ContentContainer = styled.div`
