@@ -18,6 +18,10 @@ const RnDCustom = () => {
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
 
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [title, setTitle] = useState("Customize Page");
+  const [tempTitle, setTempTitle] = useState("Customize Page");
+
   const completeList = useSelector(
     (state: RootState) => state.customize.completeList
   );
@@ -70,10 +74,49 @@ const RnDCustom = () => {
     setAddedList([...addedList, item]);
   };
 
+  const sendTitleEdit = (newTitle: string) => {
+    setTitle(newTitle);
+    setTempTitle(newTitle);
+    setIsTitleEditing(false);
+  };
+
+  const handleCancelTitleEdit = () => {
+    setTitle(tempTitle);
+    setIsTitleEditing(false);
+  };
+
+  const showEditTitle = () => {
+    setIsTitleEditing(true);
+    setTitle("");
+  };
+
   return (
     <Container>
       <TitleContainer>
-        드래그앤드롭 커스텀
+        {isTitleEditing ? (
+          <>
+            <input
+              type="text"
+              placeholder={`${tempTitle}`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                sendTitleEdit(title);
+              }}
+            >
+              확인
+            </button>
+            <button onClick={handleCancelTitleEdit}>취소</button>
+          </>
+        ) : (
+          <Title> {title} </Title>
+        )}
+        {isTitleEditing ? null : (
+          <button onClick={showEditTitle}>제목 편집</button>
+        )}{" "}
+        -----
         <button onClick={toggleModal}>추가</button> |
         <button onClick={cancelChange}>취소</button> |
         <button onClick={compleCustomize}>완료</button>
@@ -126,6 +169,10 @@ const TitleContainer = styled.div`
   width: 100%;
   height: 10%;
   border: 1px solid #000;
+`;
+
+const Title = styled.div`
+  font-size: 24px;
 `;
 
 const DragContainer = styled.div`

@@ -108,7 +108,7 @@ export interface CustomizedComponentList {
 export const customizedComponentListData: CustomizedComponentList[] = [
   {
     componentName: "UserActivityWeekly",
-    position: { x: 100, y: 500 },
+    position: { x: 600, y: 200 },
     size: { width: 400, height: 200 },
   },
   {
