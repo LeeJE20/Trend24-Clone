@@ -1,8 +1,8 @@
 package com.yes.trend.domain.bookclick.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.yes.trend.domain.book.entity.Book;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
@@ -12,7 +12,9 @@ import lombok.AccessLevel;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookClick extends BaseEntity {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "book_id")
+	private Book book;
 
 	private Integer count;
-	private Integer id2;
 }
