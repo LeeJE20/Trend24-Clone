@@ -1,15 +1,21 @@
 package com.yes.trend.domain.book.entity;
 
+import java.util.List;
+
 import com.yes.trend.common.entity.BaseEntity;
+import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.boxbook.entity.BoxBook;
 import com.yes.trend.domain.tag.entity.Tag;
 import com.yes.trend.domain.themacode.entity.ThemaCode;
-import com.yes.trend.domain.bookclick.entity.BookClick;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AccessLevel;
-import java.util.List;
 
 @Entity
 @Table(name = "book")

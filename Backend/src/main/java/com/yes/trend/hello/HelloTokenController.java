@@ -1,7 +1,5 @@
 package com.yes.trend.hello;
 
-
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 import com.yes.trend.hello.dto.HelloDto;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("hello-token")

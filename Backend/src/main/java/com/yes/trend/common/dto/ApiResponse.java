@@ -1,10 +1,11 @@
 package com.yes.trend.common.dto;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
+
+import lombok.Getter;
 
 @Getter
 public class ApiResponse<T> {

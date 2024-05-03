@@ -2,8 +2,10 @@ package com.yes.trend.common.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Component;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component

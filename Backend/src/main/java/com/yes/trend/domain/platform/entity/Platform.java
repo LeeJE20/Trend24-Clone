@@ -1,12 +1,13 @@
 package com.yes.trend.domain.platform.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AccessLevel;
 
 @Entity
 @Table(name = "platform")

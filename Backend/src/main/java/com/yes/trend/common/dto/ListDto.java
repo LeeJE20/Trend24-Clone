@@ -1,5 +1,7 @@
 package com.yes.trend.common.dto;
+
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

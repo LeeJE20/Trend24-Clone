@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import com.yes.trend.common.dto.ApiResponse;
 
@@ -28,7 +27,6 @@ public class GlobalExceptionHandler {
 			stringData);
 		return ResponseEntity.badRequest().body(response);
 	}
-
 
 	@ExceptionHandler(Exception.class)
 	protected final ResponseEntity<ApiResponse<String>> handleAllExceptions(Exception ex) {

@@ -86,7 +86,9 @@ public class LoggingFilter extends OncePerRequestFilter {
 		}
 	}
 
-	private void logMultipartRequest(HttpServletRequest request, StringBuilder stringBuilder) throws ServletException, IOException {
+	private void logMultipartRequest(HttpServletRequest request, StringBuilder stringBuilder) throws
+		ServletException,
+		IOException {
 		Collection<Part> parts = request.getParts();
 		StringBuilder multipartPayload = new StringBuilder();
 
@@ -114,7 +116,9 @@ public class LoggingFilter extends OncePerRequestFilter {
 			.append("****\n");
 	}
 
-	private void logRequest(HttpServletRequest request, StringBuilder stringBuilder) throws IOException, ServletException {
+	private void logRequest(HttpServletRequest request, StringBuilder stringBuilder) throws
+		IOException,
+		ServletException {
 		String queryString = request.getQueryString();
 
 		Enumeration<String> headerNames = request.getHeaderNames();
@@ -159,7 +163,8 @@ public class LoggingFilter extends OncePerRequestFilter {
 		logPayload("Response", response.getContentType(), response.getContentInputStream(), stringBuilder);
 	}
 
-	private void logPayload(String prefix, String contentType, InputStream inputStream, StringBuilder stringBuilder) throws IOException {
+	private void logPayload(String prefix, String contentType, InputStream inputStream,
+		StringBuilder stringBuilder) throws IOException {
 		boolean visible = isVisible(MediaType.valueOf(contentType == null ? "application/json" : contentType));
 		int maxLength = 1900; // 스트링빌더 최대 길이
 
@@ -195,7 +200,8 @@ public class LoggingFilter extends OncePerRequestFilter {
 		return VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 	}
 
-	private void handleException(Exception ex, HttpServletResponse response, StringBuilder stringBuilder) throws IOException {
+	private void handleException(Exception ex, HttpServletResponse response, StringBuilder stringBuilder) throws
+		IOException {
 		log.error("Exception during request processing", ex);
 		String logMessage = String.format("[ERROR] : %s", ex.getMessage() + "\n\n" + ex.getStackTrace());
 		stringBuilder.append(logMessage).append("\n");
