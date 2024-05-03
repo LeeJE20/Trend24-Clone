@@ -23,8 +23,8 @@ public class Keyword extends BaseEntity {
 	private String name;
 
 	private Integer clickCount;
-	private Byte rank;
-	private Byte selected;
+	private Integer ranking;
+	private Boolean selected;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
