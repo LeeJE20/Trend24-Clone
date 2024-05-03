@@ -44,6 +44,7 @@ const BookList = (prop: BookProps) => {
                 <div>판매량 : {book.total_order_count}</div>
                 <div>총 판매금액 : {book.total_order_amount}</div>
                 <div>카테고리 : {book.category_name}</div>
+                <div>키워드 : {book.keywords.map((x)=> " # " + x)}</div>
               </>
             )}
             <NextBtn onClick={() => toggleBookContent(index)}>

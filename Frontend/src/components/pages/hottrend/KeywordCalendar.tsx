@@ -7,7 +7,7 @@ const KeywordCalendar = () => {
   const lastday = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
 
   const getAllDate = (today: number, lastday: number) => {
-    let dates = [];
+    const dates = [];
 
     dates[6] = today;
     for (let i = 5; i >= 0; i--) {
@@ -24,8 +24,8 @@ const KeywordCalendar = () => {
   };
 
   const getAllWeek = (todayWeek: number) => {
-    let strWeek = ["일", "월", "화", "수", "목", "금", "토"];
-    let weekList = [];
+    const strWeek = ["일", "월", "화", "수", "목", "금", "토"];
+    const weekList = [];
 
     weekList[6] = strWeek[todayWeek];
 
@@ -86,10 +86,10 @@ const KeywordCalendar = () => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  padding: 10px;
   margin: 5px;
   box-sizing: border-box;
+  overflow: hidden;
 `;
 
 const Title = styled.div`
@@ -99,7 +99,7 @@ const Title = styled.div`
 `;
 
 const DateLabel = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   margin-bottom: 30px;
 `;
 

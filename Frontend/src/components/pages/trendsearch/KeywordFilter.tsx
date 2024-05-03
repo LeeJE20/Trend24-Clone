@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
 import { FaSearch } from "react-icons/fa";
-import { categoryKeywordData } from "../../../constants/DummyData";
+import { categoryData } from "../../../constants/DummyData";
 
 interface KeywordFilterProps {
   selectedKeyword: string[];
@@ -11,9 +11,9 @@ interface KeywordFilterProps {
 }
 
 const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFilterProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
-  const categoryClick = (category : string) => {
+  const categoryClick = (category : number) => {
     setSelectedCategory(category);
   };
 
@@ -46,9 +46,9 @@ const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFi
           카테고리
         </div>
         <div className="categoryList">
-          {Object.keys(categoryKeywordData).map((li, idx) => (
-            <div key={idx} onClick={() => categoryClick(li)}>
-              {li}
+          {categoryData.map((li, idx) => (
+            <div key={idx} onClick={() => categoryClick(li.trendCategoryId)}>
+              {li.name}
             </div>
           ))}
         </div>
@@ -57,10 +57,11 @@ const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFi
         ))} */}
       </Category>
       <KeywordList>
-          {selectedCategory && categoryKeywordData[selectedCategory].map((li, idx) => (
-            <KeywordItem key={idx} onClick={() => keywordClick(li)} selected={selectedKeyword.includes(li)}>
-              # {li}
-            </KeywordItem>
+      {selectedCategory && 
+        categoryData.find((data) => data.trendCategoryId === selectedCategory)?.keywords.map((li, idx) => (
+          <KeywordItem key={idx} onClick={() => keywordClick(li.name)} selected={selectedKeyword.includes(li.name)}>
+            # {li.name}
+          </KeywordItem>
           ))}
       </KeywordList>
     </Container>

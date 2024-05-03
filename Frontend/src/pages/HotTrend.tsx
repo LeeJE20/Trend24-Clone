@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Table from "../components/pages/hottrend/Table";
-import { hotTrend } from "../constants/DummyData";
+import { hotTrend, trendKeyword } from "../constants/DummyData";
 import { useState } from "react";
 import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
 
@@ -26,14 +26,14 @@ const HotTrend = () => {
     <HowTrendContainer>
       <h1>인기 트렌드</h1>
       <Content>
-        {Object.keys(hotTrend).map(
-          (date, idx) =>
+        {trendKeyword.map(
+          (list, idx) =>
             (selectedTable === null || selectedTable === idx) && (
               <TableWrapper key={idx}>
                 <Table
                   key={idx}
-                  header={date}
-                  columnList={hotTrend[date]}
+                  header={list.date}
+                  columnList={list.words}
                   idx={idx}
                   handleKeyword={handleKeyword}
                   handleTableClick={() => handleTableClick(idx)}
@@ -53,7 +53,6 @@ const HowTrendContainer = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background-color: white;
   border-radius: 20px;
   padding: 0px 20px 20px 20px;
   box-sizing: border-box;
@@ -69,6 +68,7 @@ const Content = styled.div`
 
 const TableWrapper = styled.div`
   overflow: auto;
+  margin-right: 5px;
   
   &:first-child{
     box-shadow: 1px 0px 5px 1px #67676755;

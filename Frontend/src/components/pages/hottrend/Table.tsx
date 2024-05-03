@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
+import { trendWordType } from "../../../constants/DummyData";
 
 interface Props {
   header: string;
-  columnList: string[];
+  columnList: trendWordType[];
   handleKeyword: (key: string) => void;
   handleTableClick: (idx: number | null) => void;
   keyword: string;
@@ -39,7 +40,7 @@ function Table({
       <tbody>
         {columnList.map((li, idx) => (
           <TableRow key={idx} keyword={keyword} data={li}>
-            <td onClick={() => keywordClick(li)}>{li}</td>
+            <td onClick={() => keywordClick(li.name)}>{li.name}</td>
           </TableRow>
         ))}
       </tbody>
