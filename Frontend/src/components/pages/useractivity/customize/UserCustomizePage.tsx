@@ -66,27 +66,8 @@ const UserCustomizePage = () => {
   return (
     <Container>
       <TitleContainer>
-        {isTitleEditing ? (
-          <>
-            <input
-              type="text"
-              placeholder={`${tempTitle}`}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                sendTitleEdit(title);
-              }}
-            >
-              확인
-            </button>
-            <button onClick={handleCancelTitleEdit}>취소</button>
-          </>
-        ) : (
-          <Title> {title} </Title>
-        )}
-        {isTitleEditing ? null : <button onClick={showEditTitle}>편집</button>}
+        <Title> {title} </Title>
+
         {componentList.length === 0 ? null : (
           <button onClick={showEditPage}>편집</button>
         )}
