@@ -18,8 +18,12 @@ const RnDCustom = () => {
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
 
-  const componentList = useSelector(
+  const completeList = useSelector(
     (state: RootState) => state.customize.completeList
+  );
+
+  const componentList = useSelector(
+    (state: RootState) => state.customize.componentList
   );
   const dispatch = useDispatch<AppDispatch>();
 
@@ -89,14 +93,10 @@ const RnDCustom = () => {
             bounds={"parent"}
             minWidth={"20%"}
             minHeight={"20%"}
-            maxHeight={"200%"}
-            maxWidth={"200%"}
+            maxHeight={"500%"}
+            maxWidth={"500%"}
           >
-            <Item>
-              {item.componentName}
-              {item.position.x}
-              {item.position.y}
-            </Item>
+            <Item>{item.componentName}</Item>
           </Rnd>
         ))}
       </DragContainer>
@@ -138,6 +138,7 @@ const DragContainer = styled.div`
   width: 100%;
   height: 90%;
   border: 1px solid #000;
+  box-sizing: border-box;
 `;
 
 const Item = styled.div`
