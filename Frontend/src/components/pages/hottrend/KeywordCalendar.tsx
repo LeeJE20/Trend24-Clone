@@ -1,83 +1,40 @@
 import styled from "styled-components";
+import { TrendRankType } from "../../../constants/DummyData/TrendRankData";
 
-const KeywordCalendar = () => {
-  const now = new Date();
-  const todayWeek = now.getDay();
-  const today = now.getDate();
-  const lastday = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+interface KeywordCalendarProps {
+  rankData: TrendRankType[];
+}
 
-  const getAllDate = (today: number, lastday: number) => {
-    const dates = [];
+interface DateType {
+  dayOfWeek: string;
+  date: number;
+  inChart: boolean;
+}
 
-    dates[6] = today;
-    for (let i = 5; i >= 0; i--) {
-      today--;
-      if (today <= 0) {
-        today = lastday;
-        dates[i] = today;
-      } else {
-        dates[i] = today;
-      }
-    }
+const KeywordCalendar = (props: KeywordCalendarProps) => {
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const baseDate = new Date(props.rankData[0].date);
+  const dayOfWeek = props.rankData.map((li) => li.date.split("-")[2]);
+  const date = [...Array(7)].map(
+    (_, i) => days[(baseDate.getDay() - i + 7) % 7]
+  );
+  const inChart = props.rankData.map((li) => (li.rank > 0 ? true : false));
 
-    return dates;
-  };
-
-  const getAllWeek = (todayWeek: number) => {
-    const strWeek = ["일", "월", "화", "수", "목", "금", "토"];
-    const weekList = [];
-
-    weekList[6] = strWeek[todayWeek];
-
-    for (let i = 5; i >= 0; i--) {
-      todayWeek--;
-      if (todayWeek < 0) {
-        todayWeek = 6;
-        weekList[i] = strWeek[todayWeek];
-      } else {
-        weekList[i] = strWeek[todayWeek];
-      }
-    }
-    console.log(weekList);
-
-    return weekList;
-  };
-
-  const getCurrentYear = () => {
-    return now.getFullYear();
-  };
-
-  const getCurrentMonth = () => {
-    return now.getMonth() + 1;
-  };
-
-  const CalendarDay = getAllDate(today, lastday);
-  const CalendarWeek = getAllWeek(todayWeek);
-  const currentYear = getCurrentYear();
-  const currentMonth = getCurrentMonth();
-
-  const CalendarObject = [
-    { week: CalendarWeek[0], day: CalendarDay[0] },
-    { week: CalendarWeek[1], day: CalendarDay[1] },
-    { week: CalendarWeek[2], day: CalendarDay[2] },
-    { week: CalendarWeek[3], day: CalendarDay[3] },
-    { week: CalendarWeek[4], day: CalendarDay[4] },
-    { week: CalendarWeek[5], day: CalendarDay[5] },
-    { week: CalendarWeek[6], day: CalendarDay[6] },
-  ];
+  const CalendarObject = dayOfWeek.map((_, index) => ({
+    dayOfWeek: dayOfWeek[index],
+    date: date[index],
+    inChart: inChart[index],
+  }));
 
   return (
     <Container>
       <Title>키워드</Title>
-      <DateLabel>
-        {currentYear}년 {currentMonth}월
-      </DateLabel>
+      <DateLabel>{/* {currentYear}년 {currentMonth}월 */}</DateLabel>
       <CalendarWrapper>
         {CalendarObject.map((calendar, index) => (
-          <DayList key={index}>
-            <div className="day">{calendar.week}</div>
-            <div className="date">{calendar.day}</div>
-            <div></div>
+          <DayList key={index} $inChart={calendar.inChart}>
+            <div className="dayOfWeek">{calendar.dayOfWeek}</div>
+            <div className="date">{calendar.date}</div>
           </DayList>
         ))}
       </CalendarWrapper>
@@ -111,35 +68,35 @@ const CalendarWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 10px;
+  flex-wrap: wrap;
   box-sizing: border-box;
 `;
 
-const DayList = styled.div`
+const DayList = styled.div<{ $inChart: boolean }>`
   width: 40px;
   height: 70px;
   text-align: center;
+  margin: 5px;
   cursor: pointer;
   border-radius: 40px;
   padding: 20px 10px;
+  background-color: ${({ $inChart }) => ($inChart ? "#224861" : "transparent")};
+  color: ${({ $inChart }) => ($inChart ? "white" : "black")};
 
-  &:hover {
-    background: #224861;
-    color: white;
+  /* &:hover {
+    background: ${({ $inChart }) => ($inChart ? "#224861" : "transparent")};
+    color: ${({ $inChart }) => ($inChart ? "white" : "black")};
 
-    .day {
-      color: white;
+    .dayOfWeek {
+      color: ${({ $inChart }) => ($inChart ? "white" : "black")};
     }
-  }
+  } */
 
-  &:nth-child(7) {
-    border: 0.04em solid rgb(12, 86, 129);
-  }
-
-  .day {
+  .dayOfWeek {
     font-size: 0.8em;
     align-items: center;
     justify-content: center;
-    color: black;
+
     text-align: center;
     margin-bottom: 20px;
   }

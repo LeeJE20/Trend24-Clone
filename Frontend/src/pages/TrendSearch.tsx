@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import KeywordFilter from "../components/pages/trendsearch/KeywordFilter";
 import BookList from "../components/pages/trendsearch/BookList";
-
-import { bookListData, Book } from "../constants/DummyData";
+import { bookListData, Book } from "../constants/DummyData/BookListData";
 
 const TrendSearch = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
@@ -23,7 +22,8 @@ const TrendSearch = () => {
   };
 
   return (
-    <Body>
+    <Container>
+      <Title>트렌드 검색</Title>
       <FilterContainer>
         <KeywordFilter
           selectedKeyword={selectedKeyword}
@@ -34,20 +34,26 @@ const TrendSearch = () => {
       <BookListContainer>
         <BookList bookList={bookList} title="추천 책 도서" />
       </BookListContainer>
-    </Body>
+    </Container>
   );
 };
 
-const Body = styled.div`
-  display: grid;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 3fr;
+`;
+
+const Title = styled.div`
+  font-size: 3vh;
+  margin: 20px 10px;
+  font-weight: bold;
 `;
 
 const FilterContainer = styled.div`
   width: 100%;
+  height: 20%;
   margin-bottom: 10px;
   border-radius: 20px;
   background-color: white;
@@ -55,6 +61,7 @@ const FilterContainer = styled.div`
 
 const BookListContainer = styled.div`
   width: 100%;
+  flex-grow: 1;
   overflow-y: auto;
   background-color: white;
   border-radius: 20px;

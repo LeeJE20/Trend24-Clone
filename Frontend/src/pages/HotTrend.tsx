@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Table from "../components/pages/hottrend/Table";
-import { hotTrend, trendKeyword } from "../constants/DummyData";
+import Table from "../components/pages/hottrend/KeywordTable";
+import { trendKeyword } from "../constants/DummyData/TrendKeywordData";
 import { useState } from "react";
 import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
 
@@ -21,10 +21,10 @@ const HotTrend = () => {
     console.log(key);
     setKeyword(key);
   };
-  
+
   return (
-    <HowTrendContainer>
-      <h1>인기 트렌드</h1>
+    <Container>
+      <Title>인기 트렌드</Title>
       <Content>
         {trendKeyword.map(
           (list, idx) =>
@@ -42,20 +42,30 @@ const HotTrend = () => {
               </TableWrapper>
             )
         )}
-        {selectedTable !== null && <KeywordDetail keyword={keyword} />}
+
+        {selectedTable !== null && (
+          <KeywordDetailWrapper>
+            <KeywordDetail keyword={keyword} />
+          </KeywordDetailWrapper>
+        )}
       </Content>
-    </HowTrendContainer>
+    </Container>
   );
 };
 
-const HowTrendContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
   border-radius: 20px;
-  padding: 0px 20px 20px 20px;
   box-sizing: border-box;
+`;
+
+const Title = styled.div`
+  font-size: 3vh;
+  margin: 20px 10px;
+  font-weight: bold;
 `;
 
 const Content = styled.div`
@@ -63,22 +73,25 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  overflow: hidden;
+  overflow-x: hidden;
+  border-radius: 20px;
 `;
 
 const TableWrapper = styled.div`
   overflow: auto;
   margin-right: 5px;
-  
-  &:first-child{
+  flex-grow: 1;
+
+  &:first-child {
     box-shadow: 1px 0px 5px 1px #67676755;
-    border-radius: 20px;
   }
 
-  &:last-child{
+  &:last-child {
     box-shadow: 1px 0px 5px 1px #67676755;
-    border-radius: 0px 20px 20px 0px;
   }
+`;
+const KeywordDetailWrapper = styled.div`
+  width: 85%;
 `;
 
 export default HotTrend;

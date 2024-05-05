@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
 import { FaSearch } from "react-icons/fa";
-import { categoryData } from "../../../constants/DummyData";
+import { trendCategoryData } from "../../../constants/DummyData/TrendCategoryData";
 
 interface KeywordFilterProps {
   selectedKeyword: string[];
@@ -10,14 +10,18 @@ interface KeywordFilterProps {
   onSearch: () => void;
 }
 
-const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFilterProps) => {
+const KeywordFilter = ({
+  selectedKeyword,
+  onKeywordChange,
+  onSearch,
+}: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
-  const categoryClick = (category : number) => {
+  const categoryClick = (category: number) => {
     setSelectedCategory(category);
   };
 
-  const keywordClick = (keyword : string) => {
+  const keywordClick = (keyword: string) => {
     if (selectedKeyword.includes(keyword)) {
       onKeywordChange(selectedKeyword.filter((kw) => kw !== keyword));
     } else {
@@ -28,13 +32,10 @@ const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFi
   return (
     <Container>
       <SelectedKeyword>
-        <div className="label">
-          선택된 키워드
-        </div>
+        <div className="label">선택된 키워드</div>
         <div className="keywordList">
-          {selectedKeyword && selectedKeyword.map((li, idx) => (
-            <div key={idx}># {li}</div>
-          ))}
+          {selectedKeyword &&
+            selectedKeyword.map((li, idx) => <div key={idx}># {li}</div>)}
         </div>
         <div className="searchBtn" onClick={onSearch}>
           <div>검색</div>
@@ -42,11 +43,9 @@ const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFi
         </div>
       </SelectedKeyword>
       <Category>
-        <div className="label">
-          카테고리
-        </div>
+        <div className="label">카테고리</div>
         <div className="categoryList">
-          {categoryData.map((li, idx) => (
+          {trendCategoryData.map((li, idx) => (
             <div key={idx} onClick={() => categoryClick(li.trendCategoryId)}>
               {li.name}
             </div>
@@ -57,12 +56,18 @@ const KeywordFilter = ({ selectedKeyword, onKeywordChange, onSearch }: KeywordFi
         ))} */}
       </Category>
       <KeywordList>
-      {selectedCategory && 
-        categoryData.find((data) => data.trendCategoryId === selectedCategory)?.keywords.map((li, idx) => (
-          <KeywordItem key={idx} onClick={() => keywordClick(li.name)} selected={selectedKeyword.includes(li.name)}>
-            # {li.name}
-          </KeywordItem>
-          ))}
+        {selectedCategory &&
+          trendCategoryData
+            .find((data) => data.trendCategoryId === selectedCategory)
+            ?.keywords.map((li, idx) => (
+              <KeywordItem
+                key={idx}
+                onClick={() => keywordClick(li.name)}
+                selected={selectedKeyword.includes(li.name)}
+              >
+                # {li.name}
+              </KeywordItem>
+            ))}
       </KeywordList>
     </Container>
   );
@@ -74,16 +79,14 @@ const Container = styled.div`
   height: 100%;
   flex-flow: column;
   box-sizing: border-box;
-  
 `;
 
 const SelectedKeyword = styled.div`
   height: 30%;
   display: flex;
   flex-direction: row;
-  border-bottom: solid 1px black;
   justify-items: center;
-  .label{
+  .label {
     width: 150px;
     background-color: ${MainColor};
     font-weight: bold;
@@ -95,24 +98,24 @@ const SelectedKeyword = styled.div`
     margin-right: 10px;
   }
 
-  .keywordList{    
+  .keywordList {
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    div{
+    div {
       margin: 0px 5px;
       padding: 10px 15px;
       border-radius: 30px;
 
-      &:hover{
+      &:hover {
         background-color: gray;
       }
     }
   }
 
-  .searchBtn{
+  .searchBtn {
     border: 1px solid black;
     padding: 5px;
     font-size: 3vh;
@@ -122,12 +125,12 @@ const SelectedKeyword = styled.div`
     align-items: center;
     align-self: center;
     cursor: pointer;
-    div{
+    div {
       font-size: 2.5vh;
       margin-right: 10px;
     }
 
-    &:hover{
+    &:hover {
       background-color: gray;
     }
   }
@@ -137,8 +140,7 @@ const Category = styled.div`
   height: 30%;
   display: flex;
   flex-direction: row;
-  border-bottom: solid 1px black;
-  .label{
+  .label {
     width: 150px;
     background-color: ${MainColor};
     font-weight: bold;
@@ -151,7 +153,7 @@ const Category = styled.div`
     margin-right: 10px;
   }
 
-  .categoryList{
+  .categoryList {
     flex: 1 0 auto;
     align-content: center;
     display: flex;
@@ -159,17 +161,17 @@ const Category = styled.div`
     height: 100%;
     cursor: pointer;
 
-    div{
-      height: 100%;
-      padding: 0px 15px;
+    div {
+      height: 70%;
+      padding: 0px 30px;
       align-content: center;
-      border-right: solid 1px black;
+      border-right: solid 2px #bebebe7e;
+
       &:hover {
         background-color: #828282;
       }
     }
   }
-  
 `;
 
 const KeywordList = styled.div`
@@ -191,6 +193,5 @@ const KeywordItem = styled.div<{ selected: boolean }>`
     background-color: gray;
   }
 `;
-
 
 export default KeywordFilter;

@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import KeywordCalendar from "./KeywordCalendar";
 import KeywordSource from "./KeywordSource";
 import BookList from "../trendsearch/BookList";
-
-import { bookListData, Book, referenceData } from "../../../constants/DummyData";
+import { trendRank } from "../../../constants/DummyData/TrendRankData";
+import { bookListData, Book } from "../../../constants/DummyData/BookListData";
+import { referenceData } from "../../../constants/DummyData";
 
 const KeywordDetail = ({ keyword }: { keyword: string }) => {
   const [bookList, setBookList] = useState<Book[]>([]);
@@ -20,11 +21,14 @@ const KeywordDetail = ({ keyword }: { keyword: string }) => {
       </BookWrapper>
 
       <KeywordCalendarWrapper>
-        <KeywordCalendar />
+        <KeywordCalendar rankData={trendRank} />
       </KeywordCalendarWrapper>
 
       <KeywordSourceWrapper>
-        <KeywordSource type={referenceData.platform} originData={referenceData.data} />
+        <KeywordSource
+          type={referenceData.platform}
+          originData={referenceData.data}
+        />
       </KeywordSourceWrapper>
     </Container>
   );

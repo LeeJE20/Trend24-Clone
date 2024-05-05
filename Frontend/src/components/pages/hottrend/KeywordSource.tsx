@@ -6,7 +6,7 @@ interface KeywordProps {
   type: string;
   originData: {
     uri: string;
-    contents : string;
+    contents: string;
   };
 }
 
@@ -15,39 +15,37 @@ const KeywordSource = (props: KeywordProps) => {
     <Container>
       <Title>참고</Title>
       <Content>
-      <Source>
-        <img src={"/public/Image/BrandLogo/" + props.type + ".webp"} />
-        <div>{props.type}</div>
-      </Source>
-      {props.type === "GoogleTrends" && (
-        <GoogleData>
-          <div className="title">구글 실시간 트렌드</div>
-          <img
-            className="data"
-            src="/public/Image/BrandLogo/googleTrend.webp"
-          />
-        </GoogleData>
-      )}
-      {props.type === "Youtube" && (
-        <YoutubeData>
-          <div className="title">IU 'Love wins all' Live Clip</div>
-          <iframe src="https://www.youtube.com/embed/ax1csKKQnns?si=Kg46sxjOhLHU4DrY" />
-        </YoutubeData>
-      )}
-      {props.type === "X" && (
-        <XData>
-          <div className="title">
-            {props.originData.contents}
-          </div>
-          <div className="content">
-            작고 깜찍한 포메라니안 강아지가 동네 지킴이 활동하는 모습이
-            공개되면서 온라인상에서 화제가 되고 있다.
-          </div>
-          <a className="link" href={props.originData.uri}>
-            링크 이동 <FaExternalLinkAlt />
-          </a>
-        </XData>
-      )}
+        <Source>
+          <img src={"/public/Image/BrandLogo/" + props.type + ".webp"} />
+          <div>{props.type}</div>
+        </Source>
+        {props.type === "GoogleTrends" && (
+          <GoogleData>
+            <div className="title">구글 실시간 트렌드</div>
+            <img
+              className="data"
+              src="/public/Image/BrandLogo/googleTrend.webp"
+            />
+          </GoogleData>
+        )}
+        {props.type === "Youtube" && (
+          <YoutubeData>
+            <div className="title">IU 'Love wins all' Live Clip</div>
+            <iframe src="https://www.youtube.com/embed/ax1csKKQnns?si=Kg46sxjOhLHU4DrY" />
+          </YoutubeData>
+        )}
+        {props.type === "X" && (
+          <XData>
+            <div className="title">{props.originData.contents}</div>
+            <div className="content">
+              작고 깜찍한 포메라니안 강아지가 동네 지킴이 활동하는 모습이
+              공개되면서 온라인상에서 화제가 되고 있다.
+            </div>
+            <a className="link" href={props.originData.uri}>
+              링크 이동 <FaExternalLinkAlt />
+            </a>
+          </XData>
+        )}
       </Content>
     </Container>
   );

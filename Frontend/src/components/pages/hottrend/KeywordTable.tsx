@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
-import { trendWordType } from "../../../constants/DummyData";
+import { trendWordType } from "../../../constants/DummyData/TrendKeywordData";
 
 interface Props {
   header: string;
@@ -39,7 +39,7 @@ function Table({
       </thead>
       <tbody>
         {columnList.map((li, idx) => (
-          <TableRow key={idx} keyword={keyword} data={li}>
+          <TableRow key={idx} $keyword={keyword} $data={li.name}>
             <td onClick={() => keywordClick(li.name)}>{li.name}</td>
           </TableRow>
         ))}
@@ -70,14 +70,13 @@ const TableContainer = styled.table`
   }
 
   tbody {
-    overflow-y: auto;
     height: calc(100% - 40px);
   }
 `;
 
-const TableRow = styled.tr<{ keyword: string; data: string }>`
-  background-color: ${({ keyword, data }) =>
-    keyword === data ? "gray" : "transparent"};
+const TableRow = styled.tr<{ $keyword: string; $data: string }>`
+  background-color: ${({ $keyword, $data }) =>
+    $keyword === $data ? "gray" : "transparent"};
   td {
     &:hover {
       &:before {
