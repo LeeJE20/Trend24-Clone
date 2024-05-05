@@ -79,6 +79,7 @@ const Container = styled.div`
   height: 100%;
   flex-flow: column;
   box-sizing: border-box;
+  font-size: 2rem;
 `;
 
 const SelectedKeyword = styled.div`
@@ -87,10 +88,11 @@ const SelectedKeyword = styled.div`
   flex-direction: row;
   justify-items: center;
   .label {
-    width: 150px;
+    width: 200px;
+    padding: 20px 5px;
     background-color: ${MainColor};
     font-weight: bold;
-    font-size: 1.1vw;
+    font-size: 2.3rem;
     color: white;
     align-content: center;
     text-align: center;
@@ -118,15 +120,14 @@ const SelectedKeyword = styled.div`
   .searchBtn {
     border: 1px solid black;
     padding: 5px;
-    font-size: 3vh;
+    font-size: 2.5rem;
     margin-right: 10px;
     display: flex;
-    flex-direction: row;
     align-items: center;
     align-self: center;
     cursor: pointer;
+
     div {
-      font-size: 2.5vh;
       margin-right: 10px;
     }
 
@@ -141,10 +142,12 @@ const Category = styled.div`
   display: flex;
   flex-direction: row;
   .label {
-    width: 150px;
+    min-width: 200px;
     background-color: ${MainColor};
     font-weight: bold;
-    font-size: 1.1vw;
+    font-size: 2.3rem;
+    width: 200px;
+    padding: 20px 5px;
     color: white;
     align-content: center;
     text-align: center;
@@ -175,7 +178,7 @@ const Category = styled.div`
 `;
 
 const KeywordList = styled.div`
-  flex: 1 0 auto;
+  flex-grow: 1;
   padding: 0px 15px;
   display: flex;
   flex-direction: row;
@@ -186,6 +189,7 @@ const KeywordItem = styled.div<{ selected: boolean }>`
   margin: 0px 5px;
   padding: 10px 15px;
   border-radius: 30px;
+  box-sizing: border-box;
   cursor: pointer;
   background-color: ${(props) => (props.selected ? "gray" : "initial")};
 

@@ -49,7 +49,9 @@ function Table({
 }
 
 const TableContainer = styled.table`
+  font-size: 1.8rem;
   width: 100%;
+  min-width: 100px;
   height: 100%;
   border-collapse: collapse;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);

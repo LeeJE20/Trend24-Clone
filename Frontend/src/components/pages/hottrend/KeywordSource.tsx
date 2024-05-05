@@ -60,7 +60,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 2vw;
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 `;
@@ -75,13 +75,15 @@ const Source = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 10px;
 
   img {
     width: 60%;
-    margin-bottom: 10px;
+    min-width: 100px;
+    margin: 10px;
   }
   div {
-    font-size: 1.5vw;
+    font-size: 3rem;
     font-weight: bold;
   }
 `;
@@ -93,13 +95,14 @@ const GoogleData = styled.div`
   align-items: center;
 
   .title {
-    font-size: 1.5vw;
+    font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 10px;
   }
 
   .data {
-    padding: 10px;
+    border: solid 1px black;
+    padding: 20px;
     width: 60%;
     box-sizing: border-box;
   }
@@ -112,19 +115,21 @@ const XData = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 300px;
 
   .title {
-    font-size: 1.5vw;
+    font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 10px;
   }
 
   .content {
-    font-size: 1vw;
+    font-size: 2rem;
     margin-bottom: 30px;
   }
 
   .link {
+    font-size: 2rem;
     align-self: last baseline;
     cursor: pointer;
     color: inherit;
@@ -139,16 +144,15 @@ const YoutubeData = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 300px;
 
   .title {
-    font-size: 1.5vw;
+    font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 10px;
   }
 
   .content {
-    font-size: 1vw;
-    margin-bottom: 30px;
   }
 
   iframe {

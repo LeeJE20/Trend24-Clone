@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { bookCategoryData } from "../../../constants/DummyData/BookCategoryData";
+import { FaSearch } from "react-icons/fa";
+
 
 const BookFilter = () => {
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
@@ -10,7 +12,12 @@ const BookFilter = () => {
   };
   return (
     <Container>
-      <Search></Search>
+      <Search>
+        <input type="text" />
+        <button>
+          <FaSearch />
+        </button>
+      </Search>
       <Category>
         <div className="label">카테고리</div>
         <div className="content">
@@ -41,16 +48,33 @@ const Container = styled.div`
 const Search = styled.div`
   border: 1px solid black;
   height: 40%;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  input {
+    height: 100%;
+    flex-grow: 1;
+    box-sizing: border-box;
+    text-align: right;
+  }
+  button {
+    height: 100%;
+    min-width: 50px;
+    box-sizing: border-box;
+    font-size: 3rem;
+    justify-content: center;
+  }
 `;
 
 const Category = styled.div`
   border: 1px solid black;
   height: 60%;
   display: flex;
+
   .label {
     border: 1px solid black;
-    min-width: 10%;
-    font-size: 1.5vw;
+    min-width: 120px;
+    font-size: 2.5rem;
     text-align: center;
     align-content: center;
   }
@@ -63,7 +87,7 @@ const Category = styled.div`
     overflow: auto;
 
     div {
-      font-size: 15px;
+      font-size: 1.7rem;
       padding: 5px 15px;
       margin: 5px;
       background-color: #ededed;

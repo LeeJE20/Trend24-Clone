@@ -46,14 +46,15 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3vh;
+  font-size: 3rem;
+  height: 30px;
   margin: 20px 10px;
   font-weight: bold;
 `;
 
 const FilterContainer = styled.div`
   width: 100%;
-  height: 20%;
+  min-height: 180px;
   margin-bottom: 10px;
   border-radius: 20px;
   background-color: white;

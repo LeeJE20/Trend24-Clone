@@ -13,7 +13,7 @@ interface DateType {
 
 const KeywordCalendar = (props: KeywordCalendarProps) => {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const baseDate = new Date(props.rankData[0].date);
+  const baseDate = new Date(props.rankData[0].date);  
   const dayOfWeek = props.rankData.map((li) => li.date.split("-")[2]);
   const date = [...Array(7)].map(
     (_, i) => days[(baseDate.getDay() - i + 7) % 7]
@@ -29,7 +29,9 @@ const KeywordCalendar = (props: KeywordCalendarProps) => {
   return (
     <Container>
       <Title>키워드</Title>
-      <DateLabel>{/* {currentYear}년 {currentMonth}월 */}</DateLabel>
+      <DateLabel>
+        {baseDate.getFullYear()}년 {baseDate.getMonth()+1}월
+      </DateLabel>
       <CalendarWrapper>
         {CalendarObject.map((calendar, index) => (
           <DayList key={index} $inChart={calendar.inChart}>
@@ -50,20 +52,20 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 15px;
 `;
 
 const DateLabel = styled.div`
-  font-size: 20px;
+  font-size: 2rem;
   margin-bottom: 30px;
 `;
 
 const CalendarWrapper = styled.div`
   width: 100%;
   height: 100%;
-  font-size: 1.4rem;
+  font-size: 2rem;
   color: #005096;
   display: flex;
   justify-content: space-around;
@@ -93,7 +95,7 @@ const DayList = styled.div<{ $inChart: boolean }>`
   } */
 
   .dayOfWeek {
-    font-size: 0.8em;
+    font-size: 1em;
     align-items: center;
     justify-content: center;
 

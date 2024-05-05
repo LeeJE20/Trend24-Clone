@@ -34,26 +34,27 @@ interface referenceType {
 }
 
 export const referenceData: referenceType = {
-  platformId: 1,
-  platform: "X",
-  data: {
-    uri: "https://www.naver.com",
-    contents: "‘귀염 뽀짝’ 외모로 동네 지키는 성동구 반려견 순찰대 ‘호두’",
-  },
+  // platformId: 1,
+  // platform: "X",
+  // data: {
+  //   uri: "https://www.naver.com",
+  //   contents: "‘귀염 뽀짝’ 외모로 동네 지키는 성동구 반려견 순찰대 ‘호두’",
+  // },
+
+  // {
+    // platformId: 2,
+    // platform :  "Youtube",
+    // data: {
+    //   uri: "https://www.naver.com",
+    //   contents: "‘귀염 뽀짝’ 외모로 동네 지키는 성동구 반려견 순찰대 ‘호두’"
+    // }
+  // }
+  // {
+    platformId: 3,
+    platform :  "GoogleTrends",
+    data: {
+      uri: "",
+      contents: ""
+    }
+  // }
 };
-// {
-//   platformId: 2,
-//   platform :  "Youtube",
-//   data: {
-//      uri: "https://www.naver.com",
-//      contents: "‘귀염 뽀짝’ 외모로 동네 지키는 성동구 반려견 순찰대 ‘호두’"
-//    }
-// }
-// {
-//   platformId: 3,
-//   platform :  "GoogleTrends",
-//   data: {
-//      uri: "",
-//      contents: ""
-//    }
-// }
