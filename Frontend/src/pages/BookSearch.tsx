@@ -2,14 +2,34 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BookList from "../components/pages/trendsearch/BookList";
 import BookFilter from "../components/pages/bookSearch/BookFilter";
-import { bookListData, Book } from "../constants/DummyData/BookListData";
+import {
+  bookListData,
+  Book,
+  PageInfo,
+} from "../constants/DummyData/BookListData";
 
 const BookSearch = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   useEffect(() => {
     setBookList(bookListData);
   }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = bookList.slice(indexOfFirstItem, indexOfLastItem);
+  const totalItems = bookList.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
   return (
     <Container>
@@ -18,7 +38,20 @@ const BookSearch = () => {
         <BookFilter />
       </SearchContainer>
       <BookListContainer>
-        <BookList bookList={bookList} title="도서 검색 결과" />
+        <BookList
+          bookList={currentItems}
+          title="도서 검색 결과"
+          pageInfo={
+            {
+              page: currentPage,
+              size: itemsPerPage,
+              totalElements: totalItems,
+              totalPages: totalPages,
+            } as PageInfo
+          }
+          onNextPage={nextPage}
+          onPrevPage={prevPage}
+        />
       </BookListContainer>
     </Container>
   );

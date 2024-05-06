@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import KeywordFilter from "../components/pages/trendsearch/KeywordFilter";
 import BookList from "../components/pages/trendsearch/BookList";
-import { bookListData, Book } from "../constants/DummyData/BookListData";
+import {
+  bookListData,
+  Book,
+  PageInfo,
+} from "../constants/DummyData/BookListData";
 
 const TrendSearch = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
   const [selectedKeyword, setSelectedKeyword] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   useEffect(() => {
     setBookList(bookListData);
@@ -21,6 +27,20 @@ const TrendSearch = () => {
     // bookList api 호출하고 bookList 바꿔주는 코드
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = bookList.slice(indexOfFirstItem, indexOfLastItem);
+  const totalItems = bookList.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
   return (
     <Container>
       <Title>트렌드 검색</Title>
@@ -32,7 +52,20 @@ const TrendSearch = () => {
         />
       </FilterContainer>
       <BookListContainer>
-        <BookList bookList={bookList} title="추천 책 도서" />
+        <BookList
+          bookList={currentItems}
+          title="추천 책 도서"
+          pageInfo={
+            {
+              page: currentPage,
+              size: itemsPerPage,
+              totalElements: totalItems,
+              totalPages: totalPages,
+            } as PageInfo
+          }
+          onNextPage={nextPage}
+          onPrevPage={prevPage}
+        />
       </BookListContainer>
     </Container>
   );

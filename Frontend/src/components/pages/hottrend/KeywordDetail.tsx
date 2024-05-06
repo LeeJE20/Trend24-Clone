@@ -4,20 +4,53 @@ import KeywordCalendar from "./KeywordCalendar";
 import KeywordSource from "./KeywordSource";
 import BookList from "../trendsearch/BookList";
 import { trendRank } from "../../../constants/DummyData/TrendRankData";
-import { bookListData, Book } from "../../../constants/DummyData/BookListData";
+import {
+  bookListData,
+  Book,
+  PageInfo,
+} from "../../../constants/DummyData/BookListData";
 import { referenceData } from "../../../constants/DummyData";
 
 const KeywordDetail = ({ keyword }: { keyword: string }) => {
   const [bookList, setBookList] = useState<Book[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   useEffect(() => {
     setBookList(bookListData);
   }, [keyword]);
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = bookList.slice(indexOfFirstItem, indexOfLastItem);
+  const totalItems = bookList.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
   return (
     <Container>
       <BookWrapper>
-        <BookList bookList={bookList} title={"# " + keyword} />
+        <BookList
+          bookList={currentItems}
+          title={"# " + keyword}
+          pageInfo={
+            {
+              page: currentPage,
+              size: itemsPerPage,
+              totalElements: totalItems,
+              totalPages: totalPages,
+            } as PageInfo
+          }
+          onNextPage={nextPage}
+          onPrevPage={prevPage}
+        />
       </BookWrapper>
 
       <KeywordCalendarWrapper>
