@@ -147,6 +147,9 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 		if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
 			logMultipartRequest(request, stringBuilder);
+		} else if (request.getRequestURI().contains("auth")) {
+			// 비밀번호 포함이므로 내용 로깅 안 함
+			return;
 		} else {
 
 			logPayload("Request", request.getContentType(), request.getInputStream(), stringBuilder);

@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,11 +30,18 @@ public class Admin extends BaseEntity {
 	@Column(length = 100)
 	private String name;
 
-	private Byte layout;
+	private Byte layout = 1;
 
 	@Column(length = 100)
-	private String branch;
+	private String branch = "";
 
 	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
 	private List<Box> boxes;
+
+	@Builder
+	public Admin(String adminId, String adminPw, String name) {
+		this.adminId = adminId;
+		this.adminPw = adminPw;
+		this.name = name;
+	}
 }
