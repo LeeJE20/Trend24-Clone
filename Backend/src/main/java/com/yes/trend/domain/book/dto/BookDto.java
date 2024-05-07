@@ -1,10 +1,7 @@
 package com.yes.trend.domain.book.dto;
 
-import jakarta.persistence.Column;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 public class BookDto {
 
