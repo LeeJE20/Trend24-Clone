@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Book, PageInfo } from "../../../constants/DummyData/BookListData";
 import { GrFormNextLink } from "react-icons/gr";
 import { MdOutlineSave } from "react-icons/md";
+import BookDrawerSaveModal from "../../common/modal/BookDrawerSaveModal";
 
 interface BookListProps {
   title: string;
@@ -21,6 +22,8 @@ const BookList = ({
 }: BookListProps) => {
   const [expandedBookIndices, setExpandedBookIndices] = useState<boolean[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<string[]>([]);
 
   // 토글 함수
   const toggleBookContent = (index: number) => {
@@ -36,7 +39,10 @@ const BookList = ({
 
   // 저장 버튼 클릭 핸들러
   const handleSaveButtonClick = (bookId: number) => {
-    console.log(`Save button clicked for bookId ${bookId}`);
+    // 서랍 키워드 api  호출
+    setModalContent(["인공지능", "IT", "부동산"])
+
+    setModalOpen(!modalOpen);
   };
 
   return (
@@ -46,7 +52,7 @@ const BookList = ({
         {bookList.map((book: Book, index: number) => (
           <BookContainer key={index}>
             <BookCover
-              hovered={hoveredIndex === index}
+              $hovered={hoveredIndex === index}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => handleSaveButtonClick(book.bookId)}
@@ -61,6 +67,9 @@ const BookList = ({
                 </div>
               )}
             </BookCover>
+            <BookDrawerSaveModal isOpen={modalOpen} onClose={() => {handleSaveButtonClick(index)}} keywordList={modalContent}>
+
+            </BookDrawerSaveModal>
             <BookInfo>
               <div className="title">{book.product_name}</div>
               {expandedBookIndices[index] ? (
@@ -137,7 +146,7 @@ const BookContainer = styled.div`
   border: 3px solid #c7d0ff7e;
 `;
 
-const BookCover = styled.div<{ hovered: boolean }>`
+const BookCover = styled.div<{ $hovered: boolean }>`
   width: 30%;
   position: relative;
   cursor: pointer;
@@ -149,7 +158,7 @@ const BookCover = styled.div<{ hovered: boolean }>`
     min-width: 150px;
     margin-right: 20px;
     transition: filter 0.3s ease-in-out;
-    filter: ${({ hovered }) => (hovered ? "brightness(70%)" : "none")};
+    filter: ${({ $hovered }) => ($hovered ? "brightness(70%)" : "none")};
     border-radius: 0px 10px 10px 0px;
   }
 
