@@ -8,15 +8,28 @@ import UserActivity from "./pages/UserActivity";
 import BookSearch from "./pages/BookSearch";
 import BookDrawer from "./pages/BookDrawer";
 
-import UserCustomizePage from "./components/pages/useractivity/customize/UserCustomizePage";
 import RnDCustom from "./components/pages/useractivity/customize/RnDCustom";
 
 import NotFound from "./pages/Notfound";
+import CustomizePage from "./pages/CustomizePage";
+
+import Event from "./pages/Event";
+import Main from "./components/pages/event/Main";
+import GeneralRecommend from "./pages/GeneralRecommend";
+import PersonalRecommend from "./pages/PersonalRecommend";
 
 function App() {
   return (
     <Routes>
-      <Route path="" element={<Login />} />
+      <Route path="/event" element={<Event />}>
+        <Route path="" element={<Main />} />
+        <Route path="personal" element={<PersonalRecommend />} />
+        <Route path="general" element={<GeneralRecommend />} />
+      </Route>
+
+      <Route path="/prac" element={<PersonalRecommend />} />
+
+      <Route path="/" element={<Login />} />
       <Route path="/main" element={<Dashboard />}>
         <Route path="" element={<HotTrend />} />
         <Route path="trendSearch" element={<TrendSearch />} />
@@ -24,7 +37,7 @@ function App() {
         <Route path="bookSearch" element={<BookSearch />} />
         <Route path="bookDrawer" element={<BookDrawer />} />
 
-        <Route path="userCustomizePage" element={<UserCustomizePage />} />
+        <Route path="customizePage" element={<CustomizePage />} />
         <Route path="custom" element={<RnDCustom />} />
       </Route>
 
