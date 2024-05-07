@@ -6,17 +6,17 @@ export interface CustomizedComponentList {
 
 export const customizedComponentListData: CustomizedComponentList[] = [
   {
-    componentName: "userWeeklyActivity",
-    position: { x: 100, y: 500 },
+    componentName: "UserActivityWeekly",
+    position: { x: 600, y: 200 },
     size: { width: 400, height: 200 },
   },
   {
-    componentName: "userMonthlyActivity",
+    componentName: "UserActivityMonthly",
     position: { x: 200, y: 100 },
     size: { width: 400, height: 200 },
   },
   {
-    componentName: "userDailyActivity",
+    componentName: "UserActivityDaily",
     position: { x: 300, y: 200 },
     size: { width: 400, height: 300 },
   },

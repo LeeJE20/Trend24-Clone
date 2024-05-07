@@ -18,8 +18,16 @@ const RnDCustom = () => {
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
 
-  const componentList = useSelector(
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [title, setTitle] = useState("Customize Page");
+  const [tempTitle, setTempTitle] = useState("Customize Page");
+
+  const completeList = useSelector(
     (state: RootState) => state.customize.completeList
+  );
+
+  const componentList = useSelector(
+    (state: RootState) => state.customize.componentList
   );
   const dispatch = useDispatch<AppDispatch>();
 
@@ -66,10 +74,49 @@ const RnDCustom = () => {
     setAddedList([...addedList, item]);
   };
 
+  const sendTitleEdit = (newTitle: string) => {
+    setTitle(newTitle);
+    setTempTitle(newTitle);
+    setIsTitleEditing(false);
+  };
+
+  const handleCancelTitleEdit = () => {
+    setTitle(tempTitle);
+    setIsTitleEditing(false);
+  };
+
+  const showEditTitle = () => {
+    setIsTitleEditing(true);
+    setTitle("");
+  };
+
   return (
     <Container>
       <TitleContainer>
-        드래그앤드롭 커스텀
+        {isTitleEditing ? (
+          <>
+            <input
+              type="text"
+              placeholder={`${tempTitle}`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                sendTitleEdit(title);
+              }}
+            >
+              확인
+            </button>
+            <button onClick={handleCancelTitleEdit}>취소</button>
+          </>
+        ) : (
+          <Title> {title} </Title>
+        )}
+        {isTitleEditing ? null : (
+          <button onClick={showEditTitle}>제목 편집</button>
+        )}{" "}
+        -----
         <button onClick={toggleModal}>추가</button> |
         <button onClick={cancelChange}>취소</button> |
         <button onClick={compleCustomize}>완료</button>
@@ -89,14 +136,10 @@ const RnDCustom = () => {
             bounds={"parent"}
             minWidth={"20%"}
             minHeight={"20%"}
-            maxHeight={"200%"}
-            maxWidth={"200%"}
+            maxHeight={"500%"}
+            maxWidth={"500%"}
           >
-            <Item>
-              {item.componentName}
-              {item.position.x}
-              {item.position.y}
-            </Item>
+            <Item>{item.componentName}</Item>
           </Rnd>
         ))}
       </DragContainer>
@@ -128,6 +171,10 @@ const TitleContainer = styled.div`
   border: 1px solid #000;
 `;
 
+const Title = styled.div`
+  font-size: 24px;
+`;
+
 const DragContainer = styled.div`
   display: grid;
   justify-content: center;
@@ -138,6 +185,7 @@ const DragContainer = styled.div`
   width: 100%;
   height: 90%;
   border: 1px solid #000;
+  box-sizing: border-box;
 `;
 
 const Item = styled.div`
