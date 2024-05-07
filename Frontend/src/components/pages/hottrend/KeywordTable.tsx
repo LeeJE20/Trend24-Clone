@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
+import { trendWordType } from "../../../constants/DummyData/TrendKeywordData";
 
 interface Props {
   header: string;
-  columnList: string[];
+  columnList: trendWordType[];
   handleKeyword: (key: string) => void;
   handleTableClick: (idx: number | null) => void;
   keyword: string;
@@ -38,8 +39,8 @@ function Table({
       </thead>
       <tbody>
         {columnList.map((li, idx) => (
-          <TableRow key={idx} keyword={keyword} data={li}>
-            <td onClick={() => keywordClick(li)}>{li}</td>
+          <TableRow key={idx} $keyword={keyword} $data={li.name}>
+            <td onClick={() => keywordClick(li.name)}>{li.name}</td>
           </TableRow>
         ))}
       </tbody>
@@ -48,7 +49,9 @@ function Table({
 }
 
 const TableContainer = styled.table`
+  font-size: 1.8rem;
   width: 100%;
+  min-width: 100px;
   height: 100%;
   border-collapse: collapse;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -69,14 +72,13 @@ const TableContainer = styled.table`
   }
 
   tbody {
-    overflow-y: auto;
     height: calc(100% - 40px);
   }
 `;
 
-const TableRow = styled.tr<{ keyword: string; data: string }>`
-  background-color: ${({ keyword, data }) =>
-    keyword === data ? "gray" : "transparent"};
+const TableRow = styled.tr<{ $keyword: string; $data: string }>`
+  background-color: ${({ $keyword, $data }) =>
+    $keyword === $data ? "gray" : "transparent"};
   td {
     &:hover {
       &:before {
