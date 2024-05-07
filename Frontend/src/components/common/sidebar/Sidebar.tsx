@@ -144,7 +144,7 @@ const linksArray = [
   {
     label: "커스텀페이지",
     icon: <RiArchiveDrawerFill />,
-    to: "/main/userCustomizePage",
+    to: "/main/customizePage",
   },
 ];
 

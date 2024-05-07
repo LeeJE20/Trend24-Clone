@@ -69,7 +69,9 @@ const UserCustomizePage = () => {
         <Title> {title} </Title>
 
         {componentList.length === 0 ? null : (
-          <button onClick={showEditPage}>편집</button>
+          <BtnBox>
+            <button onClick={showEditPage}>편집</button>
+          </BtnBox>
         )}
       </TitleContainer>
       <ContentContainer>
@@ -140,7 +142,15 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 24px;
+  display: flex;
+  justify-content: flex-start;
+  flex: 2;
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
 `;
 
 const ContentContainer = styled.div`

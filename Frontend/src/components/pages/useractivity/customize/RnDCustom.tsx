@@ -62,12 +62,12 @@ const RnDCustom = () => {
   };
 
   const cancelChange = () => {
-    navigate("/main/UserCustomizePage");
+    navigate("/main/customizePage");
   };
 
   const compleCustomize = () => {
     dispatch(setCompleteList(addedList));
-    navigate("/main/UserCustomizePage");
+    navigate("/main/customizePage");
   };
 
   const makeTempList = (item) => {
@@ -95,32 +95,45 @@ const RnDCustom = () => {
       <TitleContainer>
         {isTitleEditing ? (
           <>
-            <input
-              type="text"
-              placeholder={`${tempTitle}`}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                sendTitleEdit(title);
-              }}
-            >
-              확인
-            </button>
-            <button onClick={handleCancelTitleEdit}>취소</button>
+            <Title>
+              <input
+                type="text"
+                placeholder={`${tempTitle}`}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+
+              <button
+                onClick={() => {
+                  sendTitleEdit(title);
+                }}
+              >
+                확인
+              </button>
+              <button onClick={handleCancelTitleEdit}>취소</button>
+            </Title>
           </>
         ) : (
-          <Title> {title} </Title>
+          <>
+            <Title>
+              {title}
+              <button onClick={showEditTitle}>제목 편집</button>
+            </Title>
+          </>
         )}
-        {isTitleEditing ? null : (
-          <button onClick={showEditTitle}>제목 편집</button>
-        )}{" "}
-        -----
-        <button onClick={toggleModal}>추가</button> |
-        <button onClick={cancelChange}>취소</button> |
-        <button onClick={compleCustomize}>완료</button>
+        <BtnBox>
+          <AddBtn>
+            <button onClick={toggleModal}>추가</button>
+          </AddBtn>
+          <CancelBtn>
+            <button onClick={cancelChange}>취소</button>
+          </CancelBtn>
+          <CompleteBtn>
+            <button onClick={compleCustomize}>완료</button>
+          </CompleteBtn>
+        </BtnBox>
       </TitleContainer>
+
       <DragContainer>
         {addedList.map((item, index) => (
           <Rnd
@@ -172,7 +185,33 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 24px;
+  display: flex;
+  flex: 2;
+  justify-content: flex-start;
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+`;
+
+const AddBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
+`;
+
+const CancelBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
+`;
+
+const CompleteBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
 `;
 
 const DragContainer = styled.div`
