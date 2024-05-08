@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/common/sidebar/Sidebar";
 import styled from "styled-components";
-import { BackgroundColor, MainColor, PointColor } from "../constants/Color";
+import { BackgroundColor} from "../constants/Color";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
