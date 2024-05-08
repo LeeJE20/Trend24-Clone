@@ -6,6 +6,7 @@ import { TbDeviceDesktopSearch } from "react-icons/tb";
 import { FaChartBar, FaChartLine } from "react-icons/fa";
 import { PiBooksDuotone } from "react-icons/pi";
 import { RiArchiveDrawerFill } from "react-icons/ri";
+import { ContainerBackgroundColor, PointColor, TextColor, SubColor1 } from "../../../constants/Color";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -143,14 +144,14 @@ const linksArray = [
   {
     label: "커스텀페이지",
     icon: <RiArchiveDrawerFill />,
-    to: "/main/userCustomizePage",
+    to: "/main/customizePage",
   },
 ];
 
 const SidebarWrapper = styled.div`
   margin: 10px;
   border-radius: 20px;
-  background: white;
+  background: ${ContainerBackgroundColor};
   padding: 6px 14px;
   width: 250px;
   z-index: 99;
@@ -214,8 +215,9 @@ const Tooltip = styled.span`
 
 const NavItem = styled.li`
   position: relative;
-  margin: 20px 0;
+  padding: 5px 0;
   list-style: none;
+  border-bottom: 2px solid #97979726;
 
   &:hover ${Tooltip} {
     display: block;
@@ -223,19 +225,23 @@ const NavItem = styled.li`
     transform: translateY(0);
     background-color: white;
   }
+
+  &:last-child{
+    border-bottom: none;
+  }
 `;
 
 const LinkWrapper = styled.div<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   text-decoration: none;
-  background: ${({ $isActive }) => ($isActive ? "#11101d" : "transparent")};
-  color: ${({ $isActive }) => ($isActive ? "#fff" : "#11101d")};
+  background: ${({ $isActive }) => ($isActive ? PointColor : "transparent")};
+  color: ${({ $isActive }) => ($isActive ? "#fff" : TextColor)};
   border-radius: 12px;
   padding: 15px;
 
   &:hover {
-    background-color: #11101d;
+    background-color: ${PointColor};
     color: #fff;
     transition: background-color 0.5s ease;
     span,
@@ -261,7 +267,8 @@ const ProfileWrapper = styled.div`
   bottom: 0;
   left: 0;
   padding: 10px 14px;
-  background: #1d1b31;
+  background: ${SubColor1};
+  color: ${TextColor};
   height: 70px;
   width: 250px;
   box-sizing: border-box;
@@ -287,13 +294,11 @@ const NameJob = styled.div`
   .name {
     font-size: 15px;
     font-weight: 400;
-    color: #fff;
     white-space: nowrap;
   }
 
   .job {
     font-size: 12px;
-    color: #fff;
     white-space: nowrap;
   }
 `;
@@ -303,7 +308,6 @@ const LogOutButton = styled.i`
   top: 30%;
   right: 0;
   min-width: 50px;
-  color: white;
   font-size: 23px;
   text-align: right;
   padding-right: 14px;

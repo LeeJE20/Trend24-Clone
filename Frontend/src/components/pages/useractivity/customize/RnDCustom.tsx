@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../../store/store";
 import { setCompleteList } from "../../../../store/slices/customizeSlice";
-import { Rnd } from "react-rnd";
+import { Rnd, DraggableData, ResizableDelta } from "react-rnd";
 import CustomComponentList from "../../../common/modal/CustomComponentList";
 
 interface CustomizedComponentList {
@@ -18,9 +18,9 @@ const RnDCustom = () => {
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
 
-  const completeList = useSelector(
-    (state: RootState) => state.customize.completeList
-  );
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [title, setTitle] = useState("Customize Page");
+  const [tempTitle, setTempTitle] = useState("Customize Page");
 
   const componentList = useSelector(
     (state: RootState) => state.customize.componentList
@@ -31,7 +31,7 @@ const RnDCustom = () => {
     setAddedList([...componentList]);
   }, [componentList]);
 
-  const handleDragStop = (e, d, index) => {
+  const handleDragStop = (index: number, d: DraggableData) => {
     setAddedList(
       addedList.map((item, i) =>
         i === index ? { ...item, position: { x: d.x, y: d.y } } : item
@@ -39,7 +39,13 @@ const RnDCustom = () => {
     );
   };
 
-  const handleResizeStop = (e, direction, ref, delta, position, index) => {
+  const handleResizeStop = (
+    index: number,
+    direction: string,
+    ref: HTMLElement,
+    delta: ResizableDelta,
+    position: { x: number; y: number }
+  ) => {
     setAddedList(
       addedList.map((item, i) =>
         i === index
@@ -58,35 +64,87 @@ const RnDCustom = () => {
   };
 
   const cancelChange = () => {
-    navigate("/main/UserCustomizePage");
+    navigate("/main/customizePage");
   };
 
   const compleCustomize = () => {
     dispatch(setCompleteList(addedList));
-    navigate("/main/UserCustomizePage");
+    navigate("/main/customizePage");
   };
 
-  const makeTempList = (item) => {
+  const makeTempList = (item: CustomizedComponentList) => {
     setAddedList([...addedList, item]);
+  };
+
+  const sendTitleEdit = (newTitle: string) => {
+    setTitle(newTitle);
+    setTempTitle(newTitle);
+    setIsTitleEditing(false);
+  };
+
+  const handleCancelTitleEdit = () => {
+    setTitle(tempTitle);
+    setIsTitleEditing(false);
+  };
+
+  const showEditTitle = () => {
+    setIsTitleEditing(true);
+    setTitle("");
   };
 
   return (
     <Container>
       <TitleContainer>
-        드래그앤드롭 커스텀
-        <button onClick={toggleModal}>추가</button> |
-        <button onClick={cancelChange}>취소</button> |
-        <button onClick={compleCustomize}>완료</button>
+        {isTitleEditing ? (
+          <>
+            <Title>
+              <input
+                type="text"
+                placeholder={`${tempTitle}`}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+
+              <button
+                onClick={() => {
+                  sendTitleEdit(title);
+                }}
+              >
+                확인
+              </button>
+              <button onClick={handleCancelTitleEdit}>취소</button>
+            </Title>
+          </>
+        ) : (
+          <>
+            <Title>
+              {title}
+              <button onClick={showEditTitle}>제목 편집</button>
+            </Title>
+          </>
+        )}
+        <BtnBox>
+          <AddBtn>
+            <button onClick={toggleModal}>추가</button>
+          </AddBtn>
+          <CancelBtn>
+            <button onClick={cancelChange}>취소</button>
+          </CancelBtn>
+          <CompleteBtn>
+            <button onClick={compleCustomize}>완료</button>
+          </CompleteBtn>
+        </BtnBox>
       </TitleContainer>
+
       <DragContainer>
         {addedList.map((item, index) => (
           <Rnd
             key={index}
             size={{ width: item.size.width, height: item.size.height }}
             position={{ x: item.position.x, y: item.position.y }}
-            onDragStop={(e, d) => handleDragStop(e, d, index)}
+            onDragStop={(e, d) => handleDragStop(index, d)}
             onResizeStop={(e, direction, ref, delta, position) =>
-              handleResizeStop(e, direction, ref, delta, position, index)
+              handleResizeStop(index, direction, ref, delta, position)
             }
             resizeGrid={[20, 20]}
             dragGrid={[20, 20]}
@@ -126,6 +184,36 @@ const TitleContainer = styled.div`
   width: 100%;
   height: 10%;
   border: 1px solid #000;
+`;
+
+const Title = styled.div`
+  display: flex;
+  flex: 2;
+  justify-content: flex-start;
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+`;
+
+const AddBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
+`;
+
+const CancelBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
+`;
+
+const CompleteBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  flex: 1;
 `;
 
 const DragContainer = styled.div`

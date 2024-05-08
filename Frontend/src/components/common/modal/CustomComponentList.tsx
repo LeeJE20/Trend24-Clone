@@ -3,8 +3,20 @@ import { useState } from "react"; // useState 추가
 import { useSelector } from "react-redux"; // useSelector 추가
 import { RootState } from "../../../store/store"; // RootState 추가
 
-const CustomComponentList = ({ onClose, makeTempList }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(null); // 호버된 박스의 인덱스 상태 추가
+interface CustomComponent {
+  componentName: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+}
+
+const CustomComponentList = ({
+  onClose,
+  makeTempList,
+}: {
+  onClose: () => void;
+  makeTempList: (item: CustomComponent) => void;
+}) => {
+  const [hoveredIndex, setHoveredIndex] = useState<number>(); // 호버된 박스의 인덱스 상태 추가
   const items = useSelector(
     (state: RootState) => state.customize.componentList
   );
@@ -13,7 +25,7 @@ const CustomComponentList = ({ onClose, makeTempList }) => {
     onClose();
   };
 
-  const handleSave = (item) => {
+  const handleSave = (item: CustomComponent) => {
     makeTempList(item);
     onClose();
   };
@@ -29,10 +41,10 @@ const CustomComponentList = ({ onClose, makeTempList }) => {
             <BoxContainer
               key={item.componentName}
               onMouseEnter={() => setHoveredIndex(index)} // 호버됐을 때 인덱스 설정
-              onMouseLeave={() => setHoveredIndex("")} // 호버 해제됐을 때 인덱스 초기화
+              onMouseLeave={() => setHoveredIndex(-1)} // 호버 해제됐을 때 인덱스 초기화
             >
               <Box
-                isHovered={hoveredIndex === index} // 현재 박스가 호버 상태인지 여부 전달
+                $isHovered={hoveredIndex === index} // 현재 박스가 호버 상태인지 여부 전달
               >
                 {item.componentName}
               </Box>
@@ -98,7 +110,7 @@ const BoxContainer = styled.div`
   position: relative;
 `;
 
-const Box = styled.div`
+const Box = styled.div<{ $isHovered: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -108,7 +120,7 @@ const Box = styled.div`
   height: 100%;
 
   opacity: ${(props) =>
-    props.isHovered ? "0.2" : "1"}; // 호버 상태에 따라 불투명도 조절
+    props.$isHovered ? "0.2" : "1"}; // 호버 상태에 따라 불투명도 조절
   transition: 0.2s;
 `;
 
