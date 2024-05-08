@@ -14,6 +14,7 @@ import com.yes.trend.api.recommend.service.RecommendService;
 import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.common.util.NumberUtil;
 
@@ -48,6 +49,14 @@ public class RecommendController {
 			SuccessCode.GET_SUCCESS, recommendService.getRecommendedBooksByKeywordIds(keywordIds.stream().toList(),
 				page, size)
 		);
+	}
 
+	@GetMapping("/trend-categories")
+	public ApiResponse<ListDto<RecommendDto.CategoryWithKeywords>> getTrendCategories(
+		@RequestParam(defaultValue = "true") boolean withKeywords) {
+		if (withKeywords) {
+			return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategoriesWithKeywords());
+		}
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategories());
 	}
 }

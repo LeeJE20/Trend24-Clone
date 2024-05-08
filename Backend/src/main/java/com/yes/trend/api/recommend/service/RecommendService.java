@@ -13,9 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yes.trend.api.recommend.dto.KeywordWithBookDto;
 import com.yes.trend.api.recommend.dto.RecommendDto;
 import com.yes.trend.api.recommend.mapper.RecommendMapper;
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.recommendkeyword.repository.RecommendKeywordRepository;
+import com.yes.trend.domain.trendcategory.entity.TrendCategory;
+import com.yes.trend.domain.trendcategory.repository.TrendCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendService {
 	private final BookRepository bookRepository;
 	private final RecommendKeywordRepository recommendKeywordRepository;
+	private final TrendCategoryRepository trendCategoryRepository;
 	private final RecommendMapper recommendMapper;
 
 	public RecommendDto.Response getRecommendedBooksByKeywordIds(List<Integer> keywordIds, int page, int size) {
@@ -58,5 +62,17 @@ public class RecommendService {
 			.list(responseMap.values().stream().toList())
 			.build();
 
+	}
+
+	public ListDto<RecommendDto.CategoryWithKeywords> getTrendCategories() {
+		List<TrendCategory> categories = trendCategoryRepository.findAll();
+		List<RecommendDto.CategoryWithKeywords> list = categories.stream()
+			.map(x -> RecommendDto.CategoryWithKeywords.builder().trendCategoryId(x.getId()).name(x.getName()).build())
+			.toList();
+		return new ListDto<>(list);
+	}
+
+	public ListDto<RecommendDto.CategoryWithKeywords> getTrendCategoriesWithKeywords() {
+		return null;
 	}
 }

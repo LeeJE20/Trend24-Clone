@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.dto.BookDto;
+import com.yes.trend.domain.keyword.dto.KeywordDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,4 +37,21 @@ public class RecommendDto {
 				totalOrderAmount, salePrice, contents, totalPurchaseCount);
 		}
 	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class CategoryWithKeywords {
+		private Integer trendCategoryId;
+		private String name;
+		private List<KeywordDto.Response> keywords = new ArrayList<>();
+		@Builder
+		public CategoryWithKeywords(Integer trendCategoryId, String name, List<KeywordDto.Response> keywords) {
+			this.trendCategoryId = trendCategoryId;
+			this.name = name;
+			if (keywords != null) {
+				this.keywords = keywords;
+			}
+		}
+	}
+
 }
