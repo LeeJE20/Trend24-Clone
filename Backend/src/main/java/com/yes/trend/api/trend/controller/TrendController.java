@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TrendController {
 	private final TrendService trendService;
 
+	@Operation(summary = "HT-01 일별 인기 키워드", description = "일별 20개씩 인기 키워드를 보여준다.")
 	@GetMapping("/keywords")
 	public ApiResponse<ListDto<TrendDto.DailyKeywordsDto>> getDailyKeywords() {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, trendService.getDailyKeywords());
