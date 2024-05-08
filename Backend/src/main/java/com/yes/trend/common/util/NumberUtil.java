@@ -7,7 +7,7 @@ public class NumberUtil {
 	 * @param numberString 검사할 문자열
 	 * @return 1 이상의 정수이면 true, 아니면 false
 	 */
-	public static boolean isOver1( String numberString) {
+	public static boolean isOver1(String numberString) {
 
 		return numberString != null && numberString.matches("[1-9]\\d*");
 	}
