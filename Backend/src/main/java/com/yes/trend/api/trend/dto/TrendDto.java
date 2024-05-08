@@ -23,4 +23,17 @@ public class TrendDto {
 		}
 	}
 
+	@Getter
+	@NoArgsConstructor
+	public static class KeywordRanking {
+		int ranking;
+		private LocalDate date;
+
+		@Builder
+		public KeywordRanking(LocalDate date, int ranking) {
+			this.date = date;
+			this.ranking = ranking;
+		}
+	}
+
 }
