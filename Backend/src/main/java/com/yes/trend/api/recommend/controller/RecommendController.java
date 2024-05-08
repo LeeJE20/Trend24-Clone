@@ -51,6 +51,7 @@ public class RecommendController {
 		);
 	}
 
+	@Operation(summary = "TR-01 카테고리별 키워드", description = "카테고리별 당일의 키워드 제공")
 	@GetMapping("/trend-categories")
 	public ApiResponse<ListDto<RecommendDto.CategoryWithKeywords>> getTrendCategories(
 		@RequestParam(defaultValue = "true") boolean withKeywords) {
