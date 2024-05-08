@@ -5,4 +5,4 @@
 export ENV_FILE_PATH="./.env"
 
 # Docker Compose 실행
-docker-compose -f docker-compose.yml --env-file $ENV_FILE_PATH up
+docker-compose -f docker-compose.yml --env-file $ENV_FILE_PATH up -d
