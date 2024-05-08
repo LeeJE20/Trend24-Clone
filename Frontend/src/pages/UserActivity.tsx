@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import UserDataGraph from "../components/pages/useractivity/user/UserDataGraph";
-import UserStayTimeGraph from "../components/pages/useractivity/user/UserStayTimeGraph";
 import ClickDataChart from "../components/common/chart/ClickDataChart";
 import BounceRate from "../components/pages/useractivity/user/BounceRate";
 
