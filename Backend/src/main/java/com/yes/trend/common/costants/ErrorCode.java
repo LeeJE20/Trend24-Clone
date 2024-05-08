@@ -29,6 +29,9 @@ public enum ErrorCode {
 	SIGNUP_FAILED(BAD_REQUEST, "이미 존재하는 회원인지 확인해주세요"),
 	SIGNIN_FAILED(BAD_REQUEST, "아이디와 비밀번호를 확인해주세요."),
 
+	// Recommend
+	KEYWORDS_SHOULD_BE_ID(BAD_REQUEST, "키워드는 쉼표(,)로 구분된 양의 정수 id로 주세요."),
+
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");
 

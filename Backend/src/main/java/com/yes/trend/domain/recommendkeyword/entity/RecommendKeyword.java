@@ -2,6 +2,7 @@ package com.yes.trend.domain.recommendkeyword.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
 import com.yes.trend.domain.book.entity.Book;
+import com.yes.trend.domain.dailyrecommend.entity.DailyRecommend;
 import com.yes.trend.domain.keyword.entity.Keyword;
 
 import jakarta.persistence.Entity;
@@ -20,10 +21,10 @@ import lombok.NoArgsConstructor;
 public class RecommendKeyword extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "recommend_book_id")
-	private Book recommendBook;
+	@JoinColumn(name = "daily_recommend_id")
+	private DailyRecommend dailyRecommend;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "keywords_id")
+	@JoinColumn(name = "keyword_id")
 	private Keyword keyword;
 }
