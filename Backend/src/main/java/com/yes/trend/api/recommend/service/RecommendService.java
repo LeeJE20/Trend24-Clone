@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yes.trend.api.recommend.dto.KeywordWithBookDto;
 import com.yes.trend.api.recommend.dto.RecommendDto;
 import com.yes.trend.api.recommend.mapper.RecommendMapper;
+import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.recommendkeyword.repository.RecommendKeywordRepository;
 
@@ -27,7 +28,7 @@ public class RecommendService {
 	private final RecommendKeywordRepository recommendKeywordRepository;
 	private final RecommendMapper recommendMapper;
 
-	public Object getRecommendedBooksByKeywordIds(List<Integer> keywordIds, int page, int size) {
+	public RecommendDto.Response getRecommendedBooksByKeywordIds(List<Integer> keywordIds, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
 
 		Page<Integer> bookIds = recommendKeywordRepository.findBooksByKeywordIds(keywordIds, pageable);
@@ -50,10 +51,11 @@ public class RecommendService {
 
 		// 최종
 		RecommendDto.Response response = RecommendDto.Response.builder()
-			.pageInfo()
+			.pageInfo(new PageInfoDto(bookIds))
+			.list(responseList)
 			.build();
 
-		return keywordWithBookDtos;
+		return response;
 
 	}
 }

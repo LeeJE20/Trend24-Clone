@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yes.trend.api.recommend.dto.RecommendDto;
 import com.yes.trend.api.recommend.service.RecommendService;
 import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
@@ -28,7 +29,7 @@ public class RecommendController {
 
 	// TR-02
 	@GetMapping("/books")
-	public ApiResponse<Object> getRecommendedBooksByKeywordIds(
+	public ApiResponse<RecommendDto.Response> getRecommendedBooksByKeywordIds(
 		@RequestParam() String keywords,
 		@RequestParam(defaultValue = "0") int page,
 		@RequestParam(defaultValue = "100") int size) {
