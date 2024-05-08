@@ -1,7 +1,8 @@
 package com.yes.trend.api.recommend.service;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,33 +31,32 @@ public class RecommendService {
 
 	public RecommendDto.Response getRecommendedBooksByKeywordIds(List<Integer> keywordIds, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size);
-
 		Page<Integer> bookIds = recommendKeywordRepository.findBooksByKeywordIds(keywordIds, pageable);
+
 		List<KeywordWithBookDto> keywordWithBookDtos = recommendKeywordRepository.findKeywordWithBookByBookIds(
 			bookIds.toList());
 
-		// List<BookWithKeywords> 만들기
-		Integer currentId = null;
-		RecommendDto.BookWithKeywords currentBookWithKeywords = null;
-		List<RecommendDto.BookWithKeywords> responseList = new ArrayList<>();
+		// 순서 유지
+		Map<Integer, RecommendDto.BookWithKeywords> responseMap = new LinkedHashMap<>();
+		for (Integer id : bookIds.toList()) {
+			responseMap.put(id, null);
+		}
 
 		for (KeywordWithBookDto keywordWithBookDto : keywordWithBookDtos) {
 			Integer bookId = keywordWithBookDto.getBookId();
-			if (!bookId.equals(currentId)) {
-				currentBookWithKeywords = recommendMapper.KeywordWithBookDtoToBookWithKeywords(keywordWithBookDto);
-				responseList.add(currentBookWithKeywords);
-				currentId = bookId;
+			RecommendDto.BookWithKeywords currentBookWithKeywords = responseMap.get(bookId);
+			if (currentBookWithKeywords == null) {
+				responseMap.put(bookId, recommendMapper.KeywordWithBookDtoToBookWithKeywords(keywordWithBookDto));
+				currentBookWithKeywords = responseMap.get(bookId);
 			}
 			currentBookWithKeywords.getKeywords().add(keywordWithBookDto.getKeyword());
 		}
 
 		// 최종
-		RecommendDto.Response response = RecommendDto.Response.builder()
+		return RecommendDto.Response.builder()
 			.pageInfo(new PageInfoDto(bookIds))
-			.list(responseList)
+			.list(responseMap.values().stream().toList())
 			.build();
-
-		return response;
 
 	}
 }

@@ -19,8 +19,7 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 			" JOIN rk.keyword k " +
 			" JOIN rk.dailyRecommend dr " +
 			" JOIN dr.book b " +
-			" WHERE b.id IN :bookIds" +
-			" ORDER BY b.id ASC, k.id ASC"
+			" WHERE b.id IN :bookIds"
 	)
 	List<KeywordWithBookDto> findKeywordWithBookByBookIds(@Param("bookIds") List<Integer> bookIds);
 
@@ -30,8 +29,7 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 			" JOIN rk.keyword k " +
 			" JOIN rk.dailyRecommend dr " +
 			" JOIN dr.book b " +
-			" WHERE k.id IN :keywordIds" +
-			" ORDER BY b.id ASC"
+			" WHERE k.id IN :keywordIds"
 	)
 	Page<Integer> findBooksByKeywordIds(@Param("keywordIds") List<Integer> keywordIds, Pageable pageable);
 }
