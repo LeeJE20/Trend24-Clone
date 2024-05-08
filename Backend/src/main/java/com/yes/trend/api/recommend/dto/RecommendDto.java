@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.dto.BookDto;
-import com.yes.trend.domain.keyword.dto.KeywordDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

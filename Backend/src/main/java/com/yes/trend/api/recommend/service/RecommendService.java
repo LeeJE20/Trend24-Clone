@@ -32,14 +32,15 @@ public class RecommendService {
 		Pageable pageable = PageRequest.of(page, size);
 
 		Page<Integer> bookIds = recommendKeywordRepository.findBooksByKeywordIds(keywordIds, pageable);
-		List<KeywordWithBookDto> keywordWithBookDtos = recommendKeywordRepository.findKeywordWithBookByBookIds(bookIds.toList());
+		List<KeywordWithBookDto> keywordWithBookDtos = recommendKeywordRepository.findKeywordWithBookByBookIds(
+			bookIds.toList());
 
 		// List<BookWithKeywords> 만들기
 		Integer currentId = null;
 		RecommendDto.BookWithKeywords currentBookWithKeywords = null;
 		List<RecommendDto.BookWithKeywords> responseList = new ArrayList<>();
 
-		for(KeywordWithBookDto keywordWithBookDto: keywordWithBookDtos) {
+		for (KeywordWithBookDto keywordWithBookDto : keywordWithBookDtos) {
 			Integer bookId = keywordWithBookDto.getBookId();
 			if (!bookId.equals(currentId)) {
 				currentBookWithKeywords = recommendMapper.KeywordWithBookDtoToBookWithKeywords(keywordWithBookDto);

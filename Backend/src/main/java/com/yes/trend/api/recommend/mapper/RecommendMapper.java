@@ -1,7 +1,6 @@
 package com.yes.trend.api.recommend.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import com.yes.trend.api.recommend.dto.KeywordWithBookDto;
