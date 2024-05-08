@@ -25,9 +25,16 @@ public class RecommendDto {
 	// 책과 해당 책을 추천해준 키워드들
 	@Getter
 	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
 	public static class BookWithKeywords extends BookDto.Response {
 		private List<String> keywords = new ArrayList<>();
+
+		@Builder
+		public BookWithKeywords(Integer bookId, Integer productId, String productName, String categoryName,
+			String searchKeyword, Integer totalClickCount, Integer totalOrderCount, Integer totalOrderAmount,
+			Integer salePrice,
+			String contents, Integer totalPurchaseCount) {
+			super(bookId, productId, productName, categoryName, searchKeyword, totalClickCount, totalOrderCount,
+				totalOrderAmount, salePrice, contents, totalPurchaseCount);
+		}
 	}
 }
