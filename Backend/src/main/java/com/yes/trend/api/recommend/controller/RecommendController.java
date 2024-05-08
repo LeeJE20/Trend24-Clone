@@ -14,9 +14,11 @@ import com.yes.trend.api.recommend.service.RecommendService;
 import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.common.util.NumberUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendController {
 	private final RecommendService recommendService;
 
-	// TR-02
+	@Operation(summary = "TR-02 키워드 id로 추천된 책 리스트", description = "키워드가 여러 개면 , (쉼표) 로 구분한다")
 	@GetMapping("/books")
 	public ApiResponse<RecommendDto.Response> getRecommendedBooksByKeywordIds(
 		@RequestParam() String keywords,
@@ -47,6 +49,15 @@ public class RecommendController {
 			SuccessCode.GET_SUCCESS, recommendService.getRecommendedBooksByKeywordIds(keywordIds.stream().toList(),
 				page, size)
 		);
+	}
 
+	@Operation(summary = "TR-01 카테고리별 키워드", description = "카테고리별 당일의 키워드 제공")
+	@GetMapping("/trend-categories")
+	public ApiResponse<ListDto<RecommendDto.CategoryWithKeywords>> getTrendCategories(
+		@RequestParam(defaultValue = "true") boolean withKeywords) {
+		if (withKeywords) {
+			return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategoriesWithKeywords());
+		}
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategories());
 	}
 }
