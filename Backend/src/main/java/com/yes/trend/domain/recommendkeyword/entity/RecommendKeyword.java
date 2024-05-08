@@ -1,7 +1,6 @@
 package com.yes.trend.domain.recommendkeyword.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
-import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.dailyrecommend.entity.DailyRecommend;
 import com.yes.trend.domain.keyword.entity.Keyword;
 

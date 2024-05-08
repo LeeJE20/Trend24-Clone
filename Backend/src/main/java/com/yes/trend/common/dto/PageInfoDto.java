@@ -2,7 +2,6 @@ package com.yes.trend.common.dto;
 
 import org.springframework.data.domain.Page;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

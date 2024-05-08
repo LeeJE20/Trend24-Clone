@@ -1,5 +1,6 @@
 package com.yes.trend.domain.book.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ public class BookDto {
 
 	@Getter
 	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class Response {
 		private Integer bookId;
 		private Integer productId;
@@ -20,4 +22,5 @@ public class BookDto {
 		private String contents;
 		private Integer totalPurchaseCount;
 	}
+
 }
