@@ -1,6 +1,5 @@
 package com.yes.trend.api.recommend.dto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.yes.trend.common.dto.PageInfoDto;
@@ -22,11 +21,12 @@ public class RecommendDto {
 		private List<BookWithKeywords> list;
 	}
 
+	// 책과 해당 책을 추천해준 키워드들
 	@Getter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
-	public static class BookWithKeywords extends BookDto {
+	public static class BookWithKeywords extends BookDto.Response {
 		private List<KeywordDto> keywords;
 	}
 }
