@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface KeywordProps {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Book, PageInfo } from "../../../constants/DummyData/BookListData";
 import { GrFormNextLink } from "react-icons/gr";

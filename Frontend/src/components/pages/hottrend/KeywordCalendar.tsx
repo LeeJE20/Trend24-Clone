@@ -5,15 +5,9 @@ interface KeywordCalendarProps {
   rankData: TrendRankType[];
 }
 
-interface DateType {
-  dayOfWeek: string;
-  date: number;
-  inChart: boolean;
-}
-
 const KeywordCalendar = (props: KeywordCalendarProps) => {
   const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const baseDate = new Date(props.rankData[0].date);  
+  const baseDate = new Date(props.rankData[0].date);
   const dayOfWeek = props.rankData.map((li) => li.date.split("-")[2]);
   const date = [...Array(7)].map(
     (_, i) => days[(baseDate.getDay() - i + 7) % 7]
@@ -30,7 +24,7 @@ const KeywordCalendar = (props: KeywordCalendarProps) => {
     <Container>
       <Title>키워드</Title>
       <DateLabel>
-        {baseDate.getFullYear()}년 {baseDate.getMonth()+1}월
+        {baseDate.getFullYear()}년 {baseDate.getMonth() + 1}월
       </DateLabel>
       <CalendarWrapper>
         {CalendarObject.map((calendar, index) => (
