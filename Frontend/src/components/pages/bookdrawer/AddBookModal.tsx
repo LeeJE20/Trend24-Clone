@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const AddBookModal = ({ toggleAddBookModal }) => {
+const AddBookModal = ({
+  toggleAddBookModal,
+}: {
+  toggleAddBookModal: () => void;
+}) => {
   return (
     <AddBookModalContainer>
       <AddBookModalTitle>책 추가</AddBookModalTitle>

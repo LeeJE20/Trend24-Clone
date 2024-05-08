@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-const CustomSaveModal = ({ toggleModal, saveList, cancelChange }) => {
+const CustomSaveModal = ({
+  saveList,
+  cancelChange,
+}: {
+  saveList: () => void;
+  cancelChange: () => void;
+}) => {
   return (
     <Container>
       <Modal>

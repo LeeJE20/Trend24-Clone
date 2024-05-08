@@ -17,6 +17,9 @@ import Event from "./pages/Event";
 import Main from "./components/pages/event/Main";
 import GeneralRecommend from "./pages/GeneralRecommend";
 import PersonalRecommend from "./pages/PersonalRecommend";
+import GeneralRecommendBook from "./components/pages/generalrecommend/GeneralRecommendBook";
+
+import Practice from "./pages/Practice";
 
 function App() {
   return (
@@ -25,9 +28,10 @@ function App() {
         <Route path="" element={<Main />} />
         <Route path="personal" element={<PersonalRecommend />} />
         <Route path="general" element={<GeneralRecommend />} />
+        <Route path="general/recommend" element={<GeneralRecommendBook />} />
       </Route>
 
-      <Route path="/prac" element={<PersonalRecommend />} />
+      <Route path="/prac" element={<Practice />} />
 
       <Route path="/" element={<Login />} />
       <Route path="/main" element={<Dashboard />}>
