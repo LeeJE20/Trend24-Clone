@@ -165,16 +165,16 @@ create table IF NOT EXISTS trend.origin_data
 
 create table IF NOT EXISTS trend.recommend_keyword
 (
-    id                int auto_increment
+    id                 int auto_increment
         primary key,
-    created_time      datetime(6) null,
-    updated_time      datetime(6) null,
-    keywords_id       int         null,
-    recommend_book_id int         null,
-    constraint FK6xgbyrsvtket4wp7lqlpcqj97
-        foreign key (recommend_book_id) references trend.book (id),
-    constraint FKdt541y1xrjny5ur141051plvj
-        foreign key (keywords_id) references trend.keyword (id)
+    created_time       datetime(6) null,
+    updated_time       datetime(6) null,
+    daily_recommend_id int         null,
+    keyword_id         int         null,
+    constraint FKop1iygtye9107694bfly3puc9
+        foreign key (keyword_id) references trend.keyword (id),
+    constraint FKpds726af2r9ql2g3f0wu2rfu
+        foreign key (daily_recommend_id) references trend.daily_recommend (id)
 );
 
 create table IF NOT EXISTS trend.trend_source
