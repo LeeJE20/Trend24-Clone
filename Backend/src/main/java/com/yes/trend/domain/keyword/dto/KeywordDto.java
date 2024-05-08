@@ -1,15 +1,15 @@
 package com.yes.trend.domain.keyword.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 public class KeywordDto {
 
 	@Getter
 	@NoArgsConstructor
+	@ToString
 	public static class Response {
 		private Integer keywordId;
 		private String name;

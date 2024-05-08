@@ -1,7 +1,5 @@
 package com.yes.trend.api.recommend.dto;
 
-import java.time.LocalDateTime;
-
 import com.yes.trend.domain.keyword.dto.KeywordDto;
 
 import lombok.Getter;
