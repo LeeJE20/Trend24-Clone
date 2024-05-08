@@ -1,8 +1,10 @@
 package com.yes.trend.domain.keyword.dto;
 
+import java.time.LocalDateTime;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 public class KeywordDto {
 
 	@Getter
@@ -12,6 +14,14 @@ public class KeywordDto {
 		private String name;
 		private Integer clickCount;
 		private Integer ranking;
-		private Boolean selected;
+
+		@Builder
+		public Response(Integer keywordId, String name, Integer clickCount, Integer ranking, Boolean selected,
+			LocalDateTime createdTime) {
+			this.keywordId = keywordId;
+			this.name = name;
+			this.clickCount = clickCount;
+			this.ranking = ranking;
+		}
 	}
 }
