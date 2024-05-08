@@ -1,7 +1,10 @@
 package com.yes.trend.domain.recommendkeyword.repository;
 
 import java.util.List;
+import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +20,16 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 			" JOIN rk.keyword k " +
 			" JOIN rk.dailyRecommend dr " +
 			" JOIN dr.book b " +
+			" WHERE b.id IN :bookIds")
+	List<KeywordWithBookDto> findKeywordWithBookByBookIds(@Param("bookIds") List<Integer> bookIds);
+
+	@Query(
+		"SELECT DISTINCT b.id"
+			+
+			" FROM RecommendKeyword rk " +
+			" JOIN rk.keyword k " +
+			" JOIN rk.dailyRecommend dr " +
+			" JOIN dr.book b " +
 			" WHERE k.id IN :keywordIds")
-	List<KeywordWithBookDto> findBooksByKeywordIds(@Param("keywordIds") List<Integer> keywordIds);
+	Page<Integer> findBooksByKeywordIds(@Param("keywordIds") List<Integer> keywordIds, Pageable pageable);
 }

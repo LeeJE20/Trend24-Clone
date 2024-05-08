@@ -1,5 +1,6 @@
 package com.yes.trend.api.recommend.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.yes.trend.common.dto.PageInfoDto;
@@ -27,6 +28,6 @@ public class RecommendDto {
 	@AllArgsConstructor
 	@Builder
 	public static class BookWithKeywords extends BookDto.Response {
-		private List<KeywordDto> keywords;
+		private List<String> keywords = new ArrayList<>();
 	}
 }
