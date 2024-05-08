@@ -17,8 +17,7 @@ public class KeywordDto {
 		private Integer ranking;
 
 		@Builder
-		public Response(Integer keywordId, String name, Integer clickCount, Integer ranking, Boolean selected,
-			LocalDateTime createdTime) {
+		public Response(Integer keywordId, String name, Integer clickCount, Integer ranking) {
 			this.keywordId = keywordId;
 			this.name = name;
 			this.clickCount = clickCount;
