@@ -29,15 +29,18 @@ const Logo = styled.div`
   height: 10%;
   width: auto;
   background-color: #f9f9f9;
+  z-index: 99;
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 100vh;
-  width: 100vw;
   background-color: #f9f9f9;
+  box-sizing: border-box;
 `;
 
 export default Event;

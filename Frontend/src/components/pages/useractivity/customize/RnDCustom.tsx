@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../../store/store";
 import { setCompleteList } from "../../../../store/slices/customizeSlice";
-import { Rnd } from "react-rnd";
+import { Rnd, DraggableData, ResizableDelta } from "react-rnd";
 import CustomComponentList from "../../../common/modal/CustomComponentList";
 
 interface CustomizedComponentList {
@@ -22,10 +22,6 @@ const RnDCustom = () => {
   const [title, setTitle] = useState("Customize Page");
   const [tempTitle, setTempTitle] = useState("Customize Page");
 
-  const completeList = useSelector(
-    (state: RootState) => state.customize.completeList
-  );
-
   const componentList = useSelector(
     (state: RootState) => state.customize.componentList
   );
@@ -35,7 +31,7 @@ const RnDCustom = () => {
     setAddedList([...componentList]);
   }, [componentList]);
 
-  const handleDragStop = (e, d, index) => {
+  const handleDragStop = (index: number, d: DraggableData) => {
     setAddedList(
       addedList.map((item, i) =>
         i === index ? { ...item, position: { x: d.x, y: d.y } } : item
@@ -43,7 +39,13 @@ const RnDCustom = () => {
     );
   };
 
-  const handleResizeStop = (e, direction, ref, delta, position, index) => {
+  const handleResizeStop = (
+    index: number,
+    direction: string,
+    ref: HTMLElement,
+    delta: ResizableDelta,
+    position: { x: number; y: number }
+  ) => {
     setAddedList(
       addedList.map((item, i) =>
         i === index
@@ -70,7 +72,7 @@ const RnDCustom = () => {
     navigate("/main/customizePage");
   };
 
-  const makeTempList = (item) => {
+  const makeTempList = (item: CustomizedComponentList) => {
     setAddedList([...addedList, item]);
   };
 
@@ -140,9 +142,9 @@ const RnDCustom = () => {
             key={index}
             size={{ width: item.size.width, height: item.size.height }}
             position={{ x: item.position.x, y: item.position.y }}
-            onDragStop={(e, d) => handleDragStop(e, d, index)}
+            onDragStop={(e, d) => handleDragStop(index, d)}
             onResizeStop={(e, direction, ref, delta, position) =>
-              handleResizeStop(e, direction, ref, delta, position, index)
+              handleResizeStop(index, direction, ref, delta, position)
             }
             resizeGrid={[20, 20]}
             dragGrid={[20, 20]}

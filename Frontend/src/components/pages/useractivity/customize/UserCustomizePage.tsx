@@ -2,19 +2,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../../../store/store";
-import { emptyListData } from "../../../../constants/DummyData";
-import {
-  customizedComponentListData,
-  CustomizedComponentList,
-} from "../../../../constants/DummyData";
+
 import { Rnd } from "react-rnd";
 
 import UserActivityDaily from "../../../googleanalytics/UserActivityDaily";
 import UserActivityWeekly from "../../../googleanalytics/UserActivityWeekly";
 import UserActivityMonthly from "../../../googleanalytics/UserActivityMonthly";
 import { useSelector, useDispatch } from "react-redux";
-import { setCompleteList } from "../../../../store/slices/customizeSlice";
-import { setComponentList } from "../../../../store/slices/customizeSlice";
 
 const UserCustomizePage = () => {
   const dispatch = useDispatch<AppDispatch>();
