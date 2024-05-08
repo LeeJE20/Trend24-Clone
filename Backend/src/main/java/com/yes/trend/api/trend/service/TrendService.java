@@ -46,22 +46,20 @@ public class TrendService {
 
 		LocalDate currentDate = null;
 		TrendDto.DailyKeywordsDto currentDailyKeywordsDto = null;
-		List<TrendDto.DailyKeywordsDto> keywordList = new ArrayList<TrendDto.DailyKeywordsDto>();
+		List<TrendDto.DailyKeywordsDto> keywordList = new ArrayList<>();
 
 		for (KeywordView keywordView : keywordViews) {
 			LocalDate date = keywordView.getCreatedTime().toLocalDate();
 			// 이전 키워드와 생성일이 다를 경우 새로운 DailyKeywordsDto 생성
 			if (!date.equals(currentDate)) {
-				currentDailyKeywordsDto = new TrendDto.DailyKeywordsDto(date, new ArrayList<KeywordDto.Response>());
+				currentDailyKeywordsDto = new TrendDto.DailyKeywordsDto(date, new ArrayList<>());
 				keywordList.add(currentDailyKeywordsDto);
 				currentDate = date;
 			}
 			currentDailyKeywordsDto.getWords().add(trendMapper.KeywordViewToResponseDto(keywordView));
 		}
 
-		ListDto<TrendDto.DailyKeywordsDto> result = new ListDto<>(keywordList);
-
-		return result;
+		return new ListDto<>(keywordList);
 
 	}
 
