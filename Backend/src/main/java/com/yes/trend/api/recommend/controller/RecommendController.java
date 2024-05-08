@@ -17,6 +17,7 @@ import com.yes.trend.common.dto.ApiResponse;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.common.util.NumberUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecommendController {
 	private final RecommendService recommendService;
 
-	// TR-02
+	@Operation(summary = "TR-02 키워드 id로 추천된 책 리스트", description = "키워드가 여러 개면 , (쉼표) 로 구분한다")
 	@GetMapping("/books")
 	public ApiResponse<RecommendDto.Response> getRecommendedBooksByKeywordIds(
 		@RequestParam() String keywords,
