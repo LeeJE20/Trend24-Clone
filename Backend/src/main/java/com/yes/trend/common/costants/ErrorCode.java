@@ -32,6 +32,9 @@ public enum ErrorCode {
 	// Recommend
 	KEYWORDS_SHOULD_BE_ID(BAD_REQUEST, "키워드는 쉼표(,)로 구분된 양의 정수 id로 주세요."),
 
+	// Trend
+	NO_ORIGIN_DATA_BY_KEYWORD(INTERNAL_SERVER_ERROR, "키워드 출처를 찾을 수 없습니다. [백엔드에 알려주세요]"), // DB 저장 오류
+
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");
 

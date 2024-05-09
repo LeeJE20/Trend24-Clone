@@ -3,6 +3,7 @@ package com.yes.trend.api.recommend.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ public class RecommendService {
 			if (currentBookWithKeywords == null) {
 				responseMap.put(bookId, recommendMapper.KeywordWithBookDtoToBookWithKeywords(keywordWithBookDto));
 				currentBookWithKeywords = responseMap.get(bookId);
+				currentBookWithKeywords.setKeywords(new ArrayList<>());
 			}
 			currentBookWithKeywords.getKeywords().add(keywordWithBookDto.getKeyword());
 		}

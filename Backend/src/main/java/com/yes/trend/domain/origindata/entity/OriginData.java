@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OriginData extends BaseEntity {
+	private String uri;
 
 	@Column(columnDefinition = "JSON")
 	private String contents;
