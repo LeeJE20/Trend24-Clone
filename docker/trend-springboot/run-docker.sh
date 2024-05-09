@@ -12,6 +12,9 @@ original_dir=$(pwd)
 # 스크립트 실행 위치를 Backend 디렉토리로 변경합니다.
 cd $(dirname "$0")/../../Backend
 
+# 실행 권한 부여
+chmod +x gradlew
+
 # gradlew build 명령어를 실행합니다.
 ./gradlew build
 
