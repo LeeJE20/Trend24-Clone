@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import Table from "../components/pages/hottrend/KeywordTable";
 import { trendKeyword } from "../constants/DummyData/TrendKeywordData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
+import { getTrendKeyword } from "../apis/trendApi";
+
+interface TrendKeywordData {
+  date: string;
+  words: string[];
+}
 
 const HotTrend = () => {
   const [keyword, setKeyword] = useState("");
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
+  // const [trendKeyword, setTrendKeyword] = useState<object[]>([]);
 
   const handleTableClick = (idx: number) => {
     if (selectedTable == null) {
@@ -21,6 +28,17 @@ const HotTrend = () => {
     console.log(key);
     setKeyword(key);
   };
+  
+  useEffect(()=>{
+    const fetchData = async():Promise<TrendKeywordData[]> =>{
+      try{
+        return await getTrendKeyword();
+      }catch (error){
+        console.log(error);
+      }
+    }
+    // fetchData().then(res => setTrendKeyword(res));
+  },[])
 
   return (
     <Container>
@@ -63,7 +81,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3vh;
+  font-size: 2.5rem;
   margin: 20px 10px;
   font-weight: bold;
 `;
@@ -74,7 +92,7 @@ const Content = styled.div`
   height: 100%;
   display: flex;
   overflow-x: hidden;
-  border-radius: 20px;
+  border-radius: 10px;
 `;
 
 const TableWrapper = styled.div`

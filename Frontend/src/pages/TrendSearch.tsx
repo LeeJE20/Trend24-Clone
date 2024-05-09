@@ -79,7 +79,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2.5rem;
   height: 30px;
   margin: 20px 10px;
   font-weight: bold;
@@ -87,9 +87,9 @@ const Title = styled.div`
 
 const FilterContainer = styled.div`
   width: 100%;
-  min-height: 180px;
+  min-height: 130px;
   margin-bottom: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
 `;
 
@@ -98,7 +98,7 @@ const BookListContainer = styled.div`
   flex-grow: 1;
   overflow-y: auto;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
 `;
 
 export default TrendSearch;

@@ -73,7 +73,7 @@ const Container = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 3fr 1fr;
+  grid-template-rows: 4fr 1fr;
   grid-template-areas:
     "book book"
     "keyword source";

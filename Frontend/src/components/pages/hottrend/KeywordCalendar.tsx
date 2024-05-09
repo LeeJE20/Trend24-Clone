@@ -42,24 +42,24 @@ const Container = styled.div`
   padding: 10px;
   margin: 5px;
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 15px;
 `;
 
 const DateLabel = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 30px;
 `;
 
 const CalendarWrapper = styled.div`
   width: 100%;
   height: 100%;
-  font-size: 2rem;
+  font-size: 1.3rem;
   color: #005096;
   display: flex;
   justify-content: space-around;
@@ -69,13 +69,13 @@ const CalendarWrapper = styled.div`
 `;
 
 const DayList = styled.div<{ $inChart: boolean }>`
-  width: 40px;
-  height: 70px;
+  width: 10%;
+  height: 10%;
   text-align: center;
   margin: 5px;
   cursor: pointer;
   border-radius: 40px;
-  padding: 20px 10px;
+  padding: 15px 0px;
   background-color: ${({ $inChart }) => ($inChart ? "#224861" : "transparent")};
   color: ${({ $inChart }) => ($inChart ? "white" : "black")};
 

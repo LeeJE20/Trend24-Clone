@@ -59,7 +59,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 15px;
 `;
@@ -82,7 +82,7 @@ const Source = styled.div`
     margin: 10px;
   }
   div {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
   }
 `;
@@ -94,7 +94,7 @@ const GoogleData = styled.div`
   align-items: center;
 
   .title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 10px;
   }

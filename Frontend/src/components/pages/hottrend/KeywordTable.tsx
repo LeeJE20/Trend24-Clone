@@ -49,7 +49,7 @@ function Table({
 }
 
 const TableContainer = styled.table`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   width: 100%;
   min-width: 100px;
   height: 100%;

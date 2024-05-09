@@ -74,7 +74,7 @@ const Category = styled.div`
   .label {
     border: 1px solid black;
     min-width: 120px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
     align-content: center;
   }
@@ -87,7 +87,7 @@ const Category = styled.div`
     overflow: auto;
 
     div {
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       padding: 5px 15px;
       margin: 5px;
       background-color: #ededed;
