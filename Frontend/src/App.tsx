@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router";
+import { useEffect } from "react";
 
 import Login from "./pages/Authorization";
 import Dashboard from "./pages/Dashboard";
@@ -24,7 +26,20 @@ import GeneralRecommendBook from "./components/pages/generalrecommend/GeneralRec
 import { TransitionProvider } from "./components/pages/PersonalRecommend/TransitionConText";
 import TransitionComponent from "./components/pages/PersonalRecommend/Transition";
 
+// // usePageTracking 훅 구현
+// const usePageTracking = () => {
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     const pagePath = location.pathname + location.search;
+//     window.gtag('config', 'G-X6V6D0VZF5', {
+//       'page_path': pagePath,
+//     });
+//   }, [location]);
+// };
+
 function App() {
+  // usePageTracking(); // usePageTracking 훅 호출
   return (
     <TransitionProvider>
       <Routes>

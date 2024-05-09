@@ -8,8 +8,10 @@ const Main = () => {
   const Sample1Ref = useRef(null);
   const Sample2Ref = useRef(null);
   const ContentContainerRef = useRef(null); // ContentContainer에 대한 참조 생성
-  const GeneralRecommendBarRef = useRef(null); // GeneralRecommendBar에 대한 참조 생성
-  const PersonalRecommendBarRef = useRef(null); // PersonalRecommendBar에 대한 참조 생성
+  const PresentBarRef = useRef(null);
+  const RemainBarRef = useRef(null);
+  const GeneralRecBarRef = useRef(null);
+  const PersonalRecBarRef = useRef(null);
 
   useEffect(() => {
     // 샘플 애니메이션
@@ -17,8 +19,8 @@ const Main = () => {
       gsap.to(Sample1Ref.current, {
         keyframes: {
           "0%": { scale: 1, opacity: 0 },
-          "10%": { scale: 0.5, opacity: 0.1, y: 500 },
-          "20%": { scale: 1.2, opacity: 0.2, y: 200 },
+          "10%": { scale: 0.5, opacity: 0.1, y: 300 },
+          "20%": { scale: 1.2, opacity: 0.2, y: 100 },
           "100%": { scale: 1, opacity: 1, y: 0 },
         },
         duration: 1.5,
@@ -45,26 +47,14 @@ const Main = () => {
 
     // RecommendBarArea의 자식들의 위치를 바꾸는 애니메이션
     if (isGeneralRecommend) {
-      gsap.to(GeneralRecommendBarRef.current, {
+      gsap.to(PersonalRecBarRef.current, {
         keyframes: {
-          "0%": { x: "100%" },
-          "100%": { x: 0 },
-        },
-      });
-      gsap.to(PersonalRecommendBarRef.current, {
-        keyframes: {
-          "0%": { x: "-100%" },
-          "100%": { x: 0 },
+          "0%": { x: "100%", opacity: 0 },
+          "100%": { x: 0, opacity: 1 },
         },
       });
     } else {
-      gsap.to(GeneralRecommendBarRef.current, {
-        keyframes: {
-          "0%": { x: "-100%" },
-          "100%": { x: 0 },
-        },
-      });
-      gsap.to(PersonalRecommendBarRef.current, {
+      gsap.to(GeneralRecBarRef.current, {
         keyframes: {
           "0%": { x: "100%" },
           "100%": { x: 0 },
@@ -98,7 +88,7 @@ const Main = () => {
         $isGeneralRecommend={isGeneralRecommend}
       >
         {isGeneralRecommend ? (
-          <Content>
+          <GeneralContent>
             <Text>
               <h1>General Recommend</h1>
               <button onClick={gotoGeneral}>+</button>
@@ -106,9 +96,9 @@ const Main = () => {
             <Img>
               <SampleImg1 ref={Sample1Ref} />
             </Img>
-          </Content>
+          </GeneralContent>
         ) : (
-          <Content>
+          <PersonalContent>
             <Text>
               <h1>Personal Recommend!!</h1>
               <button onClick={gotoPersonal}>+</button>
@@ -116,33 +106,50 @@ const Main = () => {
             <Img>
               <SampleImg2 ref={Sample2Ref} />
             </Img>
-          </Content>
+          </PersonalContent>
         )}
       </ContentContainer>
       <RecommendBarArea>
-        {isGeneralRecommend ? (
-          <>
-            <GeneralRecommendBar ref={GeneralRecommendBarRef}>
-              <h1>일반 추천</h1>
-              <button onClick={handleGeneralRecommend}>+</button>
-            </GeneralRecommendBar>
-            <PersonalRecommendBar ref={PersonalRecommendBarRef}>
-              <h1>맞춤 추천</h1>
-              <button onClick={handlePersonalRecommend}>+</button>
-            </PersonalRecommendBar>
-          </>
-        ) : (
-          <>
-            <PersonalRecommendBar ref={PersonalRecommendBarRef}>
-              <h1>맞춤 추천</h1>
-              <button onClick={handlePersonalRecommend}>+</button>
-            </PersonalRecommendBar>
-            <GeneralRecommendBar ref={GeneralRecommendBarRef}>
-              <h1>일반 추천</h1>
-              <button onClick={handleGeneralRecommend}>+</button>
-            </GeneralRecommendBar>
-          </>
-        )}
+        <PresentRecommendBar
+          $isGeneralRecommend={isGeneralRecommend}
+          ref={PresentBarRef}
+        >
+          {isGeneralRecommend ? (
+            <GeneralRecBar
+              ref={GeneralRecBarRef}
+              onClick={handleGeneralRecommend}
+            >
+              General
+            </GeneralRecBar>
+          ) : (
+            <PersonalRecBar
+              ref={PersonalRecBarRef}
+              onClick={handlePersonalRecommend}
+            >
+              Personal
+            </PersonalRecBar>
+          )}
+        </PresentRecommendBar>
+        <RemainRecommendBar
+          $isGeneralRecommend={isGeneralRecommend}
+          ref={RemainBarRef}
+        >
+          {isGeneralRecommend ? (
+            <PersonalRecBar
+              ref={PersonalRecBarRef}
+              onClick={handlePersonalRecommend}
+            >
+              Personal
+            </PersonalRecBar>
+          ) : (
+            <GeneralRecBar
+              ref={GeneralRecBarRef}
+              onClick={handleGeneralRecommend}
+            >
+              General
+            </GeneralRecBar>
+          )}
+        </RemainRecommendBar>
       </RecommendBarArea>
     </Container>
   );
@@ -155,13 +162,14 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 `;
 
-interface ContentContainerProps {
+interface IsGeneralRecommendProps {
   $isGeneralRecommend: boolean;
 }
 
-const ContentContainer = styled.div<ContentContainerProps>`
+const ContentContainer = styled.div<IsGeneralRecommendProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,10 +178,21 @@ const ContentContainer = styled.div<ContentContainerProps>`
   border: 1px solid black;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#ebf4fc" : "#f1e2ff"};
+    props.$isGeneralRecommend ? "#fec2c2" : "#0e3b62"};
+  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
 `;
 
-const Content = styled.div`
+const GeneralContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 80%;
+  height: 60%;
+`;
+
+const PersonalContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,28 +247,51 @@ const RecommendBarArea = styled.div`
   box-sizing: border-box;
 `;
 
-const GeneralRecommendBar = styled.div`
+const PresentRecommendBar = styled.div<IsGeneralRecommendProps>`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 80%;
   height: 100%;
   border: 1px solid black;
   box-sizing: border-box;
-  background-color: #ebf4fc;
+  background-color: ${(props) =>
+    props.$isGeneralRecommend ? "#ffaeae" : "#093760"};
+  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
+  z-index: 10;
+`;
+const RemainRecommendBar = styled.div<IsGeneralRecommendProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: ${(props) =>
+    props.$isGeneralRecommend ? "#0e3b62" : "#fec2c2"};
+  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
+  z-index: 8;
 `;
 
-const PersonalRecommendBar = styled.div`
+const GeneralRecBar = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+
+  cursor: pointer;
+`;
+
+const PersonalRecBar = styled.div`
+  width: 100%;
   height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
-  background-color: #f1e2ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
 `;
 
 export default Main;
