@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
 
-const PersonalSearchBox = () => {
+interface PersonalSearchBoxProps {
+  onSearchClick: () => void;
+}
 
+
+const PersonalSearchBox = ({ onSearchClick }: PersonalSearchBoxProps) => {
   return (
     <Container>
       <SearchContainer>
         <Title>Book</Title>
         <InputBoxContainer>
           <input />
-          <FaSearch />
+          <FaSearch onClick={onSearchClick} />
         </InputBoxContainer>
       </SearchContainer>
     </Container>
