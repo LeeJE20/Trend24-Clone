@@ -4,28 +4,35 @@ import styled from 'styled-components';
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  keywordList: string[]
 }
 
 const Modal = (props: ModalProps) => {
+
   return (
-    <ModalWrapper isOpen={props.isOpen} onClick={props.onClose}>
+    <ModalWrapper $isOpen={props.isOpen} onClick={props.onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        {props.children}
+        <h1>서랍에 추가</h1>
+        <select>
+          {props.keywordList.map((li, idx) =>(
+            <option key={idx}>{li}</option>
+            ))}
+        </select>
+        <button> 저장</button>
         <CloseButton onClick={props.onClose}>X</CloseButton>
       </ModalContent>
     </ModalWrapper>
   );
 };
 
-const ModalWrapper = styled.div<{ isOpen: boolean }>`
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+const ModalWrapper = styled.div<{ $isOpen: boolean }>`
+  display: ${(props) => (props.$isOpen ? 'block' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.079);
   z-index: 999;
 `;
 
@@ -37,6 +44,10 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+
+
 `;
 
 const CloseButton = styled.button`

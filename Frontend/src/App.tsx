@@ -19,9 +19,12 @@ import Event from "./pages/Event";
 import Main from "./components/pages/event/Main";
 import GeneralRecommend from "./pages/GeneralRecommend";
 import PersonalRecommend from "./pages/PersonalRecommend";
+import PersonalSearch from "./pages/PersonalSearch";
+import PersonalResult from "./pages/PersonalResult";
 import GeneralRecommendBook from "./components/pages/generalrecommend/GeneralRecommendBook";
 
-import Practice from "./pages/Practice";
+import { TransitionProvider } from "./components/pages/PersonalRecommend/TransitionConText";
+import TransitionComponent from "./components/pages/PersonalRecommend/Transition";
 
 // // usePageTracking 훅 구현
 // const usePageTracking = () => {
@@ -38,30 +41,55 @@ import Practice from "./pages/Practice";
 function App() {
   // usePageTracking(); // usePageTracking 훅 호출
   return (
-    <Routes>
-      <Route path="/event" element={<Event />}>
-        <Route path="" element={<Main />} />
-        <Route path="personal" element={<PersonalRecommend />} />
+    <TransitionProvider>
+      <Routes>
+        <Route path="/event" element={<Event />}>
+          <Route path="" element={<Main />} />
+          <Route
+            path="personal"
+            element={
+              <TransitionComponent>
+                <PersonalRecommend />
+              </TransitionComponent>
+            }
+          />
+          <Route
+            path="personal/search"
+            element={
+              <TransitionComponent>
+                <PersonalSearch />
+              </TransitionComponent>
+            }
+          />
+          <Route
+            path="personal/result"
+            element={
+              <TransitionComponent>
+                <PersonalResult />
+              </TransitionComponent>
+            }
+          />
         <Route path="general" element={<GeneralRecommend />} />
         <Route path="general/recommend" element={<GeneralRecommendBook />} />
-      </Route>
+        </Route>
 
-      <Route path="/prac" element={<Practice />} />
+        <Route path="/prac" element={<PersonalRecommend />} />
 
-      <Route path="/" element={<Login />} />
-      <Route path="/main" element={<Dashboard />}>
-        <Route path="" element={<HotTrend />} />
-        <Route path="trendSearch" element={<TrendSearch />} />
-        <Route path="userActivity" element={<UserActivity />} />
-        <Route path="bookSearch" element={<BookSearch />} />
-        <Route path="bookDrawer" element={<BookDrawer />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/main" element={<Dashboard />}>
+          <Route path="" element={<HotTrend />} />
+          <Route path="trendSearch" element={<TrendSearch />} />
+          <Route path="userActivity" element={<UserActivity />} />
+          <Route path="bookSearch" element={<BookSearch />} />
+          <Route path="bookDrawer" element={<BookDrawer />} />
 
-        <Route path="customizePage" element={<CustomizePage />} />
-        <Route path="custom" element={<RnDCustom />} />
-      </Route>
+          <Route path="customizePage" element={<CustomizePage />} />
+          <Route path="custom" element={<RnDCustom />} />
+        </Route>
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </TransitionProvider>
   );
 }
 
