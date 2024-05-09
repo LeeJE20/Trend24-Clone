@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://70.12.247.130:8081/api',
+  baseURL: 'https://trend24.live/api',
   headers: {'Content-Type': 'application/json'}
 })
 

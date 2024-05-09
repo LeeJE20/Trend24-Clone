@@ -7,15 +7,36 @@ import {
   Book,
   PageInfo,
 } from "../constants/DummyData/BookListData";
+import { getTrendCategories } from "../apis/recommendApi";
+
+interface TrendCategoryDataType {
+  trendCategoryId: number;
+  name: string;
+  keywords: {
+    keywordId: number;
+    name: string;
+  }[];
+}
 
 const TrendSearch = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
   const [selectedKeyword, setSelectedKeyword] = useState<string[]>([]);
+  const [trendCategoryData, setTrendCategoryData] =
+    useState<TrendCategoryDataType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
   useEffect(() => {
     setBookList(bookListData);
+    const fetchData = async() =>{
+      try{
+        const res = await getTrendCategories();
+        setTrendCategoryData(res);
+      }catch(error){
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleKeywordChange = (keywords: string[]) => {
@@ -47,6 +68,7 @@ const TrendSearch = () => {
       <FilterContainer>
         <KeywordFilter
           selectedKeyword={selectedKeyword}
+          trendCategoryData={trendCategoryData}
           onKeywordChange={handleKeywordChange}
           onSearch={handleSearch}
         />

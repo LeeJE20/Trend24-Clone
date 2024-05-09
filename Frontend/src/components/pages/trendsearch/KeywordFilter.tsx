@@ -2,10 +2,19 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
 import { FaSearch } from "react-icons/fa";
-import { trendCategoryData } from "../../../constants/DummyData/TrendCategoryData";
+
+interface TrendCategoryDataType {
+  trendCategoryId: number;
+  name: string;
+  keywords: {
+    keywordId: number;
+    name: string;
+  }[];
+}
 
 interface KeywordFilterProps {
   selectedKeyword: string[];
+  trendCategoryData: TrendCategoryDataType[];
   onKeywordChange: (keywords: string[]) => void;
   onSearch: () => void;
 }
@@ -14,6 +23,7 @@ const KeywordFilter = ({
   selectedKeyword,
   onKeywordChange,
   onSearch,
+  trendCategoryData,
 }: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 

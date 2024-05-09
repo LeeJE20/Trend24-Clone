@@ -1,18 +1,23 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 
+interface KeywordCalendarProps {
+  rankingData: KeywordCalendarType[]; 
+}
+
 interface KeywordCalendarType {
   date: string;
   ranking: number;
 }
 
-const KeywordCalendar = (rankingData: KeywordCalendarType[]) => {
+
+const KeywordCalendar = ({rankingData}: KeywordCalendarProps) => {
   console.log("rankingData", rankingData.length);
-  
+
   // rankingData의 길이가 1 이상인 경우에만 렌더링
   if (rankingData.length > 0) {
     console.log("rankingData", rankingData);
-    
+
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     const baseDate = new Date(rankingData[0].date);
     const dayOfWeek = rankingData.map((li) => li.date.split("-")[2]);
