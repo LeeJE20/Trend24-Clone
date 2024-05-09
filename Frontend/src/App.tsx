@@ -20,8 +20,8 @@ import PersonalRecommend from "./pages/PersonalRecommend";
 import PersonalSearch from "./pages/PersonalSearch";
 import PersonalResult from "./pages/PersonalResult";
 
-import { TransitionProvider } from "./constants/TransitionConText";
-import TransitionComponent from "./components/Transition";
+import { TransitionProvider } from "./components/pages/PersonalRecommend/TransitionConText";
+import TransitionComponent from "./components/pages/PersonalRecommend/Transition";
 
 function App() {
   return (
