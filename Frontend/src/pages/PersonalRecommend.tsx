@@ -3,8 +3,9 @@ import { PersonalRecommendData } from "../constants/DummyData/PersonalRecommendD
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-
 import { useNavigate } from "react-router-dom";
+import { FaQuoteLeft } from "react-icons/fa6";
+
 
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -29,6 +30,8 @@ const PersonalRecommend = () => {
       const startX = gsap.getProperty(layer, "x");
       tl.to(layer, { x:  Number(startX) - 20, y: Number(startY) - 200, ease: "none" }, 0);
     });
+
+
   });
 
 
@@ -44,8 +47,10 @@ const PersonalRecommend = () => {
       <BoxContainer className="image_container">
         {PersonalRecommendData.map((li, idx) => (
           <Box key={idx} className="card" onClick={()=>cardClick(idx)}>
-            <div className="content">"{li}"</div>
-            <img className="img" src="/public/Image/EventPage/fold.webp"></img>
+            <div className="quote"><FaQuoteLeft/></div>
+            
+            <div className="content">{li}</div>
+            <img className="img" src="/public/Image/EventPage/glass1.png" />
           </Box>
         ))}
       </BoxContainer>
@@ -72,7 +77,7 @@ const Title = styled.div`
   z-index: 1; 
   overflow-x: hidden;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
 `;
 
@@ -105,13 +110,19 @@ const Box = styled.div`
   border-radius: 30px;
   opacity: 0.7;
   
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.8); /* 안쪽 그림자 추가 */
+  box-shadow: vinset 0px 0px 10px rgba(0, 0, 0, 0.8); /* 안쪽 그림자 추가 */
 
   overflow: hidden;
   &:hover { 
     cursor: pointer;
     opacity: 1;
     transition: opacity 0.5s ease;
+  }
+
+  .quote{
+    font-size: 4rem;
+    margin: 0;
+    font-weight: 900;
   }
 
   .img {
@@ -124,6 +135,8 @@ const Box = styled.div`
   
   &:nth-child(2n){
     margin-top: 10px;
+    background-image: linear-gradient(to bottom right, #e6cbac, white);
+
   }
 
   &:nth-child(3n){
