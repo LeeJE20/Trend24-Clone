@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 public class RecommendDto {
 	@Getter
@@ -25,11 +27,12 @@ public class RecommendDto {
 
 	// 책과 해당 책을 추천해준 키워드들
 	@Getter
+	@SuperBuilder
 	@NoArgsConstructor
 	public static class BookWithKeywords extends BookDto.Response {
+		@Setter
 		private List<String> keywords = new ArrayList<>();
 
-		@Builder
 		public BookWithKeywords(Integer bookId, Integer productId, String productName, String categoryName,
 			String searchKeyword, Integer totalClickCount, Integer totalOrderCount, Integer totalOrderAmount,
 			Integer salePrice,
