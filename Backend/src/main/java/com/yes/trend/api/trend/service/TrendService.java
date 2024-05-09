@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yes.trend.api.trend.dto.KeywordOriginDataDto;
 import com.yes.trend.api.trend.dto.TrendDto;
 import com.yes.trend.api.trend.mapper.TrendMapper;
 import com.yes.trend.common.costants.ErrorCode;
@@ -20,6 +21,8 @@ import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.keyword.entity.KeywordView;
 import com.yes.trend.domain.keyword.repository.KeywordRepository;
 import com.yes.trend.domain.keyword.repository.KeywordViewRepository;
+import com.yes.trend.domain.keyword.service.KeywordService;
+import com.yes.trend.domain.origindata.repository.OriginDataRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +34,9 @@ import lombok.extern.slf4j.Slf4j;
 public class TrendService {
 	private final KeywordViewRepository keywordViewRepository;
 	private final KeywordRepository keywordRepository;
+	private final OriginDataRepository originDataRepository;
 	private final TrendMapper trendMapper;
+	private final KeywordService keywordService;
 
 	public ListDto<TrendDto.DailyKeywordsDto> getDailyKeywords() {
 		LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
@@ -64,8 +69,7 @@ public class TrendService {
 	}
 
 	public ListDto<TrendDto.KeywordRanking> getKeywordsRankingHistories(int keywordId) {
-		Keyword keyword = keywordRepository.findById(keywordId)
-			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, keywordId));
+		Keyword keyword = keywordService.findById(keywordId);
 		LocalDate keywordCreatedDate = keyword.getCreatedTime().toLocalDate();
 		LocalDateTime startOfDay = LocalDateTime.of(keywordCreatedDate, LocalTime.MIN)
 			.minusDays(6L);
@@ -97,4 +101,15 @@ public class TrendService {
 		return new ListDto<>(keywordHistories);
 
 	}
+
+	public ListDto<KeywordOriginDataDto> getKeywordOriginData(int keywordId) {
+		// 잘못 입력했는지 검증용
+		Keyword keyword = keywordService.findById(keywordId);
+		List<KeywordOriginDataDto> dtos = originDataRepository.findKeywordOriginDataDtoByKeywordId(keywordId);
+		if (dtos.isEmpty()) {
+			throw new CustomException(ErrorCode.NO_ORIGIN_DATA_BY_KEYWORD, keywordId);
+		}
+		return new ListDto<>(dtos);
+	}
+
 }
