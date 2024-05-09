@@ -1,28 +1,38 @@
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
-import { trendWordType } from "../../../constants/DummyData/TrendKeywordData";
 
 interface Props {
-  header: string;
-  columnList: trendWordType[];
-  handleKeyword: (key: string) => void;
-  handleTableClick: (idx: number | null) => void;
-  keyword: string;
-  idx: number;
+  date: string;
+  columnList: wordType[];
+  handleKeyword: (key: wordType) => void;
+  handleTableClick: (idx: string | null) => void;
+  selectedKeyword: wordType | null;
+  // idx: number;
+}
+
+interface wordType {
+  keywordId: number;
+  name: string;
+  clickCount: number;
+  ranking: number;
 }
 
 function Table({
-  header,
+  date,
   columnList,
   handleKeyword,
   handleTableClick,
-  keyword,
-  idx,
+  selectedKeyword,
 }: Props) {
-  const keywordClick = (li: string) => {
+
+  const keywordClick = (li: wordType) => {
     handleKeyword(li);
-    if (keyword === "") {
-      handleTableClick(idx);
+    console.log("date", date);
+    console.log(columnList);
+    
+    
+    if (selectedKeyword === null) {
+      handleTableClick(date);
     }
   };
 
@@ -34,13 +44,17 @@ function Table({
     <TableContainer>
       <thead onClick={tableChange}>
         <tr>
-          <th>{header}</th>
+          <th>{date}</th>
         </tr>
       </thead>
       <tbody>
         {columnList.map((li, idx) => (
-          <TableRow key={idx} $keyword={keyword} $data={li.name}>
-            <td onClick={() => keywordClick(li.name)}>{li.name}</td>
+          <TableRow
+            key={idx}
+            $selectedKeyword={selectedKeyword}
+            $currentKeyword={li.keywordId}
+          >
+            <td onClick={() => keywordClick(li)}>{li.name}</td>
           </TableRow>
         ))}
       </tbody>
@@ -52,7 +66,6 @@ const TableContainer = styled.table`
   font-size: 1.4rem;
   width: 100%;
   min-width: 100px;
-  height: 100%;
   border-collapse: collapse;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   background-color: white;
@@ -76,9 +89,15 @@ const TableContainer = styled.table`
   }
 `;
 
-const TableRow = styled.tr<{ $keyword: string; $data: string }>`
-  background-color: ${({ $keyword, $data }) =>
-    $keyword === $data ? "gray" : "transparent"};
+const TableRow = styled.tr<{
+  $selectedKeyword: wordType | null;
+  $currentKeyword: number;
+}>`
+  background-color: ${({ $selectedKeyword, $currentKeyword }) =>
+    $selectedKeyword !== null && $selectedKeyword?.keywordId === $currentKeyword
+      ? "gray"
+      : "transparent"};
+
   td {
     &:hover {
       &:before {

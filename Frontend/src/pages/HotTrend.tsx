@@ -1,43 +1,53 @@
 import styled from "styled-components";
 import Table from "../components/pages/hottrend/KeywordTable";
-import { trendKeyword } from "../constants/DummyData/TrendKeywordData";
 import { useState, useEffect } from "react";
 import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
 import { getTrendKeyword } from "../apis/trendApi";
 
-interface TrendKeywordData {
+interface TrendKeywordType {
   date: string;
-  words: string[];
+  words: wordType[];
+}
+
+interface wordType{
+  keywordId: number;
+  name: string;
+  clickCount:number;
+  ranking: number;
 }
 
 const HotTrend = () => {
-  const [keyword, setKeyword] = useState("");
-  const [selectedTable, setSelectedTable] = useState<number | null>(null);
-  // const [trendKeyword, setTrendKeyword] = useState<object[]>([]);
+  const [keyword, setKeyword] = useState<wordType | null>(null); // 키워드의 단어와 id 저장
+  const [selectedTable, setSelectedTable] = useState<string>(""); // 날짜 데이터 저장
+  const [trendKeyword, setTrendKeyword] = useState<TrendKeywordType[]>([]); // 전체 테이블의 키워드 정보 저장
 
-  const handleTableClick = (idx: number) => {
-    if (selectedTable == null) {
-      setSelectedTable(idx);
+  // 테이블 클릭 이벤트 
+  const handleTableClick = (date: string) => {
+    console.log("selectedTable", date);
+    
+    if (selectedTable == "") {
+      setSelectedTable(date);
     } else {
-      setSelectedTable(null);
-      setKeyword("");
+      setSelectedTable("");
+      setKeyword(null);
     }
   };
 
-  const handleKeyword = (key: string) => {
-    console.log(key);
+  // 키워드 클릭했을때 이벤트
+  const handleKeyword = (key: wordType) => {
     setKeyword(key);
   };
   
+  // 데이터 통신
   useEffect(()=>{
-    const fetchData = async():Promise<TrendKeywordData[]> =>{
+    const fetchData = async() =>{
       try{
         return await getTrendKeyword();
       }catch (error){
         console.log(error);
       }
     }
-    // fetchData().then(res => setTrendKeyword(res));
+    fetchData().then(res => setTrendKeyword(res));
   },[])
 
   return (
@@ -46,24 +56,22 @@ const HotTrend = () => {
       <Content>
         {trendKeyword.map(
           (list, idx) =>
-            (selectedTable === null || selectedTable === idx) && (
+            (selectedTable === "" || selectedTable === list.date) && (
               <TableWrapper key={idx}>
                 <Table
-                  key={idx}
-                  header={list.date}
+                  date={list.date}
                   columnList={list.words}
-                  idx={idx}
                   handleKeyword={handleKeyword}
-                  handleTableClick={() => handleTableClick(idx)}
-                  keyword={keyword}
+                  handleTableClick={() => handleTableClick(list.date)}
+                  selectedKeyword={keyword}
                 />
               </TableWrapper>
             )
         )}
 
-        {selectedTable !== null && (
+        {selectedTable !== "" && (
           <KeywordDetailWrapper>
-            <KeywordDetail keyword={keyword} />
+            <KeywordDetail keyword={keyword!} />
           </KeywordDetailWrapper>
         )}
       </Content>
@@ -99,6 +107,7 @@ const TableWrapper = styled.div`
   overflow: auto;
   margin-right: 5px;
   flex-grow: 1;
+  background-color: white;
 
   &:first-child {
     box-shadow: 1px 0px 5px 1px #67676755;

@@ -3,21 +3,47 @@ import { useState, useEffect } from "react";
 import KeywordCalendar from "./KeywordCalendar";
 import KeywordSource from "./KeywordSource";
 import BookList from "../trendsearch/BookList";
-import { trendRank } from "../../../constants/DummyData/TrendRankData";
 import {
   bookListData,
   Book,
   PageInfo,
 } from "../../../constants/DummyData/BookListData";
 import { referenceData } from "../../../constants/DummyData";
+import { getKeywordRanking } from "../../../apis/trendApi";
 
-const KeywordDetail = ({ keyword }: { keyword: string }) => {
+interface wordType{
+  keywordId: number;
+  name: string;
+  clickCount:number;
+  ranking: number;
+}
+
+interface rankingType{
+  date: string;
+  ranking: number;
+}
+
+const KeywordDetail = ({ keyword }: { keyword: wordType }) => {
   const [bookList, setBookList] = useState<Book[]>([]);
+  const [ranking, setRanking] = useState<rankingType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
   useEffect(() => {
     setBookList(bookListData);
+    // console.log("keyword", keyword.keywordId);
+    const fetchData = async() =>{
+      try{
+        return await getKeywordRanking(keyword?.keywordId);
+      }catch (error){
+        console.log(error);
+      }
+    }
+    
+    
+    fetchData().then(res => res.length !== 0? setRanking(res):null);
+
+
   }, [keyword]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -34,12 +60,14 @@ const KeywordDetail = ({ keyword }: { keyword: string }) => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
+  
+
   return (
     <Container>
       <BookWrapper>
         <BookList
           bookList={currentItems}
-          title={"# " + keyword}
+          title={"# " + keyword?.name}
           pageInfo={
             {
               page: currentPage,
@@ -54,7 +82,7 @@ const KeywordDetail = ({ keyword }: { keyword: string }) => {
       </BookWrapper>
 
       <KeywordCalendarWrapper>
-        <KeywordCalendar rankData={trendRank} />
+        <KeywordCalendar rankingData={ranking} />
       </KeywordCalendarWrapper>
 
       <KeywordSourceWrapper>

@@ -1,41 +1,51 @@
+import { useEffect } from "react";
 import styled from "styled-components";
-import { TrendRankType } from "../../../constants/DummyData/TrendRankData";
 
-interface KeywordCalendarProps {
-  rankData: TrendRankType[];
+interface KeywordCalendarType {
+  date: string;
+  ranking: number;
 }
 
-const KeywordCalendar = (props: KeywordCalendarProps) => {
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const baseDate = new Date(props.rankData[0].date);
-  const dayOfWeek = props.rankData.map((li) => li.date.split("-")[2]);
-  const date = [...Array(7)].map(
-    (_, i) => days[(baseDate.getDay() - i + 7) % 7]
-  );
-  const inChart = props.rankData.map((li) => (li.rank > 0 ? true : false));
+const KeywordCalendar = (rankingData: KeywordCalendarType[]) => {
+  console.log("rankingData", rankingData.length);
+  
+  // rankingData의 길이가 1 이상인 경우에만 렌더링
+  if (rankingData.length > 0) {
+    console.log("rankingData", rankingData);
+    
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const baseDate = new Date(rankingData[0].date);
+    const dayOfWeek = rankingData.map((li) => li.date.split("-")[2]);
+    const date = [...Array(7)].map(
+      (_, i) => days[(baseDate.getDay() - i + 7) % 7]
+    );
+    const inChart = rankingData.map((li) => (li.ranking > 0 ? true : false));
 
-  const CalendarObject = dayOfWeek.map((_, index) => ({
-    dayOfWeek: dayOfWeek[index],
-    date: date[index],
-    inChart: inChart[index],
-  }));
+    const CalendarObject = dayOfWeek.map((_, index) => ({
+      dayOfWeek: dayOfWeek[index],
+      date: date[index],
+      inChart: inChart[index],
+    }));
 
-  return (
-    <Container>
-      <Title>키워드</Title>
-      <DateLabel>
-        {baseDate.getFullYear()}년 {baseDate.getMonth() + 1}월
-      </DateLabel>
-      <CalendarWrapper>
-        {CalendarObject.map((calendar, index) => (
-          <DayList key={index} $inChart={calendar.inChart}>
-            <div className="dayOfWeek">{calendar.dayOfWeek}</div>
-            <div className="date">{calendar.date}</div>
-          </DayList>
-        ))}
-      </CalendarWrapper>
-    </Container>
-  );
+    return (
+      <Container>
+        <Title>키워드</Title>
+        <DateLabel>
+          {baseDate.getFullYear()}년 {baseDate.getMonth() + 1}월
+        </DateLabel>
+        <CalendarWrapper>
+          {CalendarObject.map((calendar, index) => (
+            <DayList key={index} $inChart={calendar.inChart}>
+              <div className="dayOfWeek">{calendar.dayOfWeek}</div>
+              <div className="date">{calendar.date}</div>
+            </DayList>
+          ))}
+        </CalendarWrapper>
+      </Container>
+    );
+  } else {
+    return null; // rankingData의 길이가 0이면 null을 반환하여 렌더링하지 않음
+  }
 };
 
 const Container = styled.div`
