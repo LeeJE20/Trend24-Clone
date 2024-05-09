@@ -224,3 +224,7 @@ END$$
 DELIMITER ;
 
 CALL AddUriColumnIfNotExists();
+
+-- 컬럼 길이 늘리기
+ALTER TABLE trend.book
+    MODIFY COLUMN contents MEDIUMTEXT;
