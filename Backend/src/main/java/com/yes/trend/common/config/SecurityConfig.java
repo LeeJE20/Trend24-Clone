@@ -70,7 +70,7 @@ public class SecurityConfig {
 		final String[] ALLOWED_HOSTS = new String[] {
 			LOCALHOST,
 			"172.18.0.2:",
-			FRONT_DOMAIN+":"
+			FRONT_DOMAIN + ":"
 		};
 
 		final String[] PROTOCOLS = {"http://", "https://"};
