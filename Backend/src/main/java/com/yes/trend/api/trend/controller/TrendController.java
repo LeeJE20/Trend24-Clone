@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yes.trend.api.trend.dto.KeywordOriginDataDto;
 import com.yes.trend.api.trend.dto.TrendDto;
 import com.yes.trend.api.trend.service.TrendService;
 import com.yes.trend.common.costants.SuccessCode;
@@ -32,5 +33,11 @@ public class TrendController {
 	@GetMapping("/keywords/{keywordId}/ranking")
 	public ApiResponse<ListDto<TrendDto.KeywordRanking>> getKeywordsRankingHistories(@PathVariable int keywordId) {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, trendService.getKeywordsRankingHistories(keywordId));
+	}
+
+	@Operation(summary = "HT-06 키워드 참고 데이터", description = "키워드 출처 데이터를 보내준다.")
+	@GetMapping("/keywords/{keywordId}/reference")
+	public ApiResponse<ListDto<KeywordOriginDataDto>> getKeywordOriginData(@PathVariable int keywordId) {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, trendService.getKeywordOriginData(keywordId));
 	}
 }

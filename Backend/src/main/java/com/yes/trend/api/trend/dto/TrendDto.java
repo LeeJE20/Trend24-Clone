@@ -3,6 +3,7 @@ package com.yes.trend.api.trend.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yes.trend.domain.keyword.dto.KeywordDto;
 
 import lombok.Builder;
@@ -36,4 +37,17 @@ public class TrendDto {
 		}
 	}
 
+	@Getter
+	@NoArgsConstructor
+	public static class OriginData {
+		private String uri = "";
+		private JsonNode contents;
+
+		@Builder
+		public OriginData(String uri, JsonNode contents) {
+			if (uri != null)
+				this.uri = uri;
+			this.contents = contents;
+		}
+	}
 }
