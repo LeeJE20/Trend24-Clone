@@ -3,12 +3,19 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { GeneralDummyBookList } from "../../../constants/DummyData/GeneralRecommendDummy";
 import { GeneralDummyBookListData } from "../../../constants/DummyData/GeneralRecommendDummy";
+import BookDetail from "./BookDetail";
+import BookScroll from "./BookScroll";
 
 const GeneralRecommendBook = () => {
   const location = useLocation();
   const [title, setTitle] = useState<string>("");
   const [bookList, setBookList] = useState<GeneralDummyBookList[]>([]);
   const bookContainerRef = useRef<HTMLDivElement>(null);
+
+  const [showScrollBook, setShowScrollBook] = useState<boolean>(false);
+  const [selectedBookInfo, setSelectedBookInfo] = useState<
+    GeneralDummyBookList[]
+  >([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,10 +60,23 @@ const GeneralRecommendBook = () => {
     setBookList(GeneralDummyBookListData);
   }, [location.state.title]);
 
-  const showDetail = () => {
-    console.log("show detail");
-    // 책 디테일 보여줘야됨
-    // 페이지 넘기는 효과
+  const showBook = (book: GeneralDummyBookList) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    setSelectedBookInfo([book]); // 선택된 책의 정보를 저장
+    setShowScrollBook(true);
+  };
+
+  const toggleBack = () => {
+    setShowScrollBook(false);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -66,30 +86,29 @@ const GeneralRecommendBook = () => {
           {title}
           word cloud
         </WordContainer>
-        <Section>
-          <StyledBookContainer ref={bookContainerRef}>
-            {bookList.map((book) => (
-              <Book key={book.title}>
-                <BookImg>
-                  <img src="https://via.placeholder.com/150" alt="book" />
-                </BookImg>
-                <TextArea>
-                  <div>{book.title}</div>
-                  <div>{book.keyword1}</div>
-                  <div>{book.keyword2}</div>
-                  <div>{book.keyword3}</div>
-                  <button
-                    onClick={() => {
-                      showDetail();
-                    }}
-                  >
-                    상세보기
-                  </button>
-                </TextArea>
-              </Book>
-            ))}
-          </StyledBookContainer>
-        </Section>
+        {showScrollBook ? (
+          <BookScroll back={toggleBack} bookInfo={selectedBookInfo} /> // 선택된 책의 정보를 prop으로 전달
+        ) : (
+          <Section>
+            <StyledBookContainer ref={bookContainerRef}>
+              {bookList.map((book, index) => (
+                <Book key={book.title}>
+                  <BookImg>
+                    <BookDetail bookinfo={book} />
+                  </BookImg>
+                  <TextArea>
+                    <div>{book.title + index}</div>
+                    <div>{book.keyword1}</div>
+                    <div>{book.keyword2}</div>
+                    <div>{book.keyword3}</div>
+                    <button onClick={() => showBook(book)}>상세보기</button> //
+                    이벤트 핸들러에 현재 책의 정보를 전달
+                  </TextArea>
+                </Book>
+              ))}
+            </StyledBookContainer>
+          </Section>
+        )}
       </Container>
     </Con>
   );
