@@ -69,22 +69,33 @@ public class SecurityConfig {
 
 		final String[] ALLOWED_HOSTS = new String[] {
 			LOCALHOST,
-			"127.0.0.1:"
+			"172.18.0.2:",
+			FRONT_DOMAIN+":"
 		};
 
 		final String[] PROTOCOLS = {"http://", "https://"};
 
 		final int DEFAULT_PORT = 80;
+		final int SSL_PORT = 443;
+		final int OPEN_PORT = 3000;
 		final int ALLOWED_MIN_PORT = 5173;
 		final int ALLOWED_MAX_PORT = 5175;
+
+		final int[] PORTS = new int[] {
+			DEFAULT_PORT, SSL_PORT, OPEN_PORT
+		};
 
 		// 허용할 origin 목록
 		List<String> allowedOrigins = new ArrayList<>();
 		allowedOrigins.add(FRONT_DOMAIN);
 
 		for (String protocol : PROTOCOLS) {
-
-			allowedOrigins.add(protocol + LOCALHOST + DEFAULT_PORT);
+			allowedOrigins.add(protocol + FRONT_DOMAIN);
+			for (int port : PORTS) {
+				for (String host : ALLOWED_HOSTS) {
+					allowedOrigins.add(protocol + host + port);
+				}
+			}
 
 			int allowedPort = ALLOWED_MIN_PORT;
 
