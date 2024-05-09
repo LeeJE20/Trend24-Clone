@@ -191,3 +191,8 @@ create table IF NOT EXISTS trend.trend_source
         foreign key (origin_data_id) references trend.origin_data (id)
 );
 
+-- 컬럼 디폴트 값 변경
+ALTER TABLE trend.keyword
+MODIFY COLUMN ranking INT DEFAULT 0,
+MODIFY COLUMN click_count INT DEFAULT 0,
+MODIFY COLUMN selected BIT DEFAULT 1;
