@@ -191,8 +191,40 @@ create table IF NOT EXISTS trend.trend_source
         foreign key (origin_data_id) references trend.origin_data (id)
 );
 
+
 -- 컬럼 디폴트 값 변경
 ALTER TABLE trend.keyword
 MODIFY COLUMN ranking INT DEFAULT 0,
 MODIFY COLUMN click_count INT DEFAULT 0,
 MODIFY COLUMN selected BIT DEFAULT 1;
+
+-- 컬럼 추가
+-- 프로시저가 존재하는지 확인하고 있다면 삭제
+DROP PROCEDURE IF EXISTS AddUriColumnIfNotExists;
+
+DELIMITER $$
+
+CREATE PROCEDURE AddUriColumnIfNotExists()
+BEGIN
+    DECLARE column_count INT;
+
+    -- 컬럼이 존재하는지 확인
+    SELECT COUNT(*)
+    INTO column_count
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = 'trend' AND TABLE_NAME = 'origin_data' AND COLUMN_NAME = 'uri';
+
+    -- 컬럼이 존재하지 않으면 추가
+    IF column_count = 0 THEN
+        ALTER TABLE `trend`.`origin_data`
+            ADD COLUMN `uri` VARCHAR(255) NULL; -- 여기에 원하는 컬럼 타입 및 옵션을 추가할 수 있습니다.
+    END IF;
+END$$
+
+DELIMITER ;
+
+CALL AddUriColumnIfNotExists();
+
+-- 컬럼 길이 늘리기
+ALTER TABLE trend.book
+    MODIFY COLUMN contents MEDIUMTEXT;
