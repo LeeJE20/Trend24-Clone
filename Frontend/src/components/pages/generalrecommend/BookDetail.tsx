@@ -1,59 +1,64 @@
-import { useEffect, useRef } from "react";
+// BookDetail.js
+import { useState, useRef } from "react";
 import { gsap } from "gsap";
 import styled from "styled-components";
 
-// 페이지 컴포넌트 스타일 정의
-const Page = styled.div`
+import { GeneralDummyBookList } from "../../../constants/DummyData/GeneralRecommendDummy";
+
+const BookContainer = styled.div`
+  position: relative;
   width: 200px;
   height: 300px;
-  background-color: lightblue;
-  border: 1px solid black;
+  perspective: 1000px;
+`;
+
+const BookInner = styled.div`
   position: absolute;
+  width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
+  transition: transform 0.8s;
+`;
+
+const BookPage = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
   backface-visibility: hidden;
 `;
 
-// useGSAP 커스텀 훅 정의
-const useGSAP = () => {
-  const animationRef = useRef(null);
+const FrontPage = styled(BookPage)`
+  background-color: #f1f1f1;
+`;
 
-  useEffect(() => {
-    if (!animationRef.current) return;
+const BackPage = styled(BookPage)`
+  background-color: #ddd;
+  transform: rotateY(180deg);
+`;
 
-    gsap.fromTo(
-      animationRef.current,
-      { rotationY: -180 },
-      { rotationY: 0, duration: 1, ease: "power2.inOut" }
-    );
-  }, []);
+const BookDetail = ({ bookinfo }: { bookinfo: GeneralDummyBookList }) => {
+  const [flipped, setFlipped] = useState(false);
+  const bookInnerRef = useRef(null);
 
-  return animationRef;
-};
-
-// 페이지 플립 컴포넌트 정의
-const FlipPages = () => {
-  const page1Ref = useGSAP();
-  const page2Ref = useRef(null);
+  const handleBookClick = () => {
+    gsap.to(bookInnerRef.current, {
+      duration: 0.8,
+      rotateY: flipped ? "0" : "-180",
+    });
+    setFlipped(!flipped);
+  };
 
   return (
-    <>
-      <Page ref={page1Ref}>Page 1</Page>
-      <Page ref={page2Ref} style={{ left: "220px" }}>
-        Page 2
-      </Page>
-      <button
-        onClick={() =>
-          gsap.to([page1Ref.current, page2Ref.current], {
-            rotationY: 180,
-            duration: 1,
-            ease: "power2.inOut",
-          })
-        }
+    <BookContainer onClick={handleBookClick}>
+      <BookInner
+        style={{ transform: flipped ? "rotateY(-180deg)" : "rotateY(0)" }}
+        ref={bookInnerRef}
       >
-        Flip Pages
-      </button>
-    </>
+        <FrontPage>{bookinfo.title}</FrontPage>
+        <BackPage>Back Page</BackPage>
+      </BookInner>
+    </BookContainer>
   );
 };
 
-export default FlipPages;
+export default BookDetail;
