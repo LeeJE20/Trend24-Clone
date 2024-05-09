@@ -40,6 +40,7 @@
     ```
 - 현재 디렉터리에서 다음 명령어 실행시키세요. </br>
   ``` shell
+  chmod +x docker-compose.sh
   ./docker-compose.sh
   ```
 
