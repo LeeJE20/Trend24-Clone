@@ -21,6 +21,7 @@ cd $(dirname "$0")/../../Backend
 # 컨테이너가 존재하는지 확인합니다.
 if docker ps -a --format '{{.Names}}' | grep -q '^trend-springboot-container$'; then
     # 컨테이너를 삭제합니다.
+    docker stop trend-springboot-container
     docker rm trend-springboot-container
     echo "기존 trend-springboot-container를 삭제했습니다."
 else
