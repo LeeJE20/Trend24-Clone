@@ -30,20 +30,20 @@ const Main = styled.main<{ $sidebarOpen: boolean }>`
   height: 100%;
   flex: 1;
   box-sizing: border-box;
-  
-  ::-webkit-scrollbar{
+
+  ::-webkit-scrollbar {
     width: 10px;
-}
+  }
 
-/* 스크롤바 막대 설정*/
-::-webkit-scrollbar-thumb{
+  /* 스크롤바 막대 설정*/
+  ::-webkit-scrollbar-thumb {
     background-color: #b8b8b8;
-    border-radius: 30px; 
-}
+    border-radius: 30px;
+  }
 
-::-webkit-scrollbar-track{
-	background-color: rgba(0,0,0,0);
-}
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
 `;
 
 export default Dashboard;

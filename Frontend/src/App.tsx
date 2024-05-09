@@ -19,6 +19,7 @@ import GeneralRecommend from "./pages/GeneralRecommend";
 import PersonalRecommend from "./pages/PersonalRecommend";
 import PersonalSearch from "./pages/PersonalSearch";
 import PersonalResult from "./pages/PersonalResult";
+import GeneralRecommendBook from "./components/pages/generalrecommend/GeneralRecommendBook";
 
 import { TransitionProvider } from "./components/pages/PersonalRecommend/TransitionConText";
 import TransitionComponent from "./components/pages/PersonalRecommend/Transition";
@@ -53,7 +54,8 @@ function App() {
               </TransitionComponent>
             }
           />
-          <Route path="general" element={<GeneralRecommend />} />
+        <Route path="general" element={<GeneralRecommend />} />
+        <Route path="general/recommend" element={<GeneralRecommendBook />} />
         </Route>
 
         <Route path="/prac" element={<PersonalRecommend />} />

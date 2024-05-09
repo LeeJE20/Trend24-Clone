@@ -1,6 +1,14 @@
 import styled from "styled-components";
 
-const CustomCancelModal = ({ toggleModal, cancelChange }) => {
+interface CustomCancelModalProps {
+  toggleModal: () => void;
+  cancelChange: () => void;
+}
+
+const CustomCancelModal = ({
+  toggleModal,
+  cancelChange,
+}: CustomCancelModalProps) => {
   return (
     <Container>
       <Modal>

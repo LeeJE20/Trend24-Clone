@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-
 const Toggle = () => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -22,14 +21,18 @@ const Toggle = () => {
       />
       <Bars
         style={{
-          transform: isChecked ? "translateY(-500%) translateX(-20%) rotate(-30deg)" : "none",
+          transform: isChecked
+            ? "translateY(-500%) translateX(-20%) rotate(-30deg)"
+            : "none",
           transformOrigin: "right",
           // zIndex: isChecked ? 2 : "unset",
         }}
       />
       <Bars
         style={{
-          transform: isChecked ? "translateY(50%) translateX(-15%) rotate(90deg)" : "none",
+          transform: isChecked
+            ? "translateY(50%) translateX(-15%) rotate(90deg)"
+            : "none",
           transformOrigin: "right",
           // zIndex: isChecked ? "unset" : 1,
         }}

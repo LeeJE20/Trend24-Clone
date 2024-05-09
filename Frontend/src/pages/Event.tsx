@@ -37,12 +37,14 @@ const Logo = styled.div`
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 100vh;
-  width: 100vw;
   background-color: #f9f9f9;
+  box-sizing: border-box;
 `;
 
 export default Event;
