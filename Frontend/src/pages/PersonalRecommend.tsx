@@ -4,7 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router-dom";
-import { FaQuoteLeft } from "react-icons/fa6";
+import QuestionCard from "../components/pages/PersonalRecommend/QuestionCard";
+
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -107,19 +108,12 @@ const PersonalRecommend = () => {
 
   return (
     <Container>
-      <Title className="title">Q. 질문 뭐시기 어쩌고</Title>
-      <BoxContainer className="image_container">
+      <Title className="title">당신의 기억 속에 있는<br/>책을 꺼내보세요.</Title>
+      <CardContainer className="image_container">
         {PersonalRecommendData.map((li, idx) => (
-          <Box key={idx} className="card" onClick={() => cardClick(idx)}>
-            <div className="quote">
-              <FaQuoteLeft />
-            </div>
-
-            <div className="content">{li}</div>
-            <img className="img" src="/public/Image/EventPage/glass1.png" />
-          </Box>
+          <QuestionCard key={idx} cardClick={cardClick} cardData={li} idx={idx} />
         ))}
-      </BoxContainer>
+      </CardContainer>
     </Container>
   );
 };
@@ -146,7 +140,7 @@ const Title = styled.div`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
-const BoxContainer = styled.div`
+const CardContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;

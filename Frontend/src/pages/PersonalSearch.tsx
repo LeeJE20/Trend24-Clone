@@ -36,6 +36,13 @@ const PersonalSearch = () => {
 };
 
 const Container = styled.div`
+@font-face {
+    font-family: 'Chosunilbo_myungjo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+  font-family: Chosunilbo_myungjo;
   display: flex;
   height: 100%;
   width: 80%;
