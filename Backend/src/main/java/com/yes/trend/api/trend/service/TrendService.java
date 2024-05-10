@@ -17,6 +17,7 @@ import com.yes.trend.api.trend.mapper.TrendMapper;
 import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.exception.CustomException;
+import com.yes.trend.domain.keyword.dto.KeywordDto;
 import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.keyword.entity.KeywordView;
 import com.yes.trend.domain.keyword.repository.KeywordRepository;
@@ -42,27 +43,36 @@ public class TrendService {
 		LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
 		LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
 
-		// 어제부터 1주일
-		LocalDateTime startOfDay = todayStart.minusWeeks(1L);
-		LocalDateTime endOfDay = todayEnd.minusDays(1L);
+		// 오늘부터 7일
+		LocalDateTime startOfDay = todayStart.minusWeeks(1L).plusDays(1L);
+		LocalDateTime endOfDay = todayEnd;
 
 		List<KeywordView> keywordViews = keywordViewRepository.findByCreatedTimeBetweenOrderByCreatedTimeDescRankingAsc(
 			startOfDay, endOfDay);
 
-		LocalDate currentDate = null;
-		TrendDto.DailyKeywordsDto currentDailyKeywordsDto = null;
-		List<TrendDto.DailyKeywordsDto> keywordList = new ArrayList<>();
+		// 날짜별 데이터
+		Map<LocalDate, List<KeywordDto.Response>> keywordsByDate = new LinkedHashMap<>();
+		LocalDate targetDate = endOfDay.toLocalDate();
+		while (targetDate.isEqual(startOfDay.toLocalDate()) || targetDate.isAfter(startOfDay.toLocalDate())) {
+			keywordsByDate.put(targetDate, new ArrayList<>());
+			targetDate = targetDate.minusDays(1L);
+		}
 
 		for (KeywordView keywordView : keywordViews) {
-			LocalDate date = keywordView.getCreatedTime().toLocalDate();
-			// 이전 키워드와 생성일이 다를 경우 새로운 DailyKeywordsDto 생성
-			if (!date.equals(currentDate)) {
-				currentDailyKeywordsDto = new TrendDto.DailyKeywordsDto(date, new ArrayList<>());
-				keywordList.add(currentDailyKeywordsDto);
-				currentDate = date;
+			{
+				LocalDate date = keywordView.getCreatedTime().toLocalDate();
+				keywordsByDate.get(date).add(trendMapper.KeywordViewToResponseDto(keywordView));
 			}
-			currentDailyKeywordsDto.getWords().add(trendMapper.KeywordViewToResponseDto(keywordView));
 		}
+
+		// 결과값
+		List<TrendDto.DailyKeywordsDto> keywordList = keywordsByDate.entrySet()
+			.stream()
+			.map(k -> TrendDto.DailyKeywordsDto.builder()
+				.date(k.getKey())
+				.words(k.getValue())
+				.build())
+			.toList();
 
 		return new ListDto<>(keywordList);
 
