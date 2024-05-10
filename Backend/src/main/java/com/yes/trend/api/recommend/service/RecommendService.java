@@ -80,10 +80,11 @@ public class RecommendService {
 		return new ListDto<>(list);
 	}
 
-	public ListDto<RecommendDto.CategoryWithKeywords> getTrendCategoriesWithKeywords() {
-		LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-		LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+	public ListDto<RecommendDto.CategoryWithKeywords> getTrendCategoriesWithKeywords(LocalDate targetDate) {
+		LocalDateTime todayStart = LocalDateTime.of(targetDate, LocalTime.MIN);
+		LocalDateTime todayEnd = LocalDateTime.of(targetDate, LocalTime.MAX);
 
+		// 나중에 날짜 조정할 일 있을까봐 만들어둠
 		LocalDateTime startOfDay = todayStart.minusDays(0L);
 		LocalDateTime endOfDay = todayEnd.minusDays(0L);
 
