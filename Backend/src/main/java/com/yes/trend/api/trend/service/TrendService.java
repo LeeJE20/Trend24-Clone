@@ -39,9 +39,9 @@ public class TrendService {
 	private final TrendMapper trendMapper;
 	private final KeywordService keywordService;
 
-	public ListDto<TrendDto.DailyKeywordsDto> getDailyKeywords() {
-		LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-		LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+	public ListDto<TrendDto.DailyKeywordsDto> getDailyKeywords(LocalDate lastDate) {
+		LocalDateTime todayStart = LocalDateTime.of(lastDate, LocalTime.MIN);
+		LocalDateTime todayEnd = LocalDateTime.of(lastDate, LocalTime.MAX);
 
 		// 오늘부터 7일
 		LocalDateTime startOfDay = todayStart.minusWeeks(1L).plusDays(1L);
