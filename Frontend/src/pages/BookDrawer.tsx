@@ -111,7 +111,6 @@ const BookDrawerContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
 `;
 
 const TitleContainer = styled.div`
@@ -120,7 +119,6 @@ const TitleContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 10%;
-  border: 1px solid #000;
 `;
 
 const Title = styled.div`
@@ -132,7 +130,6 @@ const Title = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid #000;
 `;
 
 const BtnBox = styled.div`
@@ -177,7 +174,8 @@ const Drawer = styled.div`
   align-items: center;
   width: 100%;
   height: 40vh;
-  border: 1px solid #000;
+  background-color: #ffffff;
+  border-radius: 10px;
 `;
 
 const DrawerTitle = styled.div`
@@ -189,7 +187,6 @@ const DrawerTitle = styled.div`
   height: 10%;
   display: flex;
   align-items: center;
-  border: 1px solid #000;
 `;
 
 const BookContainer = styled.div`
@@ -200,7 +197,6 @@ const BookContainer = styled.div`
   grid-template-rows: repeat(2, 1fr);
   justify-content: center;
   align-items: center;
-  border: 1px solid #000;
 `;
 
 const Book = styled.div`
@@ -233,10 +229,10 @@ const EmptyDrawer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #000;
   left: 10%;
   width: 80%;
   height: 60%;
+  background-color: #ffffff;
 `;
 
 const EmptyImg = styled.div`
