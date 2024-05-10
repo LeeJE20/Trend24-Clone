@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Book, PageInfo } from "../../../constants/DummyData/BookListData";
+import { PageInfo } from "../../../constants/DummyData/BookListData";
 import { GrFormNextLink } from "react-icons/gr";
 import { MdOutlineSave } from "react-icons/md";
 import BookDrawerSaveModal from "../../common/modal/BookDrawerSaveModal";
+import { BookType } from "../../../constants/Type/Type";
 
 interface BookListProps {
   title: string;
-  bookList: Book[];
+  bookList: BookType[];
   pageInfo: PageInfo;
   onNextPage: () => void;
   onPrevPage: () => void;
@@ -33,7 +34,7 @@ const BookList = ({
   };
 
   // 초기화 이펙트
-  useEffect(() => {
+  useEffect(() => {    
     setExpandedBookIndices(Array(bookList.length).fill(false));
   }, [bookList]);
 
@@ -49,7 +50,7 @@ const BookList = ({
     <Container>
       <Title>{title}</Title>
       <BookListContainer>
-        {bookList.map((book: Book, index: number) => (
+        {bookList.length !== 0 && bookList.map((book: BookType, index: number) => (
           <BookContainer key={index}>
             <BookCover
               $hovered={hoveredIndex === index}
@@ -58,7 +59,7 @@ const BookList = ({
               onClick={() => handleSaveButtonClick(book.bookId)}
             >
               <img
-                src={`https://image.yes24.com/goods/${book.product_id}/XL`}
+                src={`https://image.yes24.com/goods/${book.productId}/XL`}
                 alt="Book Cover"
               />
               {hoveredIndex === index && (
@@ -67,21 +68,27 @@ const BookList = ({
                 </div>
               )}
             </BookCover>
-            <BookDrawerSaveModal isOpen={modalOpen} onClose={() => {handleSaveButtonClick(index)}} keywordList={modalContent}>
-            </BookDrawerSaveModal>
+            <BookDrawerSaveModal
+              isOpen={modalOpen}
+              onClose={() => {
+                handleSaveButtonClick(index);
+              }}
+              keywordList={modalContent}
+            ></BookDrawerSaveModal>
             <BookInfo>
-              <div className="title">{book.product_name}</div>
+              <div className="title">{book.productName}</div>
               {expandedBookIndices[index] ? (
                 <div>줄거리 : {book.contents}</div>
               ) : (
                 <>
-                  <div>가격 : {book.sale_price}</div>
-                  <div>유입 검색어 : {book.search_keyword}</div>
-                  <div>클릭수 : {book.total_click_count}</div>
-                  <div>판매량 : {book.total_order_count}</div>
-                  <div>총 판매금액 : {book.total_order_amount}</div>
-                  <div>카테고리 : {book.category_name}</div>
-                  <div>키워드 : {book.keywords.map((x) => " # " + x)}</div>
+                  <div>가격 : {book.salePrice}</div>
+                  <div>유입 검색어 : {book.searchKeyword}</div>
+                  <div>클릭수 : {book.totalClickCount}</div>
+                  <div>판매량 : {book.totalOrderCount}</div>
+                  <div>총 판매금액 : {book.totalOrderAmount}</div>
+                  <div>카테고리 : {book.categoryName}</div>
+
+                  {book.keywords && <div>키워드 : {book.keywords.map((x) => " # " + x)}</div>}
                 </>
               )}
               <NextBtn onClick={() => toggleBookContent(index)}>

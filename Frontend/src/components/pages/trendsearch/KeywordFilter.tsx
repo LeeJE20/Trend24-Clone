@@ -6,16 +6,17 @@ import { FaSearch } from "react-icons/fa";
 interface TrendCategoryDataType {
   trendCategoryId: number;
   name: string;
-  keywords: {
-    keywordId: number;
-    name: string;
-  }[];
+  keywords: keywords[];
+}
+interface keywords {
+  keywordId: number;
+  name: string;
 }
 
 interface KeywordFilterProps {
-  selectedKeyword: string[];
+  selectedKeyword: keywords[];
   trendCategoryData: TrendCategoryDataType[];
-  onKeywordChange: (keywords: string[]) => void;
+  onKeywordChange: (keywords: keywords[]) => void;
   onSearch: () => void;
 }
 
@@ -31,7 +32,7 @@ const KeywordFilter = ({
     setSelectedCategory(category);
   };
 
-  const keywordClick = (keyword: string) => {
+  const keywordClick = (keyword: keywords) => {
     if (selectedKeyword.includes(keyword)) {
       onKeywordChange(selectedKeyword.filter((kw) => kw !== keyword));
     } else {
@@ -45,12 +46,12 @@ const KeywordFilter = ({
         <div className="label">선택된 키워드</div>
         <div className="keywordList">
           {selectedKeyword &&
-            selectedKeyword.map((li, idx) => <div key={idx}># {li}</div>)}
+            selectedKeyword.map((li, idx) => <div key={idx}># {li.name}</div>)}
         </div>
-        <div className="searchBtn" onClick={onSearch}>
+        {/* <div className="searchBtn" onClick={onSearch}>
           <div>검색</div>
           <FaSearch />
-        </div>
+        </div> */}
       </SelectedKeyword>
       <Category>
         <div className="label">카테고리</div>
@@ -72,8 +73,8 @@ const KeywordFilter = ({
             ?.keywords.map((li, idx) => (
               <KeywordItem
                 key={idx}
-                onClick={() => keywordClick(li.name)}
-                selected={selectedKeyword.includes(li.name)}
+                onClick={() => keywordClick(li)}
+                selected={selectedKeyword.includes(li)}
               >
                 # {li.name}
               </KeywordItem>
