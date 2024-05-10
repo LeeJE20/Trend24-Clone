@@ -1,8 +1,11 @@
 package com.yes.trend.api.trend.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yes.trend.api.trend.dto.KeywordOriginDataDto;
@@ -25,8 +28,12 @@ public class TrendController {
 
 	@Operation(summary = "HT-01 일별 인기 키워드", description = "일별 20개씩 인기 키워드를 보여준다.")
 	@GetMapping("/keywords")
-	public ApiResponse<ListDto<TrendDto.DailyKeywordsDto>> getDailyKeywords() {
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, trendService.getDailyKeywords());
+	public ApiResponse<ListDto<TrendDto.DailyKeywordsDto>> getDailyKeywords(
+		@RequestParam(required = false) LocalDate date) {
+		if (date == null) {
+			date = LocalDate.now();
+		}
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, trendService.getDailyKeywords(date));
 	}
 
 	@Operation(summary = "HT-05 키워드 변화 그래프", description = "1주일동안의 키워드 순위 변동 그래프")
