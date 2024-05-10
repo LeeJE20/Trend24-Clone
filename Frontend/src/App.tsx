@@ -40,6 +40,17 @@ import TransitionComponent from "./components/pages/PersonalRecommend/Transition
 
 function App() {
   // usePageTracking(); // usePageTracking 훅 호출
+
+  useEffect(() => {
+    // 로딩 화면을 숨기는 코드
+    const loadingScreen = document.querySelector(".loading-screen");
+    if (loadingScreen instanceof HTMLElement) {
+      loadingScreen.style.display = "none";
+    }
+    // 혹은 null 병합 연산자 사용
+    // document.querySelector('.loading-screen')?.style.display = 'none';
+  }, []); // 빈 의존성 배열([])을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 함
+
   return (
     <TransitionProvider>
       <Routes>
