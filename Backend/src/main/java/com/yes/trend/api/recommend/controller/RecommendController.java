@@ -1,5 +1,6 @@
 package com.yes.trend.api.recommend.controller;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -54,9 +55,13 @@ public class RecommendController {
 	@Operation(summary = "TR-01 카테고리별 키워드", description = "카테고리별 당일의 키워드 제공")
 	@GetMapping("/trend-categories")
 	public ApiResponse<ListDto<RecommendDto.CategoryWithKeywords>> getTrendCategories(
-		@RequestParam(defaultValue = "true") boolean withKeywords) {
+		@RequestParam(defaultValue = "true") boolean withKeywords,
+		@RequestParam(required = false) LocalDate date) {
 		if (withKeywords) {
-			return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategoriesWithKeywords());
+			if (date == null) {
+				date = LocalDate.now();
+			}
+			return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategoriesWithKeywords(date));
 		}
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, recommendService.getTrendCategories());
 	}
