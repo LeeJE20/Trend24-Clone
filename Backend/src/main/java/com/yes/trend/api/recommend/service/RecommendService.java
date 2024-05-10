@@ -84,8 +84,8 @@ public class RecommendService {
 		LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
 		LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
 
-		LocalDateTime startOfDay = todayStart.minusDays(1L);
-		LocalDateTime endOfDay = todayEnd.minusDays(1L);
+		LocalDateTime startOfDay = todayStart.minusDays(0L);
+		LocalDateTime endOfDay = todayEnd.minusDays(0L);
 
 		List<TrendCategoryWithKeywordDto> categoryWithKeywordDtos = trendCategoryRepository.findTrendCategoriesWithKeywordsBetween(
 			startOfDay, endOfDay);
