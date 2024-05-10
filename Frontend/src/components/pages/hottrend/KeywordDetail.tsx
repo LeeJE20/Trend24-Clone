@@ -10,6 +10,7 @@ import {
 } from "../../../constants/DummyData/BookListData";
 import { referenceData } from "../../../constants/DummyData";
 import { getKeywordRanking } from "../../../apis/trendApi";
+import { getTrendSearchBooks } from "../../../apis/recommendApi";
 
 interface wordType{
   keywordId: number;
@@ -32,18 +33,25 @@ const KeywordDetail = ({ keyword }: { keyword: wordType }) => {
   useEffect(() => {
     setBookList(bookListData);
     // console.log("keyword", keyword.keywordId);
-    const fetchData = async() =>{
+    const rankingData = async() =>{
       try{
         return await getKeywordRanking(keyword?.keywordId);
       }catch (error){
         console.log(error);
       }
     }
-    
-    
-    fetchData().then(res => res.length !== 0? setRanking(res):null);
 
+    const bookData = async() =>{
+      try{
+        return await getTrendSearchBooks({ keywords: [keyword?.keywordId], page: 1, size: 4 });
+      }catch (error){
+        console.log(error);
+      }
+    }
 
+    rankingData().then(res => res.length !== 0? setRanking(res):null);
+    console.log("bookData",bookData());
+    
   }, [keyword]);
 
   const indexOfLastItem = currentPage * itemsPerPage;

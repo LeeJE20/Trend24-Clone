@@ -15,7 +15,7 @@ const KeywordSource = (props: KeywordProps) => {
       <Title>참고</Title>
       <Content>
         <Source>
-          <img src={"/public/Image/BrandLogo/" + props.type + ".webp"} />
+          <img src={"/Image/BrandLogo/" + props.type + ".webp"} />
           <div>{props.type}</div>
         </Source>
         {props.type === "GoogleTrends" && (
@@ -23,7 +23,7 @@ const KeywordSource = (props: KeywordProps) => {
             <div className="title">구글 실시간 트렌드</div>
             <img
               className="data"
-              src="/public/Image/BrandLogo/googleTrend.webp"
+              src="/Image/BrandLogo/googleTrend.webp"
             />
           </GoogleData>
         )}
