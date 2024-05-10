@@ -132,7 +132,6 @@ const TitleContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 10%;
-  border: 1px solid #000;
 `;
 
 const Title = styled.div`
@@ -154,7 +153,7 @@ const ContentContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 90%;
-  border: 1px solid #000;
+  background-color: #ffffff;
 `;
 
 const AddDataContainer = styled.div`

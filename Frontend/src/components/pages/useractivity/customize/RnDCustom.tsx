@@ -183,7 +183,6 @@ const TitleContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 10%;
-  border: 1px solid #000;
 `;
 
 const Title = styled.div`
@@ -225,8 +224,8 @@ const DragContainer = styled.div`
   grid-template-rows: repeat(5, 1fr);
   width: 100%;
   height: 90%;
-  border: 1px solid #000;
   box-sizing: border-box;
+  background-color: #f0f0f0;
 `;
 
 const Item = styled.div`

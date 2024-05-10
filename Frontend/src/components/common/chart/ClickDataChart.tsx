@@ -11,8 +11,8 @@ const ClickDataChart = () => {
 const ClickDataChartContainer = styled.div`
   width: 100%;
   height: 100%;
-  grid-column: 4 / 7;
-  grid-row: 1 / 4;
+  grid-column: 3 / 5;
+  grid-row: 1 / 3;
   border: 1px solid #000;
 `;
 
