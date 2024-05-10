@@ -68,7 +68,6 @@ const BookList = ({
               )}
             </BookCover>
             <BookDrawerSaveModal isOpen={modalOpen} onClose={() => {handleSaveButtonClick(index)}} keywordList={modalContent}>
-
             </BookDrawerSaveModal>
             <BookInfo>
               <div className="title">{book.product_name}</div>
@@ -122,7 +121,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 15px;
   width: 100%;
@@ -130,7 +129,7 @@ const Title = styled.div`
 
 const BookListContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 20px;
   overflow-y: auto;
 `;
@@ -138,16 +137,17 @@ const BookListContainer = styled.div`
 const BookContainer = styled.div`
   position: relative;
   display: flex;
-  flex: 1 1 40%;
+  align-items: center;
   margin: 10px;
-  padding: 30px;
-  min-width: 450px;
+  padding: 20px;
+  /* min-width: 450px; */
   box-sizing: border-box;
   border: 3px solid #c7d0ff7e;
 `;
 
 const BookCover = styled.div<{ $hovered: boolean }>`
   width: 30%;
+  max-width: 150px;
   position: relative;
   cursor: pointer;
   margin-right: 20px;
@@ -155,7 +155,7 @@ const BookCover = styled.div<{ $hovered: boolean }>`
   img {
     height: fit-content;
     width: 100%;
-    min-width: 150px;
+    /* min-width: ; */
     margin-right: 20px;
     transition: filter 0.3s ease-in-out;
     filter: ${({ $hovered }) => ($hovered ? "brightness(70%)" : "none")};
@@ -165,8 +165,9 @@ const BookCover = styled.div<{ $hovered: boolean }>`
   .saveBtn {
     display: flex;
     background-color: #000000bb;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     position: absolute;
+    width: max-content;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -174,7 +175,7 @@ const BookCover = styled.div<{ $hovered: boolean }>`
     padding: 10px;
     border-radius: 20px;
     svg {
-      font-size: 2.5rem;
+      font-size: 2rem;
       margin-right: 5px;
     }
   }
@@ -184,9 +185,9 @@ const BookInfo = styled.div`
   width: 70%;
   padding: 10px;
   border-radius: 20px;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   .title {
-    font-size: 2.8rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
   }

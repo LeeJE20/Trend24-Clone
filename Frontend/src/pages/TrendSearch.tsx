@@ -7,15 +7,36 @@ import {
   Book,
   PageInfo,
 } from "../constants/DummyData/BookListData";
+import { getTrendCategories } from "../apis/recommendApi";
+
+interface TrendCategoryDataType {
+  trendCategoryId: number;
+  name: string;
+  keywords: {
+    keywordId: number;
+    name: string;
+  }[];
+}
 
 const TrendSearch = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
   const [selectedKeyword, setSelectedKeyword] = useState<string[]>([]);
+  const [trendCategoryData, setTrendCategoryData] =
+    useState<TrendCategoryDataType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
   useEffect(() => {
     setBookList(bookListData);
+    const fetchData = async() =>{
+      try{
+        const res = await getTrendCategories();
+        setTrendCategoryData(res);
+      }catch(error){
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleKeywordChange = (keywords: string[]) => {
@@ -47,6 +68,7 @@ const TrendSearch = () => {
       <FilterContainer>
         <KeywordFilter
           selectedKeyword={selectedKeyword}
+          trendCategoryData={trendCategoryData}
           onKeywordChange={handleKeywordChange}
           onSearch={handleSearch}
         />
@@ -79,7 +101,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2.5rem;
   height: 30px;
   margin: 20px 10px;
   font-weight: bold;
@@ -87,9 +109,9 @@ const Title = styled.div`
 
 const FilterContainer = styled.div`
   width: 100%;
-  min-height: 180px;
+  min-height: 130px;
   margin-bottom: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
 `;
 
@@ -98,7 +120,7 @@ const BookListContainer = styled.div`
   flex-grow: 1;
   overflow-y: auto;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
 `;
 
 export default TrendSearch;

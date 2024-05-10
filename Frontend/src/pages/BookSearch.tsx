@@ -65,7 +65,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   margin: 20px 10px;
   font-weight: bold;
 `;
@@ -74,7 +74,7 @@ const SearchContainer = styled.div`
   width: 100%;
   height: 20%;
   margin-bottom: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
 `;
 
@@ -83,7 +83,7 @@ const BookListContainer = styled.div`
   flex-grow: 1;
   overflow-y: auto;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
 `;
 
 export default BookSearch;

@@ -2,10 +2,19 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MainColor } from "../../../constants/Color";
 import { FaSearch } from "react-icons/fa";
-import { trendCategoryData } from "../../../constants/DummyData/TrendCategoryData";
+
+interface TrendCategoryDataType {
+  trendCategoryId: number;
+  name: string;
+  keywords: {
+    keywordId: number;
+    name: string;
+  }[];
+}
 
 interface KeywordFilterProps {
   selectedKeyword: string[];
+  trendCategoryData: TrendCategoryDataType[];
   onKeywordChange: (keywords: string[]) => void;
   onSearch: () => void;
 }
@@ -14,6 +23,7 @@ const KeywordFilter = ({
   selectedKeyword,
   onKeywordChange,
   onSearch,
+  trendCategoryData,
 }: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -79,7 +89,7 @@ const Container = styled.div`
   height: 100%;
   flex-flow: column;
   box-sizing: border-box;
-  font-size: 2rem;
+  font-size: 1.5rem;
 `;
 
 const SelectedKeyword = styled.div`
@@ -92,11 +102,11 @@ const SelectedKeyword = styled.div`
     padding: 20px 5px;
     background-color: ${MainColor};
     font-weight: bold;
-    font-size: 2.3rem;
+    font-size: 1.5rem;
     color: white;
     align-content: center;
     text-align: center;
-    border-radius: 20px 10px 10px 0px;
+    border-radius: 10px 10px 10px 0px;
     margin-right: 10px;
   }
 
@@ -120,7 +130,7 @@ const SelectedKeyword = styled.div`
   .searchBtn {
     border: 1px solid black;
     padding: 5px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-right: 10px;
     display: flex;
     align-items: center;
@@ -145,7 +155,7 @@ const Category = styled.div`
     min-width: 200px;
     background-color: ${MainColor};
     font-weight: bold;
-    font-size: 2.3rem;
+    font-size: 1.5rem;
     width: 200px;
     padding: 20px 5px;
     color: white;
