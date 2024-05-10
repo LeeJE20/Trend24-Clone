@@ -11,7 +11,7 @@ api.interceptors.request.use(
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
       // 요청을 보낼 때의 헤더 상태 확인
-      console.log("Request Headers: ", config.headers);
+      // console.log("Request Headers: ", config.headers);
     }
     return config;
   },

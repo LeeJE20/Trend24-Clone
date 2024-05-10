@@ -23,8 +23,6 @@ const HotTrend = () => {
 
   // 테이블 클릭 이벤트 
   const handleTableClick = (date: string) => {
-    console.log("selectedTable", date);
-    
     if (selectedTable == "") {
       setSelectedTable(date);
     } else {

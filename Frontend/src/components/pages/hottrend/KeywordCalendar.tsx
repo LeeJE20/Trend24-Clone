@@ -12,11 +12,11 @@ interface KeywordCalendarType {
 
 
 const KeywordCalendar = ({rankingData}: KeywordCalendarProps) => {
-  console.log("rankingData", rankingData.length);
+  // console.log("rankingData", rankingData.length);
 
   // rankingData의 길이가 1 이상인 경우에만 렌더링
   if (rankingData.length > 0) {
-    console.log("rankingData", rankingData);
+    // console.log("rankingData", rankingData);
 
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     const baseDate = new Date(rankingData[0].date);

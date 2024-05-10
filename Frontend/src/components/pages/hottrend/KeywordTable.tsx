@@ -27,9 +27,6 @@ function Table({
 
   const keywordClick = (li: wordType) => {
     handleKeyword(li);
-    console.log("date", date);
-    console.log(columnList);
-    
     
     if (selectedKeyword === null) {
       handleTableClick(date);

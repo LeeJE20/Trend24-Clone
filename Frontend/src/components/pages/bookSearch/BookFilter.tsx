@@ -3,18 +3,41 @@ import styled from "styled-components";
 import { bookCategoryData } from "../../../constants/DummyData/BookCategoryData";
 import { FaSearch } from "react-icons/fa";
 
+interface BookFilterProps {
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+  handleSearch: (searchText: string) => void;
+}
 
-const BookFilter = () => {
-  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+const BookFilter = ({
+  selectedCategory,
+  onCategoryChange,
+  handleSearch,
+}: BookFilterProps) => {
+  const [searchText, setSearchText] = useState("");
 
-  const handleCategoryClick = (idx: number) => {
-    setSelectedCategory(idx);
+  const handleCategoryClick = (category: string) => {
+    setSearchText("");
+    onCategoryChange(category);
   };
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    handleSearch(searchText); // 검색 함수 호출
+  };
+
   return (
     <Container>
       <Search>
-        <input type="text" />
-        <button>
+        <input
+          type="text"
+          value={searchText}
+          onChange={handleSearchInputChange}
+        />
+        <button onClick={handleSearchButtonClick}>
           <FaSearch />
         </button>
       </Search>
@@ -24,8 +47,8 @@ const BookFilter = () => {
           {bookCategoryData.map((li: string, idx: number) => (
             <div
               key={idx}
-              onClick={() => handleCategoryClick(idx)}
-              className={selectedCategory === idx ? "selected" : ""}
+              onClick={() => handleCategoryClick(li)}
+              className={selectedCategory === li ? "selected" : ""}
             >
               {li}
             </div>
@@ -46,7 +69,6 @@ const Container = styled.div`
 `;
 
 const Search = styled.div`
-  border: 1px solid black;
   height: 40%;
   width: 100%;
   display: flex;
@@ -67,19 +89,16 @@ const Search = styled.div`
 `;
 
 const Category = styled.div`
-  border: 1px solid black;
   height: 60%;
   display: flex;
 
   .label {
-    border: 1px solid black;
     min-width: 120px;
     font-size: 2rem;
     text-align: center;
     align-content: center;
   }
   .content {
-    border: 1px solid black;
     height: 100%;
     flex-grow: 1;
     display: flex;
