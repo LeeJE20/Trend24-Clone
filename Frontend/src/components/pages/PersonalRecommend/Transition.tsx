@@ -1,21 +1,21 @@
-import { useContext } from 'react';
+import { useContext, ReactNode } from "react";
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 
 import TransitionContext from './TransitionConText';
 
-const TransitionComponent = ({ children }) => {
+const TransitionComponent = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
-  const { toggleCompleted } = useContext(TransitionContext);
+  const { toggleCompleted } = useContext<any>(TransitionContext);
   return (
     <SwitchTransition>
       <Transition
         key={location.pathname}
         timeout={500}
-        onEnter={(node) => {
+        onEnter={(node:any) => {
           toggleCompleted(false);
-          gsap.set(node, { autoAlpha: 0, scale: 0.1});
+          gsap.set(node, { autoAlpha: 0, scale: 0.1 });
           gsap
             .timeline({
               paused: true,
