@@ -85,3 +85,10 @@ def live_keyword_searching(search_sentence: Union[str, None] = None):
 
     return dto.ApiResponse(status=200, message="GET 성공", result=response)
 
+
+@app.get("/fastapi/book/momory")
+def memorial_book_searching(product_id: Union[int] = None):
+    logger.info(f"product_id=[{product_id}]")
+    response = search.memorial_book_searching(product_id)
+
+    return dto.ApiResponse(status=200, message="memorial_book_searching 성공", result=response)
