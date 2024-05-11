@@ -149,7 +149,6 @@ const CardContainer = styled.div`
   /* transform: rotate(10deg); */
   background-image: url("/public/Image/EventPage/bg.jpg");
   background-repeat: repeat;
-  background-color: antiquewhite;
 `;
 
 const Box = styled.div`

@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {
-  bookListData,
-  Book,
-} from "../constants/DummyData/BookListData";
+import { bookListData, Book } from "../constants/DummyData/BookListData";
 import { useEffect, useState } from "react";
 
 const PersonalResult = () => {
@@ -11,20 +8,19 @@ const PersonalResult = () => {
     setBookList(bookListData);
   }, []);
 
-
   return (
     <Container>
-      <Title>Q. 선택한 질문...</Title>
+      <Title>Q. 이별 후 마음의 상처를 치유하는 데 도움이 된 책이 있나요?</Title>
       <UserBook>
         <div>유저가 선택한 책</div>
-
       </UserBook>
       <RecommendBook>
-      {bookList.map((li) =>(
-        <BookImage src={`https://image.yes24.com/goods/${li.product_id}/XL`}
-                alt="Book Cover"/>
-      ))}
-
+        {bookList.map((li) => (
+          <BookImage
+            src={`https://image.yes24.com/goods/${li.product_id}/XL`}
+            alt="Book Cover"
+          />
+        ))}
       </RecommendBook>
     </Container>
   );
@@ -36,51 +32,64 @@ const Container = styled.div`
   width: 100%;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  color: white;
+  background-image: url("/public/Image/EventPage/bg.jpg");
 `;
 
 const Title = styled.div`
   font-size: 5vh;
-  margin: 3% 40% 10px 230px;
+  margin-top: 150px;
   font-weight: bold;
   padding: 50px;
-  border: solid 1px black;
-
+  width:50%;
+  border: solid 1px white;
 `;
 
 const UserBook = styled.div`
-  border: solid 1px black;
+  border: solid 1px white;
 `;
 
 const RecommendBook = styled.div`
   position: absolute;
-  border: solid 1px black;
-  height: 100%;
-  width: 100%;
-  right: -35%;
-  top: 10%;
-
-  transform: rotate(-45deg);
+  /* border: solid 1px white; */
+  padding-left: 150px;
+  height: 200%;
+  width: 50%;
+  right: 0%;
+  top: -20%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  transform: rotate(-315deg);
 
   display: flex;
-  flex-direction: row;
-  /* justify-content: center; */
-  align-items: baseline;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: baseline;
   flex-wrap: wrap;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    #e3e3e3f3,
+    #e3e3e3f3,
+    #e3e3e3f3,
+    #e3e3e3f3,
+    #e3e3e3,
+    #ffffff,
+    #ffffff
+  );
 `;
 const BookImage = styled.img`
-  transform: rotate(90deg);
+  width: 200px;
+  height: auto;
+  margin: 10px 15px;
+  box-sizing: border-box;
+  box-shadow: 1px 0px 5px 1px #67676755;
 
-    width: 200px;
-    height: auto;
-    margin: 0px 60px;
-    box-sizing: border-box;
-    &:hover{
-      border: solid 1px black;
-
-    }
+  &:hover {
+    opacity: 0.8;
+  }
 `;
-
-
 
 export default PersonalResult;
