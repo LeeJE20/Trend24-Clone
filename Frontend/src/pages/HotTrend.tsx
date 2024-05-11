@@ -3,16 +3,18 @@ import Table from "../components/pages/hottrend/KeywordTable";
 import { useState, useEffect } from "react";
 import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
 import { getTrendKeyword } from "../apis/trendApi";
+import { FaChartLine, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import Colors from "../constants/Color";
 
 interface TrendKeywordType {
   date: string;
   words: wordType[];
 }
 
-interface wordType{
+interface wordType {
   keywordId: number;
   name: string;
-  clickCount:number;
+  clickCount: number;
   ranking: number;
 }
 
@@ -21,7 +23,7 @@ const HotTrend = () => {
   const [selectedTable, setSelectedTable] = useState<string>(""); // 날짜 데이터 저장
   const [trendKeyword, setTrendKeyword] = useState<TrendKeywordType[]>([]); // 전체 테이블의 키워드 정보 저장
 
-  // 테이블 클릭 이벤트 
+  // 테이블 클릭 이벤트
   const handleTableClick = (date: string) => {
     if (selectedTable == "") {
       setSelectedTable(date);
@@ -35,22 +37,40 @@ const HotTrend = () => {
   const handleKeyword = (key: wordType) => {
     setKeyword(key);
   };
-  
+
   // 데이터 통신
-  useEffect(()=>{
-    const fetchData = async() =>{
-      try{
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         return await getTrendKeyword();
-      }catch (error){
+      } catch (error) {
         console.log(error);
       }
-    }
-    fetchData().then(res => setTrendKeyword(res));
-  },[])
+    };
+    fetchData().then((res) => setTrendKeyword(res));
+  }, []);
 
   return (
     <Container>
-      <Title>인기 트렌드</Title>
+      <Title>
+        <FaChartLine className="icon" />
+        인기 트렌드
+      </Title>
+      {selectedTable && (
+        <PrevBtn onClick={() => handleTableClick("")}>
+          <FaArrowLeft />
+        </PrevBtn>
+      )}
+      {!selectedTable && (
+        <DateBtnWrapper>
+          <PrevBtn onClick={() => handleTableClick("")}>
+            <FaArrowLeft /> 
+          </PrevBtn>
+          <NextBtn onClick={() => handleTableClick("")}>
+            <FaArrowRight />
+          </NextBtn>
+        </DateBtnWrapper>
+      )}
       <Content>
         {trendKeyword.map(
           (list, idx) =>
@@ -87,9 +107,34 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
   font-size: 2.5rem;
   margin: 20px 10px;
   font-weight: bold;
+  align-items: center;
+
+  .icon {
+    font-size: 4rem;
+    color: #313131;
+    margin-right: 10px;
+  }
+`;
+const DateBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: ${Colors.sub1};
+`;
+
+const PrevBtn = styled.div`
+  margin-left: 10px;
+  font-size: 2.5rem;
+  cursor: pointer;
+`;
+const NextBtn = styled.div`
+  margin-right: 10px;
+  font-size: 2.5rem;
+  cursor: pointer;
 `;
 
 const Content = styled.div`
@@ -105,12 +150,12 @@ const TableWrapper = styled.div`
   overflow: auto;
   margin-right: 5px;
   flex-grow: 1;
-  background-color: white;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+  
 
   &:first-child {
     box-shadow: 1px 0px 5px 1px #67676755;
   }
-
   &:last-child {
     box-shadow: 1px 0px 5px 1px #67676755;
   }

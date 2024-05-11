@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { MainColor } from "../../../constants/Color";
+import Colors from "../../../constants/Color";
+
 
 interface Props {
   date: string;
@@ -33,13 +34,10 @@ function Table({
     }
   };
 
-  const tableChange = () => {
-    handleTableClick(null);
-  };
 
   return (
     <TableContainer>
-      <thead onClick={tableChange}>
+      <thead>
         <tr>
           <th>{date}</th>
         </tr>
@@ -77,7 +75,7 @@ const TableContainer = styled.table`
   th {
     position: sticky;
     top: 0;
-    background-color: ${MainColor};
+    background-color: ${Colors.main};
     color: white;
   }
 
@@ -110,6 +108,7 @@ const TableRow = styled.tr<{
 
   &:hover {
     background-color: rgba(160, 160, 160, 0.458);
+    cursor: pointer;
   }
 `;
 

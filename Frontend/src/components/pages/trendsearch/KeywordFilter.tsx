@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MainColor } from "../../../constants/Color";
+import Colors from "../../../constants/Color";
 import { FaSearch } from "react-icons/fa";
 
 interface TrendCategoryDataType {
@@ -89,8 +89,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   flex-flow: column;
-  box-sizing: border-box;
   font-size: 1.5rem;
+  padding: 5px;
 `;
 
 const SelectedKeyword = styled.div`
@@ -99,16 +99,14 @@ const SelectedKeyword = styled.div`
   flex-direction: row;
   justify-items: center;
   .label {
-    width: 200px;
-    padding: 20px 5px;
-    background-color: ${MainColor};
+    min-width: 200px;
+    color: ${Colors.main};
     font-weight: bold;
-    font-size: 1.5rem;
-    color: white;
+    font-size: 2rem;
     align-content: center;
     text-align: center;
-    border-radius: 10px 10px 10px 0px;
-    margin-right: 10px;
+    border-right: solid 2px #bebebe7e;
+    margin: 5px 0px;
   }
 
   .keywordList {
@@ -123,7 +121,7 @@ const SelectedKeyword = styled.div`
       border-radius: 30px;
 
       &:hover {
-        background-color: gray;
+        background-color: #dadada;
       }
     }
   }
@@ -143,7 +141,7 @@ const SelectedKeyword = styled.div`
     }
 
     &:hover {
-      background-color: gray;
+      background-color: #dadada;
     }
   }
 `;
@@ -154,17 +152,13 @@ const Category = styled.div`
   flex-direction: row;
   .label {
     min-width: 200px;
-    background-color: ${MainColor};
+    color: ${Colors.main};
     font-weight: bold;
-    font-size: 1.5rem;
-    width: 200px;
-    padding: 20px 5px;
-    color: white;
+    font-size: 2rem;
     align-content: center;
     text-align: center;
-    border-radius: 0px 10px 10px 0px;
-    border-bottom: solid 1px white;
-    margin-right: 10px;
+    border-right: solid 2px #bebebe7e;
+    margin: 5px 0px;
   }
 
   .categoryList {
@@ -182,7 +176,7 @@ const Category = styled.div`
       border-right: solid 2px #bebebe7e;
 
       &:hover {
-        background-color: #828282;
+        background-color: ${Colors.sub4};
       }
     }
   }
