@@ -77,13 +77,14 @@ def make_error():
 
 @app.get("/fastapi/book/live")
 def live_keyword_searching(search_sentence: Union[str, None] = None):
+    logger.info(f"search_sentence=[{search_sentence}]")
 
     if (search_sentence == None or len(search_sentence.strip()) == 0):
         return dto.ApiResponse(status=400, message="검색어를 입력해주세요.", result=search_sentence)
 
     response = search.live_keyword_searching(search_sentence)
 
-    return dto.ApiResponse(status=200, message="GET 성공", result=response)
+    return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
 
 
 @app.get("/fastapi/book/momory")
