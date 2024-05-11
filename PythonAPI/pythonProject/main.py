@@ -5,6 +5,7 @@ from fastapi import FastAPI
 import json
 
 from requests import Request
+from starlette.responses import JSONResponse
 from tqdm import tqdm
 from qdrant_client.models import PointStruct
 from qdrant_client import QdrantClient
@@ -24,12 +25,10 @@ load_dotenv(dotenv_path=dotenv_path)
 QDRANT_HOST = str(os.getenv("QDRANT_HOST"))
 QDRANT_PORT = str(os.getenv("PORT"))
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
-
 
 # Qdrant setting
 # loaded_embeddings_topic = np.load("qdrant/embeddings_topic.npy")  # 경로
@@ -46,10 +45,19 @@ async def universal_exception_handler(request: Request, exc: Exception):
     # 스택 트레이스 로깅
     logger.error("Uncaught exception: %s", exc, exc_info=True)
     # 선택적으로 traceback을 직접 출력할 수도 있습니다:
-    # traceback.print_exc()
+    traceback.print_exc()
 
-    # 사용자에게는 더 일반적인 메시지 전달
-    return dto.ApiResponse(status=500, message="서버 에러 발생", result=Exception)
+    # ApiResponse 객체 사용
+    response = dto.ApiResponse(
+        status=500,
+        message="SERVER ERROR",
+        result={"error": str(exc)}
+    )
+    return JSONResponse(
+        status_code=500,
+        content=response
+    )
+
 
 @app.get("/fastapi")
 def read_root():
@@ -59,6 +67,13 @@ def read_root():
 @app.get("/fastapi/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+
+@app.get("/fastapi/error")
+def make_error():
+    1 / 0
+    return {"error": "error"}
+
 
 @app.get("/fastapi/book/live")
 def live_keyword_searching(search_sentence: Union[str, None] = None):
