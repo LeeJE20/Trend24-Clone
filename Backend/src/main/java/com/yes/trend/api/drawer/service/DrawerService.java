@@ -43,4 +43,9 @@ public class DrawerService {
 		admin.setLayout(layout.getLayout());
 		return new DrawerDto.Layout(admin.getLayout());
 	}
+
+	public DrawerDto.Layout getDrawerLayout() {
+		Admin admin = adminService.getLoginAdmin();
+		return new DrawerDto.Layout(admin.getLayout());
+	}
 }
