@@ -12,7 +12,7 @@ const Event = () => {
   return (
     <Container>
       <Logo onClick={gotoHome}>
-        <img src="/Image/Logo/logo.png" alt="logo" />
+        <img src="/Image/Logo/Logo.png" alt="logo" />
       </Logo>
       <Outlet />
     </Container>

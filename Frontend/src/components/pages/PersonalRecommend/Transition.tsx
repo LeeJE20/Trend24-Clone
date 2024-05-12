@@ -15,21 +15,19 @@ const TransitionComponent = ({ children }: { children: ReactNode }) => {
         timeout={500}
         onEnter={(node:any) => {
           toggleCompleted(false);
-          gsap.set(node, { autoAlpha: 0, scale: 0.1 });
+          gsap.set(node, { autoAlpha: 0 });
           gsap
             .timeline({
               paused: true,
               onComplete: () => toggleCompleted(true),
             })
-            .to(node, { autoAlpha: 1, duration: 0.25 })
-            .to(node, { scale: 1, duration: 0.25 })
+            .to(node, { autoAlpha: 1, duration: 0.5 })
             .play();
         }}
         onExit={(node) => {
           gsap
             .timeline({ paused: true })
-            .to(node, { scale: 0.1, duration: 0.2 })
-            .to(node, { autoAlpha: 0, duration: 0.2 })
+            .to(node, { autoAlpha: 0, duration: 0.5 })
             .play();
         }}
       >
