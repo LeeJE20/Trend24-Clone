@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import KeywordFilter from "../components/pages/trendsearch/KeywordFilter";
 import BookList from "../components/common/book/BookList";
-import {
-  bookListData,
-  PageInfo,
-} from "../constants/DummyData/BookListData";
 import { getTrendCategories, getTrendSearchBooks } from "../apis/recommendApi";
-import { BookType } from "../constants/Type/Type";
+import { BookType, PageInfo } from "../constants/Type/Type";
+import { TbDeviceDesktopSearch } from "react-icons/tb";
 
 interface TrendCategoryDataType {
   trendCategoryId: number;
@@ -72,7 +69,10 @@ const TrendSearch = () => {
 
   return (
     <Container>
-      <Title>트렌드 검색</Title>
+      <Title>
+        <TbDeviceDesktopSearch className="icon"/>
+        트렌드 검색
+      </Title>
       <FilterContainer>
         <KeywordFilter
           selectedKeyword={selectedKeyword}
@@ -109,10 +109,17 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
   font-size: 2.5rem;
-  height: 30px;
   margin: 20px 10px;
   font-weight: bold;
+  align-items: center;
+
+  .icon {
+    font-size: 4rem;
+    color: #313131;
+    margin-right: 10px;
+  }
 `;
 
 const FilterContainer = styled.div`
@@ -121,6 +128,7 @@ const FilterContainer = styled.div`
   margin-bottom: 10px;
   border-radius: 10px;
   background-color: white;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 `;
 
 const BookListContainer = styled.div`
@@ -129,6 +137,7 @@ const BookListContainer = styled.div`
   overflow-y: auto;
   background-color: white;
   border-radius: 10px;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 `;
 
 export default TrendSearch;

@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Modal from "../../common/modal/BookDrawerSaveModal";
+import Colors from "../../../constants/Color";
 
 type Keyword = {
   drawerId: number;
   name: string;
   books: {
     bookId: number;
-    product_id: number;
-    search_keyword: string;
-    total_click_count: number;
-    total_order_count: number;
-    total_order_amount: number;
+    productId: number;
+    searchKeyword: string;
+    totalClickCount: number;
+    totalOrderCount: number;
+    totalOrderAmount: number;
     contents: string;
-    product_name: string;
-    sale_price: number;
-    category_name: string;
-    total_purchase_count: number;
+    productName: string;
+    salePrice: number;
+    categoryName: string;
+    totalPurchaseCount: number | null;
   }[];
 };
 
@@ -42,61 +44,30 @@ const AddKeywordModal = ({
   };
 
   return (
-    <Container>
-      <Background onClick={toggleAddKeywordModal}>
-        <AddKeywordModalContainer onClick={handleBackgroundClick}>
-          <AddKeywordModalTitle>키워드 추가</AddKeywordModalTitle>
-          <AddKeywordModalContent>
-            <AddKeywordModalInput
-              placeholder="키워드"
-              value={inputValue} // 입력 값과 input 요소를 바인딩
-              onChange={(e) => setInputValue(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
-            />
-            <AddKeywordModalBtn
-              onClick={() => {
-                handleAddClick();
-              }}
-            >
-              추가
-            </AddKeywordModalBtn>
-          </AddKeywordModalContent>
-          <AddKeywordModalBtn onClick={toggleAddKeywordModal}>
-            닫기
+    <AddKeywordModalContainer onClick={handleBackgroundClick}>
+      <AddKeywordModalTitle>키워드 추가</AddKeywordModalTitle>
+      <AddKeywordModalContent>
+        <AddKeywordModalInput
+          placeholder="키워드"
+          value={inputValue} // 입력 값과 input 요소를 바인딩
+          onChange={(e) => setInputValue(e.target.value)} // 입력 값이 변경될 때마다 상태 업데이트
+        />
+        <ModalFooter>
+          <AddKeywordModalBtn
+            onClick={() => {
+              handleAddClick();
+            }}
+          >
+            추가
           </AddKeywordModalBtn>
-        </AddKeywordModalContainer>
-      </Background>
-    </Container>
+        </ModalFooter>
+      </AddKeywordModalContent>
+    </AddKeywordModalContainer>
   );
 };
 
-const Container = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Background = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const AddKeywordModalContainer = styled.div`
-  width: 300px;
-  height: 200px;
-  background-color: #fff; /* 모달 배경색 */
-  border: 1px solid #000;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -104,6 +75,11 @@ const AddKeywordModalContainer = styled.div`
 `;
 
 const AddKeywordModalTitle = styled.div`
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 3rem;
+  font-weight: bold;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,6 +87,7 @@ const AddKeywordModalTitle = styled.div`
 `;
 
 const AddKeywordModalContent = styled.div`
+width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -118,13 +95,40 @@ const AddKeywordModalContent = styled.div`
 `;
 
 const AddKeywordModalInput = styled.input`
-  width: 100%;
+  width: 70%;
   height: 30px;
+
+  padding: 1.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 2px solid #7878783b;
 `;
 
-const AddKeywordModalBtn = styled.button`
+const AddKeywordModalBtn = styled.div`
+margin-top: 30px;
+margin-right: 20px;
+  padding: 15px 25px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${Colors.sub1};
+  color: #ffffff;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+    transition: opacity 0.1s ease-out;
+  }
+`;
+
+const ModalFooter = styled.div`
+  display: flex;
   width: 100%;
-  height: 30px;
+  justify-content: flex-end;
 `;
 
 export default AddKeywordModal;

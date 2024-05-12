@@ -4,6 +4,7 @@ import BookFilter from "../components/pages/bookSearch/BookFilter";
 import BookList from "../components/common/book/BookList";
 import { BookType, PageInfo } from "../constants/Type/Type";
 import { getSearchBook } from "../apis/searchApi";
+import { PiBooksDuotone } from "react-icons/pi";
 
 const BookSearch = () => {
   const [bookList, setBookList] = useState<BookType[]>([]);
@@ -57,7 +58,10 @@ const BookSearch = () => {
 
   return (
     <Container>
-      <Title>도서 검색</Title>
+      <Title>
+        <PiBooksDuotone className="icon" />
+        도서 검색
+      </Title>
       <SearchContainer>
         <BookFilter
           onCategoryChange={handleCategoryChange}
@@ -93,17 +97,26 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
   font-size: 2.5rem;
   margin: 20px 10px;
   font-weight: bold;
+  align-items: center;
+
+  .icon {
+    font-size: 4rem;
+    color: #313131;
+    margin-right: 10px;
+  }
 `;
 
 const SearchContainer = styled.div`
   width: 100%;
-  height: 20%;
+  height: fit-content;
   margin-bottom: 10px;
   border-radius: 10px;
   background-color: white;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 `;
 
 const BookListContainer = styled.div`
@@ -112,6 +125,7 @@ const BookListContainer = styled.div`
   overflow-y: auto;
   background-color: white;
   border-radius: 10px;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 `;
 
 export default BookSearch;

@@ -5,6 +5,8 @@ import { GrFormNextLink } from "react-icons/gr";
 import { MdOutlineSave } from "react-icons/md";
 import BookDrawerSaveModal from "../../common/modal/BookDrawerSaveModal";
 import { BookType } from "../../../constants/Type/Type";
+import Colors from "../../../constants/Color";
+import CustomDropdown from "../select/Select";
 
 interface BookListProps {
   title: string;
@@ -25,6 +27,11 @@ const BookList = ({
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string[]>([]);
+  const [selectedItem, setSelectedItem] = useState("Selected item");
+
+  const selectItem = (item: string) => {
+    setSelectedItem(item);
+  };
 
   // 토글 함수
   const toggleBookContent = (index: number) => {
@@ -34,14 +41,14 @@ const BookList = ({
   };
 
   // 초기화 이펙트
-  useEffect(() => {    
+  useEffect(() => {
     setExpandedBookIndices(Array(bookList.length).fill(false));
   }, [bookList]);
 
   // 저장 버튼 클릭 핸들러
   const handleSaveButtonClick = (bookId: number) => {
     // 서랍 키워드 api  호출
-    setModalContent(["인공지능", "IT", "부동산"])
+    setModalContent(["인공지능", "IT", "부동산", "인공지능", "IT", "부동산"]);
 
     setModalOpen(!modalOpen);
   };
@@ -50,53 +57,71 @@ const BookList = ({
     <Container>
       <Title>{title}</Title>
       <BookListContainer>
-        {bookList.length !== 0 && bookList.map((book: BookType, index: number) => (
-          <BookContainer key={index}>
-            <BookCover
-              $hovered={hoveredIndex === index}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              onClick={() => handleSaveButtonClick(book.bookId)}
-            >
-              <img
-                src={`https://image.yes24.com/goods/${book.productId}/XL`}
-                alt="Book Cover"
-              />
-              {hoveredIndex === index && (
-                <div className="saveBtn">
-                  <MdOutlineSave /> 저장
-                </div>
-              )}
-            </BookCover>
-            <BookDrawerSaveModal
-              isOpen={modalOpen}
-              onClose={() => {
-                handleSaveButtonClick(index);
-              }}
-              keywordList={modalContent}
-            ></BookDrawerSaveModal>
-            <BookInfo>
-              <div className="title">{book.productName}</div>
-              {expandedBookIndices[index] ? (
-                <div>줄거리 : {book.contents}</div>
-              ) : (
-                <>
-                  <div>가격 : {book.salePrice}</div>
-                  <div>유입 검색어 : {book.searchKeyword}</div>
-                  <div>클릭수 : {book.totalClickCount}</div>
-                  <div>판매량 : {book.totalOrderCount}</div>
-                  <div>총 판매금액 : {book.totalOrderAmount}</div>
-                  <div>카테고리 : {book.categoryName}</div>
+        {bookList.length !== 0 &&
+          bookList.map((book: BookType, index: number) => (
+            <BookContainer key={index}>
+              <BookCover
+                $hovered={hoveredIndex === index}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                onClick={() => handleSaveButtonClick(book.bookId)}
+              >
+                <img
+                  src={`https://image.yes24.com/goods/${book.productId}/XL`}
+                  alt="Book Cover"
+                />
+                {hoveredIndex === index && (
+                  <div className="saveBtn">
+                    <MdOutlineSave /> 저장
+                  </div>
+                )}
+              </BookCover>
+              <BookDrawerSaveModal
+                isOpen={modalOpen}
+                onClose={() => {
+                  handleSaveButtonClick(index);
+                }}              >
+                <ModalBody>
+                  <div className="title">서랍에 추가</div>
+                  <CustomDropdown
+                    itemList={modalContent}
+                    onSelectItem={selectItem}
+                    selectedItem={selectedItem}
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <div
+                    className="saveBtn"
+                    onClick={() =>handleSaveButtonClick(index)}
+                  >
+                    저장
+                  </div>
+                </ModalFooter>
+              </BookDrawerSaveModal>
+              <BookInfo>
+                <div className="title">{book.productName}</div>
+                {expandedBookIndices[index] ? (
+                  <div>줄거리 : {book.contents}</div>
+                ) : (
+                  <>
+                    <div>가격 : {book.salePrice}</div>
+                    <div>유입 검색어 : {book.searchKeyword}</div>
+                    <div>클릭수 : {book.totalClickCount}</div>
+                    <div>판매량 : {book.totalOrderCount}</div>
+                    <div>총 판매금액 : {book.totalOrderAmount}</div>
+                    <div>카테고리 : {book.categoryName}</div>
 
-                  {book.keywords && <div>키워드 : {book.keywords.map((x) => " # " + x)}</div>}
-                </>
-              )}
-              <NextBtn onClick={() => toggleBookContent(index)}>
-                <GrFormNextLink />
-              </NextBtn>
-            </BookInfo>
-          </BookContainer>
-        ))}
+                    {book.keywords && (
+                      <div>키워드 : {book.keywords.map((x) => " # " + x)}</div>
+                    )}
+                  </>
+                )}
+                <NextBtn onClick={() => toggleBookContent(index)}>
+                  <GrFormNextLink />
+                </NextBtn>
+              </BookInfo>
+            </BookContainer>
+          ))}
       </BookListContainer>
       <Pagination>
         <button onClick={onPrevPage} disabled={pageInfo.page === 1}>
@@ -149,7 +174,7 @@ const BookContainer = styled.div`
   padding: 20px;
   /* min-width: 450px; */
   box-sizing: border-box;
-  border: 3px solid #c7d0ff7e;
+  border: 3px solid ${Colors.sub4};
 `;
 
 const BookCover = styled.div<{ $hovered: boolean }>`
@@ -232,5 +257,35 @@ const Pagination = styled.div`
     }
   }
 `;
+const ModalBody = styled.div`
+  padding: 30px;
+  .title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+`;
 
+const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 30px 30px;
+  .saveBtn {
+    display: inline-flex;
+    width: auto;
+    padding: 15px 25px;
+    justify-content: center;
+    align-items: center;
+    background-color: ${Colors.sub1};
+    color: #ffffff;
+    font-size: 1.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+      transition: opacity 0.1s ease-out;
+    }
+  }
+`;
 export default BookList;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { bookCategoryData } from "../../../constants/DummyData/BookCategoryData";
 import { FaSearch } from "react-icons/fa";
+import Colors from "../../../constants/Color";
 
 interface BookFilterProps {
   selectedCategory: string;
@@ -36,6 +37,7 @@ const BookFilter = ({
           type="text"
           value={searchText}
           onChange={handleSearchInputChange}
+          placeholder="제목으로 검색"
         />
         <button onClick={handleSearchButtonClick}>
           <FaSearch />
@@ -64,22 +66,33 @@ const Container = styled.div`
   flex-flow: column;
   width: 100%;
   height: 100%;
-
   box-sizing: border-box;
+  padding: 5px;
 `;
 
 const Search = styled.div`
-  height: 40%;
-  width: 100%;
+  align-self: center;
+  margin: 5px;
+  height: 30%;
+  width: 30%;
   display: flex;
   box-sizing: border-box;
+  align-items: center;
+
   input {
+    border: 2px solid #99999987;
     height: 100%;
     flex-grow: 1;
     box-sizing: border-box;
     text-align: right;
+    font-size: 2rem;
+    padding-right: 5px;
   }
   button {
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
     height: 100%;
     min-width: 50px;
     box-sizing: border-box;
@@ -97,6 +110,7 @@ const Category = styled.div`
     font-size: 2rem;
     text-align: center;
     align-content: center;
+    font-weight: bold;
   }
   .content {
     height: 100%;
@@ -116,7 +130,7 @@ const Category = styled.div`
         background-color: #cacaca;
       }
       &.selected {
-        background-color: gray;
+        background-color: ${Colors.sub4};
         color: white;
       }
     }

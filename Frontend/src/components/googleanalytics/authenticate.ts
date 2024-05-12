@@ -1,6 +1,6 @@
 // authenticate.ts
-import { GoogleAuth } from "google-auth-library";
-import { BetaAnalyticsDataClient } from "@google-analytics/data";
+// import { GoogleAuth } from "google-auth-library";
+// import { BetaAnalyticsDataClient } from "@google-analytics/data";
 import credentials from "./credentials.json" assert { type: "json" };
 
 async function authenticate(): Promise<BetaAnalyticsDataClient> {
