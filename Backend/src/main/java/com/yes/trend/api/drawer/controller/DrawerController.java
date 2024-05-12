@@ -1,5 +1,6 @@
 package com.yes.trend.api.drawer.controller;
 
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,5 +27,11 @@ public class DrawerController {
 	@PostMapping("")
 	public ApiResponse<DrawerDto.Response> postDrawer(@RequestBody DrawerDto.Post drawerPost) {
 		return ApiResponse.success(SuccessCode.POST_SUCCESS, drawerService.postDrawer(drawerPost));
+	}
+
+	@Operation(summary = "BD-02 서랍 보기 방식 변경", description = "layout은 number로 1, 2, 3, 4가 있다. 스웨거에 string 형태로 나오는데 무시할 것.")
+	@PatchMapping("/layout")
+	public ApiResponse<DrawerDto.Layout> patchDrawerLayout(@Valid @RequestBody DrawerDto.Layout layout) {
+		return ApiResponse.success(SuccessCode.PATCH_SUCCESS, drawerService.patchDrawerLayout(layout));
 	}
 }

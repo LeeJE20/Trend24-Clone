@@ -31,6 +31,7 @@ public class Admin extends BaseEntity {
 	@Column(length = 100)
 	private String name;
 
+	@Setter
 	private Byte layout = 1;
 
 	@Column(length = 100)
