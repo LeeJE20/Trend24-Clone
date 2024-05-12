@@ -25,4 +25,20 @@ public class CustomService {
 		admin.setCustomName(name.getName());
 		return new CustomDto.PatchPageName(admin.getCustomName());
 	}
+
+	@Transactional
+	public CustomDto.Components patchComponents(CustomDto.Components components) {
+		Admin admin = adminService.getLoginAdmin();
+		admin.setCustomContents(components.getCustomContents());
+		return new CustomDto.Components(admin.getCustomContents());
+	}
+
+	public CustomDto.Components getComponents() {
+		Admin admin = adminService.getLoginAdmin();
+		String compoments = admin.getCustomContents();
+		if (compoments == null) {
+			compoments = "";
+		}
+		return new CustomDto.Components(compoments);
+	}
 }
