@@ -36,6 +36,9 @@ public enum ErrorCode {
 	// Trend
 	NO_ORIGIN_DATA_BY_KEYWORD(INTERNAL_SERVER_ERROR, "키워드 출처를 찾을 수 없습니다. [백엔드에 알려주세요]"), // DB 저장 오류
 
+	// Drawer (Box)
+	ALREADY_EXISTS_DRAWER(BAD_REQUEST, "이미 존재하는 서랍입니다."),
+
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");
 
