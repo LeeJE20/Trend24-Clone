@@ -2,6 +2,7 @@ package com.yes.trend.api.drawer.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +41,12 @@ public class DrawerController {
 	@GetMapping("/layout")
 	public ApiResponse<DrawerDto.Layout> getDrawerLayout() {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, drawerService.getDrawerLayout());
+	}
+
+	@Operation(summary = "BS-04 서랍에 책 저장", description = "이미 있는 책은 안 됨")
+	@PostMapping("/{drawerId}")
+	public ApiResponse<DrawerDto.Response> postBookInDrawer(@PathVariable Integer drawerId,
+		@RequestBody DrawerDto.BookPost bookPost) {
+		return ApiResponse.success(SuccessCode.POST_SUCCESS, drawerService.postBookInDrawer(drawerId, bookPost));
 	}
 }
