@@ -16,4 +16,12 @@ public class CustomDto {
 		@Size(max = 100, message = "이름은 100자 이내여야 합니다.")
 		private String name;
 	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Components {
+		@NotBlank(message = "내용을 입력해주세요")
+		private String customContents;
+	}
 }

@@ -27,4 +27,10 @@ public class CustomController {
 	public ApiResponse<CustomDto.PatchPageName> patchPageName(@Valid @RequestBody CustomDto.PatchPageName name) {
 		return ApiResponse.success(SuccessCode.PATCH_SUCCESS, customService.patchPageName(name));
 	}
+
+	@Operation(summary = "CP-02 커스텀 페이지 컴포넌트 저장", description = "프론트에서 준 값을 그대로 string으로 저장")
+	@PatchMapping("/components")
+	public ApiResponse<CustomDto.Components> patchComponents(@Valid @RequestBody CustomDto.Components components) {
+		return ApiResponse.success(SuccessCode.PATCH_SUCCESS, customService.patchComponents(components));
+	}
 }
