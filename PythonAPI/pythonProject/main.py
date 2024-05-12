@@ -19,6 +19,7 @@ import api.live_searching_api as live_searching
 import dto.dtos as dto
 import logging
 import traceback
+from api.mysql_insert import Mysql_Manager
 
 dotenv_path = Path(".env")
 load_dotenv(dotenv_path=dotenv_path)
@@ -73,6 +74,12 @@ def read_item(item_id: int, q: Union[str, None] = None):
 def make_error():
     1 / 0
     return {"error": "error"}
+
+@app.get("/fastapi/db-connection-test")
+def mysql_test():
+    mysql_manager =Mysql_Manager()
+    selected = mysql_manager.select_test()
+    return dto.ApiResponse(status=200, message="mysql_test 성공", result=selected)
 
 
 @app.get("/fastapi/book/live")

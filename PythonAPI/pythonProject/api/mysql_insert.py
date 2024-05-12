@@ -170,6 +170,16 @@ class Mysql_Manager():
             # 변경 사항 커밋
             self.connection.commit()
 
+    def select_test(self):
+        with self.connection.cursor() as cursor:
+            # SQL 쿼리 실행
+            sql = "SELECT * FROM book Limit 5"
+            cursor.execute(sql)
+
+            # 결과 가져오기
+            result = cursor.fetchall()
+            return result
+
 
 #         sql = "SELECT id FROM platform WHERE name = %s"
 #
