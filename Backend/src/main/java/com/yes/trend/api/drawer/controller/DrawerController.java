@@ -1,5 +1,6 @@
 package com.yes.trend.api.drawer.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +34,11 @@ public class DrawerController {
 	@PatchMapping("/layout")
 	public ApiResponse<DrawerDto.Layout> patchDrawerLayout(@Valid @RequestBody DrawerDto.Layout layout) {
 		return ApiResponse.success(SuccessCode.PATCH_SUCCESS, drawerService.patchDrawerLayout(layout));
+	}
+
+	@Operation(summary = "BD-04 서랍 보기 방식 조회", description = "레이아웃 조회")
+	@GetMapping("/layout")
+	public ApiResponse<DrawerDto.Layout> getDrawerLayout() {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, drawerService.getDrawerLayout());
 	}
 }
