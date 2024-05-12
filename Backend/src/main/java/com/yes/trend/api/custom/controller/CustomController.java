@@ -1,5 +1,6 @@
 package com.yes.trend.api.custom.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +33,11 @@ public class CustomController {
 	@PatchMapping("/components")
 	public ApiResponse<CustomDto.Components> patchComponents(@Valid @RequestBody CustomDto.Components components) {
 		return ApiResponse.success(SuccessCode.PATCH_SUCCESS, customService.patchComponents(components));
+	}
+
+	@Operation(summary = "CP-04 컴포넌트 리스트 조회", description = "없으면 빈 문자열 반환")
+	@GetMapping("/components")
+	public ApiResponse<CustomDto.Components> getComponents() {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, customService.getComponents());
 	}
 }

@@ -32,4 +32,13 @@ public class CustomService {
 		admin.setCustomContents(components.getCustomContents());
 		return new CustomDto.Components(admin.getCustomContents());
 	}
+
+	public CustomDto.Components getComponents() {
+		Admin admin = adminService.getLoginAdmin();
+		String compoments = admin.getCustomContents();
+		if (compoments == null) {
+			compoments = "";
+		}
+		return new CustomDto.Components(compoments);
+	}
 }
