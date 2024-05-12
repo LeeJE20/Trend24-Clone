@@ -32,4 +32,9 @@ public class Box extends BaseEntity {
 
 	@OneToMany(mappedBy = "box", fetch = FetchType.LAZY)
 	private List<BoxBook> boxBooks;
+
+	public Box(String name, Admin admin) {
+		this.name = name;
+		this.admin = admin;
+	}
 }
