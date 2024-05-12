@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "admin")
@@ -34,6 +35,12 @@ public class Admin extends BaseEntity {
 
 	@Column(length = 100)
 	private String branch = "";
+
+	@Setter
+	private String customName;
+
+	@Setter
+	private String customContents;
 
 	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
 	private List<Box> boxes;
