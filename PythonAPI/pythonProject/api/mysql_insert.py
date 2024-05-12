@@ -8,14 +8,16 @@ import json
 class Mysql_Manager():
     def __init__(self):
         load_dotenv()
-        self.DB_pw = os.getenv("MYSQL_ROOT_PASSWORD")
+        self.DB_pw = os.getenv("MYSQL_PASSWORD")
         self.DB_port = int(os.getenv("HOST_PORT"))
         self.DB_name = os.getenv("MYSQL_DATABASE")
+        self.DB_user = os.getenv("MYSQL_USER")
+        self.DB_host = os.getenv("DB_HOST")
 
         # 데이터베이스 연결 설정
-        self.connection = pymysql.connect(host='localhost',  # 로컬 호스트 사용
+        self.connection = pymysql.connect(host=self.DB_host,  # 로컬 호스트 사용
                                           port=self.DB_port,
-                                          user='root',
+                                          user=self.DB_user,
                                           password=self.DB_pw,
                                           database=self.DB_name,
                                           charset='utf8mb4')
