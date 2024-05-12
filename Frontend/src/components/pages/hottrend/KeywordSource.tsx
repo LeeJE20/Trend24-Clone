@@ -1,46 +1,49 @@
 import styled from "styled-components";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-interface KeywordProps {
-  type: string;
-  originData: {
+interface referenceType {
+  platformId: number;
+  platform: string;
+  data: {
     uri: string;
-    contents: string;
+    contents: {
+      title: string;
+      video_id: string;
+      published_at: string;
+      video_keywords: string[];
+    };
   };
 }
 
-const KeywordSource = (props: KeywordProps) => {
+const KeywordSource = ({ platformId, platform, data }: referenceType) => {
   return (
     <Container>
       <Title>참고</Title>
       <Content>
         <Source>
-          <img src={"/public/Image/BrandLogo/" + props.type + ".webp"} />
-          <div>{props.type}</div>
+          <img src={"/Image/BrandLogo/" + platform + ".webp"} />
+          <div>{platform}</div>
         </Source>
-        {props.type === "GoogleTrends" && (
+        {platform === "GoogleTrends" && (
           <GoogleData>
             <div className="title">구글 실시간 트렌드</div>
-            <img
-              className="data"
-              src="/public/Image/BrandLogo/googleTrend.webp"
-            />
+            <img className="data" src="/Image/BrandLogo/googleTrend.webp" />
           </GoogleData>
         )}
-        {props.type === "Youtube" && (
+        {platform === "YOUTUBE" && (
           <YoutubeData>
-            <div className="title">IU 'Love wins all' Live Clip</div>
-            <iframe src="https://www.youtube.com/embed/ax1csKKQnns?si=Kg46sxjOhLHU4DrY" />
+            <div className="title">{data.contents.title}</div>
+            <iframe src={`https://www.youtube.com/embed/${data.contents.video_id}`} />
           </YoutubeData>
         )}
-        {props.type === "X" && (
+        {platform === "X" && (
           <XData>
-            <div className="title">{props.originData.contents}</div>
+            <div className="title">{data.contents.title}</div>
             <div className="content">
               작고 깜찍한 포메라니안 강아지가 동네 지킴이 활동하는 모습이
               공개되면서 온라인상에서 화제가 되고 있다.
             </div>
-            <a className="link" href={props.originData.uri}>
+            <a className="link" href={data.uri}>
               링크 이동 <FaExternalLinkAlt />
             </a>
           </XData>
@@ -59,7 +62,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 15px;
 `;
@@ -82,7 +85,7 @@ const Source = styled.div`
     margin: 10px;
   }
   div {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
   }
 `;
@@ -94,7 +97,7 @@ const GoogleData = styled.div`
   align-items: center;
 
   .title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 10px;
   }
@@ -142,11 +145,11 @@ const YoutubeData = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   min-width: 300px;
 
   .title {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
   }

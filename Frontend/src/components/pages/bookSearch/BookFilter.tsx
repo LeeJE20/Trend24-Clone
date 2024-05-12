@@ -2,19 +2,44 @@ import { useState } from "react";
 import styled from "styled-components";
 import { bookCategoryData } from "../../../constants/DummyData/BookCategoryData";
 import { FaSearch } from "react-icons/fa";
+import Colors from "../../../constants/Color";
 
+interface BookFilterProps {
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+  handleSearch: (searchText: string) => void;
+}
 
-const BookFilter = () => {
-  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+const BookFilter = ({
+  selectedCategory,
+  onCategoryChange,
+  handleSearch,
+}: BookFilterProps) => {
+  const [searchText, setSearchText] = useState("");
 
-  const handleCategoryClick = (idx: number) => {
-    setSelectedCategory(idx);
+  const handleCategoryClick = (category: string) => {
+    setSearchText("");
+    onCategoryChange(category);
   };
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    handleSearch(searchText); // 검색 함수 호출
+  };
+
   return (
     <Container>
       <Search>
-        <input type="text" />
-        <button>
+        <input
+          type="text"
+          value={searchText}
+          onChange={handleSearchInputChange}
+          placeholder="제목으로 검색"
+        />
+        <button onClick={handleSearchButtonClick}>
           <FaSearch />
         </button>
       </Search>
@@ -24,8 +49,8 @@ const BookFilter = () => {
           {bookCategoryData.map((li: string, idx: number) => (
             <div
               key={idx}
-              onClick={() => handleCategoryClick(idx)}
-              className={selectedCategory === idx ? "selected" : ""}
+              onClick={() => handleCategoryClick(li)}
+              className={selectedCategory === li ? "selected" : ""}
             >
               {li}
             </div>
@@ -41,23 +66,33 @@ const Container = styled.div`
   flex-flow: column;
   width: 100%;
   height: 100%;
-
   box-sizing: border-box;
+  padding: 5px;
 `;
 
 const Search = styled.div`
-  border: 1px solid black;
-  height: 40%;
-  width: 100%;
+  align-self: center;
+  margin: 5px;
+  height: 30%;
+  width: 30%;
   display: flex;
   box-sizing: border-box;
+  align-items: center;
+
   input {
+    border: 2px solid #99999987;
     height: 100%;
     flex-grow: 1;
     box-sizing: border-box;
     text-align: right;
+    font-size: 2rem;
+    padding-right: 5px;
   }
   button {
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
     height: 100%;
     min-width: 50px;
     box-sizing: border-box;
@@ -67,19 +102,17 @@ const Search = styled.div`
 `;
 
 const Category = styled.div`
-  border: 1px solid black;
   height: 60%;
   display: flex;
 
   .label {
-    border: 1px solid black;
     min-width: 120px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center;
     align-content: center;
+    font-weight: bold;
   }
   .content {
-    border: 1px solid black;
     height: 100%;
     flex-grow: 1;
     display: flex;
@@ -87,7 +120,7 @@ const Category = styled.div`
     overflow: auto;
 
     div {
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       padding: 5px 15px;
       margin: 5px;
       background-color: #ededed;
@@ -97,7 +130,7 @@ const Category = styled.div`
         background-color: #cacaca;
       }
       &.selected {
-        background-color: gray;
+        background-color: ${Colors.sub4};
         color: white;
       }
     }

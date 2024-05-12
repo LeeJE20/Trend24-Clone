@@ -31,7 +31,8 @@ const CustomComponentList = ({
   };
 
   return (
-    <Background onClick={handleClose}>
+    <>
+      <Background onClick={handleClose}></Background>
       <Container>
         <Title>
           <button onClick={handleClose}>X</button>
@@ -56,7 +57,7 @@ const CustomComponentList = ({
           ))}
         </ContentConatiner>
       </Container>
-    </Background>
+    </>
   );
 };
 

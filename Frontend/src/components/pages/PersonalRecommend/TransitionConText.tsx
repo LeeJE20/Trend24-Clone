@@ -1,7 +1,19 @@
 import { createContext, ReactNode } from 'react';
 import { useState } from 'react';
 
-const TransitionContext = createContext({ completed: false });
+
+
+interface TransitionContextType {
+  completed: boolean;
+  toggleCompleted: (value: boolean) => void;
+}
+
+const defaultContextValue: TransitionContextType = {
+  completed: false,
+  toggleCompleted: () => {},
+};
+
+const TransitionContext = createContext(defaultContextValue);
 
 export const TransitionProvider = ({ children }: {children: ReactNode }) => {
   const [completed, setCompleted] = useState(false);

@@ -6,7 +6,7 @@ import { TbDeviceDesktopSearch } from "react-icons/tb";
 import { FaChartBar, FaChartLine } from "react-icons/fa";
 import { PiBooksDuotone } from "react-icons/pi";
 import { RiArchiveDrawerFill } from "react-icons/ri";
-import { ContainerBackgroundColor, PointColor, TextColor, SubColor1 } from "../../../constants/Color";
+import Colors from "../../../constants/Color";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -77,7 +77,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     <SidebarWrapper ref={sidebarRef}>
       <LogoDetails>
         <Logo ref={logoRef}>
-          <img src="/Image/Logo/Logo.png" />
+          <img src="/Image/Logo/logo.png" />
           <div>Trend24</div>
         </Logo>
         <ToggleButton ref={toggleButtonRef} onClick={toggleSidebar}>
@@ -99,7 +99,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       </NavList>
       <ProfileWrapper ref={profileWrapperRef}>
         <ProfileDetails ref={profileContentRef}>
-          <ProfileImage src="/Image/Logo/Logo.png" alt="profileImg" />
+          <ProfileImage src="/Image/Logo/logo.png" alt="profileImg" />
           <NameJob>
             <div className="name">UserName</div>
             <div className="job">YES24 중고서점 목동점</div>
@@ -151,7 +151,7 @@ const linksArray = [
 const SidebarWrapper = styled.div`
   margin: 10px;
   border-radius: 20px;
-  background: ${ContainerBackgroundColor};
+  background: ${Colors.containerBackground};
   padding: 6px 14px;
   width: 250px;
   z-index: 99;
@@ -235,13 +235,13 @@ const LinkWrapper = styled.div<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   text-decoration: none;
-  background: ${({ $isActive }) => ($isActive ? PointColor : "transparent")};
-  color: ${({ $isActive }) => ($isActive ? "#fff" : TextColor)};
+  background: ${({ $isActive }) => ($isActive ? Colors.sub1 : "transparent")};
+  color: ${({ $isActive }) => ($isActive ? "#fff" : Colors.text)};
   border-radius: 12px;
   padding: 15px;
 
   &:hover {
-    background-color: ${PointColor};
+    background-color: ${Colors.sub1};
     color: #fff;
     transition: background-color 0.5s ease;
     span,
@@ -267,8 +267,8 @@ const ProfileWrapper = styled.div`
   bottom: 0;
   left: 0;
   padding: 10px 14px;
-  background: ${SubColor1};
-  color: ${TextColor};
+  background: ${Colors.sub1};
+  color: ${Colors.text};
   height: 70px;
   width: 250px;
   box-sizing: border-box;

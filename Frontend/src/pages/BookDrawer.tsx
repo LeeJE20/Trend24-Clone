@@ -2,24 +2,29 @@ import { useState } from "react";
 import styled from "styled-components";
 import ViewModal from "../components/pages/bookdrawer/viewModal";
 import AddKeywordModal from "../components/pages/bookdrawer/AddKeywordModal";
+import { RiArchiveDrawerFill } from "react-icons/ri";
+import { FaPlusCircle } from "react-icons/fa";
+import Modal from "../components/common/modal/BookDrawerSaveModal";
+
 
 import { booksResponse } from "../constants/DummyDataBookDrawer";
+import Colors from "../constants/Color";
 
 interface keywordlistType {
   drawerId: number;
   name: string;
   books: {
     bookId: number;
-    product_id: number;
-    search_keyword: string;
-    total_click_count: number;
-    total_order_count: number;
-    total_order_amount: number;
+    productId: number;
+    searchKeyword: string;
+    totalClickCount: number;
+    totalOrderCount: number;
+    totalOrderAmount: number;
     contents: string;
-    product_name: string;
-    sale_price: number;
-    category_name: string;
-    total_purchase_count: number;
+    productName: string;
+    salePrice: number;
+    categoryName: string;
+    totalPurchaseCount: number | null;
   }[];
 }
 
@@ -47,33 +52,39 @@ const BookDrawer = () => {
     <>
       <BookDrawerContainer>
         <TitleContainer>
-          <Title>도서 서랍</Title>
+          <Title>
+            <RiArchiveDrawerFill className="icon" />
+            도서 서랍
+          </Title>
           {keywordBooks.length > 0 && ( // keywordBooks가 비어있지 않을 때만 렌더링
-            <BtnBox>
-              <AddBtn onClick={toggleKeywordModal}>추가</AddBtn>
-              <ViewBtn onClick={toggleViewModal}>보기방식 변경</ViewBtn>
-            </BtnBox>
+            <AddBtn onClick={toggleKeywordModal}>
+              <FaPlusCircle className="icon" /> 키워드 추가
+            </AddBtn>
           )}
         </TitleContainer>
 
         <ContentContainer>
           {keywordBooks.length > 0 ? ( // keywordBooks가 비어있지 않을 때만 렌더링
-            keywordBooks.map((drawer, index) => (
-              <Drawer key={index}>
-                <DrawerTitle># {drawer.name}</DrawerTitle>
-                <BookContainer>
-                  {drawer.books.map((book, index) => (
-                    <Book key={index}>
-                      <BookImg
-                        src="https://cdn.pixabay.com/photo/2015/09/05/20/02/book-925589_960_720.jpg"
-                        alt="book1"
-                      />
-                      <BookTitle>{book.product_name}</BookTitle>
-                    </Book>
-                  ))}
-                </BookContainer>
-              </Drawer>
-            ))
+            keywordBooks.map((drawer, index) => {
+              console.log(drawer);
+
+              return (
+                <Drawer key={index}>
+                  <DrawerTitle># {drawer.name}</DrawerTitle>
+                  <BookContainer>
+                    {drawer.books.map((book, index) => (
+                      <Book key={index}>
+                        <BookImg
+                          src={`https://image.yes24.com/goods/${book.productId}/XL`}
+                          alt="book1"
+                        />
+                        <BookTitle>{book.productName}</BookTitle>
+                      </Book>
+                    ))}
+                  </BookContainer>
+                </Drawer>
+              );
+            })
           ) : (
             <EmptyDrawer>
               <EmptyImg>
@@ -94,10 +105,17 @@ const BookDrawer = () => {
         </ContentContainer>
       </BookDrawerContainer>
       {isAddKeywordModal && (
-        <AddKeywordModal
-          toggleAddKeywordModal={toggleKeywordModal}
-          addKeyword={addKeyword} // addKeyword 함수 직접 전달
-        />
+        <Modal
+          isOpen={isAddKeywordModal}
+          onClose={() => {
+            setIsAddKeywordModal(false);
+          }}
+        >
+          <AddKeywordModal
+            toggleAddKeywordModal={toggleKeywordModal}
+            addKeyword={addKeyword} // addKeyword 함수 직접 전달
+          />
+        </Modal>
       )}
       {isViewModal && <ViewModal toggleViewModal={toggleViewModal} />}
     </>
@@ -111,7 +129,6 @@ const BookDrawerContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
 `;
 
 const TitleContainer = styled.div`
@@ -120,11 +137,10 @@ const TitleContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 10%;
-  border: 1px solid #000;
 `;
 
 const Title = styled.div`
-  font-size: 24px;
+  font-size: 2.5rem;
   font-weight: bold;
   color: #000;
   text-align: start;
@@ -132,39 +148,38 @@ const Title = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid #000;
+  margin: 20px 10px;
+  .icon {
+    font-size: 3rem;
+    color: #313131;
+    margin-right: 10px;
+  }
 `;
 
-const BtnBox = styled.div`
+const AddBtn = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  height: 100%;
-  border: 1px solid #000;
-`;
-
-const AddBtn = styled.button`
-  width: 50%;
-  height: 100%;
-  border: 1px solid #000;
-`;
-
-const ViewBtn = styled.button`
-  width: 50%;
-  height: 100%;
-  border: 1px solid #000;
+  width: 10%;
+  font-size: 2rem;
+  align-content: center;
+  align-self: center;
+  cursor: pointer;
+  .icon {
+    font-size: 3rem;
+    margin-right: 10px;
+  }
+  &:hover{
+    color:${Colors.main}
+  }
 `;
 
 const ContentContainer = styled.div`
-  height: 90%;
+  height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
   justify-content: center;
   align-items: first baseline;
-  padding: 10px;
   box-sizing: border-box;
   position: relative;
   overflow-y: auto;
@@ -177,7 +192,11 @@ const Drawer = styled.div`
   align-items: center;
   width: 100%;
   height: 40vh;
-  border: 1px solid #000;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
 `;
 
 const DrawerTitle = styled.div`
@@ -189,18 +208,19 @@ const DrawerTitle = styled.div`
   height: 10%;
   display: flex;
   align-items: center;
-  border: 1px solid #000;
 `;
 
 const BookContainer = styled.div`
   display: grid;
   width: 100%;
   height: 90%;
+  grid-gap: 10px;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   justify-content: center;
   align-items: center;
-  border: 1px solid #000;
+  overflow: auto;
+  overflow-x: hidden;
 `;
 
 const Book = styled.div`
@@ -210,7 +230,6 @@ const Book = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
 `;
 
 const BookTitle = styled.div`
@@ -218,14 +237,14 @@ const BookTitle = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-
-  border: 1px solid #000;
+  height: 20%;
+  font-size: 1vw;
+  margin-top: 5px;
 `;
 
 const BookImg = styled.img`
   width: 100%;
   height: 80%;
-  border: 1px solid #000;
 `;
 
 const EmptyDrawer = styled.div`
@@ -233,10 +252,10 @@ const EmptyDrawer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #000;
   left: 10%;
   width: 80%;
   height: 60%;
+  background-color: #ffffff;
 `;
 
 const EmptyImg = styled.div`

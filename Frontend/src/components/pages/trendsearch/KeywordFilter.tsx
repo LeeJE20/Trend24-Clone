@@ -1,12 +1,22 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MainColor } from "../../../constants/Color";
+import Colors from "../../../constants/Color";
 import { FaSearch } from "react-icons/fa";
-import { trendCategoryData } from "../../../constants/DummyData/TrendCategoryData";
+
+interface TrendCategoryDataType {
+  trendCategoryId: number;
+  name: string;
+  keywords: keywords[];
+}
+interface keywords {
+  keywordId: number;
+  name: string;
+}
 
 interface KeywordFilterProps {
-  selectedKeyword: string[];
-  onKeywordChange: (keywords: string[]) => void;
+  selectedKeyword: keywords[];
+  trendCategoryData: TrendCategoryDataType[];
+  onKeywordChange: (keywords: keywords[]) => void;
   onSearch: () => void;
 }
 
@@ -14,6 +24,7 @@ const KeywordFilter = ({
   selectedKeyword,
   onKeywordChange,
   onSearch,
+  trendCategoryData,
 }: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -21,7 +32,7 @@ const KeywordFilter = ({
     setSelectedCategory(category);
   };
 
-  const keywordClick = (keyword: string) => {
+  const keywordClick = (keyword: keywords) => {
     if (selectedKeyword.includes(keyword)) {
       onKeywordChange(selectedKeyword.filter((kw) => kw !== keyword));
     } else {
@@ -35,12 +46,12 @@ const KeywordFilter = ({
         <div className="label">선택된 키워드</div>
         <div className="keywordList">
           {selectedKeyword &&
-            selectedKeyword.map((li, idx) => <div key={idx}># {li}</div>)}
+            selectedKeyword.map((li, idx) => <div key={idx}># {li.name}</div>)}
         </div>
-        <div className="searchBtn" onClick={onSearch}>
+        {/* <div className="searchBtn" onClick={onSearch}>
           <div>검색</div>
           <FaSearch />
-        </div>
+        </div> */}
       </SelectedKeyword>
       <Category>
         <div className="label">카테고리</div>
@@ -62,8 +73,8 @@ const KeywordFilter = ({
             ?.keywords.map((li, idx) => (
               <KeywordItem
                 key={idx}
-                onClick={() => keywordClick(li.name)}
-                selected={selectedKeyword.includes(li.name)}
+                onClick={() => keywordClick(li)}
+                selected={selectedKeyword.includes(li)}
               >
                 # {li.name}
               </KeywordItem>
@@ -78,8 +89,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   flex-flow: column;
-  box-sizing: border-box;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  padding: 5px;
 `;
 
 const SelectedKeyword = styled.div`
@@ -88,16 +99,14 @@ const SelectedKeyword = styled.div`
   flex-direction: row;
   justify-items: center;
   .label {
-    width: 200px;
-    padding: 20px 5px;
-    background-color: ${MainColor};
+    min-width: 200px;
+    color: ${Colors.main};
     font-weight: bold;
-    font-size: 2.3rem;
-    color: white;
+    font-size: 2rem;
     align-content: center;
     text-align: center;
-    border-radius: 20px 10px 10px 0px;
-    margin-right: 10px;
+    border-right: solid 2px #bebebe7e;
+    margin: 5px 0px;
   }
 
   .keywordList {
@@ -112,7 +121,7 @@ const SelectedKeyword = styled.div`
       border-radius: 30px;
 
       &:hover {
-        background-color: gray;
+        background-color: #dadada;
       }
     }
   }
@@ -120,7 +129,7 @@ const SelectedKeyword = styled.div`
   .searchBtn {
     border: 1px solid black;
     padding: 5px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-right: 10px;
     display: flex;
     align-items: center;
@@ -132,7 +141,7 @@ const SelectedKeyword = styled.div`
     }
 
     &:hover {
-      background-color: gray;
+      background-color: #dadada;
     }
   }
 `;
@@ -143,17 +152,13 @@ const Category = styled.div`
   flex-direction: row;
   .label {
     min-width: 200px;
-    background-color: ${MainColor};
+    color: ${Colors.main};
     font-weight: bold;
-    font-size: 2.3rem;
-    width: 200px;
-    padding: 20px 5px;
-    color: white;
+    font-size: 2rem;
     align-content: center;
     text-align: center;
-    border-radius: 0px 10px 10px 0px;
-    border-bottom: solid 1px white;
-    margin-right: 10px;
+    border-right: solid 2px #bebebe7e;
+    margin: 5px 0px;
   }
 
   .categoryList {
@@ -171,7 +176,7 @@ const Category = styled.div`
       border-right: solid 2px #bebebe7e;
 
       &:hover {
-        background-color: #828282;
+        background-color: ${Colors.sub4};
       }
     }
   }
