@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -66,7 +67,7 @@ public class RecommendService {
 			if (currentBookWithKeywords == null) {
 				responseMap.put(bookId, recommendMapper.KeywordWithBookDtoToBookWithKeywords(keywordWithBookDto));
 				currentBookWithKeywords = responseMap.get(bookId);
-				currentBookWithKeywords.setKeywords(new ArrayList<>());
+				currentBookWithKeywords.setKeywords(new LinkedHashSet<>());
 			}
 			currentBookWithKeywords.getKeywords().add(keywordWithBookDto.getKeyword());
 		}
