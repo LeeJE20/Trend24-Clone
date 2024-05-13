@@ -13,9 +13,10 @@ import lombok.Setter;
 
 public class StatusDto {
 	@Getter
-	@Setter
 	@NoArgsConstructor
-	public static class WeeklyTopClickBooksDto extends BookDto.Response {
+	@AllArgsConstructor
+	@Builder
+	public static class WeeklyTopClickedBooksDto {
 		private Integer bookId;
 		private Integer clickCountSum;
 		private String productName;
