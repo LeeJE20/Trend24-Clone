@@ -8,7 +8,6 @@ import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.bookclick.repository.BookClickRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,19 +58,20 @@ public class StatusService {
 
     return new ListDto<>(list);
   }
+
   public ListDto<StatusDto.ClickDto> getWeeklyBookClickCount(Integer bookId) {
-    Optional<Book> book = bookRepository.findById(bookId);
+//    Optional<Book> book = bookRepository.findById(bookId);
     LocalDate now = LocalDate.now();
     LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusDays(6L);
     LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
     List<BookClick> bookClicks = bookClickRepository.findByBookIdAndCreatedTimeBetween(bookId, start, end);
 
     Map<LocalDate, Integer> clickByDate = new LinkedHashMap<>();
-    for(int i = 0; i < 7; i++) {
+    for (int i = 0; i < 7; i++) {
       clickByDate.put(now.minusDays(i), 0);
     }
 
-    for(BookClick bc : bookClicks) {
+    for (BookClick bc : bookClicks) {
       LocalDate targetDate = bc.getCreatedTime().toLocalDate();
       clickByDate.put(targetDate, bc.getCount());
     }
@@ -79,6 +79,7 @@ public class StatusService {
     List<StatusDto.ClickDto> list = clickByDate.entrySet()
         .stream()
         .map(bc -> StatusDto.ClickDto.builder()
+            .date(bc.getKey())
             .count(bc.getValue())
             .build())
         .toList();

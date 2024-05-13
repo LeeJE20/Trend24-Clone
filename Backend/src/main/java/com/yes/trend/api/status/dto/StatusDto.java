@@ -4,7 +4,7 @@ import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.dto.BookDto;
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class StatusDto {
   @Getter
@@ -24,6 +24,7 @@ public class StatusDto {
   @AllArgsConstructor
   @Builder
   public static class ClickDto {
+    private LocalDate date;
     private Integer count;
   }
 }
