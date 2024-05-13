@@ -41,4 +41,9 @@ public class CustomService {
 		}
 		return new CustomDto.Components(compoments);
 	}
+
+	public CustomDto.PatchPageName getPageName() {
+		Admin admin = adminService.getLoginAdmin();
+		return new CustomDto.PatchPageName(admin.getCustomName());
+	}
 }
