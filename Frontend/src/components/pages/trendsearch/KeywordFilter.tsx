@@ -1,7 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Colors from "../../../constants/Color";
-import { FaSearch } from "react-icons/fa";
+import { FaArrowRotateLeft } from "react-icons/fa6";
+
+
 
 interface TrendCategoryDataType {
   trendCategoryId: number;
@@ -17,13 +19,11 @@ interface KeywordFilterProps {
   selectedKeyword: keywords[];
   trendCategoryData: TrendCategoryDataType[];
   onKeywordChange: (keywords: keywords[]) => void;
-  onSearch: () => void;
 }
 
 const KeywordFilter = ({
   selectedKeyword,
   onKeywordChange,
-  onSearch,
   trendCategoryData,
 }: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -40,6 +40,10 @@ const KeywordFilter = ({
     }
   };
 
+  const resetKeyword = () =>{
+    onKeywordChange([]);
+  };
+
   return (
     <Container>
       <SelectedKeyword>
@@ -48,10 +52,10 @@ const KeywordFilter = ({
           {selectedKeyword &&
             selectedKeyword.map((li, idx) => <div key={idx}># {li.name}</div>)}
         </div>
-        {/* <div className="searchBtn" onClick={onSearch}>
-          <div>검색</div>
-          <FaSearch />
-        </div> */}
+        <div className="searchBtn" onClick={resetKeyword}>
+          <div>초기화</div>
+          <FaArrowRotateLeft />
+        </div>
       </SelectedKeyword>
       <Category>
         <div className="label">카테고리</div>
@@ -62,9 +66,6 @@ const KeywordFilter = ({
             </div>
           ))}
         </div>
-        {/* {props.listData.map((li, idx) => (
-          <div key={idx} onClick={() => categoryClick(li)}>{li}</div>
-        ))} */}
       </Category>
       <KeywordList>
         {selectedCategory &&
@@ -127,14 +128,17 @@ const SelectedKeyword = styled.div`
   }
 
   .searchBtn {
-    border: 1px solid black;
     padding: 5px;
     font-size: 2rem;
-    margin-right: 10px;
+    margin-right: 20px;
+    margin-top: 8px;
+    padding: 8px 15px;
     display: flex;
     align-items: center;
     align-self: center;
     cursor: pointer;
+    background-color: ${Colors.sub4};
+    border-radius:20px;
 
     div {
       margin-right: 10px;
@@ -192,14 +196,16 @@ const KeywordList = styled.div`
 
 const KeywordItem = styled.div<{ selected: boolean }>`
   margin: 0px 5px;
-  padding: 10px 15px;
+  padding: 5px 15px;
   border-radius: 30px;
   box-sizing: border-box;
   cursor: pointer;
-  background-color: ${(props) => (props.selected ? "gray" : "initial")};
+  background-color: ${(props) =>
+    props.selected ? `${Colors.sub4}` : "initial"};
+  color: ${(props) => (props.selected ? "#5c5c5c" : "initial")};
 
   &:hover {
-    background-color: gray;
+    background-color: ${Colors.sub4};
   }
 `;
 

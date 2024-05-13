@@ -22,6 +22,7 @@ const HotTrend = () => {
   const [keyword, setKeyword] = useState<wordType | null>(null); // 키워드의 단어와 id 저장
   const [selectedTable, setSelectedTable] = useState<string>(""); // 날짜 데이터 저장
   const [trendKeyword, setTrendKeyword] = useState<TrendKeywordType[]>([]); // 전체 테이블의 키워드 정보 저장
+  const [tableDate, setTableDate] = useState<Date>(new Date());
 
   // 테이블 클릭 이벤트
   const handleTableClick = (date: string) => {
@@ -31,6 +32,14 @@ const HotTrend = () => {
       setSelectedTable("");
       setKeyword(null);
     }
+  };
+  const formatDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    console.log(`${year}-${month}-${day}`);
+
+    return `${year}-${month}-${day}`;
   };
 
   // 키워드 클릭했을때 이벤트
@@ -42,13 +51,13 @@ const HotTrend = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        return await getTrendKeyword();
+        return await getTrendKeyword(formatDate(tableDate));
       } catch (error) {
         console.log(error);
       }
     };
     fetchData().then((res) => setTrendKeyword(res));
-  }, []);
+  }, [tableDate]);
 
   return (
     <Container>
@@ -58,17 +67,35 @@ const HotTrend = () => {
       </Title>
       {selectedTable && (
         <PrevBtn onClick={() => handleTableClick("")}>
-          <FaArrowLeft />
+          <FaArrowLeft className="icon" />
         </PrevBtn>
       )}
       {!selectedTable && (
         <DateBtnWrapper>
-          <PrevBtn onClick={() => handleTableClick("")}>
-            <FaArrowLeft /> 
-          </PrevBtn>
-          <NextBtn onClick={() => handleTableClick("")}>
-            <FaArrowRight />
+          <NextBtn
+            onClick={() =>
+              setTableDate(() => {
+                const nextDate = new Date(tableDate);
+                nextDate.setDate(nextDate.getDate() + 1);
+                if (nextDate > new Date()) return new Date();
+                else return nextDate;
+              })
+            }
+          >
+            <FaArrowLeft className="icon" /> &nbsp; 이후 날짜
           </NextBtn>
+          <PrevBtn
+            onClick={() =>
+              setTableDate(() => {
+                const prevDate = new Date(tableDate);
+                prevDate.setDate(prevDate.getDate() - 1);
+                return prevDate;
+              })
+            }
+          >
+            이전 날짜 &nbsp;
+            <FaArrowRight className="icon" />
+          </PrevBtn>
         </DateBtnWrapper>
       )}
       <Content>
@@ -127,20 +154,36 @@ const DateBtnWrapper = styled.div`
 `;
 
 const PrevBtn = styled.div`
+  display: flex;
+  justify-content: left;
   margin-left: 10px;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  color: ${Colors.sub1};
   cursor: pointer;
+  margin: 8px;
+  .icon {
+    margin-right: 10px;
+    font-size: 2.5rem;
+  }
 `;
 const NextBtn = styled.div`
+  display: flex;
+  justify-content: center;
   margin-right: 10px;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  margin: 5px;
   cursor: pointer;
+  .icon {
+    margin-left: 10px;
+    font-size: 2.5rem;
+  }
 `;
 
 const Content = styled.div`
-  flex: 1;
+  /* flex: 1; */
+  flex-grow: 1;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   overflow-x: hidden;
   border-radius: 10px;
@@ -151,7 +194,6 @@ const TableWrapper = styled.div`
   margin-right: 5px;
   flex-grow: 1;
   box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
-  
 
   &:first-child {
     box-shadow: 1px 0px 5px 1px #67676755;

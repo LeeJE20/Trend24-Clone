@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { PageInfo } from "../../../constants/DummyData/BookListData";
 import { GrFormNextLink } from "react-icons/gr";
 import { MdOutlineSave } from "react-icons/md";
-import BookDrawerSaveModal from "../../common/modal/BookDrawerSaveModal";
+import BookDrawerSaveModal from "../modal/Modal";
 import { BookType } from "../../../constants/Type/Type";
 import Colors from "../../../constants/Color";
 import CustomDropdown from "../select/Select";
+import { postDrawerKeyword } from "../../../apis/drawer";
 
 interface BookListProps {
   title: string;
@@ -49,8 +50,9 @@ const BookList = ({
   const handleSaveButtonClick = (bookId: number) => {
     // 서랍 키워드 api  호출
     setModalContent(["인공지능", "IT", "부동산", "인공지능", "IT", "부동산"]);
-
+    setSelectedItem("Selected item");
     setModalOpen(!modalOpen);
+    
   };
 
   return (

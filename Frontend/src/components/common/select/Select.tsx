@@ -59,19 +59,19 @@ const DropdownSelect = styled.div`
 `;
 
 const DropdownList = styled.div<{ $isOpen: boolean }>`
-  margin-top: 10px;
+  /* margin-top: 10px; */
   border: 2px solid #7878783b;
   background-color: white;
   border-radius: 4px;
   position: absolute;
-  width: 100%;
-  top: 100%;
+
   left: 0;
   right: 0;
+  margin-top: 5px;
   max-height: 200px;
   overflow-y: auto;
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
+  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "none")};
   transition: opacity 0.2s linear, visibility 0.2s linear;
   z-index: 1;
 

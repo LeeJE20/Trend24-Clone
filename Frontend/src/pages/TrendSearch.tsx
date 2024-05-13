@@ -21,7 +21,7 @@ const TrendSearch = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(4);
   const [totalElements, setTotalElements] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedKeyword, setSelectedKeyword] = useState<keywords[]>([]);
   const [trendCategoryData, setTrendCategoryData] = useState<
     TrendCategoryDataType[]
@@ -29,7 +29,7 @@ const TrendSearch = () => {
 
   const getTrendCategory = async () => {
     try {
-      return await getTrendCategories();
+      return await getTrendCategories("2024-05-12");
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +38,7 @@ const TrendSearch = () => {
   const getBookList = async () => {
     try {
       return await getTrendSearchBooks({
-        keywords: selectedKeyword.map((li)=>li.keywordId),
+        keywords: selectedKeyword.map((li) => li.keywordId),
         page: currentPage - 1,
         size: itemsPerPage,
       });
@@ -51,12 +51,25 @@ const TrendSearch = () => {
     getTrendCategory().then((res) => setTrendCategoryData(res));
   }, []);
 
+  useEffect(() => {
+    if (selectedKeyword.length !== 0) {
+      getBookList().then((res) => {
+        if (res.length !== 0) {
+          setBookList(res.list);
+          setTotalElements(res.pageInfo.totalElements);
+          setTotalPages(res.pageInfo.totalPages);
+        }
+      });
+    } else {
+      setBookList([]);
+      setCurrentPage(1);
+      setTotalElements(0);
+      setTotalPages(1);
+    }
+  }, [currentPage, selectedKeyword]);
+
   const handleKeywordChange = (keywords: keywords[]) => {
     setSelectedKeyword(keywords);
-  };
-
-  const handleSearch = () => {
-    alert(selectedKeyword);
   };
 
   const nextPage = () => {
@@ -70,7 +83,7 @@ const TrendSearch = () => {
   return (
     <Container>
       <Title>
-        <TbDeviceDesktopSearch className="icon"/>
+        <TbDeviceDesktopSearch className="icon" />
         트렌드 검색
       </Title>
       <FilterContainer>
@@ -78,7 +91,6 @@ const TrendSearch = () => {
           selectedKeyword={selectedKeyword}
           trendCategoryData={trendCategoryData}
           onKeywordChange={handleKeywordChange}
-          onSearch={handleSearch}
         />
       </FilterContainer>
       <BookListContainer>

@@ -55,7 +55,7 @@ const KeywordDetail = ({ keyword }: { keyword: wordType }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(4);
   const [totalElements, setTotalElements] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const getRanking = async () => {
     try {
@@ -94,7 +94,13 @@ const KeywordDetail = ({ keyword }: { keyword: wordType }) => {
         setBookList(res.list);
         setCurrentPage(1);
         setTotalElements(res.pageInfo.totalElements);
-        setTotalPages(res.pageInfo.totalPages);
+        console.log(res.pageInfo);
+        
+        setTotalPages(
+          res.pageInfo.totalPages == 0
+            ? 1
+            : res.pageInfo.totalPages
+        );
       }
     });
   }, [keyword]);

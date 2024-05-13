@@ -11,7 +11,7 @@ const BookSearch = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(4);
   const [totalElements, setTotalElements] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchText, setSearchText] = useState("");
 
@@ -32,12 +32,11 @@ const BookSearch = () => {
     getBookList().then((res) => {
       if (res.length !== 0) {
         setBookList(res.list);
-        setCurrentPage(1);
         setTotalElements(res.pageInfo.totalElements);
         setTotalPages(res.pageInfo.totalPages);
       }
     });
-  }, [searchText, selectedCategory]);
+  }, [searchText, selectedCategory, currentPage]);
 
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
