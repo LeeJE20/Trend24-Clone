@@ -8,4 +8,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPredicateExecutor<Book> {
   Page<Book> findAll(Pageable pageable);
+
 }

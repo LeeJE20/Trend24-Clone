@@ -3,10 +3,12 @@ package com.yes.trend.api.status.service;
 import com.yes.trend.api.status.dto.StatusDto;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.entity.Book;
+import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.bookclick.repository.BookClickRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import java.util.*;
 @Transactional(readOnly = true)
 public class StatusService {
   private final BookClickRepository bookClickRepository;
+  private final BookRepository bookRepository;
 
   public ListDto<StatusDto.WeeklyTopClickBooksDto> getWeeklyTopClickedBooks() {
     LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusWeeks(1).plusDays(1);
@@ -49,22 +52,48 @@ public class StatusService {
         dto.setBookId(book.getId());
         dto.setProductName(book.getProductName());
         dto.setClickCountSum(entry.getValue());
-        dto.setWeeklyClickCount(getWeeklyClickCount(book, start, end));
+        dto.setWeeklyClickCount(getWeeklyBookClickCount(book.getId()));
         dto.setRanking(ranking++);
       }
     }
 
     return new ListDto<>(list);
   }
+  public ListDto<StatusDto.ClickDto> getWeeklyBookClickCount(Integer bookId) {
+    Optional<Book> book = bookRepository.findById(bookId);
+    LocalDate now = LocalDate.now();
+    LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusDays(6L);
+    LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+    List<BookClick> bookClicks = bookClickRepository.findByBookIdAndCreatedTimeBetween(bookId, start, end);
 
-  private List<Integer> getWeeklyClickCount(Book book, LocalDateTime start, LocalDateTime end) {
-    List<BookClick> bookClicks = bookClickRepository.findByBookAndCreatedTimeBetween(book, start, end);
-    List<Integer> weeklyClickCount = new ArrayList<>(Collections.nCopies(7, 0));
-    for (BookClick click : bookClicks) {
-      int dayOfWeek = click.getCreatedTime().getDayOfWeek().getValue() - 1; // Adjusting to 0-indexed
-      weeklyClickCount.set(dayOfWeek, click.getCount());
-//      weeklyClickCount.set(dayOfWeek, weeklyClickCount.get(dayOfWeek) + click.getCount());
+    Map<LocalDate, Integer> clickByDate = new LinkedHashMap<>();
+    for(int i = 0; i < 7; i++) {
+      clickByDate.put(now.minusDays(i), 0);
     }
-    return weeklyClickCount;
+
+    for(BookClick bc : bookClicks) {
+      LocalDate targetDate = bc.getCreatedTime().toLocalDate();
+      clickByDate.put(targetDate, bc.getCount());
+    }
+
+    List<StatusDto.ClickDto> list = clickByDate.entrySet()
+        .stream()
+        .map(bc -> StatusDto.ClickDto.builder()
+            .count(bc.getValue())
+            .build())
+        .toList();
+
+    return new ListDto<>(list);
   }
+
+//  private List<Integer> getWeeklyClickCount(Book book, LocalDateTime start, LocalDateTime end) {
+//    List<BookClick> bookClicks = bookClickRepository.findByBookAndCreatedTimeBetween(book, start, end);
+//    List<Integer> weeklyClickCount = new ArrayList<>(Collections.nCopies(7, 0));
+//    for (BookClick click : bookClicks) {
+//      int dayOfWeek = click.getCreatedTime().getDayOfWeek().getValue() - 1; // Adjusting to 0-indexed
+//      weeklyClickCount.set(dayOfWeek, click.getCount());
+////      weeklyClickCount.set(dayOfWeek, weeklyClickCount.get(dayOfWeek) + click.getCount());
+//    }
+//    return weeklyClickCount;
+//  }
 }

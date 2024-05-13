@@ -1,9 +1,8 @@
 package com.yes.trend.api.status.dto;
 
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.dto.BookDto;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,7 +15,15 @@ public class StatusDto {
     private Integer clickCountSum;
     private String productName;
     private Integer ranking;
-    private List<Integer> weeklyClickCount;
+    private ListDto<ClickDto> weeklyClickCount;
 
+  }
+
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class ClickDto {
+    private Integer count;
   }
 }
