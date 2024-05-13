@@ -3,8 +3,32 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../../store/store";
-import { setCompleteList } from "../../../../store/slices/customizeSlice";
 import { Rnd, DraggableData, ResizableDelta } from "react-rnd";
+
+import CityTotalReport from "../../../googleanalytics/City/CityTotalReport";
+import CityUsers from "../../../googleanalytics/City/CityUsers";
+import DateAU from "../../../googleanalytics/Date/DateAU";
+import DateBounceRate from "../../../googleanalytics/Date/DateBounceRate";
+import DateTotalReport from "../../../googleanalytics/Date/DateTotalReport";
+import DateUsers from "../../../googleanalytics/Date/DateUsers";
+import DateView from "../../../googleanalytics/Date/DateView";
+import DeviceAU from "../../../googleanalytics/Device/DeviceAU";
+import DeviceTotalReport from "../../../googleanalytics/Device/DeviceTotalReport";
+import DeviceUsers from "../../../googleanalytics/Device/DeviceUsers";
+import Memo from "./Memo";
+
+import {
+  useCustomizeTitle,
+  useCustomizedPageAPI,
+  useInitialPageAPI,
+  useGetCustomizeTitle,
+} from "./CustomizePageAPI";
+
+import {
+  setCustomizedComponentList,
+  setInitialComponentList,
+} from "../../../../store/slices/customPageSlice";
+
 import CustomComponentList from "../../../common/modal/CustomComponentList";
 
 interface CustomizedComponentList {
@@ -17,19 +41,33 @@ const RnDCustom = () => {
   const [addedList, setAddedList] = useState<CustomizedComponentList[]>([]);
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
-
-  const [isTitleEditing, setIsTitleEditing] = useState(false);
-  const [title, setTitle] = useState("Customize Page");
-  const [tempTitle, setTempTitle] = useState("Customize Page");
-
-  const componentList = useSelector(
-    (state: RootState) => state.customize.componentList
-  );
   const dispatch = useDispatch<AppDispatch>();
 
+  const [title, setTitle] = useState("");
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [tempTitle, setTempTitle] = useState("");
+
+  //API 호출
+  //API 호출 결과를 통해 title, customedComponentList를 업데이트
+  useGetCustomizeTitle();
+  useInitialPageAPI();
+
+  //API 호출 결과를 통해 title, customedComponentList를 업데이트
+  const pageTitle = useSelector(
+    (state: RootState) => state.customPage.pageTitle
+  );
+  //API 호출 결과를 통해 title, customedComponentList를 업데이트
+  const customedComponentList = useSelector(
+    (state: RootState) => state.customPage.customizedComponentList
+  );
+
   useEffect(() => {
-    setAddedList([...componentList]);
-  }, [componentList]);
+    setAddedList([...customedComponentList]);
+  }, [customedComponentList]);
+
+  useEffect(() => {
+    setTitle(pageTitle);
+  }, [pageTitle]);
 
   const handleDragStop = (index: number, d: DraggableData) => {
     setAddedList(
@@ -37,6 +75,21 @@ const RnDCustom = () => {
         i === index ? { ...item, position: { x: d.x, y: d.y } } : item
       )
     );
+  };
+
+  // 각 componentName에 대응하는 컴포넌트를 정의합니다.
+  const componentMap: { [key: string]: JSX.Element } = {
+    CityTotalReport: <CityTotalReport />,
+    CityUsers: <CityUsers />,
+    DateAU: <DateAU />,
+    DateBounceRate: <DateBounceRate />,
+    DateTotalReport: <DateTotalReport />,
+    DateUsers: <DateUsers />,
+    DateView: <DateView />,
+    DeviceAU: <DeviceAU />,
+    DeviceTotalReport: <DeviceTotalReport />,
+    DeviceUsers: <DeviceUsers />,
+    Memo: <Memo />,
   };
 
   const handleResizeStop = (
@@ -68,7 +121,8 @@ const RnDCustom = () => {
   };
 
   const compleCustomize = () => {
-    dispatch(setCompleteList(addedList));
+    dispatch(setInitialComponentList(addedList));
+    dispatch(setCustomizedComponentList(addedList));
     navigate("/main/customizePage");
   };
 
@@ -90,6 +144,10 @@ const RnDCustom = () => {
   const showEditTitle = () => {
     setIsTitleEditing(true);
     setTitle("");
+  };
+
+  const handlleDeleteComponent = (name: string) => {
+    setAddedList(addedList.filter((item) => item.componentName !== name));
   };
 
   return (
@@ -154,7 +212,16 @@ const RnDCustom = () => {
             maxHeight={"500%"}
             maxWidth={"500%"}
           >
-            <Item>{item.componentName}</Item>
+            <Item>
+              <button
+                onClick={() => {
+                  handlleDeleteComponent(item.componentName);
+                }}
+              >
+                삭제
+              </button>
+              {componentMap[item.componentName]}
+            </Item>
           </Rnd>
         ))}
       </DragContainer>
@@ -230,6 +297,7 @@ const DragContainer = styled.div`
 
 const Item = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;

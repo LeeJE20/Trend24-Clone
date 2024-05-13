@@ -1,28 +1,56 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "../../../../store/store";
+import { RootState } from "../../../../store/store";
+
+import {
+  useCustomizeTitle,
+  useCustomizedPageAPI,
+  useInitialPageAPI,
+  useGetCustomizeTitle,
+} from "./CustomizePageAPI";
 
 import { Rnd } from "react-rnd";
 
-import UserActivityDaily from "../../../googleanalytics/UserActivityDaily";
-import UserActivityWeekly from "../../../googleanalytics/UserActivityWeekly";
-import UserActivityMonthly from "../../../googleanalytics/UserActivityMonthly";
-import { useSelector, useDispatch } from "react-redux";
+import CityTotalReport from "../../../googleanalytics/City/CityTotalReport";
+import CityUsers from "../../../googleanalytics/City/CityUsers";
+import DateAU from "../../../googleanalytics/Date/DateAU";
+import DateBounceRate from "../../../googleanalytics/Date/DateBounceRate";
+import DateTotalReport from "../../../googleanalytics/Date/DateTotalReport";
+import DateUsers from "../../../googleanalytics/Date/DateUsers";
+import DateView from "../../../googleanalytics/Date/DateView";
+import DeviceAU from "../../../googleanalytics/Device/DeviceAU";
+import DeviceTotalReport from "../../../googleanalytics/Device/DeviceTotalReport";
+import DeviceUsers from "../../../googleanalytics/Device/DeviceUsers";
+import Memo from "./Memo";
+import { useSelector } from "react-redux";
+
+interface componentListProps {
+  componentName: string;
+  size: {
+    width: number;
+    height: number;
+  };
+  position: {
+    x: number;
+    y: number;
+  };
+}
 
 const UserCustomizePage = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [title, setTitle] = useState("Customize Page");
 
-  const componentList = useSelector(
-    (state: RootState) => state.customize.componentList
+  //API 호출
+  //API 호출 결과를 통해 title, customedComponentList를 업데이트
+  useGetCustomizeTitle();
+  useInitialPageAPI();
+
+  const pageTitle = useSelector(
+    (state: RootState) => state.customPage.pageTitle
   );
-
-  useEffect(() => {
-    // setComponentList(emptyListData);
-    console.log("componentList", componentList);
-  }, []);
+  const initialComponentList = useSelector(
+    (state: RootState) => state.customPage.initialComponentList
+  );
 
   const showEditPage = () => {
     navigate("/main/custom");
@@ -30,25 +58,32 @@ const UserCustomizePage = () => {
 
   // 각 componentName에 대응하는 컴포넌트를 정의합니다.
   const componentMap: { [key: string]: JSX.Element } = {
-    UserActivityDaily: <UserActivityDaily />,
-    UserActivityWeekly: <UserActivityWeekly />,
-    UserActivityMonthly: <UserActivityMonthly />,
-    // 필요한 만큼 componentName에 대응하는 컴포넌트를 추가합니다.
+    CityTotalReport: <CityTotalReport />,
+    CityUsers: <CityUsers />,
+    DateAU: <DateAU />,
+    DateBounceRate: <DateBounceRate />,
+    DateTotalReport: <DateTotalReport />,
+    DateUsers: <DateUsers />,
+    DateView: <DateView />,
+    DeviceAU: <DeviceAU />,
+    DeviceTotalReport: <DeviceTotalReport />,
+    DeviceUsers: <DeviceUsers />,
+    Memo: <Memo />,
   };
 
   return (
     <Container>
       <TitleContainer>
-        <Title> {title} </Title>
+        <Title> {pageTitle} </Title>
 
-        {componentList.length === 0 ? null : (
+        {initialComponentList.length === 0 ? null : (
           <BtnBox>
             <button onClick={showEditPage}>편집</button>
           </BtnBox>
         )}
       </TitleContainer>
       <ContentContainer>
-        {componentList.length === 0 ? (
+        {initialComponentList.length === 0 ? (
           <>
             <div>
               <img src="https://via.placeholder.com/150" alt="placeholder" />
@@ -60,7 +95,7 @@ const UserCustomizePage = () => {
           </>
         ) : (
           <>
-            {componentList.map((item, index) => (
+            {initialComponentList.map((item, index) => (
               <Rnd
                 key={item.componentName}
                 size={{ width: item.size.width, height: item.size.height }}
@@ -77,16 +112,7 @@ const UserCustomizePage = () => {
                   topRight: false,
                 }}
               >
-                <Box
-                  onClick={() => {
-                    console.log(item);
-                    console.log(item.componentName);
-                    console.log(componentMap[item.componentName]);
-                    console.log(componentMap);
-                  }}
-                >
-                  {componentMap[item.componentName]}
-                </Box>
+                <Box>{componentMap[item.componentName]}</Box>
               </Rnd>
             ))}
           </>
@@ -132,7 +158,6 @@ const ContentContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 90%;
-  background-color: #ffffff;
 `;
 
 const AddDataContainer = styled.div`
@@ -154,12 +179,13 @@ const AddComponentButton = styled.button`
 `;
 
 const Box = styled.div`
-  border: 1px solid #000;
   border-radius: 10px;
   margin: 10px;
   cursor: pointer;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff;
 `;
 
 export default UserCustomizePage;

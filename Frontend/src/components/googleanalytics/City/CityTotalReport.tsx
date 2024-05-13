@@ -43,7 +43,7 @@ const CityTotalReport = () => {
 
   return (
     <Container>
-      <Title>도시별 사용자 수</Title>
+      <Title>도시별 보고서</Title>
       <Content>
         <select
           value={selectedCity}
@@ -79,14 +79,16 @@ const CityTotalReport = () => {
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #000;
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`
+  width: 100%;
+  flex: 1 0 0;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -96,12 +98,18 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  flex: 5 0 0;
 `;
 
 const Report = styled.div`
   margin-top: 10px;
   border: 1px solid #000;
   padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
 `;
 
 export default CityTotalReport;

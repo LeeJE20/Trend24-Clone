@@ -6,8 +6,9 @@ export const GeneralRecommendDummyData: GeneralRecommendDummy[] = [
   { title: "뉴스" },
   { title: "IT" },
   { title: "동물" },
-  { title: "경제" },
-  { title: "과학" },
+  { title: "음악" },
+  { title: "엔터테인먼트" },
+  { title: "뉴미디어" },
 ];
 
 export interface GeneralDummyBookList {
