@@ -4,7 +4,7 @@ import ViewModal from "../components/pages/bookdrawer/viewModal";
 import AddKeywordModal from "../components/pages/bookdrawer/AddKeywordModal";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { FaPlusCircle } from "react-icons/fa";
-import Modal from "../components/common/modal/BookDrawerSaveModal";
+import Modal from "../components/common/modal/Modal";
 
 
 import { booksResponse } from "../constants/DummyDataBookDrawer";
@@ -112,7 +112,7 @@ const BookDrawer = () => {
           }}
         >
           <AddKeywordModal
-            toggleAddKeywordModal={toggleKeywordModal}
+            setIsAddKeywordModal={setIsAddKeywordModal}
             addKeyword={addKeyword} // addKeyword 함수 직접 전달
           />
         </Modal>

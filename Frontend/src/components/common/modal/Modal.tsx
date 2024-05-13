@@ -11,15 +11,6 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
-  const [selectedItem, setSelectedItem] = useState("Selected item");
-
-  const selectItem = (item: string) => {
-    setSelectedItem(item);
-  };
-
-  const confirmHandler = () => {
-    onClose();
-  };
 
   const closeHandler = () => {
     onClose();
@@ -35,21 +26,6 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
           </button>
         </PopupHead>
         {children}
-        {/* <PopupBody>
-          <div className="title">서랍에 추가</div>
-          <BodyContentBox>
-            <CustomDropdown
-              itemList={keywordList}
-              onSelectItem={selectItem}
-              selectedItem={selectedItem}
-            />
-          </BodyContentBox>
-        </PopupBody>
-        <PopupFoot>
-          <div className="saveBtn" onClick={confirmHandler}>
-            저장
-          </div>
-        </PopupFoot> */}
       </Popup>
     </ModalWrapper>
   );
