@@ -85,7 +85,7 @@ class QdrantSearcher:
         return reponse_book_id
 
     # For Fast API
-    def find_memorial_book(self, book_id, top_k=5):
+    def find_memorial_book(self, book_id, top_k=30):
         my_book = self.search_book_id(book_id)
 
         if len(my_book) is not 0:

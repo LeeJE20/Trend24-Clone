@@ -98,5 +98,6 @@ def live_keyword_searching(search_sentence: Union[str, None] = None):
 def memorial_book_searching(product_id: Union[int] = None):
     logger.info(f"product_id=[{product_id}]")
     response = search.memorial_book_searching(product_id)
+    response = search.memorial_book_searching(product_id, top_k)
 
     return dto.ApiResponse(status=200, message="memorial_book_searching 성공", result=response)
