@@ -38,18 +38,19 @@ public class Admin extends BaseEntity {
 	private String branch = "";
 
 	@Setter
-	private String customName;
+	private String customName = "커스텀 페이지";
 
 	@Setter
-	private String customContents;
+	private String customContents = "";
 
 	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
 	private List<Box> boxes;
 
 	@Builder
-	public Admin(String adminId, String adminPw, String name) {
+	public Admin(String adminId, String adminPw, String name, String branch) {
 		this.adminId = adminId;
 		this.adminPw = adminPw;
 		this.name = name;
+		this.branch = branch;
 	}
 }
