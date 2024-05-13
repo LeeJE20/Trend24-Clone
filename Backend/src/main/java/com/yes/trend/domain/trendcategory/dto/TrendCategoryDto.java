@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class TrendCategoryDto {
-	@Getter
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Response {
-		private Integer trendCategoryId;
-		private String name;
-	}
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Response {
+    private Integer trendCategoryId;
+    private String name;
+  }
 }

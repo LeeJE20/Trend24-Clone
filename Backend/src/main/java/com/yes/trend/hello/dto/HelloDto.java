@@ -6,19 +6,19 @@ import lombok.NoArgsConstructor;
 
 public class HelloDto {
 
-	@Getter
-	@AllArgsConstructor
-	@NoArgsConstructor
-	public static class Request {
+  @Getter
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class Request {
 
-		private String hello;
-	}
+    private String hello;
+  }
 
-	@Getter
-	@AllArgsConstructor
-	public static class Response {
+  @Getter
+  @AllArgsConstructor
+  public static class Response {
 
-		private String world;
-	}
+    private String world;
+  }
 }
 
