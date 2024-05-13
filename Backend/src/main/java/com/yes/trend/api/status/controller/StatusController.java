@@ -24,7 +24,7 @@ public class StatusController {
 
 	@Operation(summary = "UA-02 도서 클릭수 리스트", description = "")
 	@GetMapping("/books")
-	public ApiResponse<ListDto<StatusDto.WeeklyTopClickBooksDto>> getTopThreeClickBooks() {
+	public ApiResponse<ListDto<StatusDto.WeeklyTopClickedBooksDto>> getTopThreeClickBooks() {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, statusService.getWeeklyTopClickedBooks());
 	}
 
