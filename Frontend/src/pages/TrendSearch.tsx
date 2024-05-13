@@ -5,6 +5,7 @@ import BookList from "../components/common/book/BookList";
 import { getTrendCategories, getTrendSearchBooks } from "../apis/recommendApi";
 import { BookType, PageInfo } from "../constants/Type/Type";
 import { TbDeviceDesktopSearch } from "react-icons/tb";
+import moment from "moment";
 
 interface TrendCategoryDataType {
   trendCategoryId: number;
@@ -23,13 +24,14 @@ const TrendSearch = () => {
   const [totalElements, setTotalElements] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedKeyword, setSelectedKeyword] = useState<keywords[]>([]);
-  const [trendCategoryData, setTrendCategoryData] = useState<
-    TrendCategoryDataType[]
-  >([]);
+  const [trendCategoryData, setTrendCategoryData] = useState<TrendCategoryDataType[]>([]);
+  const [trendDate, setTrendDate] = useState<string>(
+    moment().subtract(1, "days").format("YYYY-MM-DD")
+  );
 
   const getTrendCategory = async () => {
     try {
-      return await getTrendCategories("2024-05-12");
+      return await getTrendCategories(trendDate);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +51,7 @@ const TrendSearch = () => {
 
   useEffect(() => {
     getTrendCategory().then((res) => setTrendCategoryData(res));
-  }, []);
+  }, [trendDate]);
 
   useEffect(() => {
     if (selectedKeyword.length !== 0) {
@@ -72,6 +74,10 @@ const TrendSearch = () => {
     setSelectedKeyword(keywords);
   };
 
+  const handleTrendDateChange = (date: string) => {
+    setTrendDate(date);
+  };
+
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -91,6 +97,7 @@ const TrendSearch = () => {
           selectedKeyword={selectedKeyword}
           trendCategoryData={trendCategoryData}
           onKeywordChange={handleKeywordChange}
+          onTrendDateChange={handleTrendDateChange}
         />
       </FilterContainer>
       <BookListContainer>
