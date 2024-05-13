@@ -5,6 +5,7 @@ import BookList from "../components/common/book/BookList";
 import { getTrendCategories, getTrendSearchBooks } from "../apis/recommendApi";
 import { BookType, PageInfo } from "../constants/Type/Type";
 import { TbDeviceDesktopSearch } from "react-icons/tb";
+import moment from "moment";
 
 interface TrendCategoryDataType {
   trendCategoryId: number;
@@ -21,15 +22,16 @@ const TrendSearch = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(4);
   const [totalElements, setTotalElements] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedKeyword, setSelectedKeyword] = useState<keywords[]>([]);
-  const [trendCategoryData, setTrendCategoryData] = useState<
-    TrendCategoryDataType[]
-  >([]);
+  const [trendCategoryData, setTrendCategoryData] = useState<TrendCategoryDataType[]>([]);
+  const [trendDate, setTrendDate] = useState<string>(
+    moment().subtract(1, "days").format("YYYY-MM-DD")
+  );
 
   const getTrendCategory = async () => {
     try {
-      return await getTrendCategories();
+      return await getTrendCategories(trendDate);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +40,7 @@ const TrendSearch = () => {
   const getBookList = async () => {
     try {
       return await getTrendSearchBooks({
-        keywords: selectedKeyword.map((li)=>li.keywordId),
+        keywords: selectedKeyword.map((li) => li.keywordId),
         page: currentPage - 1,
         size: itemsPerPage,
       });
@@ -49,14 +51,31 @@ const TrendSearch = () => {
 
   useEffect(() => {
     getTrendCategory().then((res) => setTrendCategoryData(res));
-  }, []);
+  }, [trendDate]);
+
+  useEffect(() => {
+    if (selectedKeyword.length !== 0) {
+      getBookList().then((res) => {
+        if (res.length !== 0) {
+          setBookList(res.list);
+          setTotalElements(res.pageInfo.totalElements);
+          setTotalPages(res.pageInfo.totalPages);
+        }
+      });
+    } else {
+      setBookList([]);
+      setCurrentPage(1);
+      setTotalElements(0);
+      setTotalPages(1);
+    }
+  }, [currentPage, selectedKeyword]);
 
   const handleKeywordChange = (keywords: keywords[]) => {
     setSelectedKeyword(keywords);
   };
 
-  const handleSearch = () => {
-    alert(selectedKeyword);
+  const handleTrendDateChange = (date: string) => {
+    setTrendDate(date);
   };
 
   const nextPage = () => {
@@ -70,7 +89,7 @@ const TrendSearch = () => {
   return (
     <Container>
       <Title>
-        <TbDeviceDesktopSearch className="icon"/>
+        <TbDeviceDesktopSearch className="icon" />
         트렌드 검색
       </Title>
       <FilterContainer>
@@ -78,7 +97,7 @@ const TrendSearch = () => {
           selectedKeyword={selectedKeyword}
           trendCategoryData={trendCategoryData}
           onKeywordChange={handleKeywordChange}
-          onSearch={handleSearch}
+          onTrendDateChange={handleTrendDateChange}
         />
       </FilterContainer>
       <BookListContainer>

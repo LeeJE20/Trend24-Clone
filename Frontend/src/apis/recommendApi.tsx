@@ -1,9 +1,9 @@
 import { api } from "./apiConfig";
 
-export const getTrendCategories = async () => {
+export const getTrendCategories = async (date:string) => {
   try {
     const response = await api.get(
-      "/recommend/trend-categories?withKeywords=true"
+      `/recommend/trend-categories?withKeywords=true&date=${date}`
     );
     return response.data.result.list;
   } catch (error) {
