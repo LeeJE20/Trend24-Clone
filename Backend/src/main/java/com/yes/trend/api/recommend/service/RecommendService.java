@@ -3,7 +3,6 @@ package com.yes.trend.api.recommend.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -26,7 +25,6 @@ import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.keyword.dto.KeywordDto;
-import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.recommendkeyword.repository.RecommendKeywordRepository;
 import com.yes.trend.domain.trendcategory.entity.TrendCategory;
 import com.yes.trend.domain.trendcategory.repository.TrendCategoryRepository;
@@ -49,8 +47,9 @@ public class RecommendService {
 		Page<Integer> bookIds = recommendKeywordRepository.findBooksByKeywordIds(keywordIds, pageable);
 
 		// keyword 최소 날짜로 필터링
-		LocalDate minCreatedDate = recommendKeywordRepository.findMinimumCreatedDate(keywordIds).orElseThrow(() -> new CustomException(
-			ErrorCode.NO_ID, keywordIds));
+		LocalDate minCreatedDate = recommendKeywordRepository.findMinimumCreatedDate(keywordIds)
+			.orElseThrow(() -> new CustomException(
+				ErrorCode.NO_ID, keywordIds));
 
 		List<KeywordWithBookDto> keywordWithBookDtos = recommendKeywordRepository.findKeywordWithBookByBookIds(
 			bookIds.toList(), minCreatedDate);

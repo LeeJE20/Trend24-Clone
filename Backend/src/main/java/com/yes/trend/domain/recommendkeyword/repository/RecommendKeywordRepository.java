@@ -24,7 +24,8 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 			" WHERE b.id IN :bookIds" +
 			" AND date(rk.createdTime) >= :minCreatedDate"
 	)
-	List<KeywordWithBookDto> findKeywordWithBookByBookIds(@Param("bookIds") List<Integer> bookIds,@Param("minCreatedDate") LocalDate minCreatedDate);
+	List<KeywordWithBookDto> findKeywordWithBookByBookIds(@Param("bookIds") List<Integer> bookIds,
+		@Param("minCreatedDate") LocalDate minCreatedDate);
 
 	@Query(
 		"SELECT DISTINCT b.id" +
@@ -37,7 +38,6 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 	Page<Integer> findBooksByKeywordIds(@Param("keywordIds") List<Integer> keywordIds, Pageable pageable);
 
 	@Query("SELECT MIN(date(k.createdTime)) FROM Keyword k WHERE k.id IN :keywordIds")
-	Optional<LocalDate>  findMinimumCreatedDate(@Param("keywordIds") List<Integer> keywordIds);
-
+	Optional<LocalDate> findMinimumCreatedDate(@Param("keywordIds") List<Integer> keywordIds);
 
 }
