@@ -19,10 +19,13 @@ import com.yes.trend.api.recommend.dto.KeywordWithBookDto;
 import com.yes.trend.api.recommend.dto.RecommendDto;
 import com.yes.trend.api.recommend.dto.TrendCategoryWithKeywordDto;
 import com.yes.trend.api.recommend.mapper.RecommendMapper;
+import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.dto.PageInfoDto;
+import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.keyword.dto.KeywordDto;
+import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.recommendkeyword.repository.RecommendKeywordRepository;
 import com.yes.trend.domain.trendcategory.entity.TrendCategory;
 import com.yes.trend.domain.trendcategory.repository.TrendCategoryRepository;
@@ -44,8 +47,12 @@ public class RecommendService {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Integer> bookIds = recommendKeywordRepository.findBooksByKeywordIds(keywordIds, pageable);
 
+		// keyword 최소 날짜로 필터링
+		LocalDate minCreatedDate = recommendKeywordRepository.findMinimumCreatedDate(keywordIds).orElseThrow(() -> new CustomException(
+			ErrorCode.NO_ID, keywordIds));
+
 		List<KeywordWithBookDto> keywordWithBookDtos = recommendKeywordRepository.findKeywordWithBookByBookIds(
-			bookIds.toList());
+			bookIds.toList(), minCreatedDate);
 
 		// 순서 유지
 		Map<Integer, RecommendDto.BookWithKeywords> responseMap = new LinkedHashMap<>();
