@@ -1,7 +1,8 @@
-from qdrant_client import QdrantClient
-from qdrant_client.models import Filter, FieldCondition, MatchValue, Range, SearchParams
-import numpy as np
 import os
+
+from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue, SearchParams
+
 
 class QdrantSearcher:
     def __init__(self, collection_name="yes24_v2_collection", database_url="http://localhost:6663"):

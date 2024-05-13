@@ -1,24 +1,16 @@
+import logging
+import os
+import traceback
+from pathlib import Path
 from typing import Union
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
-
-import json
-
 from requests import Request
 from starlette.responses import JSONResponse
-from tqdm import tqdm
-from qdrant_client.models import PointStruct
-from qdrant_client import QdrantClient
-from qdrant_client.http import models
-from qdrant_client.models import VectorParams, Distance
-import numpy as np
-from dotenv import load_dotenv
-from pathlib import Path
-import os
+
 import api.live_searching_api as live_searching
 import dto.dtos as dto
-import logging
-import traceback
 from api.mysql_insert import Mysql_Manager
 
 dotenv_path = Path(".env")
@@ -75,9 +67,10 @@ def make_error():
     1 / 0
     return {"error": "error"}
 
+
 @app.get("/fastapi/db-connection-test")
 def mysql_test():
-    mysql_manager =Mysql_Manager()
+    mysql_manager = Mysql_Manager()
     selected = mysql_manager.select_test()
     return dto.ApiResponse(status=200, message="mysql_test 성공", result=selected)
 
@@ -95,9 +88,10 @@ def live_keyword_searching(search_sentence: Union[str, None] = None):
 
 
 @app.get("/fastapi/book/momory")
-def memorial_book_searching(product_id: Union[int] = None):
+def memorial_book_searching(product_id: Union[int] = None, top_k: Union[int] = None):
     logger.info(f"product_id=[{product_id}]")
-    response = search.memorial_book_searching(product_id)
+    if top_k == None or top_k <= 0:
+        top_k = 30
     response = search.memorial_book_searching(product_id, top_k)
 
     return dto.ApiResponse(status=200, message="memorial_book_searching 성공", result=response)
