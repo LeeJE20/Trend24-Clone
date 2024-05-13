@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+import com.yes.trend.domain.keyword.entity.Keyword;
+import com.yes.trend.domain.keyword.repository.KeywordRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ import static com.yes.trend.domain.bookclick.entity.QBookClick.bookClick;
 @Transactional(readOnly = true)
 public class StatusService {
 	private final BookClickRepository bookClickRepository;
+	private final KeywordRepository keywordRepository;
 	private final BookRepository bookRepository;
 
 	public ListDto<StatusDto.WeeklyTopClickedBooksDto> getWeeklyTopClickedBooks() {
@@ -136,4 +139,43 @@ public class StatusService {
 	//    }
 	//    return weeklyClickCount;
 	//  }
+	public ListDto<StatusDto.TopClickedKeywordsDto> getTopClickedKeyword() {
+		List<Keyword> keywords = keywordRepository.findAll();
+
+		Map<String, Integer> clickByKeyword = new HashMap<>();
+		for (Keyword k : keywords) {
+			clickByKeyword.put(k.getName(), clickByKeyword.getOrDefault(k.getName(), 0) + k.getClickCount());
+		}
+
+		// 클릭수가 높은 키워드 정렬
+		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(clickByKeyword.entrySet());
+		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+
+		Map<String, Integer> topFiveKeywords = new LinkedHashMap<>();
+		int num = 1;
+
+		for (Map.Entry<String, Integer> entry : sortedList) {
+			if (num > 5)
+				break;
+			topFiveKeywords.put(entry.getKey(), entry.getValue());
+			num++;
+		}
+
+		List<StatusDto.TopClickedKeywordsDto> list = topFiveKeywords.entrySet()
+				.stream()
+				.map(k -> StatusDto.TopClickedKeywordsDto.builder()
+						.keywordId(keywordRepository.findByName(k.getKey()).getId())
+						.trendCategoryName(keywordRepository.findByName(k.getKey()).getCategory().getName())
+						.keywordName(k.getKey())
+						.clickCount(k.getValue())
+						.build())
+				.toList();
+
+		return new ListDto<>(list);
+	}
 }
