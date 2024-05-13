@@ -1,12 +1,11 @@
 package com.yes.trend.domain.admin.repository;
 
-import java.util.Optional;
-
+import com.yes.trend.domain.admin.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.yes.trend.domain.admin.entity.Admin;
+import java.util.Optional;
 
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
-	Optional<Admin> findByAdminId(String adminId);
+  Optional<Admin> findByAdminId(String adminId);
 }
