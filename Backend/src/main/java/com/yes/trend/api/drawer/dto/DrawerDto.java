@@ -3,6 +3,8 @@ package com.yes.trend.api.drawer.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.querydsl.core.annotations.QueryProjection;
+import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.dto.BookDto;
 
 import jakarta.validation.constraints.Max;
@@ -31,16 +33,30 @@ public class DrawerDto {
 
 	@Getter
 	@NoArgsConstructor
+	public static class Drawers {
+		PageInfoDto pageInfo;
+		List<DrawerDto.Response> list = new ArrayList<>();
+
+		public Drawers(PageInfoDto pageInfo) {
+			this.pageInfo = pageInfo;
+		}
+	}
+
+	@Getter
+	@NoArgsConstructor
 	public static class Response {
 		private Integer drawerId;
 		private String name;
 		private List<BookDto.Response> books = new ArrayList<>();
 
 		@Builder
+		@QueryProjection
 		public Response(Integer drawerId, String name, List<BookDto.Response> books) {
 			this.drawerId = drawerId;
 			this.name = name;
-			this.books = books;
+			if (books != null) {
+				this.books = books;
+			}
 		}
 	}
 

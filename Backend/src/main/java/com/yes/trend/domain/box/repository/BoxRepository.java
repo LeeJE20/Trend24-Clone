@@ -30,4 +30,6 @@ public interface BoxRepository extends JpaRepository<Box, Integer> {
 		"JOIN bb.book bk " +
 		"WHERE b.id = :boxId")
 	List<Book> findBooksByBoxId(@Param("boxId") Integer boxId);
+
+	List<Box> findByAdmin_Id(Integer adminPkId);
 }

@@ -1,6 +1,8 @@
 package com.yes.trend.domain.recommendkeyword.repository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +21,11 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 			" JOIN rk.keyword k " +
 			" JOIN rk.dailyRecommend dr " +
 			" JOIN dr.book b " +
-			" WHERE b.id IN :bookIds"
+			" WHERE b.id IN :bookIds" +
+			" AND date(rk.createdTime) >= :minCreatedDate"
 	)
-	List<KeywordWithBookDto> findKeywordWithBookByBookIds(@Param("bookIds") List<Integer> bookIds);
+	List<KeywordWithBookDto> findKeywordWithBookByBookIds(@Param("bookIds") List<Integer> bookIds,
+		@Param("minCreatedDate") LocalDate minCreatedDate);
 
 	@Query(
 		"SELECT DISTINCT b.id" +
@@ -32,4 +36,8 @@ public interface RecommendKeywordRepository extends JpaRepository<RecommendKeywo
 			" WHERE k.id IN :keywordIds"
 	)
 	Page<Integer> findBooksByKeywordIds(@Param("keywordIds") List<Integer> keywordIds, Pageable pageable);
+
+	@Query("SELECT MIN(date(k.createdTime)) FROM Keyword k WHERE k.id IN :keywordIds")
+	Optional<LocalDate> findMinimumCreatedDate(@Param("keywordIds") List<Integer> keywordIds);
+
 }
