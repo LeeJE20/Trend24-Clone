@@ -13,13 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 const UserCustomizePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [isTitleEditing, setIsTitleEditing] = useState(false);
   const [title, setTitle] = useState("Customize Page");
-  const [tempTitle, setTempTitle] = useState("Customize Page");
 
-  const completeList = useSelector(
-    (state: RootState) => state.customize.completeList
-  );
   const componentList = useSelector(
     (state: RootState) => state.customize.componentList
   );
@@ -39,22 +34,6 @@ const UserCustomizePage = () => {
     UserActivityWeekly: <UserActivityWeekly />,
     UserActivityMonthly: <UserActivityMonthly />,
     // 필요한 만큼 componentName에 대응하는 컴포넌트를 추가합니다.
-  };
-
-  const sendTitleEdit = (newTitle: string) => {
-    setTitle(newTitle);
-    setTempTitle(newTitle);
-    setIsTitleEditing(false);
-  };
-
-  const handleCancelTitleEdit = () => {
-    setTitle(tempTitle);
-    setIsTitleEditing(false);
-  };
-
-  const showEditTitle = () => {
-    setIsTitleEditing(true);
-    setTitle("");
   };
 
   return (

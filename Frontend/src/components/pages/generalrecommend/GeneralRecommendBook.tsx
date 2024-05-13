@@ -5,6 +5,7 @@ import { GeneralDummyBookList } from "../../../constants/DummyData/GeneralRecomm
 import { GeneralDummyBookListData } from "../../../constants/DummyData/GeneralRecommendDummy";
 import BookDetail from "./BookDetail";
 import BookScroll from "./BookScroll";
+import Example from "./WordCloudComponent";
 
 const GeneralRecommendBook = () => {
   const location = useLocation();
@@ -84,7 +85,7 @@ const GeneralRecommendBook = () => {
       <Container>
         <WordContainer>
           {title}
-          word cloud
+          <Example width={1000} height={1000} showControls={true} />
         </WordContainer>
         {showScrollBook ? (
           <BookScroll back={toggleBack} bookInfo={selectedBookInfo} /> // 선택된 책의 정보를 prop으로 전달
