@@ -3,8 +3,8 @@ package com.yes.trend.api.recommend.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,8 +19,10 @@ import com.yes.trend.api.recommend.dto.KeywordWithBookDto;
 import com.yes.trend.api.recommend.dto.RecommendDto;
 import com.yes.trend.api.recommend.dto.TrendCategoryWithKeywordDto;
 import com.yes.trend.api.recommend.mapper.RecommendMapper;
+import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.dto.PageInfoDto;
+import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.keyword.dto.KeywordDto;
 import com.yes.trend.domain.recommendkeyword.repository.RecommendKeywordRepository;
@@ -44,8 +46,13 @@ public class RecommendService {
 		Pageable pageable = PageRequest.of(page, size);
 		Page<Integer> bookIds = recommendKeywordRepository.findBooksByKeywordIds(keywordIds, pageable);
 
+		// keyword 최소 날짜로 필터링
+		LocalDate minCreatedDate = recommendKeywordRepository.findMinimumCreatedDate(keywordIds)
+			.orElseThrow(() -> new CustomException(
+				ErrorCode.NO_ID, keywordIds));
+
 		List<KeywordWithBookDto> keywordWithBookDtos = recommendKeywordRepository.findKeywordWithBookByBookIds(
-			bookIds.toList());
+			bookIds.toList(), minCreatedDate);
 
 		// 순서 유지
 		Map<Integer, RecommendDto.BookWithKeywords> responseMap = new LinkedHashMap<>();
@@ -59,7 +66,7 @@ public class RecommendService {
 			if (currentBookWithKeywords == null) {
 				responseMap.put(bookId, recommendMapper.KeywordWithBookDtoToBookWithKeywords(keywordWithBookDto));
 				currentBookWithKeywords = responseMap.get(bookId);
-				currentBookWithKeywords.setKeywords(new ArrayList<>());
+				currentBookWithKeywords.setKeywords(new LinkedHashSet<>());
 			}
 			currentBookWithKeywords.getKeywords().add(keywordWithBookDto.getKeyword());
 		}

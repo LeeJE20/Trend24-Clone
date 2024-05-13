@@ -1,7 +1,9 @@
 package com.yes.trend.api.recommend.dto;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.dto.BookDto;
@@ -31,7 +33,7 @@ public class RecommendDto {
 	@NoArgsConstructor
 	public static class BookWithKeywords extends BookDto.Response {
 		@Setter
-		private List<String> keywords = new ArrayList<>();
+		private Set<String> keywords = new LinkedHashSet<>();
 
 		public BookWithKeywords(Integer bookId, Integer productId, String productName, String categoryName,
 			String searchKeyword, Integer totalClickCount, Integer totalOrderCount, Integer totalOrderAmount,
