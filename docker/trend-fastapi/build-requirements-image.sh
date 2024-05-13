@@ -17,7 +17,4 @@ FILE_NAME=Dockerfile-requirements
 # 현재 폴더의 Dockerfile을 사용하여 이미지를 빌드합니다.
 docker build -f $FILE_NAME -t $IMAGE_NAME .
 
-# 컨테이너를 실행합니다.
-docker run -d -p $PORT:8000 --name $CONTAINER_NAME --network trend-network $IMAGE_NAME
-
 echo "스크립트 끝"
