@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -33,4 +34,11 @@ public class AnonymousQuestionController {
     public ApiResponse<List<Book>> getBookListByQuestionId(@PathVariable("questionId") Integer questionId){
         return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getSelectQuestionBookList(questionId));
     }
+
+    @Operation(summary = "도서 검색창에 입력한 키워드", description = "%이별%")
+    @GetMapping("/search/{bookText}")
+    public ApiResponse<List<Map<String, Object>>> getBookDataBySearch(@PathVariable("bookText") String bookText){
+        return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getfindBookByNameContain(bookText));
+    }
+
 }
