@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { SubColor } from "../constants/Color";
+import { SubColor1 } from "../constants/Color";
 
 import react from "../assets/react.svg";
 
@@ -55,7 +55,7 @@ const Login: React.FC = () => {
 const LoginPageContainer = styled.div`
   height: 100vh;
   width: 100vw;
-  background-color: ${SubColor};
+  background-color: ${SubColor1};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,7 +77,7 @@ const LoginImageWrapper = styled.div`
   height: 100%;
   width: auto;
   position: relative;
-  background-color: ${SubColor};
+  background-color: ${SubColor1};
 `;
 
 const CompanyLogo = styled.div`

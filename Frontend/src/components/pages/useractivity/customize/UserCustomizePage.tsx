@@ -2,26 +2,20 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../../../store/store";
-import { emptyListData } from "../../../../constants/DummyData";
-import {
-  customizedComponentListData,
-  CustomizedComponentList,
-} from "../../../../constants/DummyData";
+
 import { Rnd } from "react-rnd";
 
 import UserActivityDaily from "../../../googleanalytics/UserActivityDaily";
 import UserActivityWeekly from "../../../googleanalytics/UserActivityWeekly";
 import UserActivityMonthly from "../../../googleanalytics/UserActivityMonthly";
 import { useSelector, useDispatch } from "react-redux";
-import { setCompleteList } from "../../../../store/slices/customizeSlice";
-import { setComponentList } from "../../../../store/slices/customizeSlice";
 
 const UserCustomizePage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  // const [componentList, setComponentList] = useState<CustomizedComponentList[]>(
-  //   []
-  // );
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [title, setTitle] = useState("Customize Page");
+  const [tempTitle, setTempTitle] = useState("Customize Page");
 
   const completeList = useSelector(
     (state: RootState) => state.customize.completeList
@@ -47,12 +41,31 @@ const UserCustomizePage = () => {
     // 필요한 만큼 componentName에 대응하는 컴포넌트를 추가합니다.
   };
 
+  const sendTitleEdit = (newTitle: string) => {
+    setTitle(newTitle);
+    setTempTitle(newTitle);
+    setIsTitleEditing(false);
+  };
+
+  const handleCancelTitleEdit = () => {
+    setTitle(tempTitle);
+    setIsTitleEditing(false);
+  };
+
+  const showEditTitle = () => {
+    setIsTitleEditing(true);
+    setTitle("");
+  };
+
   return (
     <Container>
       <TitleContainer>
-        사용자 커스터마이징
+        <Title> {title} </Title>
+
         {componentList.length === 0 ? null : (
-          <button onClick={showEditPage}>편집</button>
+          <BtnBox>
+            <button onClick={showEditPage}>편집</button>
+          </BtnBox>
         )}
       </TitleContainer>
       <ContentContainer>
@@ -120,6 +133,18 @@ const TitleContainer = styled.div`
   width: 100%;
   height: 10%;
   border: 1px solid #000;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex: 2;
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
 `;
 
 const ContentContainer = styled.div`
