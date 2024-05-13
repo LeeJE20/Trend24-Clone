@@ -40,4 +40,10 @@ public class CustomController {
 	public ApiResponse<CustomDto.Components> getComponents() {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, customService.getComponents());
 	}
+
+	@Operation(summary = "CP-06 페이지 이름 보기", description = "")
+	@GetMapping("/page")
+	public ApiResponse<CustomDto.PatchPageName> getPageName() {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, customService.getPageName());
+	}
 }
