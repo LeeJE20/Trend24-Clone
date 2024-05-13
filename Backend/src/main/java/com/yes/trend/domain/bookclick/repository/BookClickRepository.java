@@ -16,6 +16,7 @@ public interface BookClickRepository extends JpaRepository<BookClick, Integer> {
 	//  List<BookClick> findTop3ByClickCountSumAfter(LocalDateTime start);
 
 	List<BookClick> findByBookIdAndCreatedTimeBetween(Integer bookId, LocalDateTime start, LocalDateTime end);
+
 	List<BookClick> findByCreatedTimeBetween(LocalDateTime start, LocalDateTime end);
 	//  Book findByBook(Book book);
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yes.trend.api.drawer.dto.DrawerDto;
+import com.yes.trend.api.drawer.mapper.DrawerMapper;
 import com.yes.trend.common.costants.ErrorCode;
+import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.admin.entity.Admin;
 import com.yes.trend.domain.admin.service.AdminService;
@@ -34,6 +36,7 @@ public class DrawerService {
 	private final BoxBookRepository boxBookRepository;
 	private final AdminService adminService;
 	private final BookMapper bookMapper;
+	private final DrawerMapper drawerMapper;
 
 	@Transactional
 	public DrawerDto.Response postDrawer(DrawerDto.Post drawerPost) {
@@ -62,13 +65,10 @@ public class DrawerService {
 	public DrawerDto.Response postBookInDrawer(Integer drawerId, DrawerDto.BookPost bookPost) {
 		Admin admin = adminService.getLoginAdmin();
 
-		Box drawer = boxRepository.findById(drawerId)
-			.orElseThrow(() -> new CustomException(ErrorCode.NO_DRAWER, drawerId));
+		Box drawer = findById(drawerId);
 
 		// 어드민에 해당하는 서랍이 존재하는지
-		if (!Objects.equals(drawer.getAdmin().getId(), admin.getId())) {
-			throw new CustomException(ErrorCode.NO_DRAWER_BY_ADMIN, drawerId);
-		}
+		checkDrawerIsOwnedByAdmin(drawer, admin);
 
 		Book book = bookRepository.findById(bookPost.getBookId())
 			.orElseThrow(() -> new CustomException(ErrorCode.NO_BOOK, bookPost.getBookId()));
@@ -89,5 +89,68 @@ public class DrawerService {
 
 		return DrawerDto.Response.builder().drawerId(drawer.getId()).name(drawer.getName()).books(bookDtos).build();
 
+	}
+
+	public DrawerDto.Drawers getDrawer(boolean showList, Integer drawerId, int page, int size) {
+		Admin admin = adminService.getLoginAdmin();
+
+		// TODO: pagenation
+		PageInfoDto pageInfoDto = new PageInfoDto(page, size, 0, 0);
+
+		DrawerDto.Drawers response = new DrawerDto.Drawers(pageInfoDto);
+
+		if (drawerId != null) {
+			Box target = findById(drawerId);
+			checkDrawerIsOwnedByAdmin(target, admin);
+
+			if (!showList) {
+				// DrawerDto.Response dto = new DrawerDto.Response(target.getId(), target.getName(), new ArrayList<>());
+				response.getList().add(drawerMapper.boxToResponse(target));
+				return response;
+			}
+
+			List<Book> books = boxRepository.findBooksByBoxId(drawerId);
+			List<BookDto.Response> bookDtos = books.stream().map(bookMapper::BookToDto).toList();
+			// DrawerDto.Response dto = new DrawerDto.Response(target.getId(), target.getName(), new ArrayList<>());
+			response.getList().add(drawerMapper.boxToResponse(target, bookDtos));
+			return response;
+		}
+
+		List<Box> boxes = boxRepository.findByAdmin_Id(admin.getId());
+		if (!showList) {
+
+			for (Box box : boxes) {
+				// DrawerDto.Response dto = new DrawerDto.Response(target.getId(), target.getName(), new ArrayList<>());
+				response.getList().add(drawerMapper.boxToResponse(box));
+			}
+			return response;
+		}
+
+		// TODO: 쿼리 줄이기
+		// List<Integer> boxIds = boxes.stream().map(BaseEntity::getId).toList();
+		for (Box box : boxes) {
+			List<Book> books = boxRepository.findBooksByBoxId(box.getId());
+			List<BookDto.Response> bookDtos = books.stream().map(bookMapper::BookToDto).toList();
+			response.getList().add(drawerMapper.boxToResponse(box, bookDtos));
+		}
+		return response;
+	}
+
+	public Box findById(Integer drawerId) {
+		return boxRepository.findById(drawerId)
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_DRAWER, drawerId));
+	}
+
+	/**
+	 * 어드민에 해당하는 서랍이 존재하는지
+	 * @param drawer
+	 * @param admin
+	 * @return 존재하면 true, 아니면 에러 발생
+	 */
+	public boolean checkDrawerIsOwnedByAdmin(Box drawer, Admin admin) {
+		if (!Objects.equals(drawer.getAdmin().getId(), admin.getId())) {
+			throw new CustomException(ErrorCode.NO_DRAWER_BY_ADMIN, drawer.getId());
+		}
+		return true;
 	}
 }

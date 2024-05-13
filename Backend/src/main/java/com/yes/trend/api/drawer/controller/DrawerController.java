@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yes.trend.api.drawer.dto.DrawerDto;
@@ -48,5 +49,15 @@ public class DrawerController {
 	public ApiResponse<DrawerDto.Response> postBookInDrawer(@PathVariable Integer drawerId,
 		@RequestBody DrawerDto.BookPost bookPost) {
 		return ApiResponse.success(SuccessCode.POST_SUCCESS, drawerService.postBookInDrawer(drawerId, bookPost));
+	}
+
+	@Operation(summary = "BD-01 서랍 조회", description = "show-list: 내용까지 조회, drawer-id 없으면 전체 조회, 페이지네이션 추후 구현")
+	@GetMapping("")
+	public ApiResponse<DrawerDto.Drawers> getDrawer(
+		@RequestParam(required = false, name = "show-list", defaultValue = "false") boolean showList,
+		@RequestParam(required = false, name = "drawer-id") Integer drawerId,
+		@RequestParam(required = false, defaultValue = "0") int page,
+		@RequestParam(required = false, defaultValue = "10") int size) {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, drawerService.getDrawer(showList, drawerId, page, size));
 	}
 }
