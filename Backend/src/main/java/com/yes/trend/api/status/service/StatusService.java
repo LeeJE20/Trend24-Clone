@@ -3,7 +3,12 @@ package com.yes.trend.api.status.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +22,6 @@ import com.yes.trend.domain.bookclick.repository.BookClickRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import static com.yes.trend.domain.bookclick.entity.QBookClick.bookClick;
 
 @Service
 @RequiredArgsConstructor
@@ -34,13 +37,13 @@ public class StatusService {
 		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
 		List<BookClick> bookClicks = bookClickRepository.findByCreatedTimeBetween(start, end);
 
-//		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusWeeks(1).plusDays(1);
-//		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-//		List<BookClick> bookClicks = bookClickRepository.findByCreatedTimeAfter(start);
+		//		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusWeeks(1).plusDays(1);
+		//		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+		//		List<BookClick> bookClicks = bookClickRepository.findByCreatedTimeAfter(start);
 
 		Map<Book, Integer> clickCountMap = new HashMap<>();
 		// 도서별 클릭수 합계 계산
-		if(!bookClicks.isEmpty()) {
+		if (!bookClicks.isEmpty()) {
 			//map에서 value를 long으로 변경해야할까?
 			for (BookClick bc : bookClicks) {
 				clickCountMap.put(bc.getBook(), clickCountMap.getOrDefault(bc.getBook(), 0) + bc.getCount());
@@ -67,33 +70,33 @@ public class StatusService {
 
 			int rank = 1;
 			List<StatusDto.WeeklyTopClickedBooksDto> list = topThreeBooks.entrySet()
-					.stream()
-					.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
-							.bookId(t.getKey().getId())
-							.clickCountSum(t.getValue())
-							.productName(t.getKey().getProductName())
-							.ranking(1)
-							.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
-							.build())
-					.toList();
+				.stream()
+				.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
+					.bookId(t.getKey().getId())
+					.clickCountSum(t.getValue())
+					.productName(t.getKey().getProductName())
+					.ranking(1)
+					.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
+					.build())
+				.toList();
 
 			return new ListDto<>(list);
 		}
 
-//		for (Map.Entry<Book, Integer> entry : sortedList) {
-//			if (ranking > 3)
-//				break;
-//			// TODO: setter 안쓰는 방법으로 변경하기.
-//			if (entry.getKey() != null) {
-//				Book book = entry.getKey();
-//				StatusDto.WeeklyTopClickBooksDto dto = new StatusDto.WeeklyTopClickBooksDto();
-//				dto.setBookId(book.getId());
-//				dto.setProductName(book.getProductName());
-//				dto.setClickCountSum(entry.getValue());
-//				dto.setWeeklyClickCount(getWeeklyBookClickCount(book.getId()));
-//				dto.setRanking(ranking++);
-//			}
-//		}
+		//		for (Map.Entry<Book, Integer> entry : sortedList) {
+		//			if (ranking > 3)
+		//				break;
+		//			// TODO: setter 안쓰는 방법으로 변경하기.
+		//			if (entry.getKey() != null) {
+		//				Book book = entry.getKey();
+		//				StatusDto.WeeklyTopClickBooksDto dto = new StatusDto.WeeklyTopClickBooksDto();
+		//				dto.setBookId(book.getId());
+		//				dto.setProductName(book.getProductName());
+		//				dto.setClickCountSum(entry.getValue());
+		//				dto.setWeeklyClickCount(getWeeklyBookClickCount(book.getId()));
+		//				dto.setRanking(ranking++);
+		//			}
+		//		}
 
 		return null;
 	}

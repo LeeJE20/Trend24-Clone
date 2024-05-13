@@ -1,5 +1,7 @@
 package com.yes.trend.domain.book.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +24,7 @@ public class BookDto {
 		private String contents;
 		private Integer totalPurchaseCount;
 
+		@QueryProjection
 		public Response(Integer bookId, Integer productId, String productName, String categoryName,
 			String searchKeyword,
 			Integer totalClickCount, Integer totalOrderCount, Integer totalOrderAmount, Integer salePrice,

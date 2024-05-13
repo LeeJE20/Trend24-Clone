@@ -2,9 +2,11 @@ package com.yes.trend.common.dto;
 
 import org.springframework.data.domain.Page;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class PageInfoDto {
 	private int page;
 	private int size;
