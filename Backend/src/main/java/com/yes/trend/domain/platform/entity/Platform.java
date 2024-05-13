@@ -1,6 +1,7 @@
 package com.yes.trend.domain.platform.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -14,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Platform extends BaseEntity {
 
-  @Column(length = 100)
-  private String name;
+	@Column(length = 100)
+	private String name;
 }
