@@ -9,4 +9,5 @@ import com.yes.trend.domain.book.entity.Book;
 
 public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPredicateExecutor<Book> {
 	Page<Book> findAll(Pageable pageable);
+
 }

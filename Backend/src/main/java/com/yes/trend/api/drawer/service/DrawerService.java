@@ -11,7 +11,6 @@ import com.yes.trend.api.drawer.dto.DrawerDto;
 import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.admin.entity.Admin;
-import com.yes.trend.domain.admin.repository.AdminRepository;
 import com.yes.trend.domain.admin.service.AdminService;
 import com.yes.trend.domain.book.dto.BookDto;
 import com.yes.trend.domain.book.entity.Book;

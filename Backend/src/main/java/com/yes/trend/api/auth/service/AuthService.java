@@ -58,6 +58,9 @@ public class AuthService {
 
 		AuthDto.AuthResponse authResponse = tokenProvider.generateTokenResponse(authentication);
 
+		authResponse.setBranch(admin.getBranch());
+		authResponse.setName(admin.getName());
+
 		return authResponse;
 	}
 

@@ -11,6 +11,7 @@ import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +23,7 @@ public class AuthController {
 	private final AuthService authService;
 
 	@PostMapping("/signup")
-	public ApiResponse<String> regist(@RequestBody AuthDto.Post authDto) {
+	public ApiResponse<String> regist(@Valid @RequestBody AuthDto.Post authDto) {
 		return ApiResponse.success(SuccessCode.POST_SUCCESS, authService.signup(authDto));
 	}
 
