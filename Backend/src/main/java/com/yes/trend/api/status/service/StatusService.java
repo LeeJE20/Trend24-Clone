@@ -169,10 +169,36 @@ public class StatusService {
 		List<StatusDto.TopClickedKeywordsDto> list = topFiveKeywords.entrySet()
 				.stream()
 				.map(k -> StatusDto.TopClickedKeywordsDto.builder()
-						.keywordId(keywordRepository.findByName(k.getKey()).getId())
-						.trendCategoryName(keywordRepository.findByName(k.getKey()).getCategory().getName())
+//						.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
+						.categories(getKeywordCategories(k.getKey()))
 						.keywordName(k.getKey())
-						.clickCount(k.getValue())
+						.clickCountSum(k.getValue())
+						.build())
+				.toList();
+
+		return new ListDto<>(list);
+	}
+
+	public ListDto<StatusDto.CategoryDto> getKeywordCategories(String keywordName) {
+		List<Keyword> keywords = keywordRepository.findAllByName(keywordName);
+
+		Map<String, Integer> categoryByKeyword = new HashMap<>();
+		for (Keyword k : keywords) {
+			categoryByKeyword.put(k.getCategory().getName(), categoryByKeyword.getOrDefault(k.getCategory(), 0) + 1);
+		}
+
+		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(categoryByKeyword.entrySet());
+		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+
+		List<StatusDto.CategoryDto> list = categoryByKeyword.entrySet()
+				.stream()
+				.map(k -> StatusDto.CategoryDto.builder()
+						.trendCategoryName(k.getKey())
 						.build())
 				.toList();
 

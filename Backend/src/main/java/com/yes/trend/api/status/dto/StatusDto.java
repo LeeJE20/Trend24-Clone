@@ -39,10 +39,17 @@ public class StatusDto {
 	@AllArgsConstructor
 	@Builder
 	public static class TopClickedKeywordsDto {
-		private Integer keywordId;
-		private String trendCategoryName;
+		private ListDto<CategoryDto> categories;
 		private String keywordName;
-		private Integer clickCount;
+		private Integer clickCountSum;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class CategoryDto {
+		private String trendCategoryName;
 	}
 
 }
