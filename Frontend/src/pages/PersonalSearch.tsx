@@ -58,7 +58,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   box-sizing: border-box;
   /* transform: rotate(10deg); */
-  background-image: url("/public/Image/EventPage/bg.jpg");
+  background-image: url("/Image/EventPage/bg.jpg");
   background-repeat: repeat;
   align-items: center;
   color: white;

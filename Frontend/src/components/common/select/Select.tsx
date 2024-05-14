@@ -2,10 +2,15 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
+interface itemType {
+  listName: string;
+  listKey: number;
+}
+
 interface CustomDropdownProps {
-  itemList: string[];
-  onSelectItem: (item: string) => void;
-  selectedItem: string;
+  itemList: itemType[];
+  onSelectItem: (item: itemType) => void;
+  selectedItem: itemType;
 }
 
 const CustomDropdown = ({
@@ -19,21 +24,21 @@ const CustomDropdown = ({
     setIsOpen(!isOpen);
   };
 
-  const listClick = (item:string) =>{
+  const listClick = (item: itemType) => {
     setIsOpen(false);
-  onSelectItem(item);
-  }
+    onSelectItem(item);
+  };
 
   return (
     <DropdownWrapper>
       <DropdownSelect onClick={toggleDropdown}>
-        <span>{selectedItem}</span>
+        <span>{selectedItem.listName}</span>
         {isOpen ? <FaAngleUp /> : <FaAngleDown />}
       </DropdownSelect>
       <DropdownList $isOpen={isOpen}>
         {itemList.map((item, index) => (
           <DropdownListItem key={index} onClick={() => listClick(item)}>
-            {item}
+            {item.listName}
           </DropdownListItem>
         ))}
       </DropdownList>
@@ -43,7 +48,6 @@ const CustomDropdown = ({
 
 const DropdownWrapper = styled.div`
   width: 100%;
-  height: 100%;
   position: relative;
 `;
 
@@ -71,18 +75,16 @@ const DropdownList = styled.div<{ $isOpen: boolean }>`
   max-height: 200px;
   overflow-y: auto;
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "none")};
+  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
   transition: opacity 0.2s linear, visibility 0.2s linear;
   z-index: 1;
-
-
 `;
 const DropdownListItem = styled.div`
   padding: 1rem;
   font-size: 1.4rem;
   &:hover {
-    background-color: #f0f0f0; 
-    transition: background-color 0.1s ease-in-out; 
+    background-color: #f0f0f0;
+    transition: background-color 0.1s ease-in-out;
   }
 `;
 

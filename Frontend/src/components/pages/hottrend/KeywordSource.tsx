@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface referenceType {
-  platformId: number;
   platform: string;
   data: {
     uri: string;
@@ -15,7 +14,7 @@ interface referenceType {
   };
 }
 
-const KeywordSource = ({ platformId, platform, data }: referenceType) => {
+const KeywordSource = ({ platform, data }: referenceType) => {
   return (
     <Container>
       <Title>참고</Title>

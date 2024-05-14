@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import KeywordCalendar from "./KeywordCalendar";
 import KeywordSource from "./KeywordSource";
 import BookList from "../../common/book/BookList";
-// import { referenceData } from "../../../constants/DummyData";
 import { getKeywordRanking, getKeywordReference } from "../../../apis/trendApi";
 import { getTrendSearchBooks } from "../../../apis/recommendApi";
 import { BookType, PageInfo } from "../../../constants/Type/Type";
@@ -148,7 +147,6 @@ const KeywordDetail = ({ keyword }: { keyword: wordType }) => {
 
       <KeywordSourceWrapper>
         <KeywordSource
-          platformId={reference?.platformId}
           platform={reference?.platform}
           data={reference?.data}
         />

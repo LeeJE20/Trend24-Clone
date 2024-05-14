@@ -1,14 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import ViewModal from "../components/pages/bookdrawer/viewModal";
-import AddKeywordModal from "../components/pages/bookdrawer/AddKeywordModal";
+import AddKeywordModalContent from "../components/pages/bookdrawer/AddKeywordModalContent";
 import { RiArchiveDrawerFill } from "react-icons/ri";
 import { FaPlusCircle } from "react-icons/fa";
 import Modal from "../components/common/modal/Modal";
-
-
-import { booksResponse } from "../constants/DummyDataBookDrawer";
 import Colors from "../constants/Color";
+import { getDrawer } from "../apis/drawerApi";
 
 interface keywordlistType {
   drawerId: number;
@@ -29,24 +26,31 @@ interface keywordlistType {
 }
 
 const BookDrawer = () => {
-  const [isViewModal, setIsViewModal] = useState(false);
-  const [isAddKeywordModal, setIsAddKeywordModal] = useState(false);
-  const [keywordBooks, setKeywordBooks] = useState<keywordlistType[]>(
-    booksResponse.result?.list || []
-  );
+  const [showAddKeywordModal, setShowAddKeywordModal] = useState(false);
+  const [keywordBooks, setKeywordBooks] = useState<keywordlistType[]>([]);
 
   const toggleKeywordModal = () => {
-    setIsAddKeywordModal(!isAddKeywordModal);
-  };
-
-  const toggleViewModal = () => {
-    setIsViewModal(!isViewModal);
+    setShowAddKeywordModal(!showAddKeywordModal);
   };
 
   const addKeyword = (newKeyword: keywordlistType) => {
-    // newKeyword 매개변수 타입 추가
     setKeywordBooks((prevBooks) => [...prevBooks, newKeyword]); // 이전 상태를 기반으로 새로운 키워드 추가
   };
+
+  const getDrawerData = () => {
+    try{
+      return getDrawer({showList:true, page:0, size:1000});
+    }catch(error){
+      console.log(error);
+    }
+  };
+
+  useEffect(()=>{
+    getDrawerData()?.then((res)=>{
+      console.log(res);
+      setKeywordBooks(res)
+    })
+  },[]);
 
   return (
     <>
@@ -104,20 +108,16 @@ const BookDrawer = () => {
           )}
         </ContentContainer>
       </BookDrawerContainer>
-      {isAddKeywordModal && (
+      {showAddKeywordModal && (
         <Modal
-          isOpen={isAddKeywordModal}
-          onClose={() => {
-            setIsAddKeywordModal(false);
-          }}
-        >
-          <AddKeywordModal
-            setIsAddKeywordModal={setIsAddKeywordModal}
+          isOpen={showAddKeywordModal}
+          onClose={() => { setShowAddKeywordModal(false);}}>
+          <AddKeywordModalContent
+            setShowAddKeywordModal={toggleKeywordModal}
             addKeyword={addKeyword} // addKeyword 함수 직접 전달
           />
         </Modal>
       )}
-      {isViewModal && <ViewModal toggleViewModal={toggleViewModal} />}
     </>
   );
 };
@@ -167,8 +167,8 @@ const AddBtn = styled.div`
     font-size: 3rem;
     margin-right: 10px;
   }
-  &:hover{
-    color:${Colors.main}
+  &:hover {
+    color: ${Colors.main};
   }
 `;
 
@@ -193,7 +193,7 @@ const Drawer = styled.div`
   width: 100%;
   height: 40vh;
   background-color: #ffffff;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
   box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
