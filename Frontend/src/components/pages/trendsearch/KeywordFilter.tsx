@@ -138,7 +138,9 @@ const Container = styled.div`
 `;
 
 const SelectedKeyword = styled.div`
-  height: 30%;
+  width: 100%;
+  min-height: 50px;
+  background-color: #bebebe7e;
   display: flex;
   flex-direction: row;
   justify-items: center;
@@ -155,6 +157,8 @@ const SelectedKeyword = styled.div`
 
   .keywordList {
     flex: 1 0 auto;
+    width: 50%;
+    flex-wrap: wrap;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -212,9 +216,9 @@ const SelectedKeyword = styled.div`
 `;
 
 const Category = styled.div`
-  height: 30%;
   display: flex;
   flex-direction: row;
+  min-height: 50px;
   .label {
     min-width: 200px;
     color: ${Colors.main};
@@ -251,6 +255,7 @@ const Category = styled.div`
 `;
 
 const KeywordList = styled.div`
+  min-height: 50px;
   flex-grow: 1;
   padding: 0px 15px;
   display: flex;

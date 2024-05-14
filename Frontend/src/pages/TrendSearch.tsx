@@ -143,7 +143,8 @@ const Title = styled.div`
 
 const FilterContainer = styled.div`
   width: 100%;
-  min-height: 130px;
+  /* min-height: 130px; */
+  height: fit-content;
   margin-bottom: 10px;
   border-radius: 10px;
   background-color: white;

@@ -20,7 +20,7 @@ type Keyword = {
   }[];
 };
 
-const AddKeywordModal = ({
+const AddKeywordModalContent = ({
   setShowAddKeywordModal,
   addKeyword,
 }: {
@@ -74,7 +74,7 @@ const AddKeywordModal = ({
       {!showSuccessModal && showErrorModal == null && (
         <>
           <AddKeywordModalTitle>키워드 추가</AddKeywordModalTitle>
-          <AddKeywordModalContent>
+          <AddKeywordModalBody>
             <AddKeywordModalInput
               placeholder="키워드"
               value={inputValue} // 입력 값과 input 요소를 바인딩
@@ -89,14 +89,14 @@ const AddKeywordModal = ({
                 추가
               </AddKeywordModalBtn>
             </ModalFooter>
-          </AddKeywordModalContent>
+          </AddKeywordModalBody>
         </>
       )}
 
       {showSuccessModal && (
         <>
           <AddKeywordModalTitle>키워드 추가 성공</AddKeywordModalTitle>
-          <AddKeywordModalContent>
+          <AddKeywordModalBody>
             <ModalFooter>
               <AddKeywordModalBtn
                 onClick={() => {
@@ -106,13 +106,13 @@ const AddKeywordModal = ({
                 닫기
               </AddKeywordModalBtn>
             </ModalFooter>
-          </AddKeywordModalContent>
+          </AddKeywordModalBody>
         </>
       )}
       {showErrorModal && (
         <>
           <AddKeywordModalTitle>이미 존재하는 서랍입니다.</AddKeywordModalTitle>
-          <AddKeywordModalContent>
+          <AddKeywordModalBody>
             <ModalFooter>
               <AddKeywordModalBtn
                 onClick={() => {
@@ -122,7 +122,7 @@ const AddKeywordModal = ({
                 닫기
               </AddKeywordModalBtn>
             </ModalFooter>
-          </AddKeywordModalContent>
+          </AddKeywordModalBody>
         </>
       )}
     </AddKeywordModalContainer>
@@ -149,7 +149,7 @@ const AddKeywordModalTitle = styled.div`
   width: 100%;
 `;
 
-const AddKeywordModalContent = styled.div`
+const AddKeywordModalBody = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -194,4 +194,4 @@ const ModalFooter = styled.div`
   justify-content: flex-end;
 `;
 
-export default AddKeywordModal;
+export default AddKeywordModalContent;
