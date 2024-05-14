@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -68,7 +69,17 @@ const DateUsersGraph: React.FC<DateUsersGraphProps> = ({ data }) => {
     ],
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <Container>
+      <Line data={chartData} options={options} />
+    </Container>
+  );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+`;
 
 export default DateUsersGraph;

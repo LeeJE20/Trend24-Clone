@@ -17,6 +17,8 @@ import DeviceTotalReport from "../../../googleanalytics/Device/DeviceTotalReport
 import DeviceUsers from "../../../googleanalytics/Device/DeviceUsers";
 import Memo from "./Memo";
 
+import { api } from "../../../../apis/apiConfig";
+
 import {
   useCustomizeTitle,
   useCustomizedPageAPI,
@@ -25,6 +27,7 @@ import {
 } from "./CustomizePageAPI";
 
 import {
+  setPageTitle,
   setCustomizedComponentList,
   setInitialComponentList,
 } from "../../../../store/slices/customPageSlice";
@@ -42,6 +45,8 @@ const RnDCustom = () => {
   const [toggleListModal, setToggleListModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  // API 호출을 트리거하는 상태
+  const [triggerAPI, setTriggerAPI] = useState(false);
 
   const [title, setTitle] = useState("");
   const [isTitleEditing, setIsTitleEditing] = useState(false);
@@ -68,6 +73,44 @@ const RnDCustom = () => {
   useEffect(() => {
     setTitle(pageTitle);
   }, [pageTitle]);
+
+  useEffect(() => {
+    if (triggerAPI) {
+      const fetchData = async () => {
+        try {
+          const response = await api.patch("/custom/page", {
+            name: title,
+          });
+          console.log(response.data.result);
+          dispatch(setPageTitle(response.data.result.name));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+
+      const fetchData2 = async () => {
+        try {
+          const response = await api.patch("/custom/components", {
+            customContents: JSON.stringify(addedList),
+          });
+          dispatch(
+            setInitialComponentList(response.data.result.customContents)
+          );
+          console.log(response.data.result);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData2();
+
+      // 네비게이션 이동
+      navigate("/main/customizePage");
+
+      // API 호출 상태를 초기화
+      setTriggerAPI(false);
+    }
+  }, [triggerAPI, navigate, dispatch]);
 
   const handleDragStop = (index: number, d: DraggableData) => {
     setAddedList(
@@ -123,7 +166,8 @@ const RnDCustom = () => {
   const compleCustomize = () => {
     dispatch(setInitialComponentList(addedList));
     dispatch(setCustomizedComponentList(addedList));
-    navigate("/main/customizePage");
+
+    setTriggerAPI(true);
   };
 
   const makeTempList = (item: CustomizedComponentList) => {
@@ -292,7 +336,7 @@ const DragContainer = styled.div`
   width: 100%;
   height: 90%;
   box-sizing: border-box;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
 `;
 
 const Item = styled.div`

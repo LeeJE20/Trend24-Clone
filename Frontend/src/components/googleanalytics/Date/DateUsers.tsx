@@ -29,10 +29,7 @@ const DateUsers = () => {
 
   return (
     <Container>
-      <Title>날짜별 사용자 수</Title>
-      <Content>
-        <DateUsersGraph data={Users} />
-      </Content>
+      <DateUsersGraph data={Users} />
     </Container>
   );
 };
@@ -45,20 +42,6 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
-
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
 `;
 
 export default DateUsers;

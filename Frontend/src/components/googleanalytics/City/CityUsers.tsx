@@ -48,7 +48,7 @@ const CityUsers = () => {
         {selectedCity === "전체" && <CityTotalUsersGraph data={cityUsers} />}
         {selectedCity !== "전체" && (
           <CityUsersGraph
-            data={cityUsers.filter((data) => data.city === selectedCity)}
+            data={cityUsers.filter((data) => data.city === selectedCity)} // 선택된 도시에 해당하는 데이터만 필터링
           />
         )}
       </Content>
@@ -67,10 +67,9 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  height: 10%;
 `;
 
 const Content = styled.div`
@@ -78,6 +77,7 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 90%;
 `;
 
 export default CityUsers;

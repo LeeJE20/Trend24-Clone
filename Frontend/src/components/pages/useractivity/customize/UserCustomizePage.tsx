@@ -84,15 +84,13 @@ const UserCustomizePage = () => {
       </TitleContainer>
       <ContentContainer>
         {initialComponentList.length === 0 ? (
-          <>
-            <div>
-              <img src="https://via.placeholder.com/150" alt="placeholder" />
-            </div>
+          <EmptyContainer>
+            <EmptyImg />
             <AddDataContainer>
               <h1>데이터를 추가해주세요</h1>
               <AddComponentButton onClick={showEditPage}>+</AddComponentButton>
             </AddDataContainer>
-          </>
+          </EmptyContainer>
         ) : (
           <>
             {initialComponentList.map((item, index) => (
@@ -160,6 +158,24 @@ const ContentContainer = styled.div`
   height: 90%;
 `;
 
+const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const EmptyImg = styled.div`
+  width: 50%;
+  height: 80%;
+  background-image: url("/dist/Image/Logo/Logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
 const AddDataContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -168,6 +184,10 @@ const AddDataContainer = styled.div`
 `;
 
 const AddComponentButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
   width: 100px;
   height: 50px;
   background-color: #000;

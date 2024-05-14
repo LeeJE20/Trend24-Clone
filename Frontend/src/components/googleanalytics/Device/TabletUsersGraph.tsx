@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -35,7 +36,17 @@ const TabletUsersGraph: React.FC<TabletUsersGraphProps> = ({ data }) => {
     ],
   };
 
-  return <Pie data={chartData} />;
+  return (
+    <Container>
+      <Pie data={chartData} />
+    </Container>
+  );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+`;
 
 export default TabletUsersGraph;
