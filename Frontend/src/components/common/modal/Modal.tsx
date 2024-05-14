@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // keywordList: string[];
   children: React.ReactNode;
 }
 

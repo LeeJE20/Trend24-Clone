@@ -140,7 +140,6 @@ const Container = styled.div`
 const SelectedKeyword = styled.div`
   width: 100%;
   min-height: 50px;
-  background-color: #bebebe7e;
   display: flex;
   flex-direction: row;
   justify-items: center;
