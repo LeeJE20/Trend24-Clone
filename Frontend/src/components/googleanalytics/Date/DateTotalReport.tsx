@@ -43,34 +43,65 @@ const DateTotalReport = () => {
 
   return (
     <Container>
-      <Title>날짜별 사용자 수</Title>
+      <Title>날짜별 보고서</Title>
       <Content>
-        <select
+        <DropdownSelect
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
           aria-label="날짜 선택"
         >
           {dateTotalReport.map((data) => (
-            <option value={data.date} key={data.date}>
+            <DropdownOption value={data.date} key={data.date}>
               {data.date}
-            </option>
+            </DropdownOption>
           ))}
-        </select>
+        </DropdownSelect>
         <Report>
           {dateTotalReport
             .filter((data) => data.date === selectedDate)
             .map((data) => (
-              <div key={data.date}>
-                <div>활성 사용자 수: {data.activeUsers}</div>
-                <div>전체 사용자 수: {data.totalUsers}</div>
-                <div>신규 사용자 수: {data.newUsers}</div>
-                <div>DAU/MAU: {data.dauPerMau}</div>
-                <div>DAU/WAU: {data.dauPerWau}</div>
-                <div>WAU/MAU: {data.wauPerMau}</div>
-                <div>화면 페이지뷰: {data.screenPageViews}</div>
-                <div>세션: {data.sessions}</div>
-                <div>이탈률: {data.bounceRate}</div>
-              </div>
+              <ReportItems key={data.date}>
+                <ReportItem>
+                  <ReportLabel>Date Category:</ReportLabel>
+                  <ReportValue>{data.date}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>Active Users:</ReportLabel>
+                  <ReportValue>{data.activeUsers}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>Total Users:</ReportLabel>
+                  <ReportValue>{data.totalUsers}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>New Users:</ReportLabel>
+                  <ReportValue>{data.newUsers}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>DAU/MAU:</ReportLabel>
+                  <ReportValue>{data.dauPerMau}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>DAU/WAU:</ReportLabel>
+                  <ReportValue>{data.dauPerWau}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>WAU/MAU:</ReportLabel>
+                  <ReportValue>{data.wauPerMau}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>Screen Page Views:</ReportLabel>
+                  <ReportValue>{data.screenPageViews}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>Sessions:</ReportLabel>
+                  <ReportValue>{data.sessions}</ReportValue>
+                </ReportItem>
+                <ReportItem>
+                  <ReportLabel>Bounce Rate:</ReportLabel>
+                  <ReportValue>{data.bounceRate}</ReportValue>
+                </ReportItem>
+              </ReportItems>
             ))}
         </Report>
       </Content>
@@ -83,27 +114,101 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  margin: 10px;
-  padding: 10px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 `;
 
 const Title = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  width: 100%;
+  height: 10%;
 `;
 
 const Content = styled.div`
+  width: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+`;
+
+const DropdownSelect = styled.select`
+  width: 100%;
+  height: 10%;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #5f996d;
+  outline: none; // 포커스시 테두리 제거
+  font-size: 1rem;
+  color: #333;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: #77a081;
+  }
+
+  &:focus {
+    border-color: #9ba09c;
+  }
+`;
+
+const DropdownOption = styled.option`
+  background-color: #fff;
+  padding: 10px 0;
 `;
 
 const Report = styled.div`
-  margin-top: 10px;
-  border: 1px solid #000;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 90%;
+  border-radius: 8px;
+  background: #5f996d;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+`;
+
+const ReportItems = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ReportItem = styled.div`
+  display: flex;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const ReportLabel = styled.div`
+  width: 50%;
+  height: 100%;
+  font-weight: bold;
+`;
+
+const ReportValue = styled.div`
+  width: 50%;
+  height: 100%;
+  color: #555;
+  overflow: hidden;
 `;
 
 export default DateTotalReport;

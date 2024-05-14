@@ -41,14 +41,16 @@ const DeviceUsers = () => {
 
   return (
     <Container>
-      <Title>기기별 사용자 수</Title>
-      <Content>
+      <Title>
+        기기별 사용자 수
         <select onChange={handleCategoryChange}>
           <option value="전체">전체</option>
           <option value="desktop">데스크톱</option>
           <option value="mobile">모바일</option>
           <option value="tablet">태블릿</option>
         </select>
+      </Title>
+      <Content>
         {selectedCategory === "전체" && (
           <DeviceUsersGraph data={totalDeviceUsers} />
         )}
@@ -85,13 +87,13 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  height: 10%;
 `;
 
 const Content = styled.div`
@@ -99,6 +101,7 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 90%;
 `;
 
 export default DeviceUsers;

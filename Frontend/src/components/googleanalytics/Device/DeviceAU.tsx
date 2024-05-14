@@ -39,14 +39,16 @@ const DeviceAU = () => {
 
   return (
     <Container>
-      <Title>기기별 사용자 수</Title>
-      <Content>
+      <Title>
+        기기별 사용자수 비교
         <select onChange={handleCategoryChange}>
           <option value="전체">전체</option>
           <option value="desktop">데스크톱</option>
           <option value="mobile">모바일</option>
           <option value="tablet">태블릿</option>
         </select>
+      </Title>
+      <Content>
         {selectedCategory === "전체" && <DeviceAUGraph data={totalDeviceAU} />}
         {selectedCategory === "desktop" && (
           <DesktopAUGraph
@@ -84,17 +86,18 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const Title = styled.h2`
+const Title = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 10px;
+  height: 10%;
 `;
 
 const Content = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
+  height: 90%;
 `;
 
 export default DeviceAU;

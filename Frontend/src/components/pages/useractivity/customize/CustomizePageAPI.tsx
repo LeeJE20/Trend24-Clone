@@ -16,7 +16,12 @@ export const useInitialPageAPI = () => {
     const fetchData = async () => {
       try {
         const response = await api.get("/custom/components");
-        dispatch(setInitialComponentList(response.data));
+        const datas = JSON.parse(
+          response.data.result.customContents.replace(/'/g, '"')
+        );
+        console.log(datas);
+        dispatch(setInitialComponentList(datas));
+        console.log(response.data.result);
       } catch (error) {
         console.log(error);
       }
@@ -33,6 +38,7 @@ export const useCustomizedPageAPI = () => {
       try {
         const response = await api.patch("/custom/components");
         dispatch(setCustomizedComponentList(response.data));
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -48,7 +54,8 @@ export const useGetCustomizeTitle = () => {
     const fetchData = async () => {
       try {
         const response = await api.get("/custom/page");
-        dispatch(setPageTitle(response.data));
+        console.log(response.data.result);
+        dispatch(setPageTitle(response.data.result.name));
       } catch (error) {
         console.log(error);
       }

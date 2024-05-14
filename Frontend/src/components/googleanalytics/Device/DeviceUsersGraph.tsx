@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Bar } from "react-chartjs-2"; // Line 대신 Bar를 import합니다.
 import {
   Chart as ChartJS,
@@ -60,7 +61,17 @@ const DeviceUsersGraph: React.FC<DeviceUsersGraphProps> = ({ data }) => {
     ],
   };
 
-  return <Bar data={chartData} options={options} />;
+  return (
+    <Container>
+      <Bar data={chartData} options={options} />
+    </Container>
+  );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+`;
 
 export default DeviceUsersGraph;
