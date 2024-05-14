@@ -1,14 +1,9 @@
-import logging
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from sentence_transformers import SentenceTransformer, LoggingHandler, losses
-from torch.utils.data import DataLoader
-from sentence_transformers import SentenceTransformer, LoggingHandler, losses
-from sentence_transformers import SentencesDataset, InputExample, SentenceTransformer, evaluation, models
-from sentence_transformers.readers import InputExample
 import torch
+from sentence_transformers import SentenceTransformer
+
 
 class CudaModel:
-    def __init__(self, mode = 'GPU', model_name='sentence-transformers/distiluse-base-multilingual-cased-v2'):
+    def __init__(self, mode='GPU', model_name='sentence-transformers/distiluse-base-multilingual-cased-v2'):
         self.device = None
 
         if mode == 'CPU':
@@ -33,6 +28,7 @@ class CudaModel:
     def move_model_to_device(self):
         # self.logger.info(f"모델을 {self.device}로 이동")
         self.model.to(self.device)
+
 
 # 클래스 사용
 '''
