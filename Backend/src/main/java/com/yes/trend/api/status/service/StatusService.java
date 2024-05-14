@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.keyword.repository.KeywordRepository;
@@ -24,7 +25,6 @@ import com.yes.trend.domain.bookclick.repository.BookClickRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
@@ -40,10 +40,6 @@ public class StatusService {
 		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusDays(6L);
 		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
 		List<BookClick> bookClicks = bookClickRepository.findByCreatedTimeBetween(start, end);
-
-		//		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusWeeks(1).plusDays(1);
-		//		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-		//		List<BookClick> bookClicks = bookClickRepository.findByCreatedTimeAfter(start);
 
 		Map<Book, Integer> clickCountMap = new HashMap<>();
 		// 도서별 클릭수 합계 계산
@@ -66,41 +62,25 @@ public class StatusService {
 			int num = 1;
 
 			for (Map.Entry<Book, Integer> entry : sortedList) {
-				if (num > 3)
+				if (num > 3) {
 					break;
+				}
 				topThreeBooks.put(entry.getKey(), entry.getValue());
 				num++;
 			}
-
-			int rank = 1;
+			AtomicInteger ranking = new AtomicInteger(1);
 			List<StatusDto.WeeklyTopClickedBooksDto> list = topThreeBooks.entrySet()
-				.stream()
-				.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
-					.bookId(t.getKey().getId())
-					.clickCountSum(t.getValue())
-					.productName(t.getKey().getProductName())
-					.ranking(1)
-					.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
-					.build())
-				.toList();
-
+					.stream()
+					.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
+							.bookId(t.getKey().getId())
+							.clickCountSum(t.getValue())
+							.productName(t.getKey().getProductName())
+							.ranking(ranking.getAndIncrement())
+							.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
+							.build())
+					.toList();
 			return new ListDto<>(list);
 		}
-
-		//		for (Map.Entry<Book, Integer> entry : sortedList) {
-		//			if (ranking > 3)
-		//				break;
-		//			// TODO: setter 안쓰는 방법으로 변경하기.
-		//			if (entry.getKey() != null) {
-		//				Book book = entry.getKey();
-		//				StatusDto.WeeklyTopClickBooksDto dto = new StatusDto.WeeklyTopClickBooksDto();
-		//				dto.setBookId(book.getId());
-		//				dto.setProductName(book.getProductName());
-		//				dto.setClickCountSum(entry.getValue());
-		//				dto.setWeeklyClickCount(getWeeklyBookClickCount(book.getId()));
-		//				dto.setRanking(ranking++);
-		//			}
-		//		}
 
 		return null;
 	}
@@ -133,16 +113,6 @@ public class StatusService {
 		return new ListDto<>(list);
 	}
 
-	//  private List<Integer> getWeeklyClickCount(Book book, LocalDateTime start, LocalDateTime end) {
-	//    List<BookClick> bookClicks = bookClickRepository.findByBookAndCreatedTimeBetween(book, start, end);
-	//    List<Integer> weeklyClickCount = new ArrayList<>(Collections.nCopies(7, 0));
-	//    for (BookClick click : bookClicks) {
-	//      int dayOfWeek = click.getCreatedTime().getDayOfWeek().getValue() - 1; // Adjusting to 0-indexed
-	//      weeklyClickCount.set(dayOfWeek, click.getCount());
-	////      weeklyClickCount.set(dayOfWeek, weeklyClickCount.get(dayOfWeek) + click.getCount());
-	//    }
-	//    return weeklyClickCount;
-	//  }
 	public ListDto<StatusDto.TopClickedKeywordsDto> getTopClickedKeyword() {
 		List<Keyword> keywords = keywordRepository.findAll();
 
