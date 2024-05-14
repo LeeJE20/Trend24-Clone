@@ -195,7 +195,7 @@ create table  IF NOT EXISTS trend.question
 (    
     id           int auto_increment
         primary key,
-    question_text VARCHAR(255) null,
+    question_text VARCHAR(255) null
 );
 
 create table  IF NOT EXISTS trend.book_question_map
