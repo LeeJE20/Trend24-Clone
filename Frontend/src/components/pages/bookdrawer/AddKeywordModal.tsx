@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Modal from "../../common/modal/Modal";
 import Colors from "../../../constants/Color";
-import { postDrawerKeyword } from "../../../apis/drawer";
+import { postDrawerKeyword } from "../../../apis/drawerApi";
 type Keyword = {
   drawerId: number;
   name: string;
@@ -22,13 +21,13 @@ type Keyword = {
 };
 
 const AddKeywordModal = ({
-  setIsAddKeywordModal,
+  setShowAddKeywordModal,
   addKeyword,
 }: {
-  setIsAddKeywordModal: () => void;
+  setShowAddKeywordModal: () => void;
   addKeyword: (keyword: Keyword) => void;
 }) => {
-  const [inputValue, setInputValue] = useState(""); // 입력 값을 상태로 관리
+  const [inputValue, setInputValue] = useState<string>(""); // 입력 값을 상태로 관리
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false); // 성공 모달 상태
   const [showErrorModal, setShowErrorModal] = useState<string | null>(null); // 실패 모달 상태
 
@@ -101,7 +100,7 @@ const AddKeywordModal = ({
             <ModalFooter>
               <AddKeywordModalBtn
                 onClick={() => {
-                  setIsAddKeywordModal();
+                  setShowAddKeywordModal();
                 }}
               >
                 닫기
