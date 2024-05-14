@@ -19,7 +19,7 @@ public class StatusDto {
 		private Integer clickCountSum;
 		private String productName;
 		private Integer ranking;
-		private ListDto<ClickDto> weeklyClickCount;
+		private ListDto<BookClickDto> weeklyClickCount;
 
 	}
 
@@ -27,7 +27,7 @@ public class StatusDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
-	public static class ClickDto {
+	public static class BookClickDto {
 		private LocalDate date;
 		private Integer count;
 	}
@@ -48,6 +48,15 @@ public class StatusDto {
 	@Builder
 	public static class CategoryDto {
 		private String trendCategoryName;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class KeywordClickDto {
+		private LocalDate date;
+		private Boolean trend;
 	}
 
 }

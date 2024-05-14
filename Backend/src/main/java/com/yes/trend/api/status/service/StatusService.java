@@ -24,6 +24,7 @@ import com.yes.trend.domain.bookclick.repository.BookClickRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
@@ -104,7 +105,7 @@ public class StatusService {
 		return null;
 	}
 
-	public ListDto<StatusDto.ClickDto> getWeeklyBookClickCount(Integer bookId) {
+	public ListDto<StatusDto.BookClickDto> getWeeklyBookClickCount(Integer bookId) {
 		//    Optional<Book> book = bookRepository.findById(bookId);
 		LocalDate now = LocalDate.now();
 		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusDays(6L);
@@ -121,9 +122,9 @@ public class StatusService {
 			clickByDate.put(targetDate, bc.getCount());
 		}
 
-		List<StatusDto.ClickDto> list = clickByDate.entrySet()
+		List<StatusDto.BookClickDto> list = clickByDate.entrySet()
 			.stream()
-			.map(bc -> StatusDto.ClickDto.builder()
+			.map(bc -> StatusDto.BookClickDto.builder()
 				.date(bc.getKey())
 				.count(bc.getValue())
 				.build())
@@ -202,6 +203,34 @@ public class StatusService {
 				.stream()
 				.map(k -> StatusDto.CategoryDto.builder()
 						.trendCategoryName(k.getKey())
+						.build())
+				.toList();
+
+		return new ListDto<>(list);
+	}
+
+	public ListDto<StatusDto.KeywordClickDto> getWeeklyKeywordClickCount(String keywordName) {
+		//    Optional<Book> book = bookRepository.findById(bookId);
+		LocalDate now = LocalDate.now();
+		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusDays(6L);
+		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+		List<Keyword> keywordClicks = keywordRepository.findByNameAndCreatedTimeBetween(keywordName, start, end);
+
+		Map<LocalDate, Boolean> clickByDate = new LinkedHashMap<>();
+		for (int i = 0; i < 7; i++) {
+			clickByDate.put(now.minusDays(i), false);
+		}
+
+		for (Keyword k : keywordClicks) {
+			LocalDate targetDate = k.getCreatedTime().toLocalDate();
+			clickByDate.put(targetDate, true);
+		}
+
+		List<StatusDto.KeywordClickDto> list = clickByDate.entrySet()
+				.stream()
+				.map(bc -> StatusDto.KeywordClickDto.builder()
+						.date(bc.getKey())
+						.trend(bc.getValue())
 						.build())
 				.toList();
 
