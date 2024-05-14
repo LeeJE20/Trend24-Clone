@@ -4,10 +4,12 @@ import counterReducer from "./slices/counterSlice";
 import customizeReducer from "./slices/customizeSlice";
 import editPageReducer from "./slices/editpageSlice";
 import gaReducer from "./slices/gaSlice";
+import customPageReducer from "./slices/customPageSlice";
 
 const store = configureStore({
   reducer: {
     counter: counterReducer, // slice 생성후 추가 해줘야 함
+    customPage: customPageReducer,
     customize: customizeReducer,
     editPage: editPageReducer,
     ga: gaReducer,

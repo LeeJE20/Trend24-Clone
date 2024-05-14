@@ -12,6 +12,11 @@ const Main = () => {
   const RemainBarRef = useRef(null);
   const GeneralRecBarRef = useRef(null);
   const PersonalRecBarRef = useRef(null);
+  const CloudImgRef = useRef(null);
+  const CloudImg2Ref = useRef(null);
+  const CloudImg3Ref = useRef(null);
+  const CloudImg4Ref = useRef(null);
+  const CloudImg5Ref = useRef(null);
 
   useEffect(() => {
     // 샘플 애니메이션
@@ -24,6 +29,56 @@ const Main = () => {
           "100%": { scale: 1, opacity: 1, y: 0 },
         },
         duration: 1.5,
+      });
+      gsap.to(CloudImgRef.current, {
+        keyframes: {
+          "0%": { x: "-5%" },
+          "50%": { x: "0%" },
+          "100%": { x: "-5%" },
+        },
+        duration: 10,
+        repeat: -1,
+        ease: "power4.inOut",
+      });
+      gsap.to(CloudImg2Ref.current, {
+        keyframes: {
+          "0%": { x: "-5%" },
+          "50%": { x: "0%", y: "5%" },
+          "100%": { x: "-5%", y: "0%" },
+        },
+        duration: 15,
+        repeat: -1,
+        ease: "power4.inOut",
+      });
+      gsap.to(CloudImg3Ref.current, {
+        keyframes: {
+          "0%": { x: "-5%" },
+          "50%": { x: "0%", y: "-5%" },
+          "100%": { x: "-5%", y: "0%" },
+        },
+        duration: 12,
+        repeat: -1,
+        ease: "power4.inOut",
+      });
+      gsap.to(CloudImg4Ref.current, {
+        keyframes: {
+          "0%": { x: "5%" },
+          "50%": { x: "0%", y: "5%" },
+          "100%": { x: "5%", y: "0%" },
+        },
+        duration: 14,
+        repeat: -1,
+        ease: "power4.inOut",
+      });
+      gsap.to(CloudImg5Ref.current, {
+        keyframes: {
+          "0%": { x: "-5%" },
+          "50%": { x: "0%", y: "5%" },
+          "100%": { x: "-5%", y: "0%" },
+        },
+        duration: 13,
+        repeat: -1,
+        ease: "power4.inOut",
       });
     } else {
       gsap.to(Sample2Ref.current, {
@@ -40,7 +95,7 @@ const Main = () => {
     // 배경색 변경 애니메이션
     if (ContentContainerRef.current) {
       gsap.to(ContentContainerRef.current, {
-        backgroundColor: isGeneralRecommend ? "#ebf4fc" : "#f1e2ff",
+        backgroundColor: isGeneralRecommend ? "#7A8FA3" : "#ebf4fc",
         duration: 1.5,
       });
     }
@@ -74,7 +129,69 @@ const Main = () => {
   };
 
   const gotoGeneral = () => {
-    navigate("/event/general");
+    gsap.to(Sample1Ref.current, {
+      x: "100vw",
+      y: "-100vh",
+      opacity: 0.5,
+      scale: 0,
+      duration: 3,
+      ease: "power4.inOut",
+    });
+
+    gsap.to(CloudImgRef.current, {
+      keyframes: {
+        "0%": { opacity: 1 },
+        "50%": { x: "-10%", y: "-10%", opacity: 0.5 },
+        "100%": { x: "-100%", y: "-100%", opacity: 0 },
+      },
+      duration: 3,
+      ease: "power2.inOut",
+    });
+
+    gsap.to(CloudImg2Ref.current, {
+      keyframes: {
+        "0%": { opacity: 1 },
+        "50%": { x: "10%", y: "-10%", opacity: 0.5 },
+        "100%": { x: "100%", y: "-100%", opacity: 0 },
+      },
+      duration: 3,
+      ease: "power2.inOut",
+    });
+
+    gsap.to(CloudImg3Ref.current, {
+      keyframes: {
+        "0%": { opacity: 1 },
+        "50%": { x: "-10%", y: "10%", opacity: 0.5 },
+        "100%": { x: "-100%", y: "100%", opacity: 0 },
+      },
+      duration: 3,
+      ease: "power2.inOut",
+    });
+
+    gsap.to(CloudImg4Ref.current, {
+      keyframes: {
+        "0%": { opacity: 1 },
+        "50%": { x: "10%", y: "10%", opacity: 0.5 },
+        "100%": { x: "100%", y: "100%", opacity: 0 },
+      },
+      duration: 3,
+      ease: "power1.inOut",
+    });
+
+    gsap.to(CloudImg5Ref.current, {
+      keyframes: {
+        "0%": { opacity: 1 },
+        "50%": { x: "10%", opacity: 0.5 },
+        "100%": { x: "100%", opacity: 0 },
+      },
+      duration: 3,
+      ease: "power1.inOut",
+      onComplete: () => {
+        // navigate 함수는 여러분의 라우팅 라이브러리에 따라 다를 수 있습니다.
+        // 예를 들어 react-router-dom을 사용하는 경우:
+        navigate("/event/general");
+      },
+    });
   };
 
   const gotoPersonal = () => {
@@ -89,13 +206,30 @@ const Main = () => {
       >
         {isGeneralRecommend ? (
           <GeneralContent>
-            <Text>
-              <h1>General Recommend</h1>
-              <button onClick={gotoGeneral}>+</button>
-            </Text>
-            <Img>
-              <SampleImg1 ref={Sample1Ref} />
-            </Img>
+            <TitleContainer>
+              <Title>도서 추천</Title>
+              <Title2>Click the Rocket!!</Title2>
+            </TitleContainer>
+            <BackGround>
+              <CloudImg1 ref={CloudImgRef}>
+                <img src="dist\Image\Event\Cloud1.png" alt="cloud1" />
+              </CloudImg1>
+              <CloudImg2 ref={CloudImg2Ref}>
+                <img src="dist\Image\Event\Cloud2.png" alt="cloud2" />
+              </CloudImg2>
+              <CloudImg3 ref={CloudImg3Ref}>
+                <img src="dist\Image\Event\Cloud1.png" alt="cloud3" />
+              </CloudImg3>
+              <CloudImg4 ref={CloudImg4Ref}>
+                <img src="dist\Image\Event\Cloud2.png" alt="cloud4" />
+              </CloudImg4>
+              <CloudImg5 ref={CloudImg5Ref}>
+                <img src="dist\Image\Event\Cloud2.png" alt="cloud5" />
+              </CloudImg5>
+            </BackGround>
+            <RocketImg>
+              <SampleImg1 ref={Sample1Ref} onClick={gotoGeneral} />
+            </RocketImg>
           </GeneralContent>
         ) : (
           <PersonalContent>
@@ -171,11 +305,10 @@ interface IsGeneralRecommendProps {
 
 const ContentContainer = styled.div<IsGeneralRecommendProps>`
   display: flex;
-  justify-content: center;
+  justify-items: center;
   align-items: center;
   width: 84%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
   background-color: ${(props) =>
     props.$isGeneralRecommend ? "#fec2c2" : "#0e3b62"};
@@ -183,13 +316,124 @@ const ContentContainer = styled.div<IsGeneralRecommendProps>`
 `;
 
 const GeneralContent = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   box-sizing: border-box;
-  width: 80%;
-  height: 60%;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+`;
+
+const TitleContainer = styled.div`
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  box-sizing: border-box;
+`;
+
+const Title = styled.div`
+  font-size: 5rem;
+  font-weight: bold;
+  flex: 2 0 0;
+`;
+
+const Title2 = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  flex: 1 0 0;
+`;
+
+const BackGround = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+`;
+
+const RocketImg = styled.div`
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 225px;
+  height: 250px;
+  box-sizing: border-box;
+`;
+
+const CloudImg1 = styled.div`
+  position: absolute;
+  top: 15%;
+  left: 0%;
+  width: 30vw;
+  height: 20vh;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const CloudImg2 = styled.div`
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  width: 50vw;
+  height: 40vh;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const CloudImg3 = styled.div`
+  position: absolute;
+  bottom: 0%;
+  left: 5%;
+  width: 20vw;
+  height: 15vh;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const CloudImg4 = styled.div`
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  width: 50vw;
+  height: 30vh;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const CloudImg5 = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  width: 30vw;
+  height: 16vh;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const PersonalContent = styled.div`
@@ -224,15 +468,17 @@ const Img = styled.div`
 `;
 
 const SampleImg1 = styled.div`
-  width: 200px;
-  height: 200px;
-  background: url(http://placehold.it/200x200) no-repeat center center;
+  width: 100%;
+  height: 100%;
+  background: url("dist/Image/Event/techny-rocket.gif") no-repeat center center;
   background-size: cover;
+
+  cursor: pointer;
 `;
 
 const SampleImg2 = styled.div`
-  width: 200px;
-  height: 200px;
+  width: auto;
+  height: 100%;
   background: url(http://placehold.it/200x200) no-repeat center center;
   background-size: cover;
 `;

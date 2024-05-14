@@ -45,12 +45,12 @@ const DeviceTotalReport = () => {
 
   return (
     <Container>
-      <Title>도시별 사용자 수</Title>
+      <Title>기기별 사용자 수</Title>
       <Content>
         <select
           value={selectedDevice}
           onChange={(e) => setSelectedDevice(e.target.value)}
-          aria-label="도시 선택"
+          aria-label="기기 선택"
         >
           {deviceTotalReport.map((data) => (
             <option value={data.deviceCategory} key={data.deviceCategory}>
@@ -81,11 +81,13 @@ const DeviceTotalReport = () => {
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #000;
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`

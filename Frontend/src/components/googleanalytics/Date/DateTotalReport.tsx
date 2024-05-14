@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
 interface DateReportProps {
-  city: string;
+  date: string;
   activeUsers: string;
   totalUsers: string;
   newUsers: string;
@@ -26,7 +26,7 @@ const DateTotalReport = () => {
       setSelectedDate(dateReport[0].dimensionValues[0].value);
       setDateTotalReport(
         dateReport.map((data) => ({
-          city: data.dimensionValues[0].value,
+          date: data.dimensionValues[0].value,
           activeUsers: data.metricValues[0].value,
           totalUsers: data.metricValues[1].value,
           newUsers: data.metricValues[2].value,
@@ -43,24 +43,24 @@ const DateTotalReport = () => {
 
   return (
     <Container>
-      <Title>도시별 사용자 수</Title>
+      <Title>날짜별 사용자 수</Title>
       <Content>
         <select
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          aria-label="도시 선택"
+          aria-label="날짜 선택"
         >
           {dateTotalReport.map((data) => (
-            <option value={data.city} key={data.city}>
-              {data.city}
+            <option value={data.date} key={data.date}>
+              {data.date}
             </option>
           ))}
         </select>
         <Report>
           {dateTotalReport
-            .filter((data) => data.city === selectedDate)
+            .filter((data) => data.date === selectedDate)
             .map((data) => (
-              <div key={data.city}>
+              <div key={data.date}>
                 <div>활성 사용자 수: {data.activeUsers}</div>
                 <div>전체 사용자 수: {data.totalUsers}</div>
                 <div>신규 사용자 수: {data.newUsers}</div>
@@ -79,11 +79,13 @@ const DateTotalReport = () => {
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #000;
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`
