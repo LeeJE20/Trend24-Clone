@@ -191,14 +191,14 @@ create table IF NOT EXISTS trend.trend_source
         foreign key (origin_data_id) references trend.origin_data (id)
 );
 
-create table  IF NOT EXISTS question
+create table  IF NOT EXISTS trend.question
 (    
     id           int auto_increment
         primary key,
     question_text VARCHAR(255) null,
 );
 
-create table  IF NOT EXISTS book_question_map
+create table  IF NOT EXISTS trend.book_question_map
 (    
     id           int auto_increment
         primary key,
