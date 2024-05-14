@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { useLocation } from "react-router";
 import { useEffect } from "react";
 
 import Login from "./pages/Authorization";
@@ -43,7 +42,7 @@ function App() {
 
   useEffect(() => {
     // 로딩 화면을 숨기는 코드
-    const loadingScreen = document.querySelector(".loading-screen");
+    const loadingScreen = document.querySelector("#loading-screen");
     if (loadingScreen instanceof HTMLElement) {
       loadingScreen.style.display = "none";
     }

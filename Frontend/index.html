@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="index.css" />
-    <link rel="icon" type="image/svg+xml" href="/public/Image/Logo/logo4.png" />
+    <link rel="icon" type="image/svg+xml" href="/Image/Logo/logo4.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trend24</title>
     <!-- Google tag (gtag.js) -->
@@ -25,10 +25,25 @@
       })(window, document, "script", "dataLayer", "GTM-WNTCNNWF");
     </script>
     <!-- End Google Tag Manager -->
+    <style>
+      #loading-screen{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: url("/Image/EventPage/bg.jpg");
+        background-repeat: repeat;
+      }
+    </style>
   </head>
   <body style="margin: 0px">
-    <div id="loading-root"></div>
+
     <div id="root"></div>
+    <div id="loading-screen">
+      <img src="/Image/Logo/gifLogo2.gif"/>
+    </div>
 
     <script type="module" src="/src/main.tsx"></script>
     <!-- Google Tag Manager (noscript) -->

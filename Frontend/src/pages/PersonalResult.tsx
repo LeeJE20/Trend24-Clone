@@ -34,7 +34,7 @@ const Container = styled.div`
   overflow: hidden;
   position: relative;
   color: white;
-  background-image: url("/public/Image/EventPage/bg.jpg");
+  background-image: url("/Image/EventPage/bg.jpg");
 `;
 
 const Title = styled.div`

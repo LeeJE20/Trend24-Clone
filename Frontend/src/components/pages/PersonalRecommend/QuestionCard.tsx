@@ -14,7 +14,7 @@ const QuestionCard = ({ cardData, cardClick, idx }: cardType) => {
         <FaQuoteLeft />
       </div>
       <div className="content">{cardData}</div>
-      <img className="img" src="/public/Image/EventPage/glass1.png" />
+      <img className="img" src="/Image/EventPage/glass1.png" />
     </Box>
   );
 };
