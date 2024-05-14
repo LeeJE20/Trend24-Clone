@@ -31,4 +31,23 @@ public class StatusDto {
 		private LocalDate date;
 		private Integer count;
 	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class TopClickedKeywordsDto {
+		private ListDto<CategoryDto> categories;
+		private String keywordName;
+		private Integer clickCountSum;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class CategoryDto {
+		private String trendCategoryName;
+	}
+
 }

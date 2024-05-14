@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.yes.trend.domain.keyword.entity.Keyword;
+import com.yes.trend.domain.keyword.repository.KeywordRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class StatusService {
 	private final BookClickRepository bookClickRepository;
+	private final KeywordRepository keywordRepository;
 	private final BookRepository bookRepository;
 
 	public ListDto<StatusDto.WeeklyTopClickedBooksDto> getWeeklyTopClickedBooks() {
@@ -139,4 +142,69 @@ public class StatusService {
 	//    }
 	//    return weeklyClickCount;
 	//  }
+	public ListDto<StatusDto.TopClickedKeywordsDto> getTopClickedKeyword() {
+		List<Keyword> keywords = keywordRepository.findAll();
+
+		Map<String, Integer> clickByKeyword = new HashMap<>();
+		for (Keyword k : keywords) {
+			clickByKeyword.put(k.getName(), clickByKeyword.getOrDefault(k.getName(), 0) + k.getClickCount());
+		}
+
+		// 클릭수가 높은 키워드 정렬
+		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(clickByKeyword.entrySet());
+		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+
+		Map<String, Integer> topFiveKeywords = new LinkedHashMap<>();
+		int num = 1;
+
+		for (Map.Entry<String, Integer> entry : sortedList) {
+			if (num > 5)
+				break;
+			topFiveKeywords.put(entry.getKey(), entry.getValue());
+			num++;
+		}
+
+		List<StatusDto.TopClickedKeywordsDto> list = topFiveKeywords.entrySet()
+				.stream()
+				.map(k -> StatusDto.TopClickedKeywordsDto.builder()
+//						.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
+						.categories(getKeywordCategories(k.getKey()))
+						.keywordName(k.getKey())
+						.clickCountSum(k.getValue())
+						.build())
+				.toList();
+
+		return new ListDto<>(list);
+	}
+
+	public ListDto<StatusDto.CategoryDto> getKeywordCategories(String keywordName) {
+		List<Keyword> keywords = keywordRepository.findAllByName(keywordName);
+
+		Map<String, Integer> categoryByKeyword = new HashMap<>();
+		for (Keyword k : keywords) {
+			categoryByKeyword.put(k.getCategory().getName(), categoryByKeyword.getOrDefault(k.getCategory(), 0) + 1);
+		}
+
+		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(categoryByKeyword.entrySet());
+		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+
+		List<StatusDto.CategoryDto> list = categoryByKeyword.entrySet()
+				.stream()
+				.map(k -> StatusDto.CategoryDto.builder()
+						.trendCategoryName(k.getKey())
+						.build())
+				.toList();
+
+		return new ListDto<>(list);
+	}
 }
