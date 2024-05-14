@@ -1,7 +1,6 @@
-import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Colors from "../../../constants/Color";
-import CustomDropdown from "../select/Select";
+import { useEffect, useState } from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -11,14 +10,20 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+  const [modalVisible, setModalVisible] = useState(isOpen);
+
+  useEffect(() => {
+    setModalVisible(isOpen);
+  }, [isOpen]);
 
   const closeHandler = () => {
-    onClose();
+    setModalVisible(false);
+    setTimeout(onClose, 400); // 애니메이션 시간이 0.4초이므로 모달이 사라지는 시간을 고려하여 적절한 시간 후에 onClose를 호출합니다.
   };
 
   return (
-    <ModalWrapper $isOpen={isOpen}>
-      <Popup>
+    <ModalWrapper $isOpen={modalVisible}>
+      <Popup $isOpen={isOpen}>
         <PopupHead>
           <div className="title">Trend24</div>
           <button className="closeBtn" onClick={closeHandler}>
@@ -40,6 +45,15 @@ const slideUp = keyframes`
   }
 `;
 
+const slideDown = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
+
 const ModalWrapper = styled.div<{ $isOpen: boolean }>`
   display: ${(props) => (props.$isOpen ? "block" : "none")};
   position: fixed;
@@ -56,7 +70,7 @@ const ModalWrapper = styled.div<{ $isOpen: boolean }>`
   animation: ${slideUp} 0.4s ease;
 `;
 
-const Popup = styled.div`
+const Popup = styled.div<{ $isOpen: boolean }>`
   background-color: white;
   width: 100%;
   max-width: 400px;
@@ -67,7 +81,7 @@ const Popup = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.3);
-  animation: ${slideUp} 0.4s ease;
+  animation: ${(props) => (props.$isOpen ? slideUp : slideDown)} 0.4s ease;
 `;
 
 const PopupHead = styled.div`
@@ -92,43 +106,6 @@ const PopupHead = styled.div`
     color: #ffffff;
     font-size: 24px;
     cursor: pointer;
-  }
-`;
-const PopupBody = styled.div`
-  padding: 30px;
-  .title {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 3rem;
-    font-weight: bold;
-  }
-`;
-
-
-
-const BodyContentBox = styled.div`
-  width: 100%;
-`;
-
-const PopupFoot = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 30px 30px;
-  .saveBtn {
-    display: inline-flex;
-    width: auto;
-    padding: 15px 25px;
-    justify-content: center;
-    align-items: center;
-    background-color: ${Colors.sub1};
-    color: #ffffff;
-    font-size: 1.6rem;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.7;
-      transition: opacity 0.1s ease-out;
-    }
   }
 `;
 

@@ -7,7 +7,7 @@ import BookDrawerSaveModal from "../modal/Modal";
 import { BookType } from "../../../constants/Type/Type";
 import Colors from "../../../constants/Color";
 import CustomDropdown from "../select/Select";
-import { postDrawerKeyword } from "../../../apis/drawer";
+import { getDrawer, postDrawerBook } from "../../../apis/drawerApi";
 
 interface BookListProps {
   title: string;
@@ -15,6 +15,10 @@ interface BookListProps {
   pageInfo: PageInfo;
   onNextPage: () => void;
   onPrevPage: () => void;
+}
+interface ModalDataType {
+  listName: string;
+  listKey: number;
 }
 
 const BookList = ({
@@ -27,10 +31,14 @@ const BookList = ({
   const [expandedBookIndices, setExpandedBookIndices] = useState<boolean[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<string[]>([]);
-  const [selectedItem, setSelectedItem] = useState("Selected item");
+  const [modalContent, setModalContent] = useState<ModalDataType[]>([]);
+  const [modalState, setModalState] = useState<boolean | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ModalDataType>({
+    listName: "Selected item",
+    listKey: 0,
+  });
 
-  const selectItem = (item: string) => {
+  const selectItem = (item: ModalDataType) => {
     setSelectedItem(item);
   };
 
@@ -47,19 +55,81 @@ const BookList = ({
   }, [bookList]);
 
   // 저장 버튼 클릭 핸들러
-  const handleSaveButtonClick = (bookId: number) => {
-    // 서랍 키워드 api  호출
-    setModalContent(["인공지능", "IT", "부동산", "인공지능", "IT", "부동산"]);
-    setSelectedItem("Selected item");
-    setModalOpen(!modalOpen);
+  const handleSaveButtonClick = (bookId:number) => {
+    console.log("bookId", bookId);
     
+    setSelectedItem({ listName: "Selected item", listKey: -1 });
+    setModalOpen(!modalOpen);
+  };
+
+  // 서랍 키워드 api 호출
+  const getDrawerKeyword = async () => {
+    try {
+      return await getDrawer({
+        showList: true,
+        page: 0,
+        size: 100000,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 서랍 책 추가 api 호출
+  const addDrawerBook = async (bookId: number) => {
+    try {
+      return await postDrawerBook(selectedItem.listKey, bookId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDrawerKeyword().then((res) => {
+      setModalContent(
+        res.map((x: { drawerId: number; name: string; books: [] }) => ({
+          listName: x.name,
+          listKey: x.drawerId,
+        }))
+      );
+    });
+  }, [title]);
+
+  const saveBook = (bookId: number) => {
+    console.log("bookId: 이게 찐 ", bookId);
+    if (selectedItem.listKey == -1) {
+      setModalState(false);
+      setTimeout(() => {
+        setModalState(null);
+        setSelectedItem({ listName: "Selected item", listKey: -1 });
+      }, 2300);
+    } else {
+      addDrawerBook(bookId)
+        .then(() => {
+          setModalState(true);
+          setTimeout(() => {
+            setModalOpen(false); // 3초 뒤에 모달을 닫음
+            setModalState(null);
+            setSelectedItem({ listName: "Selected item", listKey: -1 });
+          }, 1900);
+        })
+        .catch((error) => {
+          console.log(error);
+          setModalState(false);
+          setTimeout(() => {
+            setModalState(null);
+            setSelectedItem({ listName: "Selected item", listKey: -1 });
+          }, 2300);
+        });
+    }
   };
 
   return (
     <Container>
       <Title>{title}</Title>
       <BookListContainer>
-        {bookList.length !== 0 &&
+        {bookList &&
+          bookList.length !== 0 &&
           bookList.map((book: BookType, index: number) => (
             <BookContainer key={index}>
               <BookCover
@@ -81,24 +151,43 @@ const BookList = ({
               <BookDrawerSaveModal
                 isOpen={modalOpen}
                 onClose={() => {
-                  handleSaveButtonClick(index);
-                }}              >
-                <ModalBody>
-                  <div className="title">서랍에 추가</div>
-                  <CustomDropdown
-                    itemList={modalContent}
-                    onSelectItem={selectItem}
-                    selectedItem={selectedItem}
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <div
-                    className="saveBtn"
-                    onClick={() =>handleSaveButtonClick(index)}
-                  >
-                    저장
-                  </div>
-                </ModalFooter>
+                  handleSaveButtonClick(book.bookId);
+                }}
+              >
+                {modalState == null && (
+                  <>
+                    <ModalBody>
+                      <div className="title">서랍에 추가</div>
+                      <CustomDropdown
+                        itemList={modalContent}
+                        onSelectItem={selectItem}
+                        selectedItem={selectedItem}
+                      />
+                    </ModalBody>
+                    <ModalFooter>
+                      <div
+                        className="saveBtn"
+                        onClick={() => saveBook(book.bookId)}
+                      >
+                        저장 저장
+                      </div>
+                    </ModalFooter>
+                  </>
+                )}
+                {modalState === true && (
+                  <ModalState>
+                    <img className="icon" src="/Image/Modal/save.gif" />
+                    도서 저장 성공
+                  </ModalState>
+                )}
+                {modalState === false && (
+                  <ModalState>
+                    <img className="icon" src="/Image/Modal/fail.gif" />
+                    도서 저장 실패
+                    <br />
+                    다시 키워드를 선택해주세요.
+                  </ModalState>
+                )}
               </BookDrawerSaveModal>
               <BookInfo>
                 <div className="title">{book.productName}</div>
@@ -106,6 +195,7 @@ const BookList = ({
                   <div>줄거리 : {book.contents}</div>
                 ) : (
                   <>
+                    <div>id : {book.bookId}</div>
                     <div>가격 : {book.salePrice}</div>
                     <div>유입 검색어 : {book.searchKeyword}</div>
                     <div>클릭수 : {book.totalClickCount}</div>
@@ -288,6 +378,23 @@ const ModalFooter = styled.div`
       opacity: 0.7;
       transition: opacity 0.1s ease-out;
     }
+  }
+`;
+
+const ModalState = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 150%;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  .icon {
+    width: 30%;
+    height: auto;
+    margin: 10px;
   }
 `;
 export default BookList;
