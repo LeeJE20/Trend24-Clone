@@ -49,22 +49,22 @@ const DateUsersGraph: React.FC<DateUsersGraphProps> = ({ data }) => {
         label: "활성 사용자",
         data: data.map((d) => d.activeUsers),
         fill: false,
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgba(255, 99, 132, 0.2)",
+        backgroundColor: "#5f996d",
+        borderColor: "#5f996db0",
       },
       {
         label: "전체 사용자",
         data: data.map((d) => d.totalUsers),
         fill: false,
-        backgroundColor: "rgb(54, 162, 235)",
-        borderColor: "rgba(54, 162, 235, 0.2)",
+        backgroundColor: "rgb(97, 134, 158)",
+        borderColor: "rgba(97, 134, 158, 0.2)",
       },
       {
         label: "신규 사용자",
         data: data.map((d) => d.newUsers),
         fill: false,
-        backgroundColor: "rgb(75, 192, 192)",
-        borderColor: "rgba(75, 192, 192, 0.2)",
+        backgroundColor: "#c2cec5",
+        borderColor: "#c2cec5b0",
       },
     ],
   };
@@ -80,6 +80,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 `;
 
 export default DateUsersGraph;

@@ -26,11 +26,7 @@ const CityUsersGraph: React.FC<CityUsersGraphProps> = ({ data }) => {
           data.reduce((acc, cur) => acc + Number(cur.totalUsers), 0),
           data.reduce((acc, cur) => acc + Number(cur.newUsers), 0),
         ],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(75, 192, 192)",
-        ],
+        backgroundColor: ["#77a081", "#8da392", "#c2cec5"],
         hoverOffset: 4,
       },
     ],
@@ -47,6 +43,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
 `;
 
 export default CityUsersGraph;

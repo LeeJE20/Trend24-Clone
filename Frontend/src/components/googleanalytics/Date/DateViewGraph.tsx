@@ -47,8 +47,8 @@ const DateUsersGraph: React.FC<DateUsersGraphProps> = ({ data }) => {
         label: "페이지 조회수",
         data: data.map((d) => d.screenPageViews),
         fill: false,
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgba(255, 99, 132, 0.2)",
+        backgroundColor: "#5f996d",
+        borderColor: "#5f996db0",
       },
     ],
   };
@@ -64,6 +64,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 `;
 
 export default DateUsersGraph;

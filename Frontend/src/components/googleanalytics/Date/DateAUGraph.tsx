@@ -49,22 +49,22 @@ const DateUsersGraph: React.FC<DateUsersGraphProps> = ({ data }) => {
         label: "DAU/MAU",
         data: data.map((d) => d.dauPerMau),
         fill: false,
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgba(255, 99, 132, 0.2)",
+        backgroundColor: "#5f996d",
+        borderColor: "#5f996db0",
       },
       {
         label: "DAU/WAU",
         data: data.map((d) => d.dauPerWau),
         fill: false,
-        backgroundColor: "rgb(54, 162, 235)",
-        borderColor: "rgba(54, 162, 235, 0.2)",
+        backgroundColor: "rgb(97, 134, 158)",
+        borderColor: "rgba(97, 134, 158, 0.2)",
       },
       {
         label: "WAU/MAU",
         data: data.map((d) => d.wauPerMau),
         fill: false,
-        backgroundColor: "rgb(255, 205, 86)",
-        borderColor: "rgba(255, 205, 86, 0.2)",
+        backgroundColor: "#c2cec5",
+        borderColor: "#c2cec5b0",
       },
     ],
   };
@@ -80,5 +80,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 `;
 export default DateUsersGraph;

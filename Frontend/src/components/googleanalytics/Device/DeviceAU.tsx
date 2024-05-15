@@ -84,6 +84,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  background-color: white;
 `;
 
 const Title = styled.div`
