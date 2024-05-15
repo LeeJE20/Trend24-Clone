@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PageInfo } from "../../../constants/DummyData/BookListData";
-import { GrFormNextLink } from "react-icons/gr";
+import { MdOutlineMenuBook } from "react-icons/md";
+
 import { MdOutlineSave } from "react-icons/md";
 import { BookType } from "../../../constants/Type/Type";
 import Colors from "../../../constants/Color";
@@ -55,11 +56,16 @@ const BookList = ({
   return (
     <Container>
       <Title>{title}</Title>
+
       <BookListContainer>
         {bookList &&
           bookList.length !== 0 &&
           bookList.map((book: BookType, index: number) => (
             <BookContainer key={index}>
+              <NextBtn onClick={() => toggleBookContent(index)}>
+                <MdOutlineMenuBook />
+              </NextBtn>
+
               <BookCover
                 $hovered={hoveredIndex === index}
                 onMouseEnter={() => setHoveredIndex(index)}
@@ -96,9 +102,6 @@ const BookList = ({
                     )}
                   </>
                 )}
-                <NextBtn onClick={() => toggleBookContent(index)}>
-                  <GrFormNextLink />
-                </NextBtn>
               </BookInfo>
               {modalOpen && (
                 <BookDrawerSaveModal
@@ -148,25 +151,26 @@ const Title = styled.div`
 
 const BookListContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+  gap: 5px;
   overflow-y: auto;
 `;
 
 const BookContainer = styled.div`
   position: relative;
   display: flex;
+  /* min-width: 430px; */
   align-items: center;
   margin: 10px;
   padding: 20px;
-  /* min-width: 450px; */
+
   box-sizing: border-box;
   border: 3px solid ${Colors.sub4};
 `;
 
 const BookCover = styled.div<{ $hovered: boolean }>`
   width: 30%;
-  max-width: 150px;
+  max-width: 130px;
   position: relative;
   cursor: pointer;
   margin-right: 20px;
@@ -174,7 +178,6 @@ const BookCover = styled.div<{ $hovered: boolean }>`
   img {
     height: fit-content;
     width: 100%;
-    /* min-width: ; */
     margin-right: 20px;
     transition: filter 0.3s ease-in-out;
     filter: ${({ $hovered }) => ($hovered ? "brightness(70%)" : "none")};
@@ -205,10 +208,12 @@ const BookInfo = styled.div`
   padding: 10px;
   border-radius: 20px;
   font-size: 1.5rem;
+  align-self: flex-start;
   .title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
+    margin-right: 40px;
   }
 `;
 
@@ -216,9 +221,10 @@ const NextBtn = styled.button`
   background-color: transparent;
   cursor: pointer;
   border: none;
-  font-size: 4rem;
+  font-size: 3rem;
+  color: ${Colors.main};
   position: absolute;
-  bottom: 20px;
+  top: 25px;
   right: 20px;
 `;
 

@@ -160,11 +160,11 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 4fr 1fr;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: 1fr 3fr;
   grid-template-areas:
-    "book book"
-    "keyword source";
+    "book keyword"
+    "book source";
 `;
 
 const BookWrapper = styled.div`
@@ -183,7 +183,7 @@ const KeywordCalendarWrapper = styled.div`
   box-shadow: 1px 0px 5px 1px #67676755;
   background-color: white;
   box-sizing: border-box;
-  margin: 10px;
+  margin: 5px 10px 5px 5px;
   border-radius: 10px;
 `;
 

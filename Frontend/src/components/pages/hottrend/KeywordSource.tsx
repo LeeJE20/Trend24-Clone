@@ -18,6 +18,11 @@ const KeywordSource = ({ platform, data }: referenceType) => {
   return (
     <Container>
       <Title>참고</Title>
+      <Description className="description">
+        선택한 키워드가 어떤 플랫폼을 통해
+        <br/>
+        추출되었는지 알려줍니다.
+      </Description>
       <Content>
         <Source>
           <img src={"/Image/BrandLogo/" + platform + ".webp"} />
@@ -32,7 +37,9 @@ const KeywordSource = ({ platform, data }: referenceType) => {
         {platform === "YOUTUBE" && (
           <YoutubeData>
             <div className="title">{data.contents.title}</div>
-            <iframe src={`https://www.youtube.com/embed/${data.contents.video_id}`} />
+            <iframe
+              src={`https://www.youtube.com/embed/${data.contents.video_id}`}
+            />
           </YoutubeData>
         )}
         {platform === "X" && (
@@ -55,23 +62,38 @@ const KeywordSource = ({ platform, data }: referenceType) => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  margin: 5px;
   padding: 10px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
 `;
 
 const Title = styled.div`
+  padding:5px;
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 15px;
+`;
+
+const Description = styled.div`
+  padding: 5px;
+  font-size: 1.5rem;
+  color: gray;
+  margin-bottom: 10px;
 `;
 
 const Content = styled.div`
+  flex-grow: 1;
   display: flex;
+
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const Source = styled.div`
-  width: 40%;
+  width: 100%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -79,7 +101,7 @@ const Source = styled.div`
   margin: 10px;
 
   img {
-    width: 60%;
+    width: 30%;
     min-width: 100px;
     margin: 10px;
   }
@@ -140,6 +162,8 @@ const XData = styled.div`
 
 const YoutubeData = styled.div`
   padding: 10px;
+  height: 70%;
+
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -153,12 +177,10 @@ const YoutubeData = styled.div`
     margin-bottom: 10px;
   }
 
-  .content {
-  }
-
   iframe {
+    flex-grow: 1;
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 `;
 export default KeywordSource;

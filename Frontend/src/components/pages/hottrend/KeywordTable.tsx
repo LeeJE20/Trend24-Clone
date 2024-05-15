@@ -90,7 +90,7 @@ const TableRow = styled.tr<{
 }>`
   background-color: ${({ $selectedKeyword, $currentKeyword }) =>
     $selectedKeyword !== null && $selectedKeyword?.keywordId === $currentKeyword
-      ? "gray"
+      ? Colors.sub1
       : "transparent"};
 
   td {
@@ -100,14 +100,15 @@ const TableRow = styled.tr<{
         position: absolute;
         left: 0;
         right: 0;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: inherit;
         z-index: -1;
       }
     }
   }
 
   &:hover {
-    background-color: rgba(160, 160, 160, 0.458);
+    background-color: ${({ $selectedKeyword, $currentKeyword }) =>
+      $selectedKeyword?.keywordId !== $currentKeyword ? Colors.sub4 : "null"};
     cursor: pointer;
   }
 `;
