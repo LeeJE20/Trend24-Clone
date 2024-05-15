@@ -3,6 +3,7 @@ package com.yes.trend.api.anonymousquestion.controller;
 import com.yes.trend.api.anonymousquestion.service.AnonymousQuestionService;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.question.entity.Question;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,21 +24,21 @@ import java.util.Map;
 public class AnonymousQuestionController {
     private final AnonymousQuestionService anonymousQuestionService;
 
-    @Operation(summary = "익명질문페이지에서 전체 질문 리스트", description = "")
+    @Operation(summary = "QB-01 익명질문페이지에서 전체 질문 리스트", description = "")
     @GetMapping("/question")
-    public ApiResponse<List<Question>> getQuestionAll(){
+    public ApiResponse<ListDto<Question>> getQuestionAll(){
         return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getQuestionAll());
     }
 
-    @Operation(summary = "선택한 질문에 해당되는 책 리스트", description = "")
+    @Operation(summary = "QB-03 선택한 질문에 해당되는 책 리스트", description = "")
     @GetMapping("/question/{questionId}")
-    public ApiResponse<List<Book>> getBookListByQuestionId(@PathVariable("questionId") Integer questionId){
+    public ApiResponse<ListDto<Book>> getBookListByQuestionId(@PathVariable("questionId") Integer questionId){
         return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getSelectQuestionBookList(questionId));
     }
 
-    @Operation(summary = "도서 검색창에 입력한 키워드", description = "%이별%")
+    @Operation(summary = "QB-04 도서 검색창에 입력한 키워드", description = "%이별%")
     @GetMapping("/search/{bookText}")
-    public ApiResponse<List<Map<String, Object>>> getBookDataBySearch(@PathVariable("bookText") String bookText){
+    public ApiResponse<ListDto<Map<String, Object>>> getBookDataBySearch(@PathVariable("bookText") String bookText){
         return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getfindBookByNameContain(bookText));
     }
 

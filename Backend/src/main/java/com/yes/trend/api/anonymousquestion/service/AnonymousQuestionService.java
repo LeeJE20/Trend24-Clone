@@ -1,5 +1,6 @@
 package com.yes.trend.api.anonymousquestion.service;
 
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.bookquestionmap.repository.BookQuestionMapRepository;
@@ -24,27 +25,27 @@ public class AnonymousQuestionService {
     private final BookQuestionMapRepository bookQuestionMapRepository;
     private final BookRepository bookRepository;
 
-    public List<Question> getQuestionAll(){
+    public ListDto<Question> getQuestionAll(){
         List<Question> questionList = questionRepository.findAll();
-        return questionList;
+        return new ListDto<>(questionList);
     }
 
-    public List<Book> getSelectQuestionBookList(Integer questionId){
+    public ListDto<Book> getSelectQuestionBookList(Integer questionId){
         List<Book> bookQuestionMapList = bookQuestionMapRepository.findBooksByQuestionId(questionId);
-        return bookQuestionMapList;
+        return new ListDto<>(bookQuestionMapList);
     }
 
-    public List<Map<String, Object>> getfindBookByNameContain(String bookText){
+    public ListDto<Map<String, Object>> getfindBookByNameContain(String bookText){
         List<Object[]> results = bookRepository.findByTitleContain(bookText);
 
         List<Map<String, Object>> bookList = new ArrayList<>();
         for (Object[] result : results) {
             Map<String, Object> bookData = new HashMap<>();
-            bookData.put("id", result[0]);
+            bookData.put("productId", result[0]);
             bookData.put("productName", result[1]);
             bookList.add(bookData);
         }
 
-        return bookList;
+        return new ListDto<>(bookList);
     }
 }
