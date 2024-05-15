@@ -137,8 +137,8 @@ const LoginFormRightSide = styled.div`
     }
   }
   .description {
-    padding: 15px;
-    font-size: 2rem;
+    padding: 15px 10px;
+    font-size: 1.8rem;
     opacity: 0.5;
   }
 `;
