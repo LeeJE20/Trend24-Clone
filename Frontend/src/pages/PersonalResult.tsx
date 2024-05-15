@@ -1,18 +1,32 @@
 import styled from "styled-components";
 import { bookListData, Book } from "../constants/DummyData/BookListData";
 import { useEffect, useState } from "react";
+import { RootState } from "../store/store";
+import { questionType } from "../store/slices/recommendSlice";
+import { useSelector } from "react-redux";
+import { BookType } from "../constants/Type/Type";
 
 const PersonalResult = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
+
+  const selectedQuestion: questionType = useSelector(
+    (state: RootState) => state.recommend.selectedQuestion
+  );
+
+  const selectedBook: BookType = useSelector(
+    (state: RootState) => state.recommend.selectedBook
+  );
+
   useEffect(() => {
     setBookList(bookListData);
   }, []);
 
   return (
     <Container>
-      <Title>Q. 이별 후 마음의 상처를 치유하는 데 도움이 된 책이 있나요?</Title>
+      <Title>Q. {selectedQuestion.questionText}</Title>
       <UserBook>
-        <div>유저가 선택한 책</div>
+        <div>{selectedBook.productName}</div>
+        <div>줄거리</div>
       </UserBook>
       <RecommendBook>
         {bookList.map((li) => (
@@ -42,7 +56,7 @@ const Title = styled.div`
   margin-top: 150px;
   font-weight: bold;
   padding: 50px;
-  width:50%;
+  width: 50%;
   border: solid 1px white;
 `;
 
