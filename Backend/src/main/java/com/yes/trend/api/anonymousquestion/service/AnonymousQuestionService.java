@@ -28,7 +28,7 @@ public class AnonymousQuestionService {
     private final BookQuestionMapRepository bookQuestionMapRepository;
     private final BookRepository bookRepository;
     private final ExternalApiService externalApiService;
-
+    
     @Value("${DOMAIN.PYTHON}")
     private String pythonUrl;
 
@@ -43,10 +43,8 @@ public class AnonymousQuestionService {
     }
 
     public ListDto<Map<String, Object>> getfindBookByNameContain(String bookText){
-        List<Object[]> results = bookRepository.findByTitleContain(bookText);
         PageRequest pageRequest = PageRequest.of(0, 50);
         List<Object[]> results = bookRepository.findByTitleContain(bookText, pageRequest);
-
         List<Map<String, Object>> bookList = new ArrayList<>();
         for (Object[] result : results) {
             Map<String, Object> bookData = new HashMap<>();
