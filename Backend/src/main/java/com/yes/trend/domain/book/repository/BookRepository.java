@@ -14,7 +14,7 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPredicateExecutor<Book> {
 	Page<Book> findAll(Pageable pageable);
 
-	@Query("SELECT b.id, b.productName FROM Book b WHERE b.productName LIKE %:bookText% LIMIT 100")
+	@Query("SELECT b.id, b.productName FROM Book b WHERE b.productName LIKE %:bookText%")
 	List<Object[]> findByTitleContain(@Param("bookText") String bookText);
 
 }
