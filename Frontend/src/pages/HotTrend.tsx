@@ -5,6 +5,7 @@ import KeywordDetail from "../components/pages/hottrend/KeywordDetail";
 import { getTrendKeyword } from "../apis/trendApi";
 import { FaChartLine, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Colors from "../constants/Color";
+import moment from "moment";
 
 interface TrendKeywordType {
   date: string;
@@ -51,7 +52,9 @@ const HotTrend = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        return await getTrendKeyword(formatDate(tableDate));
+        return await getTrendKeyword(
+          moment(tableDate).subtract(1, "day").format("YYYY-MM-DD")
+        );
       } catch (error) {
         console.log(error);
       }

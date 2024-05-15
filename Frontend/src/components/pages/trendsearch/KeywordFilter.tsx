@@ -31,14 +31,16 @@ const KeywordFilter = ({
   onTrendDateChange,
 }: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [date, setDate] = useState<Date | any>(new Date());
+  const [date, setDate] = useState<Date | any>(
+    moment(new Date()).subtract(1, "day").format("YYYY-MM-DD")
+  );
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const categoryClick = (category: number) => {
     setSelectedCategory(category);
   };
 
   useEffect(() => {
-    onTrendDateChange(moment(date).format("YYYY-MM-DD"));
+    onTrendDateChange(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
   }, [date]);
 
   const keywordClick = (keyword: keywords) => {
