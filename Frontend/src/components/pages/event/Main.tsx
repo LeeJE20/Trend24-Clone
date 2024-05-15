@@ -7,7 +7,7 @@ const Main = () => {
   const [isGeneralRecommend, setIsGeneralRecommend] = useState<boolean>(true);
   const Sample1Ref = useRef(null);
   const Sample2Ref = useRef(null);
-  const ContentContainerRef = useRef(null); // ContentContainer에 대한 참조 생성
+  const ContentContainerRef = useRef(null);
   const PresentBarRef = useRef(null);
   const RemainBarRef = useRef(null);
   const GeneralRecBarRef = useRef(null);
@@ -93,12 +93,12 @@ const Main = () => {
     }
 
     // 배경색 변경 애니메이션
-    if (ContentContainerRef.current) {
-      gsap.to(ContentContainerRef.current, {
-        backgroundColor: isGeneralRecommend ? "#7A8FA3" : "#ebf4fc",
-        duration: 1.5,
-      });
-    }
+    // if (ContentContainerRef.current) {
+    //   gsap.to(ContentContainerRef.current, {
+    //     backgroundColor: isGeneralRecommend ? "#7A8FA3" : "#ebf4fc",
+    //     duration: 1.5,
+    //   });
+    // }
 
     // RecommendBarArea의 자식들의 위치를 바꾸는 애니메이션
     if (isGeneralRecommend) {
@@ -135,6 +135,7 @@ const Main = () => {
       opacity: 0.5,
       scale: 0,
       duration: 3,
+      rotate: 60,
       ease: "power4.inOut",
     });
 
@@ -212,19 +213,34 @@ const Main = () => {
             </TitleContainer>
             <BackGround>
               <CloudImg1 ref={CloudImgRef}>
-                <img src="Image\EventPage\Cloud1.png" alt="cloud1" />
+                <img
+                  src="Image\EventPage\GeneralRecommend\cloud1.png"
+                  alt="cloud1"
+                />
               </CloudImg1>
               <CloudImg2 ref={CloudImg2Ref}>
-                <img src="Image\EventPage\Cloud2.png" alt="cloud2" />
+                <img
+                  src="Image\EventPage\GeneralRecommend\cloud2.png"
+                  alt="cloud2"
+                />
               </CloudImg2>
               <CloudImg3 ref={CloudImg3Ref}>
-                <img src="Image\EventPage\Cloud1.png" alt="cloud3" />
+                <img
+                  src="Image\EventPage\GeneralRecommend\cloud1.png"
+                  alt="cloud3"
+                />
               </CloudImg3>
               <CloudImg4 ref={CloudImg4Ref}>
-                <img src="Image\EventPage\Cloud2.png" alt="cloud4" />
+                <img
+                  src="Image\EventPage\GeneralRecommend\cloud3.png"
+                  alt="cloud4"
+                />
               </CloudImg4>
               <CloudImg5 ref={CloudImg5Ref}>
-                <img src="Image\EventPage\Cloud2.png" alt="cloud5" />
+                <img
+                  src="Image\EventPage\GeneralRecommend\cloud4.png"
+                  alt="cloud5"
+                />
               </CloudImg5>
             </BackGround>
             <RocketImg>
@@ -316,6 +332,9 @@ const ContentContainer = styled.div<IsGeneralRecommendProps>`
 `;
 
 const GeneralContent = styled.div`
+  background-image: url("Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
   display: flex;
   justify-content: center;
@@ -373,10 +392,10 @@ const RocketImg = styled.div`
 
 const CloudImg1 = styled.div`
   position: absolute;
-  top: 15%;
-  left: 0%;
-  width: 30vw;
-  height: 20vh;
+  top: 30%;
+  left: -20%;
+  width: 50vw;
+  height: 30vh;
 
   img {
     width: 100%;
@@ -386,9 +405,9 @@ const CloudImg1 = styled.div`
 
 const CloudImg2 = styled.div`
   position: absolute;
-  top: 0%;
-  right: 0%;
-  width: 50vw;
+  top: -5%;
+  right: -15%;
+  width: 80vw;
   height: 40vh;
 
   img {
@@ -399,10 +418,10 @@ const CloudImg2 = styled.div`
 
 const CloudImg3 = styled.div`
   position: absolute;
-  bottom: 0%;
-  left: 5%;
-  width: 20vw;
-  height: 15vh;
+  bottom: -5%;
+  left: -5%;
+  width: 30vw;
+  height: 25vh;
 
   img {
     width: 100%;
@@ -412,10 +431,10 @@ const CloudImg3 = styled.div`
 
 const CloudImg4 = styled.div`
   position: absolute;
-  bottom: 0%;
-  right: 0%;
-  width: 50vw;
-  height: 30vh;
+  bottom: -10%;
+  right: -5%;
+  width: 60vw;
+  height: 40vh;
 
   img {
     width: 100%;
@@ -425,10 +444,10 @@ const CloudImg4 = styled.div`
 
 const CloudImg5 = styled.div`
   position: absolute;
-  top: 50%;
-  left: 60%;
-  width: 30vw;
-  height: 16vh;
+  top: 40%;
+  right: -15%;
+  width: 40vw;
+  height: 25vh;
 
   img {
     width: 100%;
@@ -470,9 +489,8 @@ const Img = styled.div`
 const SampleImg1 = styled.div`
   width: 100%;
   height: 100%;
-  background: url("dist/Image/Event/techny-rocket.gif") no-repeat center center;
+  background: url("Image/EventPage/techny-rocket.gif") no-repeat center center;
   background-size: cover;
-
   cursor: pointer;
 `;
 
