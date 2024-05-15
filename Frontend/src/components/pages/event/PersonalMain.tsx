@@ -2,22 +2,33 @@ import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from "react-router-dom";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+
+gsap.registerPlugin(MotionPathPlugin);
 
 interface PersonalMainProps {
   pageChangeClick: () => void;
 }
 
 const PersonalMain = ({ pageChangeClick }: PersonalMainProps) => {
-    const topLeftRef = useRef<HTMLImageElement>(null);
-    const topRightRef = useRef<HTMLImageElement>(null);
-    const bottomLeftRef = useRef<HTMLImageElement>(null);
-    const bottomRightRef = useRef<HTMLImageElement>(null);
-    const centerRef = useRef<HTMLImageElement>(null);
-    const rocketRef = useRef<HTMLImageElement>(null);
-  
+  const topLeftRef = useRef<HTMLImageElement>(null);
+  const topRightRef = useRef<HTMLImageElement>(null);
+  const bottomLeftRef = useRef<HTMLImageElement>(null);
+  const bottomRightRef = useRef<HTMLImageElement>(null);
+  const centerRef = useRef<HTMLImageElement>(null);
+  const rocketRef = useRef<HTMLImageElement>(null);
+
   useGSAP(() => {
     const tl = gsap.timeline();
-    const list = [topLeftRef.current, topRightRef.current, bottomLeftRef.current, bottomRightRef.current, centerRef.current, rocketRef.current];
+    const list = [
+      topLeftRef.current,
+      topRightRef.current,
+      bottomLeftRef.current,
+      bottomRightRef.current,
+      centerRef.current,
+      rocketRef.current,
+    ];
     tl.from(list, {
       opacity: 0, // 요소를 처음에 숨김
       y: -50, // 50px 위로 이동
@@ -35,18 +46,61 @@ const PersonalMain = ({ pageChangeClick }: PersonalMainProps) => {
     }),
       "+=1";
     tl.play();
-  },[]);
+  }, []);
+
+  const rocketClick = () => {
+    const list = [
+      topLeftRef.current,
+      topRightRef.current,
+      bottomLeftRef.current,
+      bottomRightRef.current,
+      centerRef.current,
+    ];
+    gsap.to(list, {
+      opacity: 0,
+      duration: 3,
+      ease: "power1.inOut",
+      
+    });
+    gsap.to(rocketRef.current, {
+      duration: 3,
+      ease: "power1.inOut",
+      motionPath: {
+        path: "M0,0 C200,-200 400,-400 600,-200 1000,0 1300,-350 1500,-700",
+        autoRotate: 45,
+      },
+      onComplete: pageChangeClick,
+    });
+  };
 
   return (
     <Container>
       <Title>나만의 책</Title>
-      <TopLeftImage ref={topLeftRef} src="/Image/EventPage/Personal/linePlanet2.png" />
-      <TopRightImage ref={topRightRef} src="/Image/EventPage/Personal/linePlanet3.png" />
-      <BottomLeftImage ref={bottomLeftRef} src="/Image/EventPage/Personal/lineStar.png" />
-      <BottomRightImage ref={bottomRightRef} src="/Image/EventPage/Personal/linePlanet1.png" />
-      <CenterImage ref={centerRef} src="/Image/EventPage/Personal/lineStar2.png" />
-      <Rocket ref={rocketRef} src="/Image/EventPage/techny-rocket.gif" />
-      <Btn onClick={pageChangeClick}>버튼 클릭</Btn>
+      <TopLeftImage
+        ref={topLeftRef}
+        src="/Image/EventPage/Personal/linePlanet2.png"
+      />
+      <TopRightImage
+        ref={topRightRef}
+        src="/Image/EventPage/Personal/linePlanet3.png"
+      />
+      <BottomLeftImage
+        ref={bottomLeftRef}
+        src="/Image/EventPage/Personal/lineStar.png"
+      />
+      <BottomRightImage
+        ref={bottomRightRef}
+        src="/Image/EventPage/Personal/linePlanet1.png"
+      />
+      <CenterImage
+        ref={centerRef}
+        src="/Image/EventPage/Personal/lineStar2.png"
+      />
+      <Rocket
+        onClick={rocketClick}
+        ref={rocketRef}
+        src="/Image/EventPage/techny-rocket.gif"
+      />
     </Container>
   );
 };
@@ -65,13 +119,11 @@ const Container = styled.div`
 const Title = styled.div`
   justify-content: center;
   font-weight: bold;
-  font-size:15rem;
+  font-size: 15rem;
   color: white;
   z-index: 1;
 `;
-const Btn = styled.div`
-
-`;
+const Btn = styled.div``;
 
 const CenterImage = styled.img`
   position: absolute;
@@ -118,6 +170,7 @@ const Rocket = styled.img`
   bottom: 0;
   left: 0;
   width: 300px;
+  cursor: pointer;
 `;
 
 export default PersonalMain;

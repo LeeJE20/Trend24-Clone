@@ -10,7 +10,6 @@ import { AppDispatch, RootState } from "../store/store";
 import { useDispatch } from "react-redux";
 import { setQuestion, questionType } from "../store/slices/recommendSlice";
 
-
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const PersonalRecommend = () => {
@@ -39,7 +38,7 @@ const PersonalRecommend = () => {
     });
   }, []);
 
-    useGSAP(() => {
+  useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".title",
@@ -88,11 +87,7 @@ const PersonalRecommend = () => {
       </Title>
       <CardContainer className="image_container">
         {questionList.map((li, idx) => (
-          <QuestionCard
-            key={idx}
-            cardClick={cardClick}
-            cardData={li}
-          />
+          <QuestionCard key={idx} cardClick={cardClick} cardData={li} />
         ))}
       </CardContainer>
     </Container>
