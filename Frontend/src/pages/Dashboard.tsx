@@ -37,7 +37,7 @@ const Main = styled.main<{ $sidebarOpen: boolean }>`
 
   /* 스크롤바 막대 설정*/
   ::-webkit-scrollbar-thumb {
-    background-color: ;
+    background-color: white;
     border-radius: 30px;
   }
 

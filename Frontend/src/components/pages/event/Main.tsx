@@ -212,19 +212,19 @@ const Main = () => {
             </TitleContainer>
             <BackGround>
               <CloudImg1 ref={CloudImgRef}>
-                <img src="dist\Image\Event\Cloud1.png" alt="cloud1" />
+                <img src="Image\EventPage\Cloud1.png" alt="cloud1" />
               </CloudImg1>
               <CloudImg2 ref={CloudImg2Ref}>
-                <img src="dist\Image\Event\Cloud2.png" alt="cloud2" />
+                <img src="Image\EventPage\Cloud2.png" alt="cloud2" />
               </CloudImg2>
               <CloudImg3 ref={CloudImg3Ref}>
-                <img src="dist\Image\Event\Cloud1.png" alt="cloud3" />
+                <img src="Image\EventPage\Cloud1.png" alt="cloud3" />
               </CloudImg3>
               <CloudImg4 ref={CloudImg4Ref}>
-                <img src="dist\Image\Event\Cloud2.png" alt="cloud4" />
+                <img src="Image\EventPage\Cloud2.png" alt="cloud4" />
               </CloudImg4>
               <CloudImg5 ref={CloudImg5Ref}>
-                <img src="dist\Image\Event\Cloud2.png" alt="cloud5" />
+                <img src="Image\EventPage\Cloud2.png" alt="cloud5" />
               </CloudImg5>
             </BackGround>
             <RocketImg>
