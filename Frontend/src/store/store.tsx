@@ -5,6 +5,7 @@ import customizeReducer from "./slices/customizeSlice";
 import editPageReducer from "./slices/editpageSlice";
 import gaReducer from "./slices/gaSlice";
 import customPageReducer from "./slices/customPageSlice";
+import recommendReducer from "./slices/recommendSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     customize: customizeReducer,
     editPage: editPageReducer,
     ga: gaReducer,
+    recommend: recommendReducer,
   },
 });
 

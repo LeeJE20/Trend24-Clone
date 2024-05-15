@@ -1,30 +1,44 @@
 import styled from "styled-components";
 import PersonalSearchBox from "../components/pages/PersonalRecommend/PersonalSearchBox";
 import PersonalSearchList from "../components/pages/PersonalRecommend/PersonalSearchList";
-import { useEffect, useState, useRef } from "react";
-import { bookListData, Book } from "../constants/DummyData/BookListData";
+import { useState, useRef } from "react";
+import { BookType } from "../constants/Type/Type";
 import { gsap } from "gsap";
+import { getSearchBook } from "../apis/anonymous";
 
 const PersonalSearch = () => {
-  const [bookList, setBookList] = useState<Book[]>([]);
+  const [bookList, setBookList] = useState<BookType[]>([]);
   const [isSearchBoxMoved, setIsSearchBoxMoved] = useState<boolean>(false);
   const searchBoxRef = useRef(null);
   const searchListRef = useRef(null);
   const circleRef = useRef(null);
-  console.log(isSearchBoxMoved);
 
-  const handleSearchClick = () => {
-    // if (!isSearchBoxMoved) {
-    setIsSearchBoxMoved(true);
-    gsap.to(searchBoxRef.current, { x: "-3%", duration: 0.5 });
-    gsap.from(searchListRef.current, { x: "100%", duration: 1.2, ease: "back.out(1)"});
-    gsap.from(circleRef.current, { x: "50%", duration: 1.2, ease: "back.out(1)" });
-    // }
+  const getBookList = async (bookName: string) => {
+    try {
+      return await getSearchBook(bookName);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  useEffect(() => {
-    setBookList(bookListData);
-  }, []);
+  const handleSearchClick = (searchBookText: string) => {
+    if (searchBookText !== "") {
+      getBookList(searchBookText).then((res) => setBookList(res));
+    }
+
+    setIsSearchBoxMoved(true);
+    gsap.to(searchBoxRef.current, { x: "-3%", duration: 0.5 });
+    gsap.from(searchListRef.current, {
+      x: "100%",
+      duration: 1.2,
+      ease: "back.out(1)",
+    });
+    gsap.from(circleRef.current, {
+      x: "50%",
+      duration: 1.2,
+      ease: "back.out(1)",
+    });
+  };
 
   return (
     <Container>
@@ -70,21 +84,19 @@ const SearchWrapper = styled.div`
   width: 70%;
   display: flex;
   justify-content: center;
+  z-index: 1;
 `;
 
 const BookListWrapper = styled.div<{ $isVisible: boolean }>`
+  width: 30%;
+  /* position: absolute;
+  background-color: white;
+  right: -20%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
   height: 100%;
-
-  display: ${(props) => {
-    console.log(props);
-    // console.log(props.);
-
-    return props.$isVisible ? "visible" : "hidden";
-  }};
+  display: ${(props) => (props.$isVisible ? "visible" : "hidden")};
   opacity: ${(props) => (props.$isVisible ? 1 : 0)};
   transition: opacity 0.5s ease;
   z-index: 3;
@@ -99,7 +111,7 @@ const Background = styled.div<{ $isVisible: boolean }>`
   background: linear-gradient(to left, #4e4e4ec0, #e3e3e3c0, #ffffffc0);
   opacity: ${(props) => (props.$isVisible ? 1 : 0)};
   transition: opacity 0.5s ease;
-  z-index: 1;
+  /* z-index: 1; */
   overflow: hidden;
 `;
 

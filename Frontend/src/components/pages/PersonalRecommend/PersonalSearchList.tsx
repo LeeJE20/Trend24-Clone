@@ -1,16 +1,21 @@
 import styled from "styled-components";
-import { Book } from "../../../constants/DummyData/BookListData";
+import { BookType } from "../../../constants/Type/Type";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch,  } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import { setBook } from "../../../store/slices/recommendSlice";
 
 interface BookListProps {
-  bookList: Book[];
+  bookList: BookType[];
 }
 
-const PersonalSearchList = ({bookList}:BookListProps) => {
-  const navigate = useNavigate();
+const PersonalSearchList = ({ bookList }: BookListProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   
-  const bookClick = () => {
+  const navigate = useNavigate();
+
+  const bookClick = (book:BookType) => {
+    dispatch(setBook(book));
     navigate("/event/personal/result");
   };
 
@@ -18,9 +23,9 @@ const PersonalSearchList = ({bookList}:BookListProps) => {
     <Container>
       {bookList.map((li) => (
         <BookImage
-          src={`https://image.yes24.com/goods/${li.product_id}/XL`}
+          src={`https://image.yes24.com/goods/${li.productId}/XL`}
           alt="Book Cover"
-          onClick={() => bookClick()}
+          onClick={() => bookClick(li)}
         />
       ))}
     </Container>
@@ -35,16 +40,19 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  overflow-x: auto;
 `;
 
 const BookImage = styled.img`
-    width: 8vw;
-    height: auto;
-    margin: 10px;
-    cursor: pointer;
-    &:hover{
-      opacity: 0.5;
-    }
+  min-width: 100px;
+  width: 8vw;
+  height: auto;
+  margin: 10px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 export default PersonalSearchList;

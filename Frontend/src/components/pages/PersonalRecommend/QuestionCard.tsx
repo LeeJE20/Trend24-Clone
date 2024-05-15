@@ -1,19 +1,19 @@
 import styled from "styled-components";
+import { questionType } from "../../../store/slices/recommendSlice";
 import { FaQuoteLeft } from "react-icons/fa6";
 
 interface cardType {
-  cardData: string;
-  cardClick: (idx: number) => void;
-  idx: number;
+  cardData: questionType;
+  cardClick: (card: questionType) => void;
 }
 
-const QuestionCard = ({ cardData, cardClick, idx }: cardType) => {
+const QuestionCard = ({ cardData, cardClick }: cardType) => {  
   return (
-    <Box className="card" onClick={() => cardClick(idx)}>
+    <Box className="card" onClick={() => cardClick(cardData)}>
       <div className="quote">
         <FaQuoteLeft />
       </div>
-      <div className="content">{cardData}</div>
+      <div className="content">{cardData.questionText}</div>
       <img className="img" src="/Image/EventPage/glass1.png" />
     </Box>
   );
@@ -35,9 +35,7 @@ const Box = styled.div`
   box-sizing: border-box;
   border-radius: 30px;
   opacity: 0.7;
-
-  box-shadow: vinset 0px 0px 10px rgba(0, 0, 0, 0.8); /* 안쪽 그림자 추가 */
-
+  box-shadow: vinset 0px 0px 10px rgba(0, 0, 0, 0.8); 
   overflow: hidden;
   &:hover {
     cursor: pointer;

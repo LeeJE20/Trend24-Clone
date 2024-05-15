@@ -1,19 +1,40 @@
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
 import QuestionCard from "./QuestionCard";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { getSearchBook } from "../../../apis/anonymous";
+import { questionType } from "../../../store/slices/recommendSlice";
 
 interface PersonalSearchBoxProps {
-  onSearchClick: () => void;
+  onSearchClick: (text: string) => void;
 }
 
 const PersonalSearchBox = ({ onSearchClick }: PersonalSearchBoxProps) => {
-  const cardClick = (idx: number) => {
-    console.log(idx);
+  const [searchBookText, setSearchBookText] = useState<string>("");
+
+  const cardClick = (card: questionType) => {};
+
+  const changeText = (e: React.FormEvent<HTMLInputElement>) => {
+    const {
+      currentTarget: { value },
+    } = e;
+    setSearchBookText(value);
   };
+  
+  const searchClick = () => {
+    onSearchClick(searchBookText);
+  };
+
+  const cardData: questionType = useSelector(
+    (state: RootState) => state.recommend.selectedQuestion
+  );
+
   return (
     <Container>
       <Wrapper>
-        <QuestionCard cardClick={cardClick} cardData="데이터" idx={1} />
+        <QuestionCard cardClick={cardClick} cardData={cardData} />
         <SearchContainer>
           <Title>
             당신의 기억 속에 있는
@@ -21,8 +42,8 @@ const PersonalSearchBox = ({ onSearchClick }: PersonalSearchBoxProps) => {
             책을 열어보세요.
           </Title>
           <InputBoxContainer>
-            <input />
-            <FaSearch className="searchBtn" onClick={onSearchClick} />
+            <input onChange={changeText} value={searchBookText} />
+            <FaSearch className="searchBtn" onClick={searchClick} />
           </InputBoxContainer>
         </SearchContainer>
       </Wrapper>
@@ -50,6 +71,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  color: black;
 `;
 
 const SearchContainer = styled.div`
@@ -58,6 +80,7 @@ const SearchContainer = styled.div`
   justify-content: center;
   /* align-items: center; */
   margin-top: 15%;
+  color: white;
 `;
 
 const Title = styled.div`
@@ -94,7 +117,7 @@ const InputBoxContainer = styled.div`
 `;
 
 const HashTag = styled.div`
-padding: 0px 10%;
+  padding: 0px 10%;
   font-size: 3rem;
   line-height: 5rem;
 `;
