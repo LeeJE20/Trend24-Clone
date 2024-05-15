@@ -206,14 +206,14 @@ create table  IF NOT EXISTS trend.book_question_map
         primary key,
     
     book_id     int         null,
-    quesiton_id int         null,
+    question_id int         null,
     recommend_cnt int         null,
     created_time datetime(6)  null,
     updated_time datetime(6)  null,
     constraint FKxj2o5q1m8d9c7r4g0y6f3h8i
         foreign key (book_id) references trend.book (id),
     constraint FK8d4s2v9c1m7r3x6n5t0q2p1l
-        foreign key (quesiton_id) references trend.question (id)
+        foreign key (question_id) references trend.question (id)
 );
 
 -- 컬럼 디폴트 값 변경
