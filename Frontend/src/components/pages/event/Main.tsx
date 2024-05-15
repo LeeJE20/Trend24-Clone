@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
+import PersonalMain from "./PersonalMain";
 
 const Main = () => {
   const [isGeneralRecommend, setIsGeneralRecommend] = useState<boolean>(true);
@@ -233,13 +234,14 @@ const Main = () => {
           </GeneralContent>
         ) : (
           <PersonalContent>
-            <Text>
+            <PersonalMain pageChangeClick={gotoPersonal} />
+            {/* <Text>
               <h1>Personal Recommend!!</h1>
               <button onClick={gotoPersonal}>+</button>
             </Text>
             <Img>
               <SampleImg2 ref={Sample2Ref} />
-            </Img>
+            </Img> */}
           </PersonalContent>
         )}
       </ContentContainer>
@@ -442,8 +444,8 @@ const PersonalContent = styled.div`
   align-items: center;
   border: 1px solid black;
   box-sizing: border-box;
-  width: 80%;
-  height: 60%;
+  width: 100%;
+  height: 100%;
 `;
 
 const Text = styled.div`
@@ -470,7 +472,7 @@ const Img = styled.div`
 const SampleImg1 = styled.div`
   width: 100%;
   height: 100%;
-  background: url("dist/Image/Event/techny-rocket.gif") no-repeat center center;
+  background: url("Image/EventPage/techny-rocket.gif") no-repeat center center;
   background-size: cover;
 
   cursor: pointer;
