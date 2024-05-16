@@ -31,6 +31,8 @@ const BookSearch = () => {
   useEffect(() => {
     getBookList().then((res) => {
       if (res.length !== 0) {
+        console.log(res.list);
+        
         setBookList(res.list);
         setTotalElements(res.pageInfo.totalElements);
         setTotalPages(res.pageInfo.totalPages);

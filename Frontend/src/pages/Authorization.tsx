@@ -31,8 +31,8 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const res = await signIn(userId, password); // signIn 함수의 처리를 기다림
-      alert("로그인 성공");
       localStorage.setItem("accessToken", res.accessToken);
+      alert("로그인 성공");
       navigate("/main");
     } catch (error) {
       alert("로그인 실패");
