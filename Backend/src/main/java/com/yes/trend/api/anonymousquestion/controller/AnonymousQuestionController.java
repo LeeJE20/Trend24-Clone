@@ -5,6 +5,7 @@ import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 import com.yes.trend.common.dto.ListDto;
+import com.yes.trend.domain.book.dto.BookDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.question.entity.Question;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,7 @@ public class AnonymousQuestionController {
     public ApiResponse<ListDto<Book>> getBookListByQuestionId(@PathVariable("questionId") Integer questionId){
         return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getSelectQuestionBookList(questionId));
     }
+
     @Operation(summary = "QB-04 도서 검색창에 입력한 키워드", description = "예시) 입력값 : 라임 / 추출 책: 나의 라임 오렌지나무")
     @GetMapping("/search/{bookText}")
     public ApiResponse<ListDto<Map<String, Object>>> getBookDataBySearch(@PathVariable("bookText") String bookText){
@@ -39,9 +41,9 @@ public class AnonymousQuestionController {
     }
 
 
-    @Operation(summary = "QB-08 유저가 선택한 도서 보내기", description = "질문에 해당하는 도서 보내기")
+    @Operation(summary = "QB-08 유저가 선택한 도서 보내기", description = "형식 -> { bookId:7 }" )
     @PostMapping("/question/{questionId}/books")
-    public ApiResponse<ListDto<Book>> addBookToQuestion(
+    public ApiResponse<ListDto<BookDto.Response>> addBookToQuestion(
             @PathVariable Integer questionId,
             @RequestBody Map<String, String> body
     ) {

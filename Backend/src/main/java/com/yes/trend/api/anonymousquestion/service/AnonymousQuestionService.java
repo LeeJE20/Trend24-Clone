@@ -1,7 +1,9 @@
 package com.yes.trend.api.anonymousquestion.service;
 
 import com.yes.trend.common.dto.ListDto;
+import com.yes.trend.domain.book.dto.BookDto;
 import com.yes.trend.domain.book.entity.Book;
+import com.yes.trend.domain.book.mapper.BookMapper;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.bookquestionmap.entity.BookQuestionMap;
 import com.yes.trend.domain.bookquestionmap.repository.BookQuestionMapRepository;
@@ -28,7 +30,8 @@ public class AnonymousQuestionService {
     private final BookQuestionMapRepository bookQuestionMapRepository;
     private final BookRepository bookRepository;
     private final ExternalApiService externalApiService;
-    
+    private final BookMapper bookMapper;
+
     @Value("${DOMAIN.PYTHON}")
     private String pythonUrl;
 
@@ -49,19 +52,14 @@ public class AnonymousQuestionService {
         for (Object[] result : results) {
             Map<String, Object> bookData = new HashMap<>();
             bookData.put("productId", result[0]);
-            bookData.put("productName", result[1]);
-            bookData.put("id", result[0]);
-            bookData.put("product_id", result[1]);
-            bookData.put("sale_price", result[2]);
-            bookData.put("total_click_count", result[3]);
-            bookData.put("total_order_amount", result[4]);
-            bookData.put("total_order_count", result[5]);
-            bookData.put("total_purchase_count", result[6]);
-            bookData.put("created_time", result[7]);
-            bookData.put("updated_time", result[8]);
-            bookData.put("category_id", result[9]);
-            bookData.put("category_name", result[10]);
-            bookData.put("contents", result[11]);
+            bookData.put("salePrice", result[1]);
+            bookData.put("totalClickCount", result[2]);
+            bookData.put("totalOrderAmount", result[3]);
+            bookData.put("totalOrderCount", result[4]);
+            bookData.put("totalPurchaseCount", result[5]);
+            bookData.put("categoryId", result[6]);
+            bookData.put("categoryName", result[7]);
+            bookData.put("contents", result[8]);
             bookList.add(bookData);
         }
 
@@ -88,10 +86,12 @@ public class AnonymousQuestionService {
         return true;
     }
 
-    public ListDto<Book> getMomoryBook(Integer bookId){
+    public ListDto<BookDto.Response> getMomoryBook(Integer bookId){
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new NoSuchElementException("Book not found with id: " + bookId));
         String apiUrl = pythonUrl+"/fastapi/book/momory";
+        System.out.println("--------------------");
+        System.out.println(apiUrl);
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(apiUrl).queryParam("product_id", book.getProductId()).build(true);
         URI uri = uriBuilder.toUri();
@@ -107,7 +107,7 @@ public class AnonymousQuestionService {
             }
             bookList.add(searchedBook);
         }
-        return new ListDto<>(bookList);
+        return new ListDto<>(bookList.stream().map(bookMapper::BookToDto).toList());
     }
 
 

@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "book_question_map")
 @Getter
@@ -35,5 +33,4 @@ public class BookQuestionMap extends BaseEntity {
         this.question = question;
         this.book = book;
     }
-
 }
