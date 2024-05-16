@@ -16,6 +16,10 @@ interface CityUsersGraphProps {
   data: CityReportProps[];
 }
 
+const options = {
+  maintainAspectRatio: false,
+};
+
 const CityUsersGraph: React.FC<CityUsersGraphProps> = ({ data }) => {
   const chartData = {
     labels: ["활성 사용자", "전체 사용자", "신규 사용자"],
@@ -34,14 +38,14 @@ const CityUsersGraph: React.FC<CityUsersGraphProps> = ({ data }) => {
 
   return (
     <Container>
-      <Pie data={chartData} />
+      <Pie data={chartData} options={options} />
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   justify-content: center;

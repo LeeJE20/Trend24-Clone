@@ -12,7 +12,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { set } from "lodash";
 
 ChartJS.register(
   CategoryScale,
@@ -37,8 +36,12 @@ const options = {
   scales: {
     y: {
       beginAtZero: true,
+      ticks: {
+        stepSize: 1,
+      },
     },
   },
+  maintainAspectRatio: false,
 };
 
 const BookClickGraph: React.FC<BookClickGraphProps> = ({ data }) => {
@@ -98,8 +101,8 @@ const BookClickGraph: React.FC<BookClickGraphProps> = ({ data }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
