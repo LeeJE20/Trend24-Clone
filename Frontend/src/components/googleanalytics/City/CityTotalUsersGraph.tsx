@@ -36,6 +36,7 @@ const options = {
       beginAtZero: true,
     },
   },
+  maintainAspectRatio: false,
 };
 
 const CityTotalUsersGrapg: React.FC<CityUsersGraphProps> = ({ data }) => {
@@ -68,8 +69,8 @@ const CityTotalUsersGrapg: React.FC<CityUsersGraphProps> = ({ data }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   justify-content: center;

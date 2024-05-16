@@ -133,7 +133,9 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: #ebf4fc;
+  background-image: url("/Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   box-sizing: border-box;
   contain: paint;
 `;

@@ -215,31 +215,31 @@ const Main = () => {
             <BackGround>
               <CloudImg1 ref={CloudImgRef}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud1.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud1.png"
                   alt="cloud1"
                 />
               </CloudImg1>
               <CloudImg2 ref={CloudImg2Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud2.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud2.png"
                   alt="cloud2"
                 />
               </CloudImg2>
               <CloudImg3 ref={CloudImg3Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud1.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud1.png"
                   alt="cloud3"
                 />
               </CloudImg3>
               <CloudImg4 ref={CloudImg4Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud3.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud3.png"
                   alt="cloud4"
                 />
               </CloudImg4>
               <CloudImg5 ref={CloudImg5Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud4.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud4.png"
                   alt="cloud5"
                 />
               </CloudImg5>
@@ -337,7 +337,7 @@ const ContentContainer = styled.div<IsGeneralRecommendProps>`
 `;
 
 const GeneralContent = styled.div`
-  background-image: url("Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-image: url("/Image/EventPage/GeneralRecommend/generalbackground.png");
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -472,7 +472,7 @@ const PersonalContent = styled.div`
 const SampleImg1 = styled.div`
   width: 100%;
   height: 100%;
-  background: url("Image/EventPage/techny-rocket.gif") no-repeat center center;
+  background: url("/Image/EventPage/techny-rocket.gif") no-repeat center center;
   background-size: cover;
   cursor: pointer;
 `;

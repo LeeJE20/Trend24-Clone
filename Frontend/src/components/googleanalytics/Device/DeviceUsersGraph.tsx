@@ -37,6 +37,7 @@ const options = {
       beginAtZero: true,
     },
   },
+  maintainAspectRatio: false,
 };
 
 const DeviceUsersGraph: React.FC<DeviceUsersGraphProps> = ({ data }) => {
@@ -46,17 +47,17 @@ const DeviceUsersGraph: React.FC<DeviceUsersGraphProps> = ({ data }) => {
       {
         label: "활성 사용자",
         data: data.map((d) => d.activeUsers),
-        backgroundColor: "rgb(255, 99, 132)",
+        backgroundColor: "#77a081",
       },
       {
         label: "전체 사용자",
         data: data.map((d) => d.totalUsers),
-        backgroundColor: "rgb(54, 162, 235)",
+        backgroundColor: "#8da392",
       },
       {
         label: "신규 사용자",
         data: data.map((d) => d.newUsers),
-        backgroundColor: "rgb(75, 192, 192)",
+        backgroundColor: "#c2cec5",
       },
     ],
   };
@@ -69,8 +70,8 @@ const DeviceUsersGraph: React.FC<DeviceUsersGraphProps> = ({ data }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
