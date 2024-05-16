@@ -39,6 +39,7 @@ const options = {
       beginAtZero: true,
     },
   },
+  maintainAspectRatio: false,
 };
 
 const DateUsersGraph: React.FC<DateUsersGraphProps> = ({ data }) => {
@@ -77,8 +78,8 @@ const DateUsersGraph: React.FC<DateUsersGraphProps> = ({ data }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
