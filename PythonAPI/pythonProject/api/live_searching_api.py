@@ -1,10 +1,8 @@
-from .qdrant_searching import QdrantSearcher
+import time
+
 from .cuda_model import CudaModel
 from .mysql_insert import Mysql_Manager
-
-
-import time
-from tqdm import tqdm
+from .qdrant_searching import QdrantSearcher
 
 
 class LiveBookSearcher:
@@ -21,8 +19,7 @@ class LiveBookSearcher:
         self.sql_manager = Mysql_Manager()
         print(f'Mysql_Manager 로딩 시간: {time.time() - now_time}')
 
-
-    #For Fast API
+    # For Fast API
     def live_keyword_searching(self, search_sentence):
         if search_sentence is not '':
             print(f'Start Searching {search_sentence}')
@@ -39,13 +36,12 @@ class LiveBookSearcher:
 
         return None
 
-
-    #For Fast API
-    def memorial_book_searching(self, memorial_book):# memorial_book :: product_id
+    # For Fast API
+    def memorial_book_searching(self, memorial_book, top_k=30):  # memorial_book :: product_id
         if memorial_book is not None:
             # 연관 책 추천 :: 현재는 DB의 모든 책들 중에서 검색,
             # 추후에 같은 질문을 선택한 사람들이 선택한 책중으로 바뀔 예정
-            results = self.Qsearcher.find_memorial_book(memorial_book)
+            results = self.Qsearcher.find_memorial_book(memorial_book, top_k)
 
             '''
             DB에 SQL로 결과를 업로드할 부분 :: 테이블 미완성으로 대기
@@ -55,7 +51,6 @@ class LiveBookSearcher:
             return results
 
         return None
-
 
 # tester = LiveBookSearcher()
 #

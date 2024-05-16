@@ -1,7 +1,8 @@
-from qdrant_client import QdrantClient
-from qdrant_client.models import Filter, FieldCondition, MatchValue, Range, SearchParams
-import numpy as np
 import os
+
+from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue, SearchParams
+
 
 class QdrantSearcher:
     def __init__(self, collection_name="yes24_v2_collection", database_url="http://localhost:6663"):
@@ -85,7 +86,7 @@ class QdrantSearcher:
         return reponse_book_id
 
     # For Fast API
-    def find_memorial_book(self, book_id, top_k=5):
+    def find_memorial_book(self, book_id, top_k=30):
         my_book = self.search_book_id(book_id)
 
         if len(my_book) is not 0:
