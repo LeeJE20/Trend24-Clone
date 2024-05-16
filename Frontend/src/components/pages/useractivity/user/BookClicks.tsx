@@ -135,7 +135,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
   height: 10%;
   width: 100%;

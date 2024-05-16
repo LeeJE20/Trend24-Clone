@@ -77,7 +77,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     <SidebarWrapper ref={sidebarRef}>
       <LogoDetails>
         <Logo ref={logoRef}>
-          <img src="/Image/Logo/logo.png" />
+          <img src="/Image/Logo/Logo.png" />
           <div>Trend24</div>
         </Logo>
         <ToggleButton ref={toggleButtonRef} onClick={toggleSidebar}>
@@ -99,7 +99,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       </NavList>
       <ProfileWrapper ref={profileWrapperRef}>
         <ProfileDetails ref={profileContentRef}>
-          <ProfileImage src="/Image/Logo/logo.png" alt="profileImg" />
+          <ProfileImage src="/Image/Logo/logo4.png" alt="profileImg" />
           <NameJob>
             <div className="name">UserName</div>
             <div className="job">YES24 중고서점 목동점</div>
@@ -226,7 +226,7 @@ const NavItem = styled.li`
     background-color: white;
   }
 
-  &:last-child{
+  &:last-child {
     border-bottom: none;
   }
 `;

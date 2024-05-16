@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../store/store";
+import { RiArchiveDrawerFill } from "react-icons/ri";
 
 import { useInitialPageAPI, useGetCustomizeTitle } from "./CustomizePageAPI";
 
@@ -69,7 +70,10 @@ const UserCustomizePage = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title> {pageTitle} </Title>
+        <Title>
+          <RiArchiveDrawerFill className="icon" />
+          {pageTitle}
+        </Title>
 
         {initialComponentList.length === 0 ? null : (
           <BtnBox>
@@ -127,9 +131,20 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
-  display: flex;
-  justify-content: flex-start;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000;
+  text-align: start;
   flex: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 20px 10px;
+  .icon {
+    font-size: 3rem;
+    color: #313131;
+    margin-right: 10px;
+  }
 `;
 
 const BtnBox = styled.div`
