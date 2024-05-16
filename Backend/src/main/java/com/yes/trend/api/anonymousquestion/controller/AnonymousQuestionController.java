@@ -36,7 +36,7 @@ public class AnonymousQuestionController {
 
     @Operation(summary = "QB-04 도서 검색창에 입력한 키워드", description = "예시) 입력값 : 라임 / 추출 책: 나의 라임 오렌지나무")
     @GetMapping("/search/{bookText}")
-    public ApiResponse<ListDto<Map<String, Object>>> getBookDataBySearch(@PathVariable("bookText") String bookText){
+    public ApiResponse<ListDto<BookDto.Response>> getBookDataBySearch(@PathVariable("bookText") String bookText){
         return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getfindBookByNameContain(bookText));
     }
 

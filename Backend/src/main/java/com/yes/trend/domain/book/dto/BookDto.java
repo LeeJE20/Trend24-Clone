@@ -5,7 +5,9 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookDto {
 
 	@Getter

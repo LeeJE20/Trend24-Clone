@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class AnonymousQuestionService {
     private final BookRepository bookRepository;
     private final ExternalApiService externalApiService;
     private final BookMapper bookMapper;
+    private final BookDto bookDto;
 
     @Value("${DOMAIN.PYTHON}")
     private String pythonUrl;
@@ -45,23 +47,13 @@ public class AnonymousQuestionService {
         return new ListDto<>(bookQuestionMapList);
     }
 
-    public ListDto<Map<String, Object>> getfindBookByNameContain(String bookText){
+    public ListDto<BookDto.Response> getfindBookByNameContain(String bookText) {
         PageRequest pageRequest = PageRequest.of(0, 50);
-        List<Object[]> results = bookRepository.findByTitleContain(bookText, pageRequest);
-        List<Map<String, Object>> bookList = new ArrayList<>();
-        for (Object[] result : results) {
-            Map<String, Object> bookData = new HashMap<>();
-            bookData.put("productId", result[0]);
-            bookData.put("salePrice", result[1]);
-            bookData.put("totalClickCount", result[2]);
-            bookData.put("totalOrderAmount", result[3]);
-            bookData.put("totalOrderCount", result[4]);
-            bookData.put("totalPurchaseCount", result[5]);
-            bookData.put("categoryId", result[6]);
-            bookData.put("categoryName", result[7]);
-            bookData.put("contents", result[8]);
-            bookList.add(bookData);
-        }
+        List<Book> books = bookRepository.findByTitleContain(bookText, pageRequest);
+
+        List<BookDto.Response> bookList = books.stream()
+                .map(bookMapper::BookToDto)
+                .collect(Collectors.toList());
 
         return new ListDto<>(bookList);
     }

@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPredicateExecutor<Book> {
 	Page<Book> findAll(Pageable pageable);
 
-	@Query("SELECT b.id, b.productId, b.salePrice, b.totalClickCount, b.totalOrderAmount, b.totalOrderCount, b.totalPurchaseCount, b.categoryId, b.categoryName, b.contents FROM Book b WHERE b.productName LIKE %:bookText%")
-	List<Object[]> findByTitleContain(@Param("bookText") String bookText, Pageable pageable);
-
+	// BookRepository
+	@Query("SELECT b FROM Book b WHERE b.productName LIKE %:bookText%")
+	List<Book> findByTitleContain(@Param("bookText") String bookText, Pageable pageable);
 	@Query("SELECT b FROM Book b WHERE b.productId = :productId")
 	Optional<Book> findByProductId(@Param("productId") Integer productId);
 
