@@ -20,18 +20,20 @@ const GeneralRecommend = () => {
 
   return (
     <Container>
-      {trendList.map((trend, index) => (
-        <Ball
-          key={index}
-          $index={index}
-          $total={trendList.length}
-          onClick={() => {
-            gotoRecommendPage(trend.title);
-          }}
-        >
-          {trend.title}
-        </Ball>
-      ))}
+      <ContentContainer>
+        {trendList.map((trend, index) => (
+          <Ball
+            key={index}
+            $index={index}
+            $total={trendList.length}
+            onClick={() => {
+              gotoRecommendPage(trend.title);
+            }}
+          >
+            {trend.title}
+          </Ball>
+        ))}
+      </ContentContainer>
     </Container>
   );
 };
@@ -42,7 +44,17 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: #ebf4fc;
+  background-image: url("Image/EventPage/GeneralRecommend/generalbackground.png");
+`;
+const ContentContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-image: url("Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Ball = styled.div<{ $index: number; $total: number }>`
@@ -51,7 +63,6 @@ const Ball = styled.div<{ $index: number; $total: number }>`
   align-items: center;
   padding: 10px;
   border-radius: 50%;
-  background-color: #f9f9f9;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   width: 100px;
   height: 100px;

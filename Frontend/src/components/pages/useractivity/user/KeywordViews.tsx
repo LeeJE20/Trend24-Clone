@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import Colors from "../../../../constants/Color";
+import { FaArrowLeft } from "react-icons/fa";
 
 const data = {
   status: 200,
@@ -107,66 +109,12 @@ const data2 = {
   },
 };
 
-const Modal = ({
-  setIsModalOpen,
-}: {
-  setIsModalOpen: (isOpen: boolean) => void;
-}) => {
-  return (
-    <ModalContainer>
-      <ModalContent>
-        <ModalTitle>주간 등장 추이</ModalTitle>
-        <ModalCloseButton onClick={() => setIsModalOpen(false)}>
-          닫기
-        </ModalCloseButton>
-      </ModalContent>
-    </ModalContainer>
-  );
-};
-
-const ModalContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  width: 500px;
-  height: 500px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-`;
-
-const ModalTitle = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
-
-const ModalCloseButton = styled.button`
-  width: 100px;
-  height: 40px;
-  background-color: #343a40;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  cursor: pointer;
-`;
-
 interface weekdataProps {
   date: string;
   trend: boolean;
 }
 
 const KeywordViews = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [weekdata, setWeekdata] = useState<weekdataProps[]>([]);
   const [clickedKeywordName, setClickedKeywordName] = useState("");
@@ -212,21 +160,24 @@ const KeywordViews = () => {
       {isTableOpen ? (
         <Content>
           <WeeklyData>
-            <TableIndex>
-              <TableContent1>주간 등장 추이</TableContent1>
-              <BackBtn onClick={goback}>원래대로</BackBtn>
-            </TableIndex>
-            <TableIndex>
-              <TableContent1>키워드</TableContent1>
-              <TableContent2>{clickedKeywordName}</TableContent2>
-            </TableIndex>
-            {weekdata.map((data, index) => (
-              <TableIndex key={index}>
-                <TableContent1>{data.date}</TableContent1>
-                <TableContent2>{data.trend ? "상승" : "하락"}</TableContent2>
-              </TableIndex>
-            ))}
+            <TableContent1>주간 등장 추이</TableContent1>
+            <TableContent2>{clickedKeywordName}</TableContent2>
+            <BackBtn onClick={goback}>
+              <FaArrowLeft size={"10%"} />
+            </BackBtn>
           </WeeklyData>
+          <CalendarContainer>
+            {weekdata.map((d) => (
+              <DayWrapper>
+                <DayText>
+                  {d.date.split("-")[1] + "/" + d.date.split("-")[2]}
+                </DayText>
+                <Day key={d.date.split("-")[2]} isCurrentDay={d.trend}>
+                  {d.trend ? "O" : "X"}
+                </Day>
+              </DayWrapper>
+            ))}
+          </CalendarContainer>
         </Content>
       ) : (
         <Content>
@@ -266,7 +217,6 @@ const KeywordViews = () => {
           </Table>
         </Content>
       )}
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
     </Container>
   );
 };
@@ -282,7 +232,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
   height: 10%;
   width: 100%;
@@ -350,36 +300,60 @@ const WeeklyData = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 20%;
   box-sizing: border-box;
   border: 1px solid #c2cec5;
 `;
 
-const TableIndex = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-`;
 const TableContent1 = styled.div`
   width: 100%;
   height: 20%;
 `;
 const TableContent2 = styled.div`
   width: 100%;
-  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const BackBtn = styled.div`
   width: 100%;
-  height: 80%;
-  background-color: #5f996d;
-  color: white;
   text-align: center;
   cursor: pointer;
-  &:hover {
-    background-color: #c1e1d2;
-  }
+`;
+
+const CalendarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 80%;
+  flex-direction: row;
+`;
+
+const DayWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DayText = styled.div`
+  font-size: 1.5rem;
+`;
+
+const Day = styled.div<{ isCurrentDay: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 5px;
+  background-color: ${({ isCurrentDay }) =>
+    isCurrentDay ? Colors.main : "#ccc"};
+  color: ${({ isCurrentDay }) => (isCurrentDay ? "#fff" : "#333")};
+  font-weight: bold;
+  font-size: 1.5rem;
 `;
 
 export default KeywordViews;

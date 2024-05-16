@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../../../store/store";
 import { Rnd, DraggableData, ResizableDelta } from "react-rnd";
+import { IoMdAdd } from "react-icons/io";
+import { MdOutlineCancel } from "react-icons/md";
+import { IoSaveOutline } from "react-icons/io5";
 
 import CityTotalReport from "../../../googleanalytics/City/CityTotalReport";
 import CityUsers from "../../../googleanalytics/City/CityUsers";
@@ -19,12 +22,7 @@ import Memo from "./Memo";
 
 import { api } from "../../../../apis/apiConfig";
 
-import {
-  useCustomizeTitle,
-  useCustomizedPageAPI,
-  useInitialPageAPI,
-  useGetCustomizeTitle,
-} from "./CustomizePageAPI";
+import { useInitialPageAPI, useGetCustomizeTitle } from "./CustomizePageAPI";
 
 import {
   setPageTitle,
@@ -226,14 +224,17 @@ const RnDCustom = () => {
           </>
         )}
         <BtnBox>
-          <AddBtn>
-            <button onClick={toggleModal}>추가</button>
+          <AddBtn onClick={toggleModal}>
+            <IoMdAdd size={50} />
+            추가
           </AddBtn>
-          <CancelBtn>
-            <button onClick={cancelChange}>취소</button>
+          <CancelBtn onClick={cancelChange}>
+            <MdOutlineCancel size={50} />
+            취소
           </CancelBtn>
-          <CompleteBtn>
-            <button onClick={compleCustomize}>완료</button>
+          <CompleteBtn onClick={compleCustomize}>
+            <IoSaveOutline size={50} />
+            완료
           </CompleteBtn>
         </BtnBox>
       </TitleContainer>
@@ -297,9 +298,20 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
-  display: flex;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000;
+  text-align: start;
   flex: 2;
-  justify-content: flex-start;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 20px 10px;
+  .icon {
+    font-size: 3rem;
+    color: #313131;
+    margin-right: 10px;
+  }
 `;
 
 const BtnBox = styled.div`
@@ -311,19 +323,25 @@ const BtnBox = styled.div`
 const AddBtn = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   flex: 1;
+  cursor: pointer;
 `;
 
 const CancelBtn = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   flex: 1;
+  cursor: pointer;
 `;
 
 const CompleteBtn = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   flex: 1;
+  cursor: pointer;
 `;
 
 const DragContainer = styled.div`

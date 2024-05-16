@@ -30,7 +30,7 @@ const Logo = styled.div`
   height: auto;
   padding: 10px;
   z-index: 999;
-  img{
+  img {
     width: 100%;
     height: 100%;
   }
@@ -43,7 +43,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: #f9f9f9;
   box-sizing: border-box;
 `;
 
