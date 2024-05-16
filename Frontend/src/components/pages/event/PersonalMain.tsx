@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useNavigate } from "react-router-dom";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
 gsap.registerPlugin(MotionPathPlugin);
@@ -75,7 +74,8 @@ const PersonalMain = ({ pageChangeClick }: PersonalMainProps) => {
 
   return (
     <Container>
-      <Title>나만의 책</Title>
+      <Title>개인화 추천</Title>
+      <Description>Click the Rocket!!</Description>
       <TopLeftImage
         ref={topLeftRef}
         src="/Image/EventPage/Personal/linePlanet2.png"
@@ -109,6 +109,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: url("/Image/EventPage/bg.jpg");
@@ -119,11 +120,17 @@ const Container = styled.div`
 const Title = styled.div`
   justify-content: center;
   font-weight: bold;
-  font-size: 15rem;
+  font-size: 12rem;
+  color: white;
+  z-index: 1;
+  margin-bottom: 25px;
+`;
+
+const Description = styled.div`
+  font-size: 3rem;
   color: white;
   z-index: 1;
 `;
-const Btn = styled.div``;
 
 const CenterImage = styled.img`
   position: absolute;

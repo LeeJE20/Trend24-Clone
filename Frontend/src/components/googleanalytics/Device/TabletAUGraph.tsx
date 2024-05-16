@@ -15,6 +15,10 @@ interface TabletAUGraphProps {
   data: DeviceAUProps[];
 }
 
+const options = {
+  maintainAspectRatio: false,
+};
+
 const TabletAUGraph: React.FC<TabletAUGraphProps> = ({ data }) => {
   const chartData = {
     labels: ["DAU/MAU", "DAU/WAU", "WAU/MAU"],
@@ -25,11 +29,7 @@ const TabletAUGraph: React.FC<TabletAUGraphProps> = ({ data }) => {
           data.reduce((acc, cur) => acc + Number(cur.dauPerWau), 0),
           data.reduce((acc, cur) => acc + Number(cur.wauPerMau), 0),
         ],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(75, 192, 192)",
-        ],
+        backgroundColor: ["#77a081", "#8da392", "#c2cec5"],
         hoverOffset: 4,
       },
     ],
@@ -37,14 +37,14 @@ const TabletAUGraph: React.FC<TabletAUGraphProps> = ({ data }) => {
 
   return (
     <Container>
-      <Pie data={chartData} />
+      <Pie data={chartData} options={options} />
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   justify-content: center;

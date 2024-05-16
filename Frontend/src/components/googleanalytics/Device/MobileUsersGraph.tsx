@@ -16,6 +16,10 @@ interface MobileUsersGraphProps {
   data: DeviceDataProps[];
 }
 
+const options = {
+  maintainAspectRatio: false,
+};
+
 const MobileUsersGraph: React.FC<MobileUsersGraphProps> = ({ data }) => {
   const chartData = {
     labels: ["활성 사용자", "전체 사용자", "신규 사용자"],
@@ -26,11 +30,7 @@ const MobileUsersGraph: React.FC<MobileUsersGraphProps> = ({ data }) => {
           data.reduce((acc, cur) => acc + Number(cur.totalUsers), 0),
           data.reduce((acc, cur) => acc + Number(cur.newUsers), 0),
         ],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(75, 192, 192)",
-        ],
+        backgroundColor: ["#77a081", "#8da392", "#c2cec5"],
         hoverOffset: 4,
       },
     ],
@@ -38,14 +38,14 @@ const MobileUsersGraph: React.FC<MobileUsersGraphProps> = ({ data }) => {
 
   return (
     <Container>
-      <Pie data={chartData} />
+      <Pie data={chartData} options={options} />
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   justify-content: center;

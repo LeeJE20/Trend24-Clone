@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import QuestionCard from "../components/pages/PersonalRecommend/QuestionCard";
 import { getQuestion } from "../apis/anonymous";
 import { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "../store/store";
+import { AppDispatch } from "../store/store";
 import { useDispatch } from "react-redux";
 import { setQuestion, questionType } from "../store/slices/recommendSlice";
 
@@ -90,6 +90,10 @@ const PersonalRecommend = () => {
           <QuestionCard key={idx} cardClick={cardClick} cardData={li} />
         ))}
       </CardContainer>
+      <ScrollWrapper>
+        <Scroll />
+        Scroll
+      </ScrollWrapper>
     </Container>
   );
 };
@@ -125,6 +129,54 @@ const CardContainer = styled.div`
   /* transform: rotate(10deg); */
   background-image: url("/Image/EventPage/bg.jpg");
   background-repeat: repeat;
+`;
+
+const ScrollWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translate(-50%, 0%);
+  font-size: 2rem;
+  color: #ffffff79;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  `;
+
+const Scroll = styled.div`
+  width: 50px;
+  height: 90px;
+  border: 3px solid #ffffff79;
+  border-radius: 60px;
+  margin-bottom: 10px;
+  &::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #cacaca;
+    border-radius: 50%;
+    opacity: 1;
+    animation: wheel 2s infinite;
+    -webkit-animation: wheel 2s infinite;
+  }
+  @keyframes wheel {
+    to {
+      opacity: 0;
+      top: 70%;
+    }
+  }
+
+  @-webkit-keyframes wheel {
+    to {
+      opacity: 0;
+      top: 70%;
+    }
+  }
 `;
 
 export default PersonalRecommend;

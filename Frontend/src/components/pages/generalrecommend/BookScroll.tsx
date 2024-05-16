@@ -14,6 +14,9 @@ const BookContainer = styled.div`
   position: relative;
   transform-style: preserve-3d;
   perspective: 1200px;
+  background-image: url("/Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const BookPage = styled.div`

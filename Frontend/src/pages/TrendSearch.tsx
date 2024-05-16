@@ -90,7 +90,7 @@ const TrendSearch = () => {
     <Container>
       <Title>
         <TbDeviceDesktopSearch className="icon" />
-        트렌드 검색
+        트렌드 조회
       </Title>
       <FilterContainer>
         <KeywordFilter

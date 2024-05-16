@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import BookClickGraph from "./BookClickGraph";
+import { FaArrowLeft } from "react-icons/fa";
 
 const data = {
   status: 200,
@@ -81,7 +82,7 @@ const BookClicks = () => {
           <GraphTitleContainer>
             <GraphTitle>일주일간 클릭 수</GraphTitle>
             <GoBackBtn onClick={() => setIsBookClicked(false)}>
-              돌아가기
+              <FaArrowLeft size={20} />
             </GoBackBtn>
           </GraphTitleContainer>
           <GraphBox>
@@ -194,7 +195,6 @@ const BookImage = styled.div`
 
 const BookClickBox = styled.div`
   display: flex;
-  margin: 10px;
   flex-direction: row;
   align-items: center;
   width: 100%;
@@ -221,8 +221,8 @@ const GotoGraphBtn = styled.div`
   text-align: center;
   width: 40%;
   height: 100%;
-  background-color: #5f996d;
   border-radius: 10px;
+  background-color: #5f996d;
 
   &:hover {
     background-color: #c1e1d2;
@@ -240,11 +240,13 @@ const GraphContainer = styled.div`
 `;
 
 const GraphTitle = styled.div`
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  padding: 10px;
   height: 10%;
   width: 100%;
-  padding: 10px;
+  justify-content: start;
+  align-items: center;
+  display: flex;
   box-sizing: border-box;
 `;
 
@@ -258,17 +260,13 @@ const GraphBox = styled.div`
 `;
 
 const GoBackBtn = styled.div`
-  font-size: 1rem;
   width: 20%;
   height: 100%;
-  background-color: #5f996d;
-  border-radius: 10px;
-  margin-left: 10px;
-
-  &:hover {
-    background-color: #c1e1d2;
-    cursor: pointer;
-  }
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 const GraphTitleContainer = styled.div`

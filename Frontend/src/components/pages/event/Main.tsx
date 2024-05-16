@@ -209,37 +209,37 @@ const Main = () => {
         {isGeneralRecommend ? (
           <GeneralContent>
             <TitleContainer>
-              <Title>도서 추천</Title>
+              <Title>일반 추천</Title>
               <Title2>Click the Rocket!!</Title2>
             </TitleContainer>
             <BackGround>
               <CloudImg1 ref={CloudImgRef}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud1.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud1.png"
                   alt="cloud1"
                 />
               </CloudImg1>
               <CloudImg2 ref={CloudImg2Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud2.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud2.png"
                   alt="cloud2"
                 />
               </CloudImg2>
               <CloudImg3 ref={CloudImg3Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud1.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud1.png"
                   alt="cloud3"
                 />
               </CloudImg3>
               <CloudImg4 ref={CloudImg4Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud3.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud3.png"
                   alt="cloud4"
                 />
               </CloudImg4>
               <CloudImg5 ref={CloudImg5Ref}>
                 <img
-                  src="Image\EventPage\GeneralRecommend\cloud4.png"
+                  src="\Image\EventPage\GeneralRecommend\cloud4.png"
                   alt="cloud5"
                 />
               </CloudImg5>
@@ -270,15 +270,17 @@ const Main = () => {
             <GeneralRecBar
               ref={GeneralRecBarRef}
               onClick={handleGeneralRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              General
+              Book Recommend
             </GeneralRecBar>
           ) : (
             <PersonalRecBar
               ref={PersonalRecBarRef}
               onClick={handlePersonalRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              Personal
+              Personal Recommend
             </PersonalRecBar>
           )}
         </PresentRecommendBar>
@@ -290,15 +292,17 @@ const Main = () => {
             <PersonalRecBar
               ref={PersonalRecBarRef}
               onClick={handlePersonalRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              Personal
+              Personal Recommend
             </PersonalRecBar>
           ) : (
             <GeneralRecBar
               ref={GeneralRecBarRef}
               onClick={handleGeneralRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              General
+              Book Recommend
             </GeneralRecBar>
           )}
         </RemainRecommendBar>
@@ -329,12 +333,12 @@ const ContentContainer = styled.div<IsGeneralRecommendProps>`
   height: 100%;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#fec2c2" : "#0e3b62"};
+    props.$isGeneralRecommend ? "#e5c2fe" : "#333333"};
   transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
 `;
 
 const GeneralContent = styled.div`
-  background-image: url("Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-image: url("/Image/EventPage/GeneralRecommend/generalbackground.png");
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -461,46 +465,17 @@ const PersonalContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-`;
-
-const Text = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 60%;
-  height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
-`;
-
-const Img = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
 `;
 
 const SampleImg1 = styled.div`
   width: 100%;
   height: 100%;
-  background: url("Image/EventPage/techny-rocket.gif") no-repeat center center;
+  background: url("/Image/EventPage/techny-rocket.gif") no-repeat center center;
   background-size: cover;
   cursor: pointer;
-`;
-
-const SampleImg2 = styled.div`
-  width: auto;
-  height: 100%;
-  background: url(http://placehold.it/200x200) no-repeat center center;
-  background-size: cover;
 `;
 
 const RecommendBarArea = styled.div`
@@ -509,55 +484,76 @@ const RecommendBarArea = styled.div`
   align-items: center;
   width: 16%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
 `;
 
 const PresentRecommendBar = styled.div<IsGeneralRecommendProps>`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: end;
+  justify-content: flex-start;
   width: 80%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
-  background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#ffaeae" : "#093760"};
-  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
+  color: #ffffffc3;
+  background-image: radial-gradient(
+    circle at 0% 100%,
+    ${(props) =>
+      props.$isGeneralRecommend
+        ? "#4f1879 0%, #ab8fc4 70%, #ab8fc4 70%"
+        : "#001638 0%, #637ca1 70%, #637ca1 70%"}
+  );
+  transition: background-color 1.5s ease;
   z-index: 10;
 `;
+
 const RemainRecommendBar = styled.div<IsGeneralRecommendProps>`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: end;
+  justify-content: flex-start;
   width: 20%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
-  background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#0e3b62" : "#fec2c2"};
-  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
+  color: white;
+
+  background-image: radial-gradient(
+    circle at 900% 0%,
+    ${(props) =>
+      props.$isGeneralRecommend
+        ? "#001638 0%, #637ca1 70%, #637ca1d0 70%"
+        : "#300038 0%, #ab99ca 70%, #ab8fc4d0 70%"}
+  );
+  transition: background-color 1.5s ease;
   z-index: 8;
+  &:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
 `;
 
-const GeneralRecBar = styled.div`
+const GeneralRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
+  display: flex;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
+  box-sizing: border-box;
+  align-items: flex-end;
+  justify-content: flex-end;
+  cursor: ${(props) => (props.$isGeneralRecommend ? "default" : "pointer")};
+  writing-mode: vertical-rl;
+  font-size: ${(props) => (props.$isGeneralRecommend ? "8vh" : "2vh")};
 `;
 
-const PersonalRecBar = styled.div`
+const PersonalRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
+  display: flex;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
+  box-sizing: border-box;
+  align-items: flex-end;
+  justify-content: flex-end;
+  cursor: ${(props) => (props.$isGeneralRecommend ? "pointer" : "default")};
+  writing-mode: vertical-rl;
+  font-size: ${(props) => (props.$isGeneralRecommend ? "2vh" : "8vh")};
 `;
 
 export default Main;

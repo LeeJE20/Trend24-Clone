@@ -37,6 +37,7 @@ const options = {
       beginAtZero: true,
     },
   },
+  maintainAspectRatio: false,
 };
 
 const DeviceAUGraph: React.FC<DeviceAUGraphProps> = ({ data }) => {
@@ -46,17 +47,17 @@ const DeviceAUGraph: React.FC<DeviceAUGraphProps> = ({ data }) => {
       {
         label: "DAU/MAU",
         data: data.map((d) => d.dauPerMau),
-        backgroundColor: "rgb(255, 99, 132)",
+        backgroundColor: "#77a081",
       },
       {
         label: "DAU/WAU",
         data: data.map((d) => d.dauPerWau),
-        backgroundColor: "rgb(54, 162, 235)",
+        backgroundColor: "#8da392",
       },
       {
         label: "WAU/MAU",
         data: data.map((d) => d.wauPerMau),
-        backgroundColor: "rgb(75, 192, 192)",
+        backgroundColor: "#c2cec5",
       },
     ],
   };
@@ -69,8 +70,8 @@ const DeviceAUGraph: React.FC<DeviceAUGraphProps> = ({ data }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
