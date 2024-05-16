@@ -209,7 +209,7 @@ const Main = () => {
         {isGeneralRecommend ? (
           <GeneralContent>
             <TitleContainer>
-              <Title>도서 추천</Title>
+              <Title>일반 추천</Title>
               <Title2>Click the Rocket!!</Title2>
             </TitleContainer>
             <BackGround>
@@ -267,18 +267,19 @@ const Main = () => {
           ref={PresentBarRef}
         >
           {isGeneralRecommend ? (
-            <GeneralRecBar
-              ref={GeneralRecBarRef}
-              onClick={handleGeneralRecommend}
-            >
-              General
-            </GeneralRecBar>
+              <GeneralRecBar
+                ref={GeneralRecBarRef}
+                onClick={handleGeneralRecommend}
+                $isGeneralRecommend={isGeneralRecommend}
+              >Book Recommend
+              </GeneralRecBar>
           ) : (
             <PersonalRecBar
               ref={PersonalRecBarRef}
               onClick={handlePersonalRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              Personal
+              Personal Recommend
             </PersonalRecBar>
           )}
         </PresentRecommendBar>
@@ -290,15 +291,17 @@ const Main = () => {
             <PersonalRecBar
               ref={PersonalRecBarRef}
               onClick={handlePersonalRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              Personal
+              Personal Recommend
             </PersonalRecBar>
           ) : (
             <GeneralRecBar
               ref={GeneralRecBarRef}
               onClick={handleGeneralRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
             >
-              General
+              Book Recommend
             </GeneralRecBar>
           )}
         </RemainRecommendBar>
@@ -461,31 +464,9 @@ const PersonalContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-`;
-
-const Text = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 60%;
-  height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
-`;
-
-const Img = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
 `;
 
 const SampleImg1 = styled.div`
@@ -496,43 +477,34 @@ const SampleImg1 = styled.div`
   cursor: pointer;
 `;
 
-const SampleImg2 = styled.div`
-  width: auto;
-  height: 100%;
-  background: url(http://placehold.it/200x200) no-repeat center center;
-  background-size: cover;
-`;
-
 const RecommendBarArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 16%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
 `;
 
 const PresentRecommendBar = styled.div<IsGeneralRecommendProps>`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: end;
+  justify-content: flex-start;
   width: 80%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
   background-color: ${(props) =>
     props.$isGeneralRecommend ? "#ffaeae" : "#093760"};
   transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
   z-index: 10;
 `;
+
 const RemainRecommendBar = styled.div<IsGeneralRecommendProps>`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: end;
+  justify-content: flex-start;
   width: 20%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
   background-color: ${(props) =>
     props.$isGeneralRecommend ? "#0e3b62" : "#fec2c2"};
@@ -540,24 +512,30 @@ const RemainRecommendBar = styled.div<IsGeneralRecommendProps>`
   z-index: 8;
 `;
 
-const GeneralRecBar = styled.div`
+const GeneralRecBar = styled.div<{$isGeneralRecommend:boolean}>`
+  display: flex;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  box-sizing: border-box;
+  align-items: flex-end;
+  justify-content: flex-end;
   cursor: pointer;
+  writing-mode: vertical-rl; 
+  font-size: ${(props)=>(props.$isGeneralRecommend ? "8vh":"2vh")};
 `;
 
-const PersonalRecBar = styled.div`
+const PersonalRecBar = styled.div<{$isGeneralRecommend:boolean}>`
+  display: flex;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  box-sizing: border-box;
+  align-items: flex-end;
+  justify-content: flex-end;
   cursor: pointer;
+  writing-mode: vertical-rl; 
+  font-size: ${(props)=>(props.$isGeneralRecommend ? "2vh":"8vh")};
 `;
 
 export default Main;

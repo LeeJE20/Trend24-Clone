@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import QuestionCard from "../components/pages/PersonalRecommend/QuestionCard";
 import { getQuestion } from "../apis/anonymous";
 import { useEffect, useState } from "react";
-import { AppDispatch, RootState } from "../store/store";
+import { AppDispatch } from "../store/store";
 import { useDispatch } from "react-redux";
 import { setQuestion, questionType } from "../store/slices/recommendSlice";
 
@@ -20,7 +20,7 @@ const PersonalRecommend = () => {
   useGSAP(() => {
     const tl = gsap.timeline({ repeat: -1, yoyo: true });
     const cards = gsap.utils.toArray(".card");
-    cards.forEach((layer: any) => {
+    cards.forEach((layer:any) => {
       const startX = gsap.getProperty(layer, "x");
       const startY = gsap.getProperty(layer, "y");
       const randomX = gsap.utils.random(-10, 10);
