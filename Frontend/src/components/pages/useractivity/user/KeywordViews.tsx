@@ -1,38 +1,111 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const dummyKeywords = [
-  {
-    id: 1,
-    keyword: "키워드1",
-    category: "IT",
-    views: 100,
+const data = {
+  status: 200,
+  message: "성공",
+  result: {
+    list: [
+      {
+        categories: [
+          {
+            trendCategoryName: "건강",
+          },
+          {
+            trendCategoryName: "뉴스",
+          },
+        ],
+        keywordName: "관절염",
+        clickCountSum: 4,
+      },
+      {
+        categories: [
+          {
+            trendCategoryName: "건강",
+          },
+          {
+            trendCategoryName: "뉴스",
+          },
+        ],
+        keywordName: "관절염",
+        clickCountSum: 4,
+      },
+      {
+        categories: [
+          {
+            trendCategoryName: "건강",
+          },
+          {
+            trendCategoryName: "뉴스",
+          },
+        ],
+        keywordName: "관절염",
+        clickCountSum: 4,
+      },
+      {
+        categories: [
+          {
+            trendCategoryName: "건강",
+          },
+          {
+            trendCategoryName: "뉴스",
+          },
+        ],
+        keywordName: "관절염",
+        clickCountSum: 4,
+      },
+      {
+        categories: [
+          {
+            trendCategoryName: "건강",
+          },
+          {
+            trendCategoryName: "뉴스",
+          },
+        ],
+        keywordName: "관절염",
+        clickCountSum: 4,
+      },
+    ],
   },
-  {
-    id: 2,
-    keyword: "키워드2",
-    category: "IT",
-    views: 100,
+};
+
+const data2 = {
+  status: 200,
+  message: "성공",
+  result: {
+    list: [
+      {
+        date: "2024-05-16",
+        trend: true,
+      },
+      {
+        date: "2024-05-15",
+        trend: false,
+      },
+      {
+        date: "2024-05-14",
+        trend: true,
+      },
+      {
+        date: "2024-05-13",
+        trend: false,
+      },
+      {
+        date: "2024-05-12",
+        trend: true,
+      },
+      {
+        date: "2024-05-11",
+        trend: false,
+      },
+      {
+        date: "2024-05-10",
+        trend: true,
+      },
+    ],
   },
-  {
-    id: 3,
-    keyword: "키워드3",
-    category: "IT",
-    views: 100,
-  },
-  {
-    id: 4,
-    keyword: "키워드4",
-    category: "IT",
-    views: 100,
-  },
-  {
-    id: 5,
-    keyword: "키워드5",
-    category: "IT",
-    views: 100,
-  },
-];
+};
 
 const Modal = ({
   setIsModalOpen,
@@ -87,42 +160,112 @@ const ModalCloseButton = styled.button`
   cursor: pointer;
 `;
 
+interface weekdataProps {
+  date: string;
+  trend: boolean;
+}
+
 const KeywordViews = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTableOpen, setIsTableOpen] = useState(false);
+  const [weekdata, setWeekdata] = useState<weekdataProps[]>([]);
+  const [clickedKeywordName, setClickedKeywordName] = useState("");
 
-  const showWeeklyKewyword = () => {
-    setIsModalOpen(true);
+  useEffect(() => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+
+    const formatNumber = (num: number) => `0${num}`.slice(-2);
+    const weekdates = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(year, month, day - i);
+      return `${d.getFullYear()}-${formatNumber(
+        d.getMonth() + 1
+      )}-${formatNumber(d.getDate())}`;
+    });
+
+    setWeekdata(
+      weekdates.map((date) => {
+        const weeklyData = data2.result.list.find((d) => d.date === date);
+        return {
+          date,
+          trend: weeklyData ? weeklyData.trend : false,
+        };
+      })
+    );
+  }, []);
+
+  const showWeeklyKeyword = (keywordName: string) => {
+    setIsTableOpen(true);
+
+    setClickedKeywordName(keywordName);
+  };
+
+  const goback = () => {
+    setIsTableOpen(false);
   };
 
   return (
     <Container>
       <Title>키워드 조회수 Top 5</Title>
-      <Content>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeadCell>순위</TableHeadCell>
-              <TableHeadCell>키워드</TableHeadCell>
-              <TableHeadCell>카테고리</TableHeadCell>
-              <TableHeadCell>조회수</TableHeadCell>
-              <TableWeekly>주간 등장 추이</TableWeekly>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {dummyKeywords.map((keyword, index) => (
-              <TableRow key={keyword.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{keyword.keyword}</TableCell>
-                <TableCell>{keyword.category}</TableCell>
-                <TableCell>{keyword.views}</TableCell>
-                <TableWeekly>
-                  <button onClick={showWeeklyKewyword}>click</button>
-                </TableWeekly>
-              </TableRow>
+      {isTableOpen ? (
+        <Content>
+          <WeeklyData>
+            <TableIndex>
+              <TableContent1>주간 등장 추이</TableContent1>
+              <BackBtn onClick={goback}>원래대로</BackBtn>
+            </TableIndex>
+            <TableIndex>
+              <TableContent1>키워드</TableContent1>
+              <TableContent2>{clickedKeywordName}</TableContent2>
+            </TableIndex>
+            {weekdata.map((data, index) => (
+              <TableIndex key={index}>
+                <TableContent1>{data.date}</TableContent1>
+                <TableContent2>{data.trend ? "상승" : "하락"}</TableContent2>
+              </TableIndex>
             ))}
-          </TableBody>
-        </Table>
-      </Content>
+          </WeeklyData>
+        </Content>
+      ) : (
+        <Content>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeadCell>순위</TableHeadCell>
+                <TableHeadCell>키워드</TableHeadCell>
+                <TableHeadCell>카테고리</TableHeadCell>
+                <TableHeadCell>조회수</TableHeadCell>
+                <TableWeekly>주간 등장 추이</TableWeekly>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.result.list.map((keyword, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{keyword.keywordName}</TableCell>
+                  <TableCell>
+                    {keyword.categories.map((category, categoryIndex) => (
+                      <span key={categoryIndex}>
+                        {category.trendCategoryName}
+                      </span>
+                    ))}
+                  </TableCell>
+                  <TableCell>{keyword.clickCountSum}</TableCell>
+                  <TableWeekly>
+                    <button
+                      onClick={() => showWeeklyKeyword(keyword.keywordName)}
+                    >
+                      click
+                    </button>
+                  </TableWeekly>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Content>
+      )}
       {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
     </Container>
   );
@@ -139,9 +282,12 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: 600;
   height: 10%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 `;
 
 const Content = styled.div`
@@ -150,6 +296,7 @@ const Content = styled.div`
   align-items: center;
   height: 90%;
   width: 100%;
+  box-sizing: border-box;
 `;
 
 const Table = styled.table`
@@ -162,7 +309,7 @@ const Table = styled.table`
 `;
 
 const TableHead = styled.thead`
-  background-color: #f8f9fa;
+  background-color: #5f996d;
   width: 100%;
 `;
 
@@ -173,14 +320,16 @@ const TableRow = styled.tr`
     border-bottom: none;
   }
   box-sizing: border-box;
+  text-align: center;
 `;
 
 const TableHeadCell = styled.th`
-  padding: 10px;
+  font-size: 2rem;
   box-sizing: border-box;
 `;
 
 const TableBody = styled.tbody`
+  font-size: 1.5rem;
   width: 100%;
   box-sizing: border-box;
 `;
@@ -193,6 +342,44 @@ const TableCell = styled.td`
 const TableWeekly = styled.td`
   padding: 10px;
   box-sizing: border-box;
+`;
+
+const WeeklyData = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #c2cec5;
+`;
+
+const TableIndex = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+const TableContent1 = styled.div`
+  width: 100%;
+  height: 20%;
+`;
+const TableContent2 = styled.div`
+  width: 100%;
+  height: 80%;
+`;
+
+const BackBtn = styled.div`
+  width: 100%;
+  height: 80%;
+  background-color: #5f996d;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #c1e1d2;
+  }
 `;
 
 export default KeywordViews;
