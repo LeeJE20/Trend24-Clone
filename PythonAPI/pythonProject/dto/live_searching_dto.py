@@ -5,14 +5,14 @@ from typing import Generic, TypeVar, Optional
 T = TypeVar('T')
 
 class BookResponse(BaseModel):
-    book_id: int
-    product_id: int
-    product_name: str
-    category_name: str
-    search_keyword: str
-    total_click_count: int
-    total_order_count: int
-    total_order_amount: int
-    sale_price: int
+    bookId: int
+    productId: int
+    productName: str
+    categoryName: str
+    searchKeyword: str
+    totalClickCount: int
+    totalOrderCount: int
+    totalOrderAmount: int
+    salePrice: int
     contents: str
-    total_purchase_count: Optional[int] = 0
+    totalPurchaseCount: Optional[int] = 0
