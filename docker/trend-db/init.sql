@@ -216,6 +216,23 @@ create table  IF NOT EXISTS trend.book_question_map
         foreign key (quesiton_id) references trend.question (id)
 );
 
+create table IF NOT EXISTS trend.keyword_click
+(
+    id           int auto_increment
+        primary key,
+    created_time datetime(6)  null,
+    updated_time datetime(6)  null,
+    click_count  int          null,
+    keyword_name varchar(255) null,
+    category_id  int          null,
+    constraint FKk86c9x42ex3urirtmaf4gfcey
+        foreign key (category_id) references trend.trend_category (id)
+);
+
+
+
+
+
 -- 컬럼 디폴트 값 변경
 ALTER TABLE trend.keyword
 MODIFY COLUMN ranking INT DEFAULT 0,
