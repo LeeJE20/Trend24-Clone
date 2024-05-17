@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source .env
-APP_PORT=$PORT
 
 # 스크립트 실행 위치를 Backend 디렉토리로 변경합니다.
 cd $(dirname "$0")/../../Frontend
@@ -40,9 +39,6 @@ else
     echo "기존 $CONTAINER_NAME 가 존재하지 않습니다."
 fi
 
-
-echo "$APP_PORT 포트로 실행시킵니다."
-
-docker run -d -p $APP_PORT:5173 --network trend-network --name $CONTAINER_NAME $IMAGE_NAME
+docker run -d -p $PORT:5173 --network trend-network --name $CONTAINER_NAME $IMAGE_NAME
 echo "컨테이너 실행 완료"
 echo "스크립트 종료"
