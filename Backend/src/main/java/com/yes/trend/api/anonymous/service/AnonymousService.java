@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yes.trend.api.anonymous.dto.AnonymousDto;
+import com.yes.trend.api.recommend.dto.RecommendDto;
 import com.yes.trend.common.costants.ErrorCode;
+import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.book.entity.Book;
+import com.yes.trend.domain.book.mapper.BookMapper;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.bookclick.repository.BookClickRepository;
@@ -36,6 +39,7 @@ public class AnonymousService {
 	private final TrendCategoryRepository trendCategoryRepository;
 	private final KeywordClickRepository keywordClickRepository;
 	private final KeywordRepository keywordRepository;
+	private final BookMapper bookMapper;
 
 	@Transactional
 	public AnonymousDto.BookKeywordsClickCountDto postBookKeywordClickCount(Integer bookId, Byte categoryId) {
@@ -78,6 +82,48 @@ public class AnonymousService {
 		}
 
 		return new AnonymousDto.BookKeywordsClickCountDto(book.getId(), bookClick.getCount(), keywordDtos);
+	}
+
+	@Transactional(readOnly = true)
+	public ListDto<AnonymousDto.KeywordsAndBooksByCategory> getKeywordsAndBooksByCategory(Byte categoryId, int size,
+		LocalDate date) {
+		List<String> categoryNames = new ArrayList<>();
+		categoryNames.add("NEWS");
+		categoryNames.add("IT");
+		categoryNames.add("ANIMAL");
+		categoryNames.add("ENTERTAINMENT");
+		categoryNames.add("NEWMEDIA");
+		List<AnonymousDto.KeywordsAndBooksByCategory> response = new ArrayList<>();
+		for (String name : categoryNames) {
+
+			List<AnonymousDto.KeywordWithFrequency> keywords = new ArrayList<>();
+
+			keywords.add(new AnonymousDto.KeywordWithFrequency("푸바오", 1));
+			keywords.add(new AnonymousDto.KeywordWithFrequency("봄이", 2));
+			keywords.add(new AnonymousDto.KeywordWithFrequency("고양이", 3));
+			keywords.add(new AnonymousDto.KeywordWithFrequency("토끼", 4));
+			keywords.add(new AnonymousDto.KeywordWithFrequency("사자", 5));
+			keywords.add(new AnonymousDto.KeywordWithFrequency("호랑이", 6));
+			keywords.add(new AnonymousDto.KeywordWithFrequency("두식이", 7));
+
+			List<RecommendDto.BookWithKeywords> books = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				int id = 60700 + i;
+				Book book = bookRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NO_BOOK, id));
+				List<String> keywordNames = new ArrayList<>();
+				keywordNames.add("키워드1");
+				keywordNames.add("키워드2");
+				keywordNames.add("키워드3");
+				books.add(new RecommendDto.BookWithKeywords(book, keywordNames));
+			}
+
+			AnonymousDto.KeywordsAndBooksByCategory dto = new AnonymousDto.KeywordsAndBooksByCategory(name, keywords,
+				books);
+
+			response.add(dto);
+		}
+		return new ListDto<>(response);
+
 	}
 
 	public LocalDate getTrendSearchStartDate() {

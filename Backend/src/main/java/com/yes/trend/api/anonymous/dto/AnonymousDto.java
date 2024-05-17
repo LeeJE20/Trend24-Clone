@@ -2,6 +2,8 @@ package com.yes.trend.api.anonymous.dto;
 
 import java.util.List;
 
+import com.yes.trend.api.recommend.dto.RecommendDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +29,25 @@ public class AnonymousDto {
 		private String name;
 		private Integer clickCount;
 		private String trendCategoryName;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class KeywordsAndBooksByCategory {
+		List<KeywordWithFrequency> keywords;
+		List<RecommendDto.BookWithKeywords> books;
+		private String name; // 트렌드 카테고리 이름
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class KeywordWithFrequency {
+		String name;
+		Integer freq;
+
 	}
 }
