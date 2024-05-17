@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "admin")
@@ -30,18 +31,26 @@ public class Admin extends BaseEntity {
 	@Column(length = 100)
 	private String name;
 
+	@Setter
 	private Byte layout = 1;
 
 	@Column(length = 100)
 	private String branch = "";
 
+	@Setter
+	private String customName = "커스텀 페이지";
+
+	@Setter
+	private String customContents = "";
+
 	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
 	private List<Box> boxes;
 
 	@Builder
-	public Admin(String adminId, String adminPw, String name) {
+	public Admin(String adminId, String adminPw, String name, String branch) {
 		this.adminId = adminId;
 		this.adminPw = adminPw;
 		this.name = name;
+		this.branch = branch;
 	}
 }

@@ -228,3 +228,38 @@ CALL AddUriColumnIfNotExists();
 -- 컬럼 길이 늘리기
 ALTER TABLE trend.book
     MODIFY COLUMN contents MEDIUMTEXT;
+
+
+
+
+-- [커스텀 페이지 컬럼 추가]
+-- 프로시저가 존재하는지 확인하고 있다면 삭제
+-- 프로시저가 존재하는지 확인하고 있다면 삭제
+DROP PROCEDURE IF EXISTS AddCustomColumnIfNotExists;
+
+DELIMITER $$
+
+CREATE PROCEDURE AddCustomColumnIfNotExists()
+BEGIN
+    DECLARE column_count INT;
+
+    -- 컬럼이 존재하는지 확인
+    SELECT COUNT(*)
+    INTO column_count
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_SCHEMA = 'trend' AND TABLE_NAME = 'admin' AND COLUMN_NAME = 'custom_name';
+
+    -- 컬럼이 존재하지 않으면 추가
+    IF column_count = 0 THEN
+        ALTER TABLE `trend`.`admin`
+            ADD COLUMN `custom_name` VARCHAR(100) DEFAULT '커스텀 페이지' NULL;
+        ALTER TABLE `trend`.`admin`
+            ADD COLUMN `custom_contents` TEXT NULL;
+    END IF;
+END$$
+
+DELIMITER ;
+
+CALL AddCustomColumnIfNotExists();
+-- [커스텀 페이지 컬럼 추가 종료]
+
