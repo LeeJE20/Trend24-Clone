@@ -12,10 +12,12 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "book_question_map")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookQuestionMap extends BaseEntity {
 
@@ -29,4 +31,12 @@ public class BookQuestionMap extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "book_id")
 	private Book book;
+
+	// 모든 필드를 포함하는 생성자 추가
+	public BookQuestionMap(Integer recommendCnt, Question question, Book book) {
+		this.recommendCnt = recommendCnt;
+		this.question = question;
+		this.book = book;
+	}
+
 }

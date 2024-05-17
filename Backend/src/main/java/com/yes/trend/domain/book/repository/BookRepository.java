@@ -1,6 +1,7 @@
 package com.yes.trend.domain.book.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,11 @@ import io.lettuce.core.dynamic.annotation.Param;
 public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPredicateExecutor<Book> {
 	Page<Book> findAll(Pageable pageable);
 
-	@Query("SELECT b.id, b.productName FROM Book b WHERE b.productName LIKE %:bookText%")
-	List<Object[]> findByTitleContain(@Param("bookText") String bookText);
+	// BookRepository
+	@Query("SELECT b FROM Book b WHERE b.productName LIKE %:bookText%")
+	List<Book> findByTitleContain(@Param("bookText") String bookText, Pageable pageable);
+
+	@Query("SELECT b FROM Book b WHERE b.productId = :productId")
+	Optional<Book> findByProductId(@Param("productId") Integer productId);
 
 }

@@ -1,7 +1,7 @@
 spring:
   profiles:
-    #    active: dev # 개발용
-    active: dev # 배포용
+#    active: dev # 개발용
+    active: prod # 배포용
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_HOST}:${HOST_PORT}/${MYSQL_DATABASE}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
@@ -48,5 +48,6 @@ springdoc:
 DOMAIN:
   FRONT: ${FRONT_DOMAIN} # localhost:5173
   BACK: ${BACK_DOMAIN} # http://localhost:8080
-
+#  PYTHON: ${PYTHON_DOMAIN} #몰랑
+  PYTHON: "http://trend24.live:8000"
 secretKeyPlain: ${SECURE_KEY_PLAIN} # 시큐리티 키
