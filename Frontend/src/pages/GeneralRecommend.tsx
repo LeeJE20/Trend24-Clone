@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { gsap } from "gsap";
 
 const data = {
   status: 200,
@@ -227,26 +229,111 @@ interface TrendDataProps {
 
 const GeneralRecommend = () => {
   const [trendList, setTrendList] = useState<TrendDataProps[]>([]);
-
+  const ballsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [hoverTimeline, setHoverTimeline] = useState<GSAPTimeline | null>(null);
+  const [makeTl, setMakeTl] = useState(true);
+  const [goToRecommend, setGoToRecommend] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setTrendList(data.result.list);
   }, []);
 
-  const gotoRecommendPage = (title: string) => {
-    navigate(`/event/general/recommend`, { state: { title } });
+  useEffect(() => {
+    if (makeTl) {
+      const tl = gsap.timeline();
+      tl.to(ballsRef.current, {
+        keyframes: {
+          "0%": { scale: 1 },
+          "50%": { scale: 1.1 },
+          "100%": { scale: 1 },
+        },
+        ease: "linear",
+        duration: 1,
+        repeat: -1,
+      });
+      setHoverTimeline(tl);
+    }
+    return () => {
+      hoverTimeline?.kill();
+    };
+  }, [makeTl]);
+
+  const handleMouseOver = (index: number) => {
+    hoverTimeline?.pause();
+    setMakeTl(false);
+
+    const ball = ballsRef.current[index];
+    const textElement = ball?.querySelector(Text);
+    if (ball && textElement) {
+      const tl = gsap.timeline();
+      tl.to(ball, {
+        scale: 3.5,
+        duration: 0.5,
+      }).to(textElement, {
+        opacity: 1,
+        duration: 0.5,
+      });
+    }
+  };
+
+  const handleMouseOut = (index: number) => {
+    hoverTimeline?.resume();
+    if (goToRecommend) return;
+    setMakeTl(true);
+
+    const ball = ballsRef.current[index];
+    if (ball) {
+      const textElement = ball.querySelector(Text);
+      const tl = gsap.timeline();
+      tl.to(ball, { scale: 1, duration: 0.5 });
+      if (textElement) {
+        tl.to(textElement, { opacity: 0, duration: 0.5 });
+      }
+    }
+  };
+
+  const gotoRecommendPage = (title: string, index: number) => {
+    setGoToRecommend(true);
+    const tl = gsap.timeline();
+    const element = ballsRef.current[index];
+    if (element) {
+      const currentX = element.offsetLeft + element.offsetWidth / 2;
+      const currentY = element.offsetTop + element.offsetHeight / 2;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      tl.to(ballsRef.current, { scale: 0.1, duration: 0.5 }).to(element, {
+        keyframes: {
+          "0%": { scale: 1, x: 0, y: 0 },
+          "100%": { scale: 20, x: centerX - currentX, y: centerY - currentY },
+        },
+        duration: 1,
+        ease: "linear",
+        onComplete: () => {
+          navigate(`/event/general/recommend`, { state: { title } });
+        },
+      });
+    }
   };
 
   return (
     <Container>
+      <Title>별들에 마우스를 올려보세요</Title>
       {trendList.map((trend, index) => (
         <Ball
+          ref={(ref) => (ballsRef.current[index] = ref)}
           $title={trend.name}
           key={trend.name}
-          onClick={() => gotoRecommendPage(trend.name)}
+          onClick={() => gotoRecommendPage(trend.name, index)}
+          onMouseOver={() => handleMouseOver(index)}
+          onMouseOut={() => handleMouseOut(index)}
         >
-          <Text> {trend.name}</Text>
+          {trend.name === "ANIMAL" && <Text>동물</Text>}
+          {trend.name === "IT" && <Text>IT</Text>}
+          {trend.name === "NEWS" && <Text>뉴스 </Text>}
+          {trend.name === "ENTERTAINMENT" && <Text>엔터테인먼트</Text>}
+          {trend.name === "NEWMEDIA" && <Text>뉴미디어</Text>}
         </Ball>
       ))}
     </Container>
@@ -269,14 +356,28 @@ const Container = styled.div`
     ". NEWS . . .";
   height: 100%;
   width: 100%;
-
   background-image: url("/Image/EventPage/GeneralRecommend/generalbackground.png");
   background-size: cover;
   background-repeat: no-repeat;
 `;
 
+const Title = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 6rem;
+  color: white;
+  font-weight: bold;
+`;
+
 const Text = styled.div`
-  display: none;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
 `;
 
 const Ball = styled.div<BallProps>`
@@ -297,14 +398,6 @@ const Ball = styled.div<BallProps>`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
-  &:hover {
-    transform: translate(-50%, -50%) scale(3.5);
-    transition: 0.5s;
-  }
-  &:hover ${Text} {
-    display: block;
-  }
 `;
 
 export default GeneralRecommend;

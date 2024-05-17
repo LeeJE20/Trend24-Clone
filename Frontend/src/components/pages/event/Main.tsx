@@ -267,12 +267,13 @@ const Main = () => {
           ref={PresentBarRef}
         >
           {isGeneralRecommend ? (
-              <GeneralRecBar
-                ref={GeneralRecBarRef}
-                onClick={handleGeneralRecommend}
-                $isGeneralRecommend={isGeneralRecommend}
-              >Book Recommend
-              </GeneralRecBar>
+            <GeneralRecBar
+              ref={GeneralRecBarRef}
+              onClick={handleGeneralRecommend}
+              $isGeneralRecommend={isGeneralRecommend}
+            >
+              Book Recommend
+            </GeneralRecBar>
           ) : (
             <PersonalRecBar
               ref={PersonalRecBarRef}
@@ -494,7 +495,7 @@ const PresentRecommendBar = styled.div<IsGeneralRecommendProps>`
   height: 100%;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#ffaeae" : "#093760"};
+    props.$isGeneralRecommend ? "#cb9dd0" : "#031220"};
   transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
   z-index: 10;
 `;
@@ -507,12 +508,12 @@ const RemainRecommendBar = styled.div<IsGeneralRecommendProps>`
   height: 100%;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#0e3b62" : "#fec2c2"};
+    props.$isGeneralRecommend ? "#031220" : "#cb9dd0"};
   transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
   z-index: 8;
 `;
 
-const GeneralRecBar = styled.div<{$isGeneralRecommend:boolean}>`
+const GeneralRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
   display: flex;
   padding: 10px;
   width: 100%;
@@ -521,11 +522,11 @@ const GeneralRecBar = styled.div<{$isGeneralRecommend:boolean}>`
   align-items: flex-end;
   justify-content: flex-end;
   cursor: pointer;
-  writing-mode: vertical-rl; 
-  font-size: ${(props)=>(props.$isGeneralRecommend ? "8vh":"2vh")};
+  writing-mode: vertical-rl;
+  font-size: ${(props) => (props.$isGeneralRecommend ? "8vh" : "2vh")};
 `;
 
-const PersonalRecBar = styled.div<{$isGeneralRecommend:boolean}>`
+const PersonalRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
   display: flex;
   padding: 10px;
   width: 100%;
@@ -534,8 +535,9 @@ const PersonalRecBar = styled.div<{$isGeneralRecommend:boolean}>`
   align-items: flex-end;
   justify-content: flex-end;
   cursor: pointer;
-  writing-mode: vertical-rl; 
-  font-size: ${(props)=>(props.$isGeneralRecommend ? "2vh":"8vh")};
+  writing-mode: vertical-rl;
+  font-size: ${(props) => (props.$isGeneralRecommend ? "2vh" : "8vh")};
+  color: white;
 `;
 
 export default Main;

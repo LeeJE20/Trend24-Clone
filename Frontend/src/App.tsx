@@ -25,6 +25,8 @@ import GeneralRecommendBook from "./components/pages/generalrecommend/GeneralRec
 import { TransitionProvider } from "./components/pages/PersonalRecommend/TransitionConText";
 import TransitionComponent from "./components/pages/PersonalRecommend/Transition";
 
+import Dummy from "./pages/Dummy";
+
 // // usePageTracking 훅 구현
 // const usePageTracking = () => {
 //   const location = useLocation();
@@ -79,11 +81,11 @@ function App() {
               </TransitionComponent>
             }
           />
-        <Route path="general" element={<GeneralRecommend />} />
-        <Route path="general/recommend" element={<GeneralRecommendBook />} />
+          <Route path="general" element={<GeneralRecommend />} />
+          <Route path="general/recommend" element={<GeneralRecommendBook />} />
         </Route>
 
-        <Route path="/prac" element={<PersonalRecommend />} />
+        <Route path="/prac" element={<Dummy />} />
 
         <Route path="/" element={<Login />} />
         <Route path="/main" element={<Dashboard />}>

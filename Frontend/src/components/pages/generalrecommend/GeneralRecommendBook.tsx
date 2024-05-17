@@ -7,16 +7,253 @@ import BookDetail from "./BookDetail";
 import BookScroll from "./BookScroll";
 import Example from "./WordCloudComponent";
 
+import React from "react";
+
+const data = {
+  status: 200,
+  message: "성공",
+  result: {
+    list: [
+      {
+        name: "ANIMAL",
+        keywords: [
+          {
+            name: "푸바오",
+            freq: 3,
+          },
+        ],
+        books: [
+          {
+            bookId: 1,
+            product_id: 101,
+            search_keyword: "리액트",
+            total_click_count: 500,
+            total_order_count: 100,
+            total_order_amount: 5000,
+            contents: "리액트에 관한 책이다.",
+            product_name: "리액트 훅 인 액션",
+            sale_price: 20,
+            category_name: "IT",
+            total_purchase_count: 50,
+            keywords: ["AI", "블록체인"],
+          },
+          {
+            bookId: 2,
+            product_id: 102,
+            search_keyword: "역사",
+            total_click_count: 300,
+            total_order_count: 80,
+            total_order_amount: 4000,
+            contents: "역사는 중요하다",
+            product_name: "역사는 흐른다",
+            sale_price: 25,
+            category_name: "역사",
+            total_purchase_count: 40,
+            keywords: ["AI", "블록체인"],
+          },
+        ],
+      },
+      {
+        name: "IT",
+        keywords: [
+          {
+            name: "푸바오",
+            freq: 3,
+          },
+        ],
+        books: [
+          {
+            bookId: 1,
+            product_id: 101,
+            search_keyword: "리액트",
+            total_click_count: 500,
+            total_order_count: 100,
+            total_order_amount: 5000,
+            contents: "리액트에 관한 책이다.",
+            product_name: "리액트 훅 인 액션",
+            sale_price: 20,
+            category_name: "IT",
+            total_purchase_count: 50,
+            keywords: ["AI", "블록체인"],
+          },
+          {
+            bookId: 2,
+            product_id: 102,
+            search_keyword: "역사",
+            total_click_count: 300,
+            total_order_count: 80,
+            total_order_amount: 4000,
+            contents: "역사는 중요하다",
+            product_name: "역사는 흐른다",
+            sale_price: 25,
+            category_name: "역사",
+            total_purchase_count: 40,
+            keywords: ["AI", "블록체인"],
+          },
+        ],
+      },
+      {
+        name: "NEWS",
+        keywords: [
+          {
+            name: "푸바오",
+            freq: 3,
+          },
+        ],
+        books: [
+          {
+            bookId: 1,
+            product_id: 101,
+            search_keyword: "리액트",
+            total_click_count: 500,
+            total_order_count: 100,
+            total_order_amount: 5000,
+            contents: "리액트에 관한 책이다.",
+            product_name: "리액트 훅 인 액션",
+            sale_price: 20,
+            category_name: "IT",
+            total_purchase_count: 50,
+            keywords: ["AI", "블록체인"],
+          },
+          {
+            bookId: 2,
+            product_id: 102,
+            search_keyword: "역사",
+            total_click_count: 300,
+            total_order_count: 80,
+            total_order_amount: 4000,
+            contents: "역사는 중요하다",
+            product_name: "역사는 흐른다",
+            sale_price: 25,
+            category_name: "역사",
+            total_purchase_count: 40,
+            keywords: ["AI", "블록체인"],
+          },
+        ],
+      },
+      {
+        name: "ENTERTAINMENT",
+        keywords: [
+          {
+            name: "푸바오",
+            freq: 3,
+          },
+        ],
+        books: [
+          {
+            bookId: 1,
+            product_id: 101,
+            search_keyword: "리액트",
+            total_click_count: 500,
+            total_order_count: 100,
+            total_order_amount: 5000,
+            contents: "리액트에 관한 책이다.",
+            product_name: "리액트 훅 인 액션",
+            sale_price: 20,
+            category_name: "IT",
+            total_purchase_count: 50,
+            keywords: ["AI", "블록체인"],
+          },
+          {
+            bookId: 2,
+            product_id: 102,
+            search_keyword: "역사",
+            total_click_count: 300,
+            total_order_count: 80,
+            total_order_amount: 4000,
+            contents: "역사는 중요하다",
+            product_name: "역사는 흐른다",
+            sale_price: 25,
+            category_name: "역사",
+            total_purchase_count: 40,
+            keywords: ["AI", "블록체인"],
+          },
+        ],
+      },
+      {
+        name: "NEWMEDIA",
+        keywords: [
+          {
+            name: "푸바오",
+            freq: 3,
+          },
+        ],
+        books: [
+          {
+            bookId: 1,
+            product_id: 101,
+            search_keyword: "리액트",
+            total_click_count: 500,
+            total_order_count: 100,
+            total_order_amount: 5000,
+            contents: "리액트에 관한 책이다.",
+            product_name: "리액트 훅 인 액션",
+            sale_price: 20,
+            category_name: "IT",
+            total_purchase_count: 50,
+            keywords: ["AI", "블록체인"],
+          },
+          {
+            bookId: 2,
+            product_id: 102,
+            search_keyword: "역사",
+            total_click_count: 300,
+            total_order_count: 80,
+            total_order_amount: 4000,
+            contents: "역사는 중요하다",
+            product_name: "역사는 흐른다",
+            sale_price: 25,
+            category_name: "역사",
+            total_purchase_count: 40,
+            keywords: ["AI", "블록체인"],
+          },
+        ],
+      },
+    ],
+  },
+};
+
+interface booksProps {
+  bookId: number;
+  product_id: number;
+  search_keyword: string;
+  total_click_count: number;
+  total_order_count: number;
+  total_order_amount: number;
+  contents: string;
+  product_name: string;
+  sale_price: number;
+  category_name: string;
+  total_purchase_count: number;
+  keywords: string[];
+}
+interface keywordsProps {
+  name: string;
+  freq: number;
+}
+
+interface DataProps {
+  name: string;
+  keywords: keywordsProps[];
+  books: booksProps[];
+}
+
 const GeneralRecommendBook = () => {
   const location = useLocation();
-  const [title, setTitle] = useState<string>("");
-  const [bookList, setBookList] = useState<GeneralDummyBookList[]>([]);
+  const [bookData, setBookData] = useState<DataProps[]>([]);
+  const [category, setCategory] = useState<string>("");
+  const [bookList, setBookList] = useState<booksProps[]>([]);
   const bookContainerRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+
+  const [bookTitle, setBookTitle] = useState<string>("");
+  const [bookKeywords, setBookKeywords] = useState<string[]>([]);
 
   const [showScrollBook, setShowScrollBook] = useState<boolean>(false);
-  const [selectedBookInfo, setSelectedBookInfo] = useState<
-    GeneralDummyBookList[]
-  >([]);
+  const [selectedBookInfo, setSelectedBookInfo] = useState<booksProps | null>(
+    null
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,17 +294,53 @@ const GeneralRecommendBook = () => {
   }, []);
 
   useEffect(() => {
-    setTitle(location.state.title);
-    setBookList(GeneralDummyBookListData);
-  }, [location.state.title]);
+    const Category = location.state.title;
+    if (Category === "IT") {
+      setCategory("IT");
+    } else if (Category === "ENTERTAINMENT") {
+      setCategory("엔터테인먼트");
+    } else if (Category === "NEWMEDIA") {
+      setCategory("뉴미디어");
+    } else if (Category === "ANIMAL") {
+      setCategory("동물");
+    } else if (Category === "NEWS") {
+      setCategory("뉴스");
+    }
+    setBookData(
+      data.result.list.filter((element) => element.name === Category)
+    );
 
-  const showBook = (book: GeneralDummyBookList) => {
+    // data.result.list.forEach((element) => {
+    //   // data.result.list에 있는 요소들을 순회
+    //   if (element.name === Category) {
+    //     // 현재 페이지의 title과 일치하는 요소를 찾아서.
+    //     element.books.forEach((book) => {
+    //       // 일치하는 요소의 books를 순회
+    //       setBookTitle(book.product_name); // 책의 제목을 설정
+    //       setBookKeywords(book.keywords); // 책의 키워드를 설정
+    //     });
+    //   }
+    // });
+  }, [location.state.title]);
+  console.log(bookTitle);
+  console.log(bookKeywords);
+  console.log(bookData);
+
+  useEffect(() => {
+    const innerWidth = window.innerWidth;
+    const innerHeight = window.innerHeight;
+
+    setWidth((innerWidth / 16) * 6);
+    setHeight((innerHeight / 9) * 6);
+  }, []);
+
+  const showBook = (book: booksProps) => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
-    setSelectedBookInfo([book]); // 선택된 책의 정보를 저장
+    setSelectedBookInfo(book); // 선택된 책의 정보를 저장
     setShowScrollBook(true);
   };
 
@@ -84,28 +357,32 @@ const GeneralRecommendBook = () => {
     <Con>
       <Container>
         <WordContainer>
-          {title}
-          <Example width={1000} height={1000} showControls={true} />
+          <Titletext> {category}</Titletext>
+
+          <Example width={width} height={height} showControls={false} />
         </WordContainer>
         {showScrollBook ? (
           <BookScroll back={toggleBack} bookInfo={selectedBookInfo} /> // 선택된 책의 정보를 prop으로 전달
         ) : (
           <Section>
             <StyledBookContainer ref={bookContainerRef}>
-              {bookList.map((book, index) => (
-                <Book key={book.title}>
-                  <BookImg>
-                    <BookDetail bookinfo={book} />
-                  </BookImg>
-                  <TextArea>
-                    <div>{book.title + index}</div>
-                    <div>{book.keyword1}</div>
-                    <div>{book.keyword2}</div>
-                    <div>{book.keyword3}</div>
-                    <button onClick={() => showBook(book)}>상세보기</button> //
-                    이벤트 핸들러에 현재 책의 정보를 전달
-                  </TextArea>
-                </Book>
+              {bookData.map((element) => (
+                <React.Fragment key={element.name}>
+                  {element.books.map((book) => (
+                    <Book key={book.bookId}>
+                      <BookImg>
+                        <img src="https://via.placeholder.com/150" alt="book" />
+                      </BookImg>
+                      <TextArea>
+                        <div>{book.product_name}</div>
+                        {book.keywords.map((keyword, index) => (
+                          <div key={index}># {keyword}</div>
+                        ))}
+                        <button onClick={() => showBook(book)}>책 소개</button>
+                      </TextArea>
+                    </Book>
+                  ))}
+                </React.Fragment>
               ))}
             </StyledBookContainer>
           </Section>
@@ -140,8 +417,21 @@ const Container = styled.div`
   contain: paint;
 `;
 
+const Titletext = styled.div`
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffffff;
+  box-sizing: border-box;
+`;
+
 const WordContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -181,7 +471,6 @@ const Book = styled.div`
   width: 25vw;
   height: 50vh;
   padding: 10px;
-  background-color: #f9f9f9;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 `;
@@ -201,6 +490,7 @@ const TextArea = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
 `;
 
 export default GeneralRecommendBook;

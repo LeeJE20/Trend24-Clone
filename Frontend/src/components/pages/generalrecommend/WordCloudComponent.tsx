@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import { Text } from "@visx/text";
 import { scaleLog } from "@visx/scale";
@@ -8,10 +7,10 @@ const WordCloudContainer = styled.div`
   display: flex;
   flex-direction: column;
   user-select: none;
-  background-color: #d0d6de;
+  background-color: #ffffff;
+  border-radius: 50%;
   svg {
     margin: 1rem 0;
-    cursor: pointer;
     font-weight: 500;
   }
   label {
@@ -41,24 +40,26 @@ The moonlit wings reflect the stars that guide me towards salvation`;
 const colors = ["#143059", "#43597A", "#72839B", "#A1ACBD"];
 
 function wordFreq(text: string): WordData[] {
-  const words: string[] = text.split(/\s/);
-  const freqMap: Record<string, number> = {};
+  const words: string[] = text.split(/\s/); // split by whitespace
+  const freqMap: Record<string, number> = {}; // create a map for word frequency
 
   for (const w of words) {
-    if (!freqMap[w]) freqMap[w] = 0;
-    freqMap[w] += 1;
+    // count the frequency of each word
+    if (!freqMap[w]) freqMap[w] = 0; // initialize the word count
+    freqMap[w] += 1; // increment the word count
   }
   return Object.keys(freqMap).map((word) => ({
-    text: word,
-    value: freqMap[word],
+    // create an array of word data
+    text: word, // the word itself
+    value: freqMap[word], // the frequency of the word
   }));
 }
 
-function getRotationDegree() {
-  const rand = Math.random();
-  const degree = rand > 0.5 ? 60 : -60;
-  return rand * degree;
-}
+// function getRotationDegree() {
+//   const rand = Math.random();
+//   const degree = rand > 0.5 ? 60 : -60;
+//   return rand * degree;
+// }
 
 const words = wordFreq(totoAfricaLyrics);
 
@@ -67,18 +68,27 @@ const fontScale = scaleLog({
     Math.min(...words.map((w) => w.value)),
     Math.max(...words.map((w) => w.value)),
   ],
-  range: [10, 100],
+  range: [20, 250],
 });
 const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
 
+// const spiralType =  ((size: [number, number]) => (t: number) => [5, 5]);
+// const logarithmicSpiral =
+//   (size: [number, number]) =>
+//   (t: number): [number, number] => {
+//     const a = 5; // 스파이럴의 초기 반지름 (조정 가능)
+//     const b = 0.3; // 스파이럴이 얼마나 빠르게 커지는지 조절 (조정 가능)
+//     const r = a * Math.exp(b * t);
+//     const aspectRatio = size[0] / size[1];
+//     return [
+//       (aspectRatio * r * Math.cos(t)) / 2, // x 좌표
+//       (r * Math.sin(t)) / 2, // y 좌표
+//     ];
+//   };
+
 const fixedValueGenerator = () => 0.5;
 
-type SpiralType = "archimedean" | "rectangular";
-
 function Example({ width, height, showControls }: ExampleProps) {
-  const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
-  const [withRotation, setWithRotation] = useState(false);
-
   return (
     <WordCloudContainer>
       <Wordcloud
@@ -86,10 +96,10 @@ function Example({ width, height, showControls }: ExampleProps) {
         width={width}
         height={height}
         fontSize={fontSizeSetter}
-        font={"Source Sans Pro"}
+        // font={"Source Sans Pro"}
         padding={1}
-        spiral={spiralType}
-        rotate={withRotation ? getRotationDegree : 0}
+        spiral={"archimedean"}
+        rotate={0}
         random={fixedValueGenerator}
       >
         {(cloudWords) =>
@@ -107,33 +117,6 @@ function Example({ width, height, showControls }: ExampleProps) {
           ))
         }
       </Wordcloud>
-      {showControls && (
-        <div>
-          <label>
-            Spiral type &nbsp;
-            <select
-              onChange={(e) => setSpiralType(e.target.value as SpiralType)}
-              value={spiralType}
-            >
-              <option key={"archimedean"} value={"archimedean"}>
-                archimedean
-              </option>
-              <option key={"rectangular"} value={"rectangular"}>
-                rectangular
-              </option>
-            </select>
-          </label>
-          <label>
-            With rotation &nbsp;
-            <input
-              type="checkbox"
-              checked={withRotation}
-              onChange={() => setWithRotation(!withRotation)}
-            />
-          </label>
-          <br />
-        </div>
-      )}
     </WordCloudContainer>
   );
 }
