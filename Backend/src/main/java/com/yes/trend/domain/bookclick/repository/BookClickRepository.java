@@ -2,7 +2,9 @@ package com.yes.trend.domain.bookclick.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import com.yes.trend.domain.book.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.yes.trend.domain.bookclick.entity.BookClick;
@@ -19,4 +21,6 @@ public interface BookClickRepository extends JpaRepository<BookClick, Integer> {
 
 	List<BookClick> findByCreatedTimeBetween(LocalDateTime start, LocalDateTime end);
 	//  Book findByBook(Book book);
+
+	BookClick findByBook(Optional<Book> book);
 }

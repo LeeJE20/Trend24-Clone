@@ -1,5 +1,6 @@
 package com.yes.trend.api.anonymousquestion.service;
 
+import com.yes.trend.api.anonymous.dto.AnonymousDto;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.repository.BookRepository;
@@ -48,4 +49,5 @@ public class AnonymousQuestionService {
 
         return new ListDto<>(bookList);
     }
+
 }

@@ -17,4 +17,5 @@ public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPr
 	@Query("SELECT b.id, b.productName FROM Book b WHERE b.productName LIKE %:bookText%")
 	List<Object[]> findByTitleContain(@Param("bookText") String bookText);
 
+
 }
