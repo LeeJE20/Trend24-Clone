@@ -95,3 +95,15 @@ def memorial_book_searching(product_id: Union[int] = None, top_k: Union[int] = N
     response = search.memorial_book_searching(product_id, top_k)
 
     return dto.ApiResponse(status=200, message="memorial_book_searching 성공", result=response)
+
+
+@app.get("/fastapi/book/memory-real")
+def memorial_book_searching(product_id: Union[int] = None, question_id: Union[int] = None, top_k: Union[int] = 30):
+    logger.info(f"product_id=[{product_id}]")
+    if top_k == None or top_k <= 0:
+        top_k = 30
+    print(f"product_id=[{product_id}] question_id=[{question_id}] tok_k=[{top_k}]", flush=True)
+    response = search.memorial_book_searching_real_service(product_id, question_id, top_k)
+    print(f"response={response}", flush=True)
+
+    return dto.ApiResponse(status=200, message="memorial_book_searching_real_service 성공", result=response)
