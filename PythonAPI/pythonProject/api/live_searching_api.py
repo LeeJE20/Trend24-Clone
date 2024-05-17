@@ -3,6 +3,8 @@ import time
 from .cuda_model import CudaModel
 from .mysql_insert import Mysql_Manager
 from .qdrant_searching import QdrantSearcher
+import dto.live_searching_dto as dto
+from api.mysql_insert import Mysql_Manager
 
 
 class LiveBookSearcher:
@@ -28,9 +30,24 @@ class LiveBookSearcher:
 
             search_results = self.Qsearcher.search_items(search_vector, search_sentence, 10)
 
+            mysql_manager = Mysql_Manager()
             results = []
             for search_result in search_results:
-                results.append(search_result['book_id'])
+                book_info = mysql_manager.select_book_by_id(search_result['book_id'])
+                book_model = dto.BookResponse(
+                    book_id=book_info[0],
+                    product_id=book_info[6],
+                    product_name=book_info[7],
+                    category_name=book_info[4],
+                    search_keyword=book_info[9],
+                    total_click_count=book_info[10],
+                    total_order_count=book_info[12],
+                    total_order_amount=book_info[11],
+                    sale_price=book_info[8],
+                    contents=book_info[5],
+                    total_purchase_count=book_info[13]
+                )
+                results.append(book_model)
 
             return results
 
