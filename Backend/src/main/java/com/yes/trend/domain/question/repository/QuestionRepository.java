@@ -1,11 +1,12 @@
 package com.yes.trend.domain.question.repository;
 
-import com.yes.trend.domain.question.entity.Question;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.yes.trend.domain.question.entity.Question;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
-    List<Question> findAll();
+	List<Question> findAll();
 }

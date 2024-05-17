@@ -31,5 +31,4 @@ public class TrendCategory extends BaseEntity {
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private List<KeywordClick> keywordClicks;
 
-
 }

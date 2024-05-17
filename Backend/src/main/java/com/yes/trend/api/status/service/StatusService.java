@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.yes.trend.domain.keyword.entity.Keyword;
-import com.yes.trend.domain.keyword.repository.KeywordRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +20,8 @@ import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.bookclick.repository.BookClickRepository;
+import com.yes.trend.domain.keyword.entity.Keyword;
+import com.yes.trend.domain.keyword.repository.KeywordRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,15 +70,15 @@ public class StatusService {
 			}
 			AtomicInteger ranking = new AtomicInteger(1);
 			List<StatusDto.WeeklyTopClickedBooksDto> list = topThreeBooks.entrySet()
-					.stream()
-					.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
-							.bookId(t.getKey().getId())
-							.clickCountSum(t.getValue())
-							.productName(t.getKey().getProductName())
-							.ranking(ranking.getAndIncrement())
-							.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
-							.build())
-					.toList();
+				.stream()
+				.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
+					.bookId(t.getKey().getId())
+					.clickCountSum(t.getValue())
+					.productName(t.getKey().getProductName())
+					.ranking(ranking.getAndIncrement())
+					.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
+					.build())
+				.toList();
 			return new ListDto<>(list);
 		}
 
@@ -141,14 +141,14 @@ public class StatusService {
 		}
 
 		List<StatusDto.TopClickedKeywordsDto> list = topFiveKeywords.entrySet()
-				.stream()
-				.map(k -> StatusDto.TopClickedKeywordsDto.builder()
-//						.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
-						.categories(getKeywordCategories(k.getKey()))
-						.keywordName(k.getKey())
-						.clickCountSum(k.getValue())
-						.build())
-				.toList();
+			.stream()
+			.map(k -> StatusDto.TopClickedKeywordsDto.builder()
+				//						.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
+				.categories(getKeywordCategories(k.getKey()))
+				.keywordName(k.getKey())
+				.clickCountSum(k.getValue())
+				.build())
+			.toList();
 
 		return new ListDto<>(list);
 	}
@@ -170,11 +170,11 @@ public class StatusService {
 		});
 
 		List<StatusDto.CategoryDto> list = categoryByKeyword.entrySet()
-				.stream()
-				.map(k -> StatusDto.CategoryDto.builder()
-						.trendCategoryName(k.getKey())
-						.build())
-				.toList();
+			.stream()
+			.map(k -> StatusDto.CategoryDto.builder()
+				.trendCategoryName(k.getKey())
+				.build())
+			.toList();
 
 		return new ListDto<>(list);
 	}
@@ -197,12 +197,12 @@ public class StatusService {
 		}
 
 		List<StatusDto.KeywordClickDto> list = clickByDate.entrySet()
-				.stream()
-				.map(bc -> StatusDto.KeywordClickDto.builder()
-						.date(bc.getKey())
-						.trend(bc.getValue())
-						.build())
-				.toList();
+			.stream()
+			.map(bc -> StatusDto.KeywordClickDto.builder()
+				.date(bc.getKey())
+				.trend(bc.getValue())
+				.build())
+			.toList();
 
 		return new ListDto<>(list);
 	}

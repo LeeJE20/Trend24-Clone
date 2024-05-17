@@ -1,6 +1,6 @@
 spring:
   profiles:
-#    active: dev # 개발용
+    #    active: dev # 개발용
     active: dev # 배포용
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

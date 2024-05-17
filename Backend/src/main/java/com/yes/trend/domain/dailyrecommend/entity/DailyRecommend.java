@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.yes.trend.common.entity.BaseEntity;
 import com.yes.trend.domain.book.entity.Book;
-import com.yes.trend.domain.keywordclick.entity.KeywordClick;
 import com.yes.trend.domain.recommendkeyword.entity.RecommendKeyword;
 
 import jakarta.persistence.Entity;

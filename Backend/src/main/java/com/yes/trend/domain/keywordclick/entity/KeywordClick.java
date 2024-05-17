@@ -1,10 +1,8 @@
 package com.yes.trend.domain.keywordclick.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
-import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.trendcategory.entity.TrendCategory;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -27,13 +25,13 @@ public class KeywordClick extends BaseEntity {
 	@JoinColumn(name = "category_id")
 	private TrendCategory category;
 
-	public void addClickCount() {
-		Integer count = this.getClickCount() + 1;
-		this.clickCount = count;
-	}
-
 	public KeywordClick(String keywordName, TrendCategory category) {
 		this.keywordName = keywordName;
 		this.category = category;
+	}
+
+	public void addClickCount() {
+		Integer count = this.getClickCount() + 1;
+		this.clickCount = count;
 	}
 }

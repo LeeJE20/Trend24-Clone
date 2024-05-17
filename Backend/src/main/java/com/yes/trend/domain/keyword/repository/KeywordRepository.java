@@ -13,7 +13,9 @@ import com.yes.trend.domain.keyword.entity.Keyword;
 public interface KeywordRepository extends JpaRepository<Keyword, Integer> {
 	List<Keyword> findByNameAndCreatedTimeBetween(String name, LocalDateTime start,
 		LocalDateTime end);
+
 	List<Keyword> findAllByName(String name);
+
 	Keyword findByName(String name);
 
 	@Query("SELECT k.name " +
@@ -25,5 +27,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Integer> {
 		"AND FUNCTION('date', k.createdTime) > :localDate " +
 		"GROUP BY k.name " +
 		"ORDER BY COUNT(k.name) DESC, MAX(k.createdTime) DESC")
-	List<String> findTopKeyword_NameByBookIdAndCategoryId(Integer book_id, Byte category_id, LocalDate localDate, Pageable pageable);
+	List<String> findTopKeyword_NameByBookIdAndCategoryId(Integer book_id, Byte category_id, LocalDate localDate,
+		Pageable pageable);
 }

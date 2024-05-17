@@ -1,6 +1,7 @@
 package com.yes.trend.domain.question.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -14,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Question extends BaseEntity {
 
-    @Column(length = 255)
-    private String questionText;
+	@Column(length = 255)
+	private String questionText;
 }

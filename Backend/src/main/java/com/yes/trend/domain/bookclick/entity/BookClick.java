@@ -3,7 +3,6 @@ package com.yes.trend.domain.bookclick.entity;
 import com.yes.trend.common.entity.BaseEntity;
 import com.yes.trend.domain.book.entity.Book;
 
-import com.yes.trend.domain.keyword.entity.Keyword;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -26,12 +25,12 @@ public class BookClick extends BaseEntity {
 
 	private Integer count = 0;
 
+	public BookClick(Book book) {
+		this.book = book;
+	}
+
 	public void addClickCount() {
 		Integer click = this.getCount() + 1;
 		this.count = click;
-	}
-
-	public BookClick(Book book) {
-		this.book = book;
 	}
 }
