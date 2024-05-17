@@ -18,11 +18,9 @@ import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.repository.BookRepository;
 import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.bookclick.repository.BookClickRepository;
-import com.yes.trend.domain.dailyrecommend.repository.DailyRecommendRepository;
 import com.yes.trend.domain.keyword.repository.KeywordRepository;
 import com.yes.trend.domain.keywordclick.entity.KeywordClick;
 import com.yes.trend.domain.keywordclick.repository.KeywordClickRepository;
-import com.yes.trend.domain.recommendkeyword.repository.RecommendKeywordRepository;
 import com.yes.trend.domain.trendcategory.entity.TrendCategory;
 import com.yes.trend.domain.trendcategory.repository.TrendCategoryRepository;
 
@@ -35,8 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AnonymousService {
 	private final BookRepository bookRepository;
 	private final BookClickRepository bookClickRepository;
-	private final DailyRecommendRepository dailyRecommendRepository;
-	private final RecommendKeywordRepository recommendKeywordRepository;
 	private final TrendCategoryRepository trendCategoryRepository;
 	private final KeywordClickRepository keywordClickRepository;
 	private final KeywordRepository keywordRepository;
@@ -80,26 +76,6 @@ public class AnonymousService {
 				.trendCategoryName(trendCategory.getName())
 				.build());
 		}
-
-		// DailyRecommend dailyRecommend = dailyRecommendRepository.findByBook(book);
-		// List<RecommendKeyword> recommendKeywords = recommendKeywordRepository.findByDailyRecommend(dailyRecommend);
-		// List<Keyword> keywords = new ArrayList<>();
-		//
-		// recommendKeywords.forEach(rk -> {
-		//   keywords.add(rk.getKeyword());
-		// });
-		//
-		// keywords.forEach(keyword -> {
-		//   keyword.addClickCount(keyword);
-		// });
-
-		// List<AnonymousDto.KeywordClickDto> keywordDtos = keywords.stream()
-		//     .map(keyword -> AnonymousDto.KeywordClickDto.builder()
-		//         .keywordClickId(keyword.getId())
-		//         .name(keyword.getName())
-		//         .clickCount(keyword.getClickCount())
-		//         .build())
-		//     .toList();
 
 		return new AnonymousDto.BookKeywordsClickCountDto(book.getId(), bookClick.getCount(), keywordDtos);
 	}
