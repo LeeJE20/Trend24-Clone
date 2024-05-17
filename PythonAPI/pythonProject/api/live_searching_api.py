@@ -35,17 +35,17 @@ class LiveBookSearcher:
             for search_result in search_results:
                 book_info = mysql_manager.select_book_by_id(search_result['book_id'])
                 book_model = dto.BookResponse(
-                    book_id=book_info[0],
-                    product_id=book_info[6],
-                    product_name=book_info[7],
-                    category_name=book_info[4],
-                    search_keyword=book_info[9],
-                    total_click_count=book_info[10],
-                    total_order_count=book_info[12],
-                    total_order_amount=book_info[11],
-                    sale_price=book_info[8],
+                    bookId=book_info[0],
+                    productId=book_info[6],
+                    productName=book_info[7],
+                    categoryName=book_info[4],
+                    searchKeyword=book_info[9],
+                    totalClickCount=book_info[10],
+                    totalOrderCount=book_info[12],
+                    totalOrderAmount=book_info[11],
+                    salePrice=book_info[8],
                     contents=book_info[5],
-                    total_purchase_count=book_info[13]
+                    totalPurchaseCount=book_info[13]
                 )
                 results.append(book_model)
 
