@@ -117,8 +117,8 @@ public class AnonymousService {
 				books.add(new RecommendDto.BookWithKeywords(book, keywordNames));
 			}
 
-			AnonymousDto.KeywordsAndBooksByCategory dto = new AnonymousDto.KeywordsAndBooksByCategory(name, keywords,
-				books);
+			AnonymousDto.KeywordsAndBooksByCategory dto = new AnonymousDto.KeywordsAndBooksByCategory( keywords,
+				books, name);
 
 			response.add(dto);
 		}
