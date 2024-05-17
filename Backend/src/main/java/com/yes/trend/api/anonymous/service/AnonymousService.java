@@ -105,7 +105,6 @@ public class AnonymousService {
 	}
 
 	public LocalDate getTrendSearchStartDate() {
-		// return LocalDate.now().minusWeeks(1L);
-		return LocalDate.now().minusWeeks(4L);
+		return LocalDate.now().minusWeeks(1L);
 	}
 }
