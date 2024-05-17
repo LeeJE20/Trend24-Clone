@@ -45,6 +45,9 @@ public enum ErrorCode {
 	// Book
 	NO_BOOK(BAD_REQUEST, "해당하는 책이 없습니다."),
 
+	// 트렌드 카테고리
+	NO_TREND_CATEGORY(BAD_REQUEST, "해당하는 트렌드 카테고리가 없습니다."),
+
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");
 
