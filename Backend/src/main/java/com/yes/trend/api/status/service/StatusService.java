@@ -90,7 +90,7 @@ public class StatusService {
 		LocalDate now = LocalDate.now();
 		LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN).minusDays(6L);
 		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-		List<BookClick> bookClicks = bookClickRepository.findByBookIdAndCreatedTimeBetween(bookId, start, end);
+		List<BookClick> bookClicks = bookClickRepository.findAllByBookIdAndCreatedTimeBetween(bookId, start, end);
 
 		Map<LocalDate, Integer> clickByDate = new LinkedHashMap<>();
 		for (int i = 0; i < 7; i++) {

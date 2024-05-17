@@ -1,5 +1,7 @@
 package com.yes.trend.api.anonymous.dto;
 
+import java.util.List;
+
 import com.yes.trend.common.dto.ListDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,16 +16,17 @@ public class AnonymousDto {
   public static class BookKeywordsClickCountDto {
     private Integer bookId;
     private Integer clickCount;
-    private ListDto<AnonymousDto.KeywordDto> keywords;
+    private List<KeywordClickDto> keywords;
   }
 
   @Getter
   @NoArgsConstructor
   @AllArgsConstructor
   @Builder
-  public static class KeywordDto {
-    private Integer keywordId;
+  public static class KeywordClickDto {
+    private Integer keywordClickId;
     private String name;
     private Integer clickCount;
+    private String trendCategoryName;
   }
 }

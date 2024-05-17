@@ -1,9 +1,7 @@
-package com.yes.trend.domain.keyword.entity;
-
-import java.util.List;
+package com.yes.trend.domain.keywordclick.entity;
 
 import com.yes.trend.common.entity.BaseEntity;
-import com.yes.trend.domain.keywordclick.entity.KeywordClick;
+import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.trendcategory.entity.TrendCategory;
 
 import jakarta.persistence.Column;
@@ -11,31 +9,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "keyword")
+@Table(name = "keyword_click")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Keyword extends BaseEntity {
+public class KeywordClick extends BaseEntity {
+	private Integer clickCount = 0;
 
-	@Column(length = 255)
-	private String name;
-
-	private Integer clickCount;
-	private Integer ranking;
-	private Boolean selected;
+	private String keywordName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private TrendCategory category;
 
-	public void addClickCount(Keyword keyword) {
+	public void addClickCount() {
 		Integer count = this.getClickCount() + 1;
 		this.clickCount = count;
+	}
+
+	public KeywordClick(String keywordName, TrendCategory category) {
+		this.keywordName = keywordName;
+		this.category = category;
 	}
 }

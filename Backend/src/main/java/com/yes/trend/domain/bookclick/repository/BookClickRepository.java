@@ -17,10 +17,11 @@ public interface BookClickRepository extends JpaRepository<BookClick, Integer> {
 	//  @Query("SELECT SUM(b.clickCount) FROM BookClick b WHERE b.createdTime > :start ORDER BY b.clickCount DESC")
 	//  List<BookClick> findTop3ByClickCountSumAfter(LocalDateTime start);
 
-	List<BookClick> findByBookIdAndCreatedTimeBetween(Integer bookId, LocalDateTime start, LocalDateTime end);
+	List<BookClick> findAllByBookIdAndCreatedTimeBetween(Integer bookId, LocalDateTime start, LocalDateTime end);
 
 	List<BookClick> findByCreatedTimeBetween(LocalDateTime start, LocalDateTime end);
 	//  Book findByBook(Book book);
 
-	BookClick findByBook(Optional<Book> book);
+	Optional<BookClick> findByBookIdAndCreatedTimeBetween(Integer bookId, LocalDateTime start, LocalDateTime end);
+
 }

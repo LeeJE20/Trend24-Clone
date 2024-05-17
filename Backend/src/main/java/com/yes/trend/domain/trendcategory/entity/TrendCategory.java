@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yes.trend.common.entity.BaseEntity;
 import com.yes.trend.domain.keyword.entity.Keyword;
+import com.yes.trend.domain.keywordclick.entity.KeywordClick;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,4 +27,9 @@ public class TrendCategory extends BaseEntity {
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private List<Keyword> keywords;
+
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	private List<KeywordClick> keywordClicks;
+
+
 }

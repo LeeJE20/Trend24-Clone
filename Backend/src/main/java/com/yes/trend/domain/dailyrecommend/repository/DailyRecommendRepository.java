@@ -8,5 +8,5 @@ import com.yes.trend.domain.dailyrecommend.entity.DailyRecommend;
 import java.util.Optional;
 
 public interface DailyRecommendRepository extends JpaRepository<DailyRecommend, Integer> {
-  DailyRecommend findByBook(Optional<Book> book);
+  DailyRecommend findByBook(Book book);
 }
