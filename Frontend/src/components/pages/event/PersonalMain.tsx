@@ -74,7 +74,7 @@ const PersonalMain = ({ pageChangeClick }: PersonalMainProps) => {
 
   return (
     <Container>
-      <Title>개인 추천</Title>
+      <Title>개인화 추천</Title>
       <Description>Click the Rocket!!</Description>
       <TopLeftImage
         ref={topLeftRef}

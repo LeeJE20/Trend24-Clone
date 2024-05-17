@@ -46,6 +46,7 @@ const PersonalSearch = () => {
         <PersonalSearchBox onSearchClick={handleSearchClick} />
       </SearchWrapper>
       <BookListWrapper ref={searchListRef} $isVisible={isSearchBoxMoved}>
+        <Description>도서를 클릭해주세요.</Description>
         <PersonalSearchList bookList={bookList} />
       </BookListWrapper>
       <Background ref={circleRef} $isVisible={isSearchBoxMoved}></Background>
@@ -87,11 +88,16 @@ const SearchWrapper = styled.div`
   z-index: 1;
 `;
 
+const Description = styled.div`
+  position: absolute;
+  top: 5%;
+  font-size: 3rem;
+  opacity: 0.6;
+`;
+
 const BookListWrapper = styled.div<{ $isVisible: boolean }>`
   width: 30%;
-  /* position: absolute;
-  background-color: white;
-  right: -20%; */
+  /* position: relative; */
   display: flex;
   justify-content: center;
   align-items: center;

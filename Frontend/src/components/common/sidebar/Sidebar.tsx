@@ -77,7 +77,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     <SidebarWrapper ref={sidebarRef}>
       <LogoDetails>
         <Logo ref={logoRef}>
-          <img src="/Image/Logo/Logo.png" />
+          <img src="/Image/Logo/logo.png" />
           <div>Trend24</div>
         </Logo>
         <ToggleButton ref={toggleButtonRef} onClick={toggleSidebar}>

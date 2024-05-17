@@ -333,7 +333,7 @@ const ContentContainer = styled.div<IsGeneralRecommendProps>`
   height: 100%;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#fec2c2" : "#0e3b62"};
+    props.$isGeneralRecommend ? "#e5c2fe" : "#333333"};
   transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
 `;
 
@@ -494,9 +494,15 @@ const PresentRecommendBar = styled.div<IsGeneralRecommendProps>`
   width: 80%;
   height: 100%;
   box-sizing: border-box;
-  background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#cb9dd0" : "#031220"};
-  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
+  color: #ffffffc3;
+  background-image: radial-gradient(
+    circle at 0% 100%,
+    ${(props) =>
+      props.$isGeneralRecommend
+        ? "#4f1879 0%, #ab8fc4 70%, #ab8fc4 70%"
+        : "#001638 0%, #637ca1 70%, #637ca1 70%"}
+  );
+  transition: background-color 1.5s ease;
   z-index: 10;
 `;
 
@@ -507,10 +513,21 @@ const RemainRecommendBar = styled.div<IsGeneralRecommendProps>`
   width: 20%;
   height: 100%;
   box-sizing: border-box;
-  background-color: ${(props) =>
-    props.$isGeneralRecommend ? "#031220" : "#cb9dd0"};
-  transition: background-color 1.5s ease; // 배경색 전환에 대한 CSS 트랜지션 추가
+  color: white;
+
+  background-image: radial-gradient(
+    circle at 900% 0%,
+    ${(props) =>
+      props.$isGeneralRecommend
+        ? "#001638 0%, #637ca1 70%, #637ca1d0 70%"
+        : "#300038 0%, #ab99ca 70%, #ab8fc4d0 70%"}
+  );
+  transition: background-color 1.5s ease;
   z-index: 8;
+  &:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
 `;
 
 const GeneralRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
@@ -521,7 +538,7 @@ const GeneralRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
   box-sizing: border-box;
   align-items: flex-end;
   justify-content: flex-end;
-  cursor: pointer;
+  cursor: ${(props) => (props.$isGeneralRecommend ? "default" : "pointer")};
   writing-mode: vertical-rl;
   font-size: ${(props) => (props.$isGeneralRecommend ? "8vh" : "2vh")};
 `;
@@ -534,10 +551,9 @@ const PersonalRecBar = styled.div<{ $isGeneralRecommend: boolean }>`
   box-sizing: border-box;
   align-items: flex-end;
   justify-content: flex-end;
-  cursor: pointer;
+  cursor: ${(props) => (props.$isGeneralRecommend ? "pointer" : "default")};
   writing-mode: vertical-rl;
   font-size: ${(props) => (props.$isGeneralRecommend ? "2vh" : "8vh")};
-  color: white;
 `;
 
 export default Main;
