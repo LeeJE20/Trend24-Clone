@@ -18,7 +18,6 @@ const BookFilter = ({
   const [searchText, setSearchText] = useState("");
 
   const handleCategoryClick = (category: string) => {
-    setSearchText("");
     onCategoryChange(category);
   };
 

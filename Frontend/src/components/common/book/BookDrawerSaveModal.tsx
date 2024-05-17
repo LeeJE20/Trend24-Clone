@@ -115,7 +115,7 @@ const BookDrawerSaveModal = ({
           </ModalBody>
           <ModalFooter>
             <div className="saveBtn" onClick={() => saveBook(bookId)}>
-              저장 저장
+              저장
             </div>
           </ModalFooter>
         </>

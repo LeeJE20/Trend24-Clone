@@ -52,6 +52,10 @@ const KeywordFilter = ({
     }
   };
 
+  const selectedKeywordClick = (keyword:keywords) => {
+    onKeywordChange(selectedKeyword.filter((kw) => kw !== keyword));
+  }
+
   const resetKeyword = () => {
     onKeywordChange([]);
   };
@@ -61,13 +65,15 @@ const KeywordFilter = ({
     setShowCalendar(false);
   };
 
+
+
   return (
     <Container>
       <SelectedKeyword>
         <div className="label">선택된 키워드</div>
         <div className="keywordList">
           {selectedKeyword &&
-            selectedKeyword.map((li, idx) => <div key={idx}># {li.name}</div>)}
+            selectedKeyword.map((li, idx) => <div key={idx} onClick={() => selectedKeywordClick(li)}># {li.name}</div>)}
         </div>
         <div className="calendar">
           <div>{moment(date).format("YYYY년 MM월 DD일")}</div>

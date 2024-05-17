@@ -46,12 +46,12 @@ const BookList = ({
     setShowBookContent(Array(bookList.length).fill(false));
   }, [bookList]);
 
-  const bookClick = (bookId:number)=>{
+  const bookClick = (bookId: number) => {
     console.log(bookId);
-    
+
     setSelectedBookId(bookId);
     setModalOpen(true);
-  }
+  };
 
   return (
     <Container>
@@ -113,20 +113,27 @@ const BookList = ({
             </BookContainer>
           ))}
       </BookListContainer>
-      <Pagination>
-        <button onClick={onPrevPage} disabled={pageInfo.page === 1}>
-          Prev
-        </button>
-        <span>
-          {pageInfo.page} / {pageInfo.totalPages}
-        </span>
-        <button
-          onClick={onNextPage}
-          disabled={pageInfo.page === pageInfo.totalPages}
-        >
-          Next
-        </button>
-      </Pagination>
+      {pageInfo.totalElements > 0 && (
+        <Pagination>
+          <button onClick={onPrevPage} disabled={pageInfo.page === 1}>
+            Prev
+          </button>
+          <span>
+            {pageInfo.page} / {pageInfo.totalPages}
+          </span>
+          <button
+            onClick={onNextPage}
+            disabled={pageInfo.page === pageInfo.totalPages}
+          >
+            Next
+          </button>
+        </Pagination>
+      )}
+      {pageInfo.totalElements == 0 && (
+        <NoData>
+          도서 데이터가 없습니다.
+        </NoData>
+      )}
     </Container>
   );
 };
@@ -205,6 +212,8 @@ const BookCover = styled.div<{ $hovered: boolean }>`
 
 const BookInfo = styled.div`
   width: 70%;
+  max-height: 300px;
+  overflow: auto;
   padding: 10px;
   border-radius: 20px;
   font-size: 1.5rem;
@@ -250,5 +259,10 @@ const Pagination = styled.div`
     }
   }
 `;
+
+const NoData = styled.div`
+  
+  
+`
 
 export default BookList;

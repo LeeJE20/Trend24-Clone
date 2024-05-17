@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { BookType } from "../../../constants/Type/Type";
-import { getSearchBook, getQuestionBooks } from "../../../apis/anonymous";
+import { getQuestionBooks } from "../../../apis/anonymous";
 import { questionType } from "../../../store/slices/recommendSlice";
 
 interface PersonalSearchBoxProps {

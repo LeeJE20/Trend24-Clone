@@ -19,7 +19,7 @@ const BookSearch = () => {
     try {
       return await getSearchBook({
         title: searchText,
-        category: selectedCategory,
+        category: selectedCategory === "전체" ? "" : selectedCategory,
         page: currentPage - 1,
         size: itemsPerPage,
       });
@@ -32,7 +32,7 @@ const BookSearch = () => {
     getBookList().then((res) => {
       if (res.length !== 0) {
         console.log(res.list);
-        
+
         setBookList(res.list);
         setTotalElements(res.pageInfo.totalElements);
         setTotalPages(res.pageInfo.totalPages);
@@ -49,7 +49,6 @@ const BookSearch = () => {
   };
 
   const handleCategoryChange = (category: string) => {
-    setSearchText("");
     setSelectedCategory(category);
   };
 
