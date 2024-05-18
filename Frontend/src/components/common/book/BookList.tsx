@@ -86,7 +86,7 @@ const BookList = ({
               <BookInfo>
                 <div className="title">{book.productName}</div>
                 {showBookContent[index] ? (
-                  <div>줄거리 : {book.contents}</div>
+                  <div>{book.contents}</div>
                 ) : (
                   <>
                     <div>id : {book.bookId}</div>
