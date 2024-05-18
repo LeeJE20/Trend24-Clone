@@ -45,7 +45,6 @@ const GeneralRecommendBook = () => {
   const getwordCloud = async () => {
     try {
       if (category) return await getWordCloudData(category.categoryId, null);
-      
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +53,7 @@ const GeneralRecommendBook = () => {
   // BR-01 도서 및 키워드 클릭 수 올리기
   const postClick = async (bookId: number) => {
     try {
-      if(category) return await postBookClick(bookId, category.categoryId);
+      if (category) return await postBookClick(bookId, category.categoryId);
     } catch (error) {
       console.log(error);
     }
@@ -120,17 +119,14 @@ const GeneralRecommendBook = () => {
   }, []);
 
   useEffect(() => {
-    console.log("실행", category);
     try {
       getwordCloud().then((res) => {
-        console.log("res", res, category);
-
         const filterData = res.filter(
           (element: DataProps) => element.name === category!.categoryEngName
         );
-        console.log("filterData", filterData, category);
-
         setBookData(filterData);
+        console.log(filterData);
+        
       });
     } catch (error) {
       console.log(error);
@@ -138,6 +134,7 @@ const GeneralRecommendBook = () => {
   }, [category]);
 
   useEffect(() => {
+    
     const Category = location.state.title;
     if (Category === "NEWS") {
       setCategory({
@@ -211,6 +208,7 @@ const GeneralRecommendBook = () => {
             width={width}
             height={height}
             showControls={false}
+            wordList={bookData.length == 1 ? bookData[0].keywords : []}
           />
         </WordContainer>
         {showScrollBook ? (
@@ -233,7 +231,9 @@ const GeneralRecommendBook = () => {
                         {book.keywords.map((keyword, index) => (
                           <div key={index}># {keyword}</div>
                         ))}
-                        <div className="button" onClick={() => showBook(book)}>책 소개</div>
+                        <div className="button" onClick={() => showBook(book)}>
+                          책 소개
+                        </div>
                       </TextArea>
                     </Book>
                   ))}
@@ -365,13 +365,13 @@ const TextArea = styled.div`
     font-weight: bold;
     margin-bottom: 10px;
   }
-  .button{
-    margin-top:10px;
+  .button {
+    margin-top: 10px;
     background-color: #ffffffaf;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
-    &:hover{
+    &:hover {
       opacity: 0.7;
     }
   }
