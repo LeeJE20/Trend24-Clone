@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yes.trend.api.anonymous.dto.AnonymousDto;
 import com.yes.trend.api.anonymous.service.AnonymousService;
-import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 import com.yes.trend.common.dto.ListDto;
-import com.yes.trend.common.exception.CustomException;
-import com.yes.trend.common.util.NumberUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

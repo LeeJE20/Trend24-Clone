@@ -13,7 +13,6 @@ public interface KeywordClickRepository extends JpaRepository<KeywordClick, Inte
 	Optional<KeywordClick> findByKeywordNameAndCategory_IdAndCreatedTimeBetween(String keywordName, Byte CategoryId,
 		LocalDateTime startDate, LocalDateTime endDate);
 
-
 	@Query("SELECT CASE WHEN COUNT(dr) > 0 THEN true ELSE false END " +
 		"FROM DailyRecommend dr " +
 		"JOIN dr.recommendKeywords rk " +
@@ -21,6 +20,6 @@ public interface KeywordClickRepository extends JpaRepository<KeywordClick, Inte
 		"JOIN dr.book b " +
 		"WHERE b.id = :bookId " +
 		"AND k.name = :keywordName")
-	// 해당 키워드 이름으로 bookId를 가진 책이 추천된 적 있는지
+		// 해당 키워드 이름으로 bookId를 가진 책이 추천된 적 있는지
 	boolean existsByBookIdAndKeywordName(@Param("bookId") Integer bookId, @Param("keywordName") String keywordName);
 }

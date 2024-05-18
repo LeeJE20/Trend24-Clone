@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +45,8 @@ public class AnonymousService {
 	private final WordCloudRepository wordCloudRepository;
 
 	@Transactional
-	public AnonymousDto.BookKeywordsClickCountDto postBookKeywordClickCount(Integer bookId, Byte categoryId, List<String> keywordNames) {
+	public AnonymousDto.BookKeywordsClickCountDto postBookKeywordClickCount(Integer bookId, Byte categoryId,
+		List<String> keywordNames) {
 		// 값 검증
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> new CustomException(ErrorCode.NO_BOOK, bookId));
 		TrendCategory trendCategory = trendCategoryRepository.findById(categoryId)
@@ -62,13 +61,13 @@ public class AnonymousService {
 			.orElseGet(() -> new BookClick(book));
 		bookClick.addClickCount();
 		bookClickRepository.save(bookClick);
-		
+
 		List<String> wrongKewordNames = new ArrayList<>();
 
 		List<AnonymousDto.KeywordClickDto> keywordDtos = new ArrayList<>();
 		// 키워드이름마다 이름 & 카테고리 조합으로 클릭 엔티티 찾기
 		for (String keywordName : keywordNames) {
-			if(!keywordClickRepository.existsByBookIdAndKeywordName(bookId, keywordName)) {
+			if (!keywordClickRepository.existsByBookIdAndKeywordName(bookId, keywordName)) {
 				wrongKewordNames.add(keywordName);
 				continue;
 			}
