@@ -52,30 +52,30 @@ async def universal_exception_handler(request: Request, exc: Exception):
     )
 
 
-@app.get("/fastapi")
+@app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/fastapi/items/{item_id}")
+@app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 
-@app.get("/fastapi/error")
+@app.get("/error")
 def make_error():
     1 / 0
     return {"error": "error"}
 
 
-@app.get("/fastapi/db-connection-test")
+@app.get("/db-connection-test")
 def mysql_test():
     mysql_manager = Mysql_Manager()
     selected = mysql_manager.select_test()
     return dto.ApiResponse(status=200, message="mysql_test 성공", result=selected)
 
 
-@app.get("/fastapi/book/live")
+@app.get("/book/live")
 def live_keyword_searching(search_sentence: Union[str, None] = None):
     logger.info(f"search_sentence=[{search_sentence}]")
 
@@ -86,8 +86,30 @@ def live_keyword_searching(search_sentence: Union[str, None] = None):
 
     return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
 
+@app.get("/book/live/v2/springboot")
+def live_keyword_searching_v2_for_springboot(search_sentence: Union[str, None] = None):
+    logger.info(f"search_sentence=[{search_sentence}]")
 
-@app.get("/fastapi/book/momory")
+    if (search_sentence == None or len(search_sentence.strip()) == 0):
+        return dto.ApiResponse(status=400, message="검색어를 입력해주세요.", result=search_sentence)
+
+    response = search.live_keyword_searching_v2_for_springboot(search_sentence)
+
+    return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
+
+@app.get("/book/live/v2/api-test")
+def live_keyword_searching_v2_for_api_test(search_sentence: Union[str, None] = None):
+    logger.info(f"search_sentence=[{search_sentence}]")
+
+    if (search_sentence == None or len(search_sentence.strip()) == 0):
+        return dto.ApiResponse(status=400, message="검색어를 입력해주세요.", result=search_sentence)
+
+    response = search.live_keyword_searching_v2_for_api_test(search_sentence)
+
+    return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
+
+
+@app.get("/book/momory")
 def memorial_book_searching(product_id: Union[int] = None, top_k: Union[int] = None):
     logger.info(f"product_id=[{product_id}]")
     if top_k == None or top_k <= 0:
@@ -97,7 +119,7 @@ def memorial_book_searching(product_id: Union[int] = None, top_k: Union[int] = N
     return dto.ApiResponse(status=200, message="memorial_book_searching 성공", result=response)
 
 
-@app.get("/fastapi/book/memory-real")
+@app.get("/book/memory-real")
 def memorial_book_searching(product_id: Union[int] = None, question_id: Union[int] = None, top_k: Union[int] = 30):
     logger.info(f"product_id=[{product_id}]")
     if top_k == None or top_k <= 0:
