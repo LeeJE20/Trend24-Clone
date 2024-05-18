@@ -83,15 +83,16 @@ public class AnonymousQuestionService {
 		return true;
 	}
 
-	public ListDto<BookDto.Response> getMomoryBook(Integer bookId) {
+	public ListDto<BookDto.Response> getMomoryBook(Integer bookId, Integer questionId) {
 		Book book = bookRepository.findById(bookId)
 			.orElseThrow(() -> new NoSuchElementException("Book not found with id: " + bookId));
-		String apiUrl = pythonUrl + "/fastapi/book/momory";
+		String apiUrl = pythonUrl + "/fastapi/book/memory-real";
 		System.out.println("--------------------");
 		System.out.println(apiUrl);
 
 		UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(apiUrl)
 			.queryParam("product_id", book.getProductId())
+			.queryParam("question_id", questionId)
 			.build(true);
 		URI uri = uriBuilder.toUri();
 		Map<String, Object> result = externalApiService.sendGetRequest(uri, Map.class);

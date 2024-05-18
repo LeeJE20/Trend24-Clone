@@ -1,7 +1,5 @@
 package com.yes.trend.api.anonymousquestion.controller;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yes.trend.api.anonymousquestion.dto.AnonymousQuestionDto;
 import com.yes.trend.api.anonymousquestion.service.AnonymousQuestionService;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
@@ -48,16 +47,16 @@ public class AnonymousQuestionController {
 			anonymousQuestionService.getfindBookByNameContain(bookText));
 	}
 
-	@Operation(summary = "QB-08 유저가 선택한 도서 보내기", description = "형식 -> { bookId:7 }")
+	@Operation(summary = "QB-07 유저가 선택한 도서 보내기", description = "형식 -> { bookId:7 }")
 	@PostMapping("/question/{questionId}/books")
 	public ApiResponse<ListDto<BookDto.Response>> addBookToQuestion(
 		@PathVariable Integer questionId,
-		@RequestBody Map<String, String> body
+		@RequestBody AnonymousQuestionDto.SelectedBook body
 	) {
 
-		Integer bookId = Integer.valueOf(body.get("bookId"));
+		Integer bookId = Integer.valueOf(body.getBookId());
 		anonymousQuestionService.addBookToQuestion(questionId, bookId);
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getMomoryBook(bookId));
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getMomoryBook(bookId, questionId));
 
 	}
 
