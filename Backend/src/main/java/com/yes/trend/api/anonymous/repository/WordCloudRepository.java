@@ -30,7 +30,8 @@ public class WordCloudRepository {
 		return query.getResultList();
 	}
 
-	public List<AnonymousDto.BookWithKeywordNamesByCategory> findBooksAndKeywordsByCategories(LocalDate startDate, int size) {
+	public List<AnonymousDto.BookWithKeywordNamesByCategory> findBooksAndKeywordsByCategories(LocalDate startDate,
+		int size) {
 		String sql =
 			"SELECT subquery.trend_category_id, subquery.trend_category_name, keyword_names, book_id, product_id, search_keyword, total_click_count, total_order_count, total_order_amount, contents, product_name, sale_price, category_name, total_purchase_count "
 				+ "FROM (SELECT ROW_NUMBER() OVER (PARTITION BY tc.id ORDER BY SUM(tckeyword.kcount) DESC, MAX(daily_recommend.id) DESC) AS rn, "
