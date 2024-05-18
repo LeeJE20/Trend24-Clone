@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +45,8 @@ public class AnonymousService {
 	private final WordCloudRepository wordCloudRepository;
 
 	@Transactional
-	public AnonymousDto.BookKeywordsClickCountDto postBookKeywordClickCount(Integer bookId, Byte categoryId) {
+	public AnonymousDto.BookKeywordsClickCountDto postBookKeywordClickCount(Integer bookId, Byte categoryId,
+		List<String> keywordNames) {
 		// 값 검증
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> new CustomException(ErrorCode.NO_BOOK, bookId));
 		TrendCategory trendCategory = trendCategoryRepository.findById(categoryId)
@@ -63,16 +62,15 @@ public class AnonymousService {
 		bookClick.addClickCount();
 		bookClickRepository.save(bookClick);
 
-		// 키워드 이름 찾기
-		int keywordSize = 3; // 책마다의 키워드 개수
-		Pageable pageable = PageRequest.of(0, keywordSize);
-		LocalDate searchStartDate = getTrendSearchStartDate();
-		List<String> keywordNames = keywordRepository.findTopKeyword_NameByBookIdAndCategoryId(bookId, categoryId,
-			searchStartDate, pageable);
+		List<String> wrongKewordNames = new ArrayList<>();
 
 		List<AnonymousDto.KeywordClickDto> keywordDtos = new ArrayList<>();
 		// 키워드이름마다 이름 & 카테고리 조합으로 클릭 엔티티 찾기
 		for (String keywordName : keywordNames) {
+			if (!keywordClickRepository.existsByBookIdAndKeywordName(bookId, keywordName)) {
+				wrongKewordNames.add(keywordName);
+				continue;
+			}
 			KeywordClick keywordClick = keywordClickRepository.findByKeywordNameAndCategory_IdAndCreatedTimeBetween(
 					keywordName, categoryId, todayStart, todayEnd)
 				.orElseGet(() -> new KeywordClick(keywordName, trendCategory));
@@ -84,6 +82,10 @@ public class AnonymousService {
 				.clickCount(keywordClick.getClickCount())
 				.trendCategoryName(trendCategory.getName())
 				.build());
+		}
+
+		if (!wrongKewordNames.isEmpty()) {
+			throw new CustomException(ErrorCode.NO_MATCHING_KEYWORD_NAME_AND_BOOK_ID, wrongKewordNames);
 		}
 
 		return new AnonymousDto.BookKeywordsClickCountDto(book.getId(), bookClick.getCount(), keywordDtos);

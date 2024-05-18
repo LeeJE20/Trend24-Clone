@@ -1,6 +1,9 @@
 package com.yes.trend.api.anonymous.controller;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +32,17 @@ public class AnonymousController {
 	@Operation(summary = "BR-03 도서 및 키워드 클릭 수 올리기", description = "")
 	@PostMapping("/recommend/book/{bookId}/click")
 	public ApiResponse<AnonymousDto.BookKeywordsClickCountDto> postBookKeywordClickCount(@PathVariable Integer bookId,
-		@RequestParam(name = "category-id") Byte categoryId) {
+		@RequestParam(name = "category-id") Byte categoryId, @RequestParam String keywords) {
+
+		StringTokenizer stringTokenizer = new StringTokenizer(keywords, ",");
+		Set<String> keywordNames = new HashSet<>();
+		while (stringTokenizer.hasMoreTokens()) {
+			String target = stringTokenizer.nextToken();
+			keywordNames.add(target);
+		}
+
 		return ApiResponse.success(SuccessCode.GET_SUCCESS,
-			anonymousService.postBookKeywordClickCount(bookId, categoryId));
+			anonymousService.postBookKeywordClickCount(bookId, categoryId, keywordNames.stream().toList()));
 	}
 
 	@Operation(summary = "BR-01 카테고리별 키워드 및 도서 목록 (워드클라우드)", description = "category-id 를 입력하면 해당 "
