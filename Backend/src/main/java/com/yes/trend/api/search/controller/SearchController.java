@@ -10,7 +10,6 @@ import com.yes.trend.api.search.service.SearchService;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 import com.yes.trend.common.dto.ListDto;
-import com.yes.trend.common.exception.CustomException;
 import com.yes.trend.domain.book.dto.BookDto;
 
 import io.swagger.v3.oas.annotations.Operation;
