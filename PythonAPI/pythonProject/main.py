@@ -6,6 +6,7 @@ from typing import Union
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from requests import Request
 from starlette.responses import JSONResponse
 
@@ -22,6 +23,18 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Qdrant setting
 # loaded_embeddings_topic = np.load("qdrant/embeddings_topic.npy")  # 경로
