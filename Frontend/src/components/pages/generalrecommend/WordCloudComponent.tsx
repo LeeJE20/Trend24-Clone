@@ -4,8 +4,12 @@ import { scaleLog } from "@visx/scale";
 import { Wordcloud } from "@visx/wordcloud";
 
 const WordCloudContainer = styled.div`
+  width: 700px;
+  height: 700px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   user-select: none;
   background-color: #ffffff;
   border-radius: 50%;
@@ -88,7 +92,7 @@ const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
 
 const fixedValueGenerator = () => 0.5;
 
-function Example({ width, height, showControls }: ExampleProps) {
+function WordCloudComponent({ width, height, showControls }: ExampleProps) {
   return (
     <WordCloudContainer>
       <Wordcloud
@@ -121,4 +125,4 @@ function Example({ width, height, showControls }: ExampleProps) {
   );
 }
 
-export default Example;
+export default WordCloudComponent;
