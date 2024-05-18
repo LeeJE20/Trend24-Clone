@@ -26,6 +26,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
+    "https://trend24.live"
 ]
 
 app.add_middleware(
