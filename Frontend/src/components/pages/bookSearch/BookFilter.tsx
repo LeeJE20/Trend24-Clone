@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { bookCategoryData } from "../../../constants/DummyData/BookCategoryData";
 import { FaSearch } from "react-icons/fa";
@@ -7,7 +7,7 @@ import Colors from "../../../constants/Color";
 interface BookFilterProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
-  handleSearch: (searchText: string) => void;
+  handleSearch: (type: string, searchText: string) => void;
 }
 
 const BookFilter = ({
@@ -15,10 +15,10 @@ const BookFilter = ({
   onCategoryChange,
   handleSearch,
 }: BookFilterProps) => {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState<string>("");
+  const [searchType, setSearchType] = useState<string>("basic");
 
   const handleCategoryClick = (category: string) => {
-    setSearchText("");
     onCategoryChange(category);
   };
 
@@ -27,36 +27,69 @@ const BookFilter = ({
   };
 
   const handleSearchButtonClick = () => {
-    handleSearch(searchText); // 검색 함수 호출
+    handleSearch(searchType, searchText); // 검색 함수 호출
   };
+  useEffect(()=>{
+    setSearchText("");
+  },[searchType])
 
   return (
     <Container>
-      <Search>
-        <input
-          type="text"
-          value={searchText}
-          onChange={handleSearchInputChange}
-          placeholder="제목으로 검색"
-        />
-        <button onClick={handleSearchButtonClick}>
-          <FaSearch />
-        </button>
-      </Search>
-      <Category>
-        <div className="label">카테고리</div>
-        <div className="content">
-          {bookCategoryData.map((li: string, idx: number) => (
-            <div
-              key={idx}
-              onClick={() => handleCategoryClick(li)}
-              className={selectedCategory === li ? "selected" : ""}
-            >
-              {li}
-            </div>
-          ))}
+      <SearchTypeTab $type={searchType}>
+        <div className="titleSearch" onClick={() => setSearchType("basic")}>
+          제목으로 검색
         </div>
-      </Category>
+        <div className="sentenceSearch" onClick={() => setSearchType("live")}>
+          문장으로 검색
+        </div>
+        <div className="border"></div>
+      </SearchTypeTab>
+      {searchType == "live" && (
+        <Search>
+          <div className="desc">자유롭게 검색하셈</div>
+          
+          <input
+            type="text"
+            value={searchText}
+            onChange={handleSearchInputChange}
+            placeholder="문장으로 검색"
+          />
+          
+          <button onClick={handleSearchButtonClick}>
+            <FaSearch />
+          </button>
+        </Search>
+      )}
+      {searchType == "basic" && (
+        <>
+          <Search>
+            <input
+              type="text"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              placeholder="제목으로 검색"
+            />
+            <button onClick={handleSearchButtonClick}>
+              <FaSearch />
+            </button>
+          </Search>
+
+          <Category>
+            <div className="label">카테고리</div>
+            <div className="content">
+              {bookCategoryData.map((li: string, idx: number) => (
+                <div
+                  key={idx}
+                  onClick={() => handleCategoryClick(li)}
+                  className={selectedCategory === li ? "selected" : ""}
+                >
+                  {li}
+                </div>
+              ))}
+            </div>
+          </Category>
+        </>
+      )}
     </Container>
   );
 };
@@ -70,18 +103,66 @@ const Container = styled.div`
   padding: 5px;
 `;
 
+const SearchTypeTab = styled.div<{ $type: string }>`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+  text-align: center;
+  position: relative;
+  background-color: white;
+  margin-bottom: 10px;
+
+  .titleSearch {
+    width: 50%;
+    height: 100%;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    color: ${(props) => (props.$type === "basic" ? "black" : "#aeaeae")};
+  }
+
+  .sentenceSearch {
+    width: 50%;
+    height: 100%;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    color: ${(props) => (props.$type === "live" ? "black" : "#aeaeae")};
+  }
+
+  .border {
+    position: absolute;
+    width: 50%;
+    height: 8px;
+    background: ${Colors.sub1};
+    top: 40px;
+    z-index: 2;
+    transition: 0.4s;
+    transform: ${(props) => {
+      if (props.$type === "basic") return "translateX(0)";
+      else if (props.$type === "live") return "translateX(100%)";
+      else return "translateX(100%)";
+    }};
+  }
+`;
 const Search = styled.div`
   align-self: center;
   margin: 5px;
   height: 30%;
-  width: 30%;
+  width: 50%;
   display: flex;
   box-sizing: border-box;
   align-items: center;
+  justify-content: center;
 
   input {
     border: 2px solid #99999987;
-    height: 100%;
+    height: 50px;
+    max-width: 300px;
     flex-grow: 1;
     box-sizing: border-box;
     text-align: right;
@@ -90,6 +171,7 @@ const Search = styled.div`
   }
   button {
     border: none;
+    color: ${Colors.main};
     border-radius: 50%;
     background-color: transparent;
     cursor: pointer;
@@ -98,6 +180,12 @@ const Search = styled.div`
     box-sizing: border-box;
     font-size: 3rem;
     justify-content: center;
+  }
+  .desc{
+    /* width: 300px; */
+    margin-right: 10px;
+
+    font-size: 2rem;
   }
 `;
 
