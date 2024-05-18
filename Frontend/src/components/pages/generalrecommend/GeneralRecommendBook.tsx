@@ -6,6 +6,8 @@ import { GeneralDummyBookListData } from "../../../constants/DummyData/GeneralRe
 import BookDetail from "./BookDetail";
 import BookScroll from "./BookScroll";
 import Example from "./WordCloudComponent";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import React from "react";
 
@@ -242,18 +244,36 @@ const GeneralRecommendBook = () => {
   const location = useLocation();
   const [bookData, setBookData] = useState<DataProps[]>([]);
   const [category, setCategory] = useState<string>("");
-  const [bookList, setBookList] = useState<booksProps[]>([]);
   const bookContainerRef = useRef<HTMLDivElement>(null);
+  const bookImgRef = useRef<(HTMLDivElement | null)[]>([]);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
-
-  const [bookTitle, setBookTitle] = useState<string>("");
-  const [bookKeywords, setBookKeywords] = useState<string[]>([]);
 
   const [showScrollBook, setShowScrollBook] = useState<boolean>(false);
   const [selectedBookInfo, setSelectedBookInfo] = useState<booksProps | null>(
     null
   );
+
+  useEffect(() => {
+    // gsap과 ScrollTrigger 플러그인이 로드되었는지 확인
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: bookImgRef.current, // 트리거가 될 요소
+        start: "top center", // 애니메이션이 시작되는 스크롤 위치
+        end: "bottom center", // 애니메이션이 끝나는 스크롤 위치
+        scrub: 1, // 스크롤에 따라 애니메이션 지연 없이 바로 반응하도록 설정
+      },
+    });
+
+    // 'keyframes' 대신 직접적인 속성 변화를 사용하여 애니메이션 정의
+    tl.to(bookImgRef.current, {
+      scale: 2, // 최종적으로 도달할 스케일 값
+      duration: 1, // 애니메이션 지속 시간
+      ease: "linear", // 애니메이션 속도 곡선
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -322,8 +342,6 @@ const GeneralRecommendBook = () => {
     //   }
     // });
   }, [location.state.title]);
-  console.log(bookTitle);
-  console.log(bookKeywords);
   console.log(bookData);
 
   useEffect(() => {
@@ -368,9 +386,9 @@ const GeneralRecommendBook = () => {
             <StyledBookContainer ref={bookContainerRef}>
               {bookData.map((element) => (
                 <React.Fragment key={element.name}>
-                  {element.books.map((book) => (
+                  {element.books.map((book, index) => (
                     <Book key={book.bookId}>
-                      <BookImg>
+                      <BookImg ref={(el) => (bookImgRef.current[index] = el)}>
                         <img src="https://via.placeholder.com/150" alt="book" />
                       </BookImg>
                       <TextArea>

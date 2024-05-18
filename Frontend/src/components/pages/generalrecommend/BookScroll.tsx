@@ -57,6 +57,18 @@ const BookPage = styled.div`
   transform-style: preserve-3d;
 `;
 
+const PageContent = styled.div`
+  height: 90%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+  box-sizing: border-box;
+`;
+
 const BookPageFront = styled.div`
   height: 95%;
   width: 95%;
@@ -111,8 +123,8 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
         scrollTrigger: {
           // ScrollTrigger를 사용하여 스크롤 위치에 따라 애니메이션을 제어합니다.
           scrub: 1, // 스크롤 속도에 따라 애니메이션 속도를 조절합니다.
-          start: () => (index + 1) * (window.innerHeight / 5), // 애니메이션이 시작되는 스크롤 위치를 설정합니다.
-          end: () => (index + 2) * (window.innerHeight / 5), // 애니메이션이 끝나는 스크롤 위치를 설정합니다.
+          start: () => (index + 1) * (window.innerHeight / 6), // 애니메이션이 시작되는 스크롤 위치를 설정합니다.
+          end: () => (index + 2) * (window.innerHeight / 6), // 애니메이션이 끝나는 스크롤 위치를 설정합니다.
         },
       });
 
@@ -121,8 +133,8 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
         scrollTrigger: {
           // ScrollTrigger를 사용하여 스크롤 위치에 따라 애니메이션을 제어합니다.
           scrub: 1, // 스크롤 속도에 따라 애니메이션 속도를 조절합니다.
-          start: () => (index + 1) * (window.innerHeight / 5), // 애니메이션이 시작되는 스크롤 위치를 설정합니다.
-          end: () => (index + 1.5) * (window.innerHeight / 5), // 애니메이션이 끝나는 스크롤 위치를 설정합니다.
+          start: () => (index + 1) * (window.innerHeight / 6), // 애니메이션이 시작되는 스크롤 위치를 설정합니다.
+          end: () => (index + 1.5) * (window.innerHeight / 6), // 애니메이션이 끝나는 스크롤 위치를 설정합니다.
         },
       });
     });
@@ -145,73 +157,79 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
       ></BookPageFrontCover>
       <BookPage ref={(el) => (bookPageRefs.current[1] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <div>
+          <PageContent>
             <h1>{bookInfo?.product_name}</h1>
             <p>카테고리: {bookInfo?.category_name}</p>
             <p>1페이지</p>
-          </div>
+          </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <div>
+          <PageContent>
             <h1>가격</h1>
             <p>{bookInfo?.sale_price}원</p>
             <p>2페이지</p>
-          </div>
+          </PageContent>
         </BookPageBack>
       </BookPage>
 
       <BookPage ref={(el) => (bookPageRefs.current[2] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <div>
+          <PageContent>
             <h1>책 소개</h1>
             <p>{bookInfo?.contents}</p>
             <p>3페이지</p>
-          </div>
+          </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <div>
-            <h1>키워드</h1>
-            <p>{bookInfo?.keywords.join(", ")}</p>
+          <PageContent>
+            <h1>검색어</h1>
+            <p>{bookInfo?.search_keyword}</p>
             <p>4페이지</p>
-          </div>
+          </PageContent>
         </BookPageBack>
       </BookPage>
       <BookPage ref={(el) => (bookPageRefs.current[3] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <div>
+          <PageContent>
             <h1>클릭수</h1>
             <p>{bookInfo?.total_click_count}회</p>
             <p>5페이지</p>
-          </div>
+          </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <div>
+          <PageContent>
             <h1>구매수</h1>
             <p>{bookInfo?.total_order_count}회</p>
             <p>6페이지</p>
-          </div>
+          </PageContent>
+        </BookPageBack>
+      </BookPage>
+      <BookPage ref={(el) => (bookPageRefs.current[4] = el)}>
+        <BookPageFront style={{ backgroundColor: "white" }}>
+          <PageContent>
+            <h1>키워드</h1>
+            <p>{bookInfo?.keywords.join(", ")}</p>
+            <p>7페이지</p>
+          </PageContent>
+        </BookPageFront>
+        <BookPageBack style={{ backgroundColor: "white" }}>
+          <PageContent>
+            <PageContent>
+              <p>The End</p>
+              <button onClick={toggleBack}>돌아가기</button>
+              <button onClick={gotoPersonal}>나의 책</button>
+            </PageContent>
+          </PageContent>
         </BookPageBack>
       </BookPage>
       <BookPageBackCover
-        ref={(el) => (bookPageRefs.current[4] = el)}
+        ref={(el) => (bookPageRefs.current[5] = el)}
         style={{
           backgroundImage: `url("https://picsum.photos/200/300")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-      >
-        <div
-          style={{
-            backgroundColor: "white",
-            width: "95%",
-            height: "95%",
-          }}
-        >
-          <p>마지막페이지</p>
-          <button onClick={toggleBack}>돌아가기</button>
-          <button onClick={gotoPersonal}>나의 책</button>
-        </div>
-      </BookPageBackCover>
+      ></BookPageBackCover>
     </BookContainer>
   );
 };
