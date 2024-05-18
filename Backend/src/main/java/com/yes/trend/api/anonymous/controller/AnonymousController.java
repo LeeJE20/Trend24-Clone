@@ -35,7 +35,7 @@ public class AnonymousController {
 	}
 
 	@Operation(summary = "BR-01 카테고리별 키워드 및 도서 목록 (워드클라우드)", description = "category-id 를 입력하면 해당 "
-		+ "카테고리별 도서를 size 권을 보여준다. size의 기본값은 5이다. \ndate 이후의 키워드들을 보내준다. "
+		+ "카테고리별 도서를 size 권을 보여준다. (아직 category-id 입력은 미구현) size의 기본값은 5이다. \ndate 이후의 키워드들을 보내준다. "
 		+ "date 형식: 2024-05-10 디폴트값은 7일전 (오늘이 5월 17일이면 디폴트는 5월 10일)")
 	@GetMapping("/recommend")
 	public ApiResponse<ListDto<AnonymousDto.KeywordsAndBooksByCategory>> getKeywordsAndBooksByCategory(
