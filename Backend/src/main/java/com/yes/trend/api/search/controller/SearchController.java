@@ -9,6 +9,9 @@ import com.yes.trend.api.search.dto.SearchDto;
 import com.yes.trend.api.search.service.SearchService;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
+import com.yes.trend.common.dto.ListDto;
+import com.yes.trend.common.exception.CustomException;
+import com.yes.trend.domain.book.dto.BookDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +33,13 @@ public class SearchController {
 		@RequestParam(defaultValue = "40") int size) {
 
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, searchService.searchBooks(title, category, page, size));
+	}
+
+	@Operation(summary = "BS-03 도서 문장으로 검색", description = "live searching")
+	@GetMapping("/live")
+	public ApiResponse<ListDto<BookDto.Response>> liveSearch(
+		@RequestParam String sentence) {
+
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, searchService.liveSearch(sentence));
 	}
 }
