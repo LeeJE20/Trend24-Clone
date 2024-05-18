@@ -1,4 +1,4 @@
-package com.yes.trend.api.anonymousquestion.service;
+package com.yes.trend.common.service;
 
 import java.net.URI;
 import java.util.Map;

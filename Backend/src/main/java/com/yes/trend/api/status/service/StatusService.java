@@ -81,8 +81,6 @@ public class StatusService {
 			.toList();
 		return new ListDto<>(list);
 
-
-
 	}
 
 	public ListDto<StatusDto.BookClickDto> getWeeklyBookClickCount(Integer bookId) {
