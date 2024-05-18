@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yes.trend.api.anonymousquestion.service.AnonymousQuestionService;
-import com.yes.trend.common.costants.ErrorCode;
 import com.yes.trend.common.costants.SuccessCode;
 import com.yes.trend.common.dto.ApiResponse;
 import com.yes.trend.common.dto.ListDto;
@@ -55,14 +54,11 @@ public class AnonymousQuestionController {
 		@PathVariable Integer questionId,
 		@RequestBody Map<String, String> body
 	) {
-		try {
-			Integer bookId = Integer.valueOf(body.get("bookId"));
-			anonymousQuestionService.addBookToQuestion(questionId, bookId);
-			return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getMomoryBook(bookId));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ApiResponse.error(ErrorCode.BAD_PARAMETER, null);
-		}
+
+		Integer bookId = Integer.valueOf(body.get("bookId"));
+		anonymousQuestionService.addBookToQuestion(questionId, bookId);
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, anonymousQuestionService.getMomoryBook(bookId));
+
 	}
 
 }
