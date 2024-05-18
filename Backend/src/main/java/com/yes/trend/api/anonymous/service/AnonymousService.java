@@ -122,7 +122,7 @@ public class AnonymousService {
 					book.getTrendCategoryName());
 				resultMap.put(book.getTrendCategoryName(), categoryDto);
 			}
-
+			
 			AnonymousDto.KeywordsAndBooksByCategory trendCategoryDto = resultMap.get(book.getTrendCategoryName());
 			RecommendDto.BookWithKeywords bookDto = new RecommendDto.BookWithKeywords(book.getBookId(),
 				book.getProductId(), book.getProductName(), book.getCategoryName(),
