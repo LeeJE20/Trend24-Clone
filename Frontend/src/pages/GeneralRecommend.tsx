@@ -3,210 +3,211 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { gsap } from "gsap";
+import { getWordCloudData } from "../apis/anonymous";
 
-const data = {
-  status: 200,
-  message: "성공",
-  result: {
-    list: [
-      {
-        name: "ANIMAL",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "IT",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "NEWS",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "ENTERTAINMENT",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "NEWMEDIA",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-    ],
-  },
-};
+// const data = {
+//   status: 200,
+//   message: "성공",
+//   result: {
+//     list: [
+//       {
+//         name: "ANIMAL",
+//         keywords: [
+//           {
+//             name: "푸바오",
+//             freq: 3,
+//           },
+//         ],
+//         books: [
+//           {
+//             bookId: 1,
+//             product_id: 101,
+//             search_keyword: "리액트",
+//             total_click_count: 500,
+//             total_order_count: 100,
+//             total_order_amount: 5000,
+//             contents: "리액트에 관한 책이다.",
+//             product_name: "리액트 훅 인 액션",
+//             sale_price: 20,
+//             category_name: "IT",
+//             total_purchase_count: 50,
+//             keywords: ["AI", "블록체인"],
+//           },
+//           {
+//             bookId: 2,
+//             product_id: 102,
+//             search_keyword: "역사",
+//             total_click_count: 300,
+//             total_order_count: 80,
+//             total_order_amount: 4000,
+//             contents: "역사는 중요하다",
+//             product_name: "역사는 흐른다",
+//             sale_price: 25,
+//             category_name: "역사",
+//             total_purchase_count: 40,
+//             keywords: ["AI", "블록체인"],
+//           },
+//         ],
+//       },
+//       {
+//         name: "IT",
+//         keywords: [
+//           {
+//             name: "푸바오",
+//             freq: 3,
+//           },
+//         ],
+//         books: [
+//           {
+//             bookId: 1,
+//             product_id: 101,
+//             search_keyword: "리액트",
+//             total_click_count: 500,
+//             total_order_count: 100,
+//             total_order_amount: 5000,
+//             contents: "리액트에 관한 책이다.",
+//             product_name: "리액트 훅 인 액션",
+//             sale_price: 20,
+//             category_name: "IT",
+//             total_purchase_count: 50,
+//             keywords: ["AI", "블록체인"],
+//           },
+//           {
+//             bookId: 2,
+//             product_id: 102,
+//             search_keyword: "역사",
+//             total_click_count: 300,
+//             total_order_count: 80,
+//             total_order_amount: 4000,
+//             contents: "역사는 중요하다",
+//             product_name: "역사는 흐른다",
+//             sale_price: 25,
+//             category_name: "역사",
+//             total_purchase_count: 40,
+//             keywords: ["AI", "블록체인"],
+//           },
+//         ],
+//       },
+//       {
+//         name: "NEWS",
+//         keywords: [
+//           {
+//             name: "푸바오",
+//             freq: 3,
+//           },
+//         ],
+//         books: [
+//           {
+//             bookId: 1,
+//             product_id: 101,
+//             search_keyword: "리액트",
+//             total_click_count: 500,
+//             total_order_count: 100,
+//             total_order_amount: 5000,
+//             contents: "리액트에 관한 책이다.",
+//             product_name: "리액트 훅 인 액션",
+//             sale_price: 20,
+//             category_name: "IT",
+//             total_purchase_count: 50,
+//             keywords: ["AI", "블록체인"],
+//           },
+//           {
+//             bookId: 2,
+//             product_id: 102,
+//             search_keyword: "역사",
+//             total_click_count: 300,
+//             total_order_count: 80,
+//             total_order_amount: 4000,
+//             contents: "역사는 중요하다",
+//             product_name: "역사는 흐른다",
+//             sale_price: 25,
+//             category_name: "역사",
+//             total_purchase_count: 40,
+//             keywords: ["AI", "블록체인"],
+//           },
+//         ],
+//       },
+//       {
+//         name: "ENTERTAINMENT",
+//         keywords: [
+//           {
+//             name: "푸바오",
+//             freq: 3,
+//           },
+//         ],
+//         books: [
+//           {
+//             bookId: 1,
+//             product_id: 101,
+//             search_keyword: "리액트",
+//             total_click_count: 500,
+//             total_order_count: 100,
+//             total_order_amount: 5000,
+//             contents: "리액트에 관한 책이다.",
+//             product_name: "리액트 훅 인 액션",
+//             sale_price: 20,
+//             category_name: "IT",
+//             total_purchase_count: 50,
+//             keywords: ["AI", "블록체인"],
+//           },
+//           {
+//             bookId: 2,
+//             product_id: 102,
+//             search_keyword: "역사",
+//             total_click_count: 300,
+//             total_order_count: 80,
+//             total_order_amount: 4000,
+//             contents: "역사는 중요하다",
+//             product_name: "역사는 흐른다",
+//             sale_price: 25,
+//             category_name: "역사",
+//             total_purchase_count: 40,
+//             keywords: ["AI", "블록체인"],
+//           },
+//         ],
+//       },
+//       {
+//         name: "NEWMEDIA",
+//         keywords: [
+//           {
+//             name: "푸바오",
+//             freq: 3,
+//           },
+//         ],
+//         books: [
+//           {
+//             bookId: 1,
+//             product_id: 101,
+//             search_keyword: "리액트",
+//             total_click_count: 500,
+//             total_order_count: 100,
+//             total_order_amount: 5000,
+//             contents: "리액트에 관한 책이다.",
+//             product_name: "리액트 훅 인 액션",
+//             sale_price: 20,
+//             category_name: "IT",
+//             total_purchase_count: 50,
+//             keywords: ["AI", "블록체인"],
+//           },
+//           {
+//             bookId: 2,
+//             product_id: 102,
+//             search_keyword: "역사",
+//             total_click_count: 300,
+//             total_order_count: 80,
+//             total_order_amount: 4000,
+//             contents: "역사는 중요하다",
+//             product_name: "역사는 흐른다",
+//             sale_price: 25,
+//             category_name: "역사",
+//             total_purchase_count: 40,
+//             keywords: ["AI", "블록체인"],
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// };
 
 interface TrendDataProps {
   name: string;
@@ -235,8 +236,16 @@ const GeneralRecommend = () => {
   const [goToRecommend, setGoToRecommend] = useState(false);
   const navigate = useNavigate();
 
+  const getTrendList = async () => {
+    try {
+      return await getWordCloudData(1, null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    setTrendList(data.result.list);
+    getTrendList().then((res) => setTrendList(res));
   }, []);
 
   useEffect(() => {

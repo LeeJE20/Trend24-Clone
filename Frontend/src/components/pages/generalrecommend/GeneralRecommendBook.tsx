@@ -29,12 +29,8 @@ interface categoryType {
 
 const GeneralRecommendBook = () => {
   const location = useLocation();
-  const [bookData, setBookData] = useState<DataProps | null>(null);
-  const [category, setCategory] = useState<categoryType>({
-    categoryId: 0,
-    categoryEngName: "",
-    categoryKorName: "",
-  });
+  const [bookData, setBookData] = useState<DataProps[]>([]);
+  const [category, setCategory] = useState<categoryType>();
   const bookContainerRef = useRef<HTMLDivElement>(null);
   const bookImgRef = useRef<(HTMLDivElement | null)[]>([]);
   const [width, setWidth] = useState<number>(0);
@@ -48,7 +44,8 @@ const GeneralRecommendBook = () => {
   // BR-03 카테고리별 키워드 및 도서 목록(워드클라우드)
   const getwordCloud = async () => {
     try {
-      return await getWordCloudData(category.categoryId, null);
+      if (category) return await getWordCloudData(category.categoryId, null);
+      
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +54,7 @@ const GeneralRecommendBook = () => {
   // BR-01 도서 및 키워드 클릭 수 올리기
   const postClick = async (bookId: number) => {
     try {
-      return await postBookClick(bookId, category.categoryId);
+      if(category) return await postBookClick(bookId, category.categoryId);
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +75,7 @@ const GeneralRecommendBook = () => {
 
     // 'keyframes' 대신 직접적인 속성 변화를 사용하여 애니메이션 정의
     tl.to(bookImgRef.current, {
-      scale: 2, // 최종적으로 도달할 스케일 값
+      // scale: 2, // 최종적으로 도달할 스케일 값
       duration: 1, // 애니메이션 지속 시간
       ease: "linear", // 애니메이션 속도 곡선
     });
@@ -123,28 +120,22 @@ const GeneralRecommendBook = () => {
   }, []);
 
   useEffect(() => {
+    console.log("실행", category);
     try {
       getwordCloud().then((res) => {
-        console.log("res", res);
+        console.log("res", res, category);
 
-        for (let i = 0; i < res.length; i++) {
-          console.log(res[i].name, category.categoryEngName);
+        const filterData = res.filter(
+          (element: DataProps) => element.name === category!.categoryEngName
+        );
+        console.log("filterData", filterData, category);
 
-          if (res[i].name == category.categoryEngName) {
-            console.log(res[i]);
-            setBookData(res[i]);
-
-            break;
-          }
-        }
+        setBookData(filterData);
       });
     } catch (error) {
       console.log(error);
     }
-  }, []);
-  useEffect(() => {
-    console.log("bookData", bookData);
-  }, [bookData]);
+  }, [category]);
 
   useEffect(() => {
     const Category = location.state.title;
@@ -179,20 +170,7 @@ const GeneralRecommendBook = () => {
         categoryKorName: "뉴미디어",
       });
     }
-
-    // data.result.list.forEach((element) => {
-    //   // data.result.list에 있는 요소들을 순회
-    //   if (element.name === Category) {
-    //     // 현재 페이지의 title과 일치하는 요소를 찾아서.
-    //     element.books.forEach((book) => {
-    //       // 일치하는 요소의 books를 순회
-    //       setBookTitle(book.product_name); // 책의 제목을 설정
-    //       setBookKeywords(book.keywords); // 책의 키워드를 설정
-    //     });
-    //   }
-    // });
-  }, [location.state.title]);
-  console.log(bookData);
+  }, []);
 
   useEffect(() => {
     const innerWidth = window.innerWidth;
@@ -240,22 +218,27 @@ const GeneralRecommendBook = () => {
         ) : (
           <Section>
             <StyledBookContainer ref={bookContainerRef}>
-              {bookData &&
-                bookData.books.map((book, idx) => (
-                  <Book key={book.bookId}>
-                    <BookImg ref={(el) => (bookImgRef.current[idx] = el)}>
-                      <img src="https://via.placeholder.com/150" alt="book" />
-                    </BookImg>
-                    <TextArea>
-                      <div>{book.productName}</div>
-                      {book.keywords.map((keyword, index) => (
-                        <div key={index}># {keyword}</div>
-                      ))}
-                      <button onClick={() => showBook(book)}>책 소개</button>
-                    </TextArea>
-                  </Book>
-                ))}
-              {bookData && <div></div>}
+              {bookData.map((element) => (
+                <React.Fragment key={element.name}>
+                  {element.books.map((book, index) => (
+                    <Book key={book.bookId}>
+                      <BookImg ref={(el) => (bookImgRef.current[index] = el)}>
+                        <img
+                          src={`https://image.yes24.com/goods/${book.productId}/XL`}
+                          alt="Book Cover"
+                        />
+                      </BookImg>
+                      <TextArea>
+                        <div className="title">{book.productName}</div>
+                        {book.keywords.map((keyword, index) => (
+                          <div key={index}># {keyword}</div>
+                        ))}
+                        <div className="button" onClick={() => showBook(book)}>책 소개</div>
+                      </TextArea>
+                    </Book>
+                  ))}
+                </React.Fragment>
+              ))}
             </StyledBookContainer>
           </Section>
         )}
@@ -332,7 +315,7 @@ const StyledBookContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 100vw;
+  width: 120vw;
   box-sizing: border-box;
 `;
 
@@ -342,27 +325,56 @@ const Book = styled.div`
   align-items: center;
   width: 25vw;
   height: 50vh;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff40;
+  margin: 5px;
   box-sizing: border-box;
+  text-align: center;
 `;
 
 const BookImg = styled.div`
   width: 50%;
   height: 100%;
+  box-sizing: border-box;
+
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 const TextArea = styled.div`
   width: 50%;
   height: 100%;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  margin: 5px;
+
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .button{
+    margin-top:10px;
+    background-color: #ffffffaf;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover{
+      opacity: 0.7;
+    }
+  }
 `;
 
 const ScrollWrapper = styled.div`
