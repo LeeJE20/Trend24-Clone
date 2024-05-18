@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yes.trend.common.dto.ListDto;
+import com.yes.trend.common.service.ExternalApiService;
 import com.yes.trend.domain.book.dto.BookDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.mapper.BookMapper;
