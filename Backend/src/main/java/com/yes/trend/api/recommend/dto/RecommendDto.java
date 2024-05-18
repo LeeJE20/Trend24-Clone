@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 public class RecommendDto {
@@ -33,6 +34,7 @@ public class RecommendDto {
 	@Getter
 	@SuperBuilder
 	@NoArgsConstructor
+	@ToString
 	public static class BookWithKeywords extends BookDto.Response {
 		@Setter
 		private Set<String> keywords = new LinkedHashSet<>();
