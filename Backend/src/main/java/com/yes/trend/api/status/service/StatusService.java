@@ -153,32 +153,6 @@ public class StatusService {
 		return new ListDto<>(list);
 	}
 
-	public ListDto<StatusDto.CategoryDto> getKeywordCategories(String keywordName) {
-		List<Keyword> keywords = keywordRepository.findAllByName(keywordName);
-
-		Map<String, Integer> categoryByKeyword = new HashMap<>();
-		for (Keyword k : keywords) {
-			categoryByKeyword.put(k.getCategory().getName(), categoryByKeyword.getOrDefault(k.getCategory(), 0) + 1);
-		}
-
-		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(categoryByKeyword.entrySet());
-		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
-			@Override
-			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-				return o2.getValue() - o1.getValue();
-			}
-		});
-
-		List<StatusDto.CategoryDto> list = categoryByKeyword.entrySet()
-			.stream()
-			.map(k -> StatusDto.CategoryDto.builder()
-				.trendCategoryName(k.getKey())
-				.build())
-			.toList();
-
-		return new ListDto<>(list);
-	}
-
 	public ListDto<StatusDto.KeywordClickDto> getWeeklyKeywordClickCount(String keywordName) {
 		//    Optional<Book> book = bookRepository.findById(bookId);
 		LocalDate now = LocalDate.now();
@@ -205,5 +179,32 @@ public class StatusService {
 			.toList();
 
 		return new ListDto<>(list);
+	}
+
+
+	private List<StatusDto.CategoryDto> getKeywordCategories(String keywordName) {
+		List<Keyword> keywords = keywordRepository.findAllByName(keywordName);
+
+		Map<String, Integer> categoryByKeyword = new HashMap<>();
+		for (Keyword k : keywords) {
+			categoryByKeyword.put(k.getCategory().getName(), categoryByKeyword.getOrDefault(k.getCategory(), 0) + 1);
+		}
+
+		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(categoryByKeyword.entrySet());
+		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
+			@Override
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+
+		List<StatusDto.CategoryDto> list = categoryByKeyword.entrySet()
+			.stream()
+			.map(k -> StatusDto.CategoryDto.builder()
+				.trendCategoryName(k.getKey())
+				.build())
+			.toList();
+
+		return list;
 	}
 }
