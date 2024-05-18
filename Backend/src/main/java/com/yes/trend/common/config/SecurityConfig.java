@@ -130,7 +130,7 @@ public class SecurityConfig {
 		// 	HttpHeaders.ACCEPT,
 		// 	HttpHeaders.AUTHORIZATION
 		// ));
-		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
+		corsConfiguration.setAllowedMethods(List.of("*"));  // 모든 메서드 허용
 		corsConfiguration.setAllowedHeaders(List.of("*"));  // 모든 헤더 허용
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -138,3 +138,4 @@ public class SecurityConfig {
 		return source;
 	}
 }
+
