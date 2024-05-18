@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const fastApi = axios.create({
-  baseURL: "http://trend24.live:8000/fastapi",
+  baseURL: "trend-fastapi-container/fastapi",
   headers: { "Content-Type": "application/json" },
 });
 
