@@ -96,18 +96,18 @@ public class AnonymousQuestionService {
 			.build(true);
 		URI uri = uriBuilder.toUri();
 		Map<String, Object> result = externalApiService.sendGetRequest(uri, Map.class);
-		List<Book> bookList = new ArrayList<>();
-		List<Integer> productList = (List<Integer>)result.get("result");
 
-		for (Integer productId : productList) {
-			Book searchedBook = bookRepository.findByProductId(productId)
-				.orElse(null);
-			if (searchedBook == null) {
-				continue;
-			}
-			bookList.add(searchedBook);
-		}
-		return new ListDto<>(bookList.stream().map(bookMapper::BookToDto).toList());
+		List<Integer> productList = (List<Integer>)result.get("result");
+		List<Book> books = bookRepository.findByProductIds(productList);
+
+		// 결과를 productIds 순서대로 정렬
+		books.sort((b1, b2) -> {
+			int index1 = productList.indexOf(b1.getProductId());
+			int index2 = productList.indexOf(b2.getProductId());
+			return Integer.compare(index1, index2);
+		});
+
+		return new ListDto<>(books.stream().map(bookMapper::BookToDto).toList());
 	}
 
 }
