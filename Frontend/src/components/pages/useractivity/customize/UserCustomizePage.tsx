@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../store/store";
-import { RiArchiveDrawerFill } from "react-icons/ri";
+import { MdDashboardCustomize } from "react-icons/md";
+import { RiDragDropLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
 
 import { useInitialPageAPI, useGetCustomizeTitle } from "./CustomizePageAPI";
 
@@ -18,41 +20,70 @@ import DeviceAU from "../../../googleanalytics/Device/DeviceAU";
 import DeviceTotalReport from "../../../googleanalytics/Device/DeviceTotalReport";
 import DeviceUsers from "../../../googleanalytics/Device/DeviceUsers";
 import Memo from "./Memo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EmptyFile from "../../../common/EmptyFile";
 
-// interface componentListProps {
-//   componentName: string;
-//   size: {
-//     width: number;
-//     height: number;
-//   };
-//   position: {
-//     x: number;
-//     y: number;
-//   };
-// }
+import { getCustomComponents, getCustomPage } from "../../../../apis/customApi";
 
-const UserCustomizePage = () => {
+// const data1 = {
+//   status: 200,
+//   message: "성공",
+//   result: {
+//     name: "이름",
+//   },
+// };
+
+// const data2 = {
+//   status: 200,
+//   message: "성공",
+//   result: [
+//     {
+//       componentName: "userWeeklyActivity",
+//       position: { x: 100, y: 100 },
+//       size: { width: 200, height: 200 },
+//     },
+//     {
+//       componentName: "userMonthlyActivity",
+//       position: { x: 200, y: 100 },
+//       size: { width: 100, height: 200 },
+//     },
+//     {
+//       componentName: "userDailyActivity",
+//       position: { x: 100, y: 200 },
+//       size: { width: 200, height: 100 },
+//     },
+//   ],
+// };
+
+interface ComponentProps {
+  componentName: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+}
+
+const UserCustomizePage: React.FC = () => {
   const navigate = useNavigate();
+  const [pageTitle, setPageTitle] = useState<string>("");
+  const [initialComponentList, setInitialComponentList] = useState<
+    ComponentProps[]
+  >([]);
 
-  //API 호출
-  //API 호출 결과를 통해 title, customedComponentList를 업데이트
-  useGetCustomizeTitle();
-  useInitialPageAPI();
-
-  const pageTitle = useSelector(
-    (state: RootState) => state.customPage.pageTitle
-  );
-  const initialComponentList = useSelector(
-    (state: RootState) => state.customPage.initialComponentList
-  );
-
+  useEffect(() => {
+    getCustomPage().then((res) => {
+      setPageTitle(res.name);
+    });
+    getCustomComponents().then((res) => {
+      if (Array.isArray(res)) {
+        setInitialComponentList(res);
+      } else {
+        console.error("Invalid response format:", res);
+      }
+    });
+  }, []);
   const showEditPage = () => {
     navigate("/main/custom");
   };
 
-  // 각 componentName에 대응하는 컴포넌트를 정의합니다.
   const componentMap: { [key: string]: JSX.Element } = {
     CityTotalReport: <CityTotalReport />,
     CityUsers: <CityUsers />,
@@ -71,13 +102,15 @@ const UserCustomizePage = () => {
     <Container>
       <TitleContainer>
         <Title>
-          <RiArchiveDrawerFill className="icon" />
-          {pageTitle}
+          <MdDashboardCustomize className="icon" /> {pageTitle}
         </Title>
 
-        {initialComponentList.length === 0 ? null : (
+        {initialComponentList.length > 0 && (
           <BtnBox>
-            <button onClick={showEditPage}>편집</button>
+            <EditBtn onClick={showEditPage}>
+              <RiDragDropLine className="icon" />
+              편집
+            </EditBtn>
           </BtnBox>
         )}
       </TitleContainer>
@@ -85,28 +118,26 @@ const UserCustomizePage = () => {
         {initialComponentList.length === 0 ? (
           <EmptyFile showEditPage={showEditPage} />
         ) : (
-          <>
-            {initialComponentList.map((item) => (
-              <Rnd
-                key={item.componentName}
-                size={{ width: item.size.width, height: item.size.height }}
-                position={{ x: item.position.x, y: item.position.y }}
-                disableDragging={true}
-                enableResizing={{
-                  bottom: false,
-                  bottomLeft: false,
-                  bottomRight: false,
-                  left: false,
-                  right: false,
-                  top: false,
-                  topLeft: false,
-                  topRight: false,
-                }}
-              >
-                <Box>{componentMap[item.componentName]}</Box>
-              </Rnd>
-            ))}
-          </>
+          initialComponentList.map((item) => (
+            <Rnd
+              key={item.componentName}
+              size={{ width: item.size.width, height: item.size.height }}
+              position={{ x: item.position.x, y: item.position.y }}
+              disableDragging={true}
+              enableResizing={{
+                bottom: false,
+                bottomLeft: false,
+                bottomRight: false,
+                left: false,
+                right: false,
+                top: false,
+                topLeft: false,
+                topRight: false,
+              }}
+            >
+              <Box>{componentMap[item.componentName]}</Box>
+            </Rnd>
+          ))
         )}
       </ContentContainer>
     </Container>
@@ -151,6 +182,19 @@ const BtnBox = styled.div`
   display: flex;
   justify-content: flex-end;
   flex: 1;
+`;
+
+const EditBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 2rem;
+
+  .icon {
+    font-size: 4rem;
+    margin-right: 10px;
+  }
 `;
 
 const ContentContainer = styled.div`

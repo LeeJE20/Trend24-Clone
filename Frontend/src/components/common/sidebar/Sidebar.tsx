@@ -6,6 +6,7 @@ import { TbDeviceDesktopSearch } from "react-icons/tb";
 import { FaChartBar, FaChartLine } from "react-icons/fa";
 import { PiBooksDuotone } from "react-icons/pi";
 import { RiArchiveDrawerFill } from "react-icons/ri";
+import { MdDashboardCustomize } from "react-icons/md";
 import Colors from "../../../constants/Color";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -143,7 +144,7 @@ const linksArray = [
   },
   {
     label: "커스텀페이지",
-    icon: <RiArchiveDrawerFill />,
+    icon: <MdDashboardCustomize />,
     to: "/main/customizePage",
   },
 ];

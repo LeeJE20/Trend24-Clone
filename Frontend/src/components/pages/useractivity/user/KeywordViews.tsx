@@ -2,122 +2,138 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import Colors from "../../../../constants/Color";
 import { FaArrowLeft } from "react-icons/fa";
+import { getHighClickKeywords } from "../../../../apis/uaApi";
+import { getKeywordClickCount } from "../../../../apis/uaApi";
+import { FaArrowRight } from "react-icons/fa";
 
-const data = {
-  status: 200,
-  message: "성공",
-  result: {
-    list: [
-      {
-        categories: [
-          {
-            trendCategoryName: "건강",
-          },
-          {
-            trendCategoryName: "뉴스",
-          },
-        ],
-        keywordName: "관절염",
-        clickCountSum: 4,
-      },
-      {
-        categories: [
-          {
-            trendCategoryName: "건강",
-          },
-          {
-            trendCategoryName: "뉴스",
-          },
-        ],
-        keywordName: "관절염",
-        clickCountSum: 4,
-      },
-      {
-        categories: [
-          {
-            trendCategoryName: "건강",
-          },
-          {
-            trendCategoryName: "뉴스",
-          },
-        ],
-        keywordName: "관절염",
-        clickCountSum: 4,
-      },
-      {
-        categories: [
-          {
-            trendCategoryName: "건강",
-          },
-          {
-            trendCategoryName: "뉴스",
-          },
-        ],
-        keywordName: "관절염",
-        clickCountSum: 4,
-      },
-      {
-        categories: [
-          {
-            trendCategoryName: "건강",
-          },
-          {
-            trendCategoryName: "뉴스",
-          },
-        ],
-        keywordName: "관절염",
-        clickCountSum: 4,
-      },
-    ],
-  },
-};
+// const data = {
+//   status: 200,
+//   message: "성공",
+//   result: {
+//     list: [
+//       {
+//         categories: [
+//           {
+//             trendCategoryName: "건강",
+//           },
+//           {
+//             trendCategoryName: "뉴스",
+//           },
+//         ],
+//         keywordName: "관절염",
+//         clickCountSum: 4,
+//       },
+//       {
+//         categories: [
+//           {
+//             trendCategoryName: "건강",
+//           },
+//           {
+//             trendCategoryName: "뉴스",
+//           },
+//         ],
+//         keywordName: "관절염",
+//         clickCountSum: 4,
+//       },
+//       {
+//         categories: [
+//           {
+//             trendCategoryName: "건강",
+//           },
+//           {
+//             trendCategoryName: "뉴스",
+//           },
+//         ],
+//         keywordName: "관절염",
+//         clickCountSum: 4,
+//       },
+//       {
+//         categories: [
+//           {
+//             trendCategoryName: "건강",
+//           },
+//           {
+//             trendCategoryName: "뉴스",
+//           },
+//         ],
+//         keywordName: "관절염",
+//         clickCountSum: 4,
+//       },
+//       {
+//         categories: [
+//           {
+//             trendCategoryName: "건강",
+//           },
+//           {
+//             trendCategoryName: "뉴스",
+//           },
+//         ],
+//         keywordName: "관절염",
+//         clickCountSum: 4,
+//       },
+//     ],
+//   },
+// };
 
-const data2 = {
-  status: 200,
-  message: "성공",
-  result: {
-    list: [
-      {
-        date: "2024-05-16",
-        trend: true,
-      },
-      {
-        date: "2024-05-15",
-        trend: false,
-      },
-      {
-        date: "2024-05-14",
-        trend: true,
-      },
-      {
-        date: "2024-05-13",
-        trend: false,
-      },
-      {
-        date: "2024-05-12",
-        trend: true,
-      },
-      {
-        date: "2024-05-11",
-        trend: false,
-      },
-      {
-        date: "2024-05-10",
-        trend: true,
-      },
-    ],
-  },
-};
+// const data2 = {
+//   status: 200,
+//   message: "성공",
+//   result: {
+//     list: [
+//       {
+//         date: "2024-05-16",
+//         trend: true,
+//       },
+//       {
+//         date: "2024-05-15",
+//         trend: false,
+//       },
+//       {
+//         date: "2024-05-14",
+//         trend: true,
+//       },
+//       {
+//         date: "2024-05-13",
+//         trend: false,
+//       },
+//       {
+//         date: "2024-05-12",
+//         trend: true,
+//       },
+//       {
+//         date: "2024-05-11",
+//         trend: false,
+//       },
+//       {
+//         date: "2024-05-10",
+//         trend: true,
+//       },
+//     ],
+//   },
+// };
 
 interface weekdataProps {
   date: string;
   trend: boolean;
 }
+interface keywordProps {
+  categories: Array<{ trendCategoryName: string }>;
+  keywordName: string;
+  clickCountSum: number;
+}
 
 const KeywordViews = () => {
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [weekdata, setWeekdata] = useState<weekdataProps[]>([]);
+  const [keywordlist, setKeywordlist] = useState<keywordProps[]>([]);
+  const [weeklyClicked, setWeeklyClicked] = useState<weekdataProps[]>([]);
   const [clickedKeywordName, setClickedKeywordName] = useState("");
+
+  useEffect(() => {
+    getHighClickKeywords().then((res) => {
+      setKeywordlist(res);
+    });
+  }, []);
 
   useEffect(() => {
     const date = new Date();
@@ -135,19 +151,21 @@ const KeywordViews = () => {
 
     setWeekdata(
       weekdates.map((date) => {
-        const weeklyData = data2.result.list.find((d) => d.date === date);
+        const weeklyData = weeklyClicked.find((d) => d.date === date);
         return {
           date,
           trend: weeklyData ? weeklyData.trend : false,
         };
       })
     );
-  }, []);
+  }, [weeklyClicked]);
 
   const showWeeklyKeyword = (keywordName: string) => {
-    setIsTableOpen(true);
-
     setClickedKeywordName(keywordName);
+    getKeywordClickCount(keywordName).then((res) => {
+      setWeeklyClicked(res);
+    });
+    setIsTableOpen(true);
   };
 
   const goback = () => {
@@ -188,28 +206,28 @@ const KeywordViews = () => {
                 <TableHeadCell>키워드</TableHeadCell>
                 <TableHeadCell>카테고리</TableHeadCell>
                 <TableHeadCell>조회수</TableHeadCell>
-                <TableWeekly>주간 등장 추이</TableWeekly>
+                <TableHeadCell>주간 등장 추이</TableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.result.list.map((keyword, index) => (
+              {keywordlist.map((keyword, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{keyword.keywordName}</TableCell>
                   <TableCell>
-                    {keyword.categories.map((category, categoryIndex) => (
-                      <span key={categoryIndex}>
-                        {category.trendCategoryName}
-                      </span>
-                    ))}
+                    {keyword.categories.length > 0 &&
+                      keyword.categories.map((category, categoryIndex) => (
+                        <span key={categoryIndex}>
+                          {category.trendCategoryName}
+                        </span>
+                      ))}
                   </TableCell>
                   <TableCell>{keyword.clickCountSum}</TableCell>
                   <TableWeekly>
-                    <button
+                    <FaArrowRight
+                      className="icon"
                       onClick={() => showWeeklyKeyword(keyword.keywordName)}
-                    >
-                      click
-                    </button>
+                    />
                   </TableWeekly>
                 </TableRow>
               ))}
@@ -292,6 +310,11 @@ const TableCell = styled.td`
 const TableWeekly = styled.td`
   padding: 10px;
   box-sizing: border-box;
+
+  .icon {
+    cursor: pointer;
+    font-size: 2rem;
+  }
 `;
 
 const WeeklyData = styled.div`

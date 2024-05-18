@@ -1,78 +1,111 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookClickGraph from "./BookClickGraph";
 import { FaArrowLeft } from "react-icons/fa";
+import { getWeeklyBookClick } from "../../../../apis/uaApi";
+import { setBooks } from "../../../../store/slices/bookClicksSlice";
+import { useDispatch } from "react-redux";
+import { GoGraph } from "react-icons/go";
 
-const data = {
-  status: 200,
-  message: "성공",
-  result: {
-    list: [
-      {
-        bookId: 1,
-        clickCountSum: 36,
-        productName: "책제목",
-        ranking: 1,
-        weeklyClickCount: [
-          {
-            date: "2024-05-16",
-            clickCount: 4,
-          },
-          {
-            date: "2024-04-24",
-            clickCount: 3,
-          },
-        ],
-      },
-      {
-        bookId: 2,
-        clickCountSum: 7,
-        productName: "책제목",
-        ranking: 2,
-        weeklyClickCount: [
-          {
-            date: "2024-04-25",
-            clickCount: 4,
-          },
-          {
-            date: "2024-04-24",
-            clickCount: 3,
-          },
-        ],
-      },
-      {
-        bookId: 3,
-        clickCountSum: 7,
-        productName: "책제목",
-        ranking: 3,
-        weeklyClickCount: [
-          {
-            date: "2024-04-25",
-            clickCount: 4,
-          },
-          {
-            date: "2024-04-24",
-            clickCount: 3,
-          },
-        ],
-      },
-    ],
-  },
-};
+// const data = {
+//   status: 200,
+//   message: "성공",
+//   result: {
+//     list: [
+//       {
+//         bookId: 1,
+//         clickCountSum: 36,
+//         productName: "책제목",
+//         ranking: 1,
+//         weeklyClickCount: [
+//           {
+//             date: "2024-05-16",
+//             clickCount: 4,
+//           },
+//           {
+//             date: "2024-04-24",
+//             clickCount: 3,
+//           },
+//         ],
+//       },
+//       {
+//         bookId: 2,
+//         clickCountSum: 7,
+//         productName: "책제목",
+//         ranking: 2,
+//         weeklyClickCount: [
+//           {
+//             date: "2024-04-25",
+//             clickCount: 4,
+//           },
+//           {
+//             date: "2024-04-24",
+//             clickCount: 3,
+//           },
+//         ],
+//       },
+//       {
+//         bookId: 3,
+//         clickCountSum: 7,
+//         productName: "책제목",
+//         ranking: 3,
+//         weeklyClickCount: [
+//           {
+//             date: "2024-04-25",
+//             clickCount: 4,
+//           },
+//           {
+//             date: "2024-04-24",
+//             clickCount: 3,
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// };
+
+interface weeklyClickCountProps {
+  date: string;
+  clickCount: number;
+}
+
+interface booksProps {
+  bookId: number;
+  clickCountSum: number;
+  productName: string;
+  ranking: number;
+  weeklyClickCount: Array<weeklyClickCountProps>;
+}
 
 const BookClicks = () => {
   const [isBookClicked, setIsBookClicked] = useState(false);
   const [selectedRanking, setSelectedRanking] = useState<number | null>(null); // 선택된 도서의 랭킹을 저장하기 위한 상태
+  const [selectedData, setSelectedData] = useState<
+    Array<weeklyClickCountProps>
+  >([]);
+  const [bookList, setBookList] = useState<Array<booksProps>>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getWeeklyBookClick().then((res) => {
+      console.log(res);
+      dispatch(setBooks(res));
+      setBookList(res);
+    });
+  }, [dispatch]);
 
   const handleOpenGraph = (ranking: number) => {
     setIsBookClicked(true);
     setSelectedRanking(ranking); // 선택된 랭킹을 상태에 저장
   };
 
-  // 선택된 랭킹에 따라 그래프에 전달할 데이터를 결정하는 로직
-  const selectedData =
-    data.result.list.find((book) => book.ranking === selectedRanking)
-      ?.weeklyClickCount || [];
+  useEffect(() => {
+    setSelectedData(
+      bookList?.find((book) => book.ranking === selectedRanking)
+        ?.weeklyClickCount || []
+    );
+  }, [selectedRanking, bookList]);
+  console.log(bookList);
 
   return (
     <Container>
@@ -92,9 +125,7 @@ const BookClicks = () => {
       ) : (
         <ContentContainer>
           {[1, 2, 3].map((ranking) => {
-            const book = data.result.list.find(
-              (book) => book.ranking === ranking
-            );
+            const book = bookList.find((book) => book.ranking === ranking);
             return (
               <BookContainer key={ranking}>
                 <BookTitleBox>
@@ -111,9 +142,7 @@ const BookClicks = () => {
                     {book?.clickCountSum || "데이터 없음"}회
                   </BookClickCount>
                   <GotoGraphBtn onClick={() => handleOpenGraph(ranking)}>
-                    일주일간
-                    <br />
-                    통계
+                    <GoGraph className="icon" />
                   </GotoGraphBtn>
                 </BookClickBox>
               </BookContainer>
@@ -176,13 +205,13 @@ const BookTitle = styled.div`
   font-size: 2rem;
   font-weight: 600;
   text-align: left;
-  width: 50%;
+  width: 80%;
 `;
 
 const BookRanking = styled.div`
   font-size: 2rem;
   text-align: right;
-  width: 50%;
+  width: 20%;
 `;
 
 const BookImage = styled.div`
@@ -223,6 +252,10 @@ const GotoGraphBtn = styled.div`
   height: 100%;
   border-radius: 10px;
   background-color: #5f996d;
+
+  .icon {
+    font-size: 3rem;
+  }
 
   &:hover {
     background-color: #c1e1d2;

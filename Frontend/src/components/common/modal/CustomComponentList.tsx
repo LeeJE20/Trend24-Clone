@@ -26,7 +26,7 @@ const CustomComponentList = ({
   makeTempList,
 }: {
   onClose: () => void;
-  makeTempList: (item: CustomComponent) => void;
+  makeTempList: (item: string) => void;
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number>(); // 호버된 박스의 인덱스 상태 추가
   const items = useSelector(
@@ -37,7 +37,7 @@ const CustomComponentList = ({
     onClose();
   };
 
-  const handleSave = (item: CustomComponent) => {
+  const handleSave = (item: string) => {
     makeTempList(item);
     onClose();
   };
@@ -77,7 +77,9 @@ const CustomComponentList = ({
                 {componentMap[item.componentName]}
               </Box>
               {hoveredIndex === index && (
-                <PlusButton onClick={() => handleSave(item)}>+</PlusButton>
+                <PlusButton onClick={() => handleSave(item.componentName)}>
+                  +
+                </PlusButton>
               )}
               {/* 현재 박스가 호버 상태이면 + 버튼 표시 */}
             </BoxContainer>
