@@ -181,7 +181,6 @@ public class StatusService {
 		return new ListDto<>(list);
 	}
 
-
 	private List<StatusDto.CategoryDto> getKeywordCategories(String keywordName) {
 		List<Keyword> keywords = keywordRepository.findAllByName(keywordName);
 
