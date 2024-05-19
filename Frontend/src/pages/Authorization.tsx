@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { FaKey } from "react-icons/fa";
@@ -6,11 +6,19 @@ import { signIn } from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
 import { PiArrowFatLeft } from "react-icons/pi";
 
+import {
+  LoginSuccessModal,
+  LoginFailModal,
+} from "../components/common/modal/LoginModal";
+
 const Login = () => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState(""); // ID 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
+
+  const [loginSuccessModalOpen, setLoginSuccessModalOpen] = useState(false);
+  const [loginFailModalOpen, setLoginFailModalOpen] = useState(false);
 
   // ID 입력 상자 변경 이벤트 핸들러
   const handleUserIdChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -28,15 +36,19 @@ const Login = () => {
     setPassword(value); // ID 상태 업데이트
   };
 
+  const onClose = () => {
+    setLoginSuccessModalOpen(false);
+    setLoginFailModalOpen(false);
+  };
+
   // 로그인 버튼 클릭 이벤트 핸들러
   const handleLogin = async () => {
     try {
       const res = await signIn(userId, password); // signIn 함수의 처리를 기다림
       localStorage.setItem("accessToken", res.accessToken);
-      alert("로그인 성공");
-      navigate("/main");
+      setLoginSuccessModalOpen(true);
     } catch (error) {
-      alert("로그인 실패");
+      setLoginFailModalOpen(true);
       console.log(error);
     }
   };
@@ -47,6 +59,12 @@ const Login = () => {
 
   return (
     <Container>
+      {loginSuccessModalOpen && (
+        <LoginSuccessModal isOpen={loginSuccessModalOpen} onClose={onClose} />
+      )}
+      {loginFailModalOpen && (
+        <LoginFailModal isOpen={loginFailModalOpen} onClose={onClose} />
+      )}
       <GotoEventPage>
         <EventLogo onClick={gotoEvent}>
           <img src="/Image/Logo/gifLogo3.gif" />
@@ -156,7 +174,7 @@ const EventText = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #001638;
 
   .icon {

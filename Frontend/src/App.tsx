@@ -26,6 +26,7 @@ import { TransitionProvider } from "./components/pages/PersonalRecommend/Transit
 import TransitionComponent from "./components/pages/PersonalRecommend/Transition";
 
 import Dummy from "./pages/Dummy";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 // // usePageTracking 훅 구현
 // const usePageTracking = () => {
@@ -39,18 +40,38 @@ import Dummy from "./pages/Dummy";
 //   }, [location]);
 // };
 
-function App() {
-  // usePageTracking(); // usePageTracking 훅 호출
+// function applyFixedTheme() {
+//   document.body.style.backgroundColor = "#ffffff";
+//   document.body.style.color = "#000000";
+// }
 
+function App() {
   useEffect(() => {
     // 로딩 화면을 숨기는 코드
     const loadingScreen = document.querySelector("#loading-screen");
     if (loadingScreen instanceof HTMLElement) {
       loadingScreen.style.display = "none";
     }
-    // 혹은 null 병합 연산자 사용
-    // document.querySelector('.loading-screen')?.style.display = 'none';
   }, []); // 빈 의존성 배열([])을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 함
+
+  // const windowRef = React.useRef(window);
+
+  // useEffect(() => {
+  //   applyFixedTheme();
+
+  //   const windowObj = windowRef.current;
+
+  //   const handleKeyDown = (e: KeyboardEvent) => {
+  //     if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+  //       e.preventDefault();
+  //       alert("개발자 도구 사용이 제한됩니다.");
+  //     }
+  //   };
+  //   windowObj.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     windowObj.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
 
   return (
     <TransitionProvider>
@@ -88,15 +109,17 @@ function App() {
         <Route path="/prac" element={<Dummy />} />
 
         <Route path="/" element={<Login />} />
-        <Route path="/main" element={<Dashboard />}>
-          <Route path="" element={<HotTrend />} />
-          <Route path="trendSearch" element={<TrendSearch />} />
-          <Route path="userActivity" element={<UserActivity />} />
-          <Route path="bookSearch" element={<BookSearch />} />
-          <Route path="bookDrawer" element={<BookDrawer />} />
 
-          <Route path="customizePage" element={<CustomizePage />} />
-          <Route path="custom" element={<RnDCustom />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/main" element={<Dashboard />}>
+            <Route path="" element={<HotTrend />} />
+            <Route path="trendSearch" element={<TrendSearch />} />
+            <Route path="userActivity" element={<UserActivity />} />
+            <Route path="bookSearch" element={<BookSearch />} />
+            <Route path="bookDrawer" element={<BookDrawer />} />
+            <Route path="customizePage" element={<CustomizePage />} />
+            <Route path="custom" element={<RnDCustom />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />
