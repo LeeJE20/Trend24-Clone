@@ -3,6 +3,7 @@ package com.yes.trend.api.status.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -11,10 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yes.trend.api.status.dto.StatusDto;
+import com.yes.trend.api.status.dto.TopKeywordDto;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.repository.BookRepository;
@@ -22,6 +26,7 @@ import com.yes.trend.domain.bookclick.entity.BookClick;
 import com.yes.trend.domain.bookclick.repository.BookClickRepository;
 import com.yes.trend.domain.keyword.entity.Keyword;
 import com.yes.trend.domain.keyword.repository.KeywordRepository;
+import com.yes.trend.domain.keywordclick.repository.KeywordClickRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StatusService {
 	private final BookClickRepository bookClickRepository;
 	private final KeywordRepository keywordRepository;
+	private final KeywordClickRepository keywordClickRepository;
 	private final BookRepository bookRepository;
 
 	public ListDto<StatusDto.WeeklyTopClickedBooksDto> getWeeklyTopClickedBooks() {
@@ -112,44 +118,20 @@ public class StatusService {
 	}
 
 	public ListDto<StatusDto.TopClickedKeywordsDto> getTopClickedKeyword() {
-		List<Keyword> keywords = keywordRepository.findAll();
+		LocalDate startDate = LocalDate.now().minusDays(6L);
+		final int size = 5;
+		Pageable pageable = PageRequest.of(0, size);
+		List<TopKeywordDto> topKeywordDtos = keywordClickRepository.findByTopKeywordsByClickCount(startDate, pageable);
 
-		Map<String, Integer> clickByKeyword = new HashMap<>();
-		for (Keyword k : keywords) {
-			clickByKeyword.put(k.getName(), clickByKeyword.getOrDefault(k.getName(), 0) + k.getClickCount());
+		List<StatusDto.TopClickedKeywordsDto> list = new ArrayList<>();
+		for (TopKeywordDto topKeyword: topKeywordDtos) {
+			list.add(StatusDto.TopClickedKeywordsDto.builder()
+				.categoryName(topKeyword.getCategory())
+				.keywordName(topKeyword.getKeywordName())
+				.clickCountSum(topKeyword.getClickCountSum())
+				.build());
 		}
 
-		// 클릭수가 높은 키워드 정렬
-		List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(clickByKeyword.entrySet());
-		sortedList.sort(new Comparator<Map.Entry<String, Integer>>() {
-			@Override
-			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-				return o2.getValue() - o1.getValue();
-			}
-		});
-
-		Map<String, Integer> topFiveKeywords = new LinkedHashMap<>();
-		int num = 1;
-
-		for (Map.Entry<String, Integer> entry : sortedList) {
-			if (num > 5)
-				break;
-			topFiveKeywords.put(entry.getKey(), entry.getValue());
-			num++;
-		}
-
-		List<StatusDto.TopClickedKeywordsDto> list = topFiveKeywords.entrySet()
-			.stream()
-			.map(k -> StatusDto.TopClickedKeywordsDto.builder()
-				//						.weeklyClickCount(getWeeklyBookClickCount(t.getKey().getId()))
-				.categories(getKeywordCategories(k.getKey()))
-				.keywordName(k.getKey())
-				.clickCountSum(k.getValue())
-				.build())
-			.toList();
-
-		return new ListDto<>(list);
-	}
 
 	public ListDto<StatusDto.KeywordClickDto> getWeeklyKeywordClickCount(String keywordName) {
 		//    Optional<Book> book = bookRepository.findById(bookId);

@@ -1,6 +1,7 @@
 package com.yes.trend.api.status.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.yes.trend.common.dto.ListDto;
@@ -35,12 +36,17 @@ public class StatusDto {
 
 	@Getter
 	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
 	public static class TopClickedKeywordsDto {
-		private List<CategoryDto> categories;
+		private List<CategoryDto> categories = new ArrayList<>();
 		private String keywordName;
 		private Integer clickCountSum;
+
+		@Builder
+		public TopClickedKeywordsDto(String categoryName, String keywordName, Long clickCountSum) {
+			this.categories.add(new CategoryDto(categoryName));
+			this.keywordName = keywordName;
+			this.clickCountSum = clickCountSum.intValue();
+		}
 	}
 
 	@Getter
