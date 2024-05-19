@@ -24,6 +24,7 @@ const HotTrend = () => {
   const [selectedTable, setSelectedTable] = useState<string>(""); // 날짜 데이터 저장
   const [trendKeyword, setTrendKeyword] = useState<TrendKeywordType[]>([]); // 전체 테이블의 키워드 정보 저장
   const [tableDate, setTableDate] = useState<Date>(new Date());
+  const [hoverWord, setHoverWord] = useState<wordType | null>(null);
 
   // 테이블 클릭 이벤트
   const handleTableClick = (date: string) => {
@@ -38,8 +39,6 @@ const HotTrend = () => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
-    console.log(`${year}-${month}-${day}`);
-
     return `${year}-${month}-${day}`;
   };
 
@@ -61,6 +60,10 @@ const HotTrend = () => {
     };
     fetchData().then((res) => setTrendKeyword(res));
   }, [tableDate]);
+
+  const hoverWordChange = (hoverWord: wordType) => {
+    setHoverWord(hoverWord);
+  };
 
   return (
     <Container>
@@ -105,13 +108,16 @@ const HotTrend = () => {
         {trendKeyword.map(
           (list, idx) =>
             (selectedTable === "" || selectedTable === list.date) && (
-              <TableWrapper key={idx}>
+              <TableWrapper key={idx} onMouseLeave={() => setHoverWord(null)}>
                 <Table
                   date={list.date}
                   columnList={list.words}
                   handleKeyword={handleKeyword}
                   handleTableClick={() => handleTableClick(list.date)}
                   selectedKeyword={keyword}
+                  hoverWord={hoverWord}
+                  hoverWordChange={hoverWordChange}
+                  
                 />
               </TableWrapper>
             )

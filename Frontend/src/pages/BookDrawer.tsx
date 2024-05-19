@@ -38,19 +38,19 @@ const BookDrawer = () => {
   };
 
   const getDrawerData = () => {
-    try{
-      return getDrawer({showList:true, page:0, size:1000});
-    }catch(error){
+    try {
+      return getDrawer({ showList: true, page: 0, size: 1000 });
+    } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(()=>{
-    getDrawerData()?.then((res)=>{
+  useEffect(() => {
+    getDrawerData()?.then((res) => {
       console.log(res);
-      setKeywordBooks(res)
-    })
-  },[]);
+      setKeywordBooks(res);
+    });
+  }, []);
 
   return (
     <>
@@ -91,19 +91,24 @@ const BookDrawer = () => {
             })
           ) : (
             <EmptyDrawer>
-              <EmptyImg>
-                <img
-                  src="https://cdn.pixabay.com/photo/2015/09/05/20/02/book-925589_960_720.jpg"
-                  alt="trend24"
-                />
-              </EmptyImg>
-              <EmptyImg />
+              <img src="/Image/Logo/logo.png" alt="trend24" />
+
               <EmptyDataBox>
-                <EmptyText>데이터를 추가해주세요</EmptyText>
-                <PlusBtnBox>
-                  <PLusBtn onClick={toggleKeywordModal}>+ 추가</PLusBtn>
-                </PlusBtnBox>
+                <div className="title">
+                  데이터를
+                  <br />
+                  추가해주세요
+                </div>
+                <div className="button" onClick={toggleKeywordModal}>
+                  + 추가
+                </div>
               </EmptyDataBox>
+              {/* <EmptyImg />
+              <EmptyDataBox>
+                <PlusBtnBox>
+                  
+                </PlusBtnBox>
+              </EmptyDataBox> */}
             </EmptyDrawer>
           )}
         </ContentContainer>
@@ -111,7 +116,10 @@ const BookDrawer = () => {
       {showAddKeywordModal && (
         <Modal
           isOpen={showAddKeywordModal}
-          onClose={() => { setShowAddKeywordModal(false);}}>
+          onClose={() => {
+            setShowAddKeywordModal(false);
+          }}
+        >
           <AddKeywordModalContent
             setShowAddKeywordModal={toggleKeywordModal}
             addKeyword={addKeyword} // addKeyword 함수 직접 전달
@@ -248,26 +256,37 @@ const BookImg = styled.img`
 `;
 
 const EmptyDrawer = styled.div`
+  background-color: #ffffffc9;
+  border: solid 3px #98989887;
+  border-radius: 30px;
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 10%;
-  width: 80%;
+  justify-self: center;
+  top: 5%;
+  width: 70%;
   height: 60%;
-  background-color: #ffffff;
-`;
-
-const EmptyImg = styled.div`
-  width: 40%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #000;
-
   img {
-    width: 100%;
-    height: 100%;
+    width: 50%;
+  }
+  .title {
+    font-size: 5rem;
+    font-weight: bold;
+    margin: 30px;
+  }
+  .button {
+    align-self: flex-end;
+    font-size: 3rem;
+    padding: 10px;
+    background-color: #96a79486;
+    border-radius: 10px;
+    margin: 5px 30px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 `;
 
@@ -276,39 +295,7 @@ const EmptyDataBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
   height: 100%;
-  border: 1px solid #000;
-`;
-
-const EmptyText = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  color: #000;
-  text-align: center;
-  width: 100%;
-  height: 80%;
-  display: flex;
-  align-items: center;
-  border: 1px solid #000;
-`;
-
-const PlusBtnBox = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: end;
-  width: 100%;
-  height: 20%;
-  border: 1px solid #000;
-`;
-
-const PLusBtn = styled.button`
-  width: 50%;
-  height: 50%;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  border: 1px solid #000;
 `;
 
 export default BookDrawer;

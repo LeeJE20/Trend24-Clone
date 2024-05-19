@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import Colors from "../../../constants/Color";
 
-
 interface Props {
   date: string;
   columnList: wordType[];
   handleKeyword: (key: wordType) => void;
   handleTableClick: (idx: string | null) => void;
   selectedKeyword: wordType | null;
-  // idx: number;
+  hoverWord: wordType|null;
+  hoverWordChange: (keword: wordType) => void;
 }
 
 interface wordType {
@@ -24,16 +24,16 @@ function Table({
   handleKeyword,
   handleTableClick,
   selectedKeyword,
+  hoverWord,
+  hoverWordChange,
 }: Props) {
-
   const keywordClick = (li: wordType) => {
     handleKeyword(li);
-    
+
     if (selectedKeyword === null) {
       handleTableClick(date);
     }
   };
-
 
   return (
     <TableContainer>
@@ -46,10 +46,13 @@ function Table({
         {columnList.map((li, idx) => (
           <TableRow
             key={idx}
+            $hover={hoverWord?.name == li.name}
             $selectedKeyword={selectedKeyword}
             $currentKeyword={li.keywordId}
           >
-            <td onClick={() => keywordClick(li)}>{li.name}</td>
+            <td onMouseEnter={() => hoverWordChange(li)} onClick={() => keywordClick(li)}>
+              {li.name}
+            </td>
           </TableRow>
         ))}
       </tbody>
@@ -83,10 +86,10 @@ const TableContainer = styled.table`
     height: calc(100% - 40px);
   }
 `;
-
 const TableRow = styled.tr<{
   $selectedKeyword: wordType | null;
   $currentKeyword: number;
+  $hover: boolean;
 }>`
   background-color: ${({ $selectedKeyword, $currentKeyword }) =>
     $selectedKeyword !== null && $selectedKeyword?.keywordId === $currentKeyword
@@ -94,6 +97,8 @@ const TableRow = styled.tr<{
       : "transparent"};
 
   td {
+    background-color: ${(props) => props.$hover? Colors.sub4: null};
+    transition:background-color 0.2s ease;
     &:hover {
       &:before {
         content: "";
