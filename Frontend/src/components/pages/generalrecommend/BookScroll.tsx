@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { BookType } from "../../../constants/Type/Type";
 import { BiSolidCategory } from "react-icons/bi";
+import { FaBookBookmark } from "react-icons/fa6";
+import { PiArrowUUpLeftBold } from "react-icons/pi";
+import { HiTrendingUp } from "react-icons/hi";
 
 interface BookScrollProps {
   back: () => void;
@@ -23,6 +26,9 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
     navigate("/event/personal");
   };
 
+  const gotoGeneral = () => {
+    navigate("/event/general");
+  };
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -152,8 +158,20 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
             style={{ backgroundImage: "url('/Image/Book/trend24.png')" }}
           >
             <p>The End</p>
-            <button onClick={toggleBack}>돌아가기</button>
-            <button onClick={gotoPersonal}>나의 책</button>
+            <button onClick={toggleBack}>
+              <PiArrowUUpLeftBold className="icon" />
+              돌아가기
+            </button>
+            <ButtonWrapper>
+              <button className="general" onClick={gotoGeneral}>
+                <HiTrendingUp className="icon" />
+                트렌드 추천
+              </button>
+              <button className="personal" onClick={gotoPersonal}>
+                <FaBookBookmark className="icon" />
+                추억의 도서
+              </button>
+            </ButtonWrapper>
           </PageContent>
         </BookPageBack>
       </BookPage>
@@ -258,14 +276,48 @@ const PageContent = styled.div`
   button {
     font-size: 2rem;
     margin: 5px;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     border: none;
     background-color: #c3adc78e;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       opacity: 0.7;
     }
+    .icon {
+      font-size: 2.8rem;
+      margin-right: 10px;
+    }
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 30px;
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  button {
+    width: 50%;
+    box-sizing: border-box;
+    font-size: 2rem;
+    margin: 8px;
+    .icon {
+      font-size: 2.8rem;
+      margin-right: 10px;
+    }
+  }
+  .personal {
+    background-color: #557ec16f;
+    color: #fff;
+  }
+  .general {
+    background-color: #b77ceab6;
+    color: #fff;
   }
 `;
 
