@@ -47,9 +47,9 @@ public class AnonymousQuestionService {
 		return new ListDto<>(questionList);
 	}
 
-	public ListDto<Book> getSelectQuestionBookList(Integer questionId) {
+	public ListDto<BookDto.Response> getSelectQuestionBookList(Integer questionId) {
 		List<Book> bookQuestionMapList = bookQuestionMapRepository.findBooksByQuestionId(questionId);
-		return new ListDto<>(bookQuestionMapList);
+		return new ListDto<>(bookQuestionMapList.stream().map(bookMapper::BookToDto).toList());
 	}
 
 	public ListDto<BookDto.Response> getfindBookByNameContain(String bookText) {
