@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"; // ScrollTrigger를 따로 �
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { BookType } from "../../../constants/Type/Type";
+import { BiSolidCategory } from "react-icons/bi";
 
 interface BookScrollProps {
   back: () => void;
@@ -74,63 +75,82 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
       ></BookPageFrontCover>
       <BookPage ref={(el) => (bookPageRefs.current[1] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/title.png')" }}
+          >
             <h1>{bookInfo?.productName}</h1>
-            <p>카테고리: {bookInfo?.categoryName}</p>
-            <p>1페이지</p>
+            <p>
+              <BiSolidCategory className="icon" /> 카테고리:{" "}
+              {bookInfo?.categoryName}
+            </p>
+            <p className="page">1페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/price.png')" }}
+          >
             <h1>가격</h1>
             <p>{bookInfo?.salePrice}원</p>
-            <p>2페이지</p>
+            <p className="page">2페이지</p>
           </PageContent>
         </BookPageBack>
       </BookPage>
 
       <BookPage ref={(el) => (bookPageRefs.current[2] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <PageContent>
-            <h1>책 소개</h1>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/summary.png')" }}
+          >
+            {/* <h1>책 소개</h1> */}
             <p className="story">{bookInfo?.contents}</p>
-            <p>3페이지</p>
+            <p className="page">3페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/keyword.png')" }}
+          >
             <h1>검색어</h1>
             <p>{bookInfo?.searchKeyword}</p>
-            <p>4페이지</p>
+            <p className="page">4페이지</p>
           </PageContent>
         </BookPageBack>
       </BookPage>
       <BookPage ref={(el) => (bookPageRefs.current[3] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/click.png')" }}
+          >
             <h1>클릭수</h1>
             <p>{bookInfo?.totalClickCount}회</p>
-            <p>5페이지</p>
+            <p className="page">5페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/purchase.png')" }}
+          >
             <h1>구매수</h1>
             <p>{bookInfo?.totalOrderCount}회</p>
-            <p>6페이지</p>
+            <p className="page">6페이지</p>
           </PageContent>
         </BookPageBack>
       </BookPage>
       <BookPage ref={(el) => (bookPageRefs.current[4] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/keyword.png')" }}
+          >
             <h1>키워드</h1>
             <p>{bookInfo?.keywords.join(", ")}</p>
             <p className="page">7페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
-          <PageContent>
+          <PageContent
+            style={{ backgroundImage: "url('/Image/Book/trend24.png')" }}
+          >
             <p>The End</p>
             <button onClick={toggleBack}>돌아가기</button>
             <button onClick={gotoPersonal}>나의 책</button>
@@ -138,7 +158,7 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
         </BookPageBack>
       </BookPage>
       <BookPageBackCover ref={(el) => (bookPageRefs.current[5] = el)}>
-        <img src="/Image/Logo/logo.png"/>
+        <img src="/Image/Logo/logo.png" />
       </BookPageBackCover>
     </BookContainer>
   );
@@ -164,7 +184,8 @@ const BookPageFrontCover = styled.div`
 `;
 
 const BookPageBackCover = styled.div`
-  background-color: white;
+  background: linear-gradient(120deg, #ffffff 0%, #a7b2c2 70%, #b6bfcdd0 70%);
+
   height: 100%;
   width: 100%;
   position: absolute;
@@ -174,8 +195,8 @@ const BookPageBackCover = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  img{
-    width: 50%
+  img {
+    width: 50%;
   }
 `;
 
@@ -193,7 +214,6 @@ const BookPage = styled.div`
 `;
 
 const PageContent = styled.div`
-  border: 3px solid #c588e952;
   height: 90%;
   width: 90%;
   display: flex;
@@ -201,17 +221,37 @@ const PageContent = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background-color: white;
+  background-color: #d1d1d152;
+  background-size: contain;
   box-sizing: border-box;
+
   h1 {
     font-size: 4rem;
+    text-align: center;
+    word-wrap: keep-all;
   }
   p {
+    display: flex;
     font-size: 2rem;
+    .icon {
+      font-size: 3rem;
+      margin-right: 5px;
+    }
+  }
+
+  .page {
+    position: absolute;
+    bottom: 30px;
+    justify-self: flex-end;
+    align-self: flex-end;
+    margin: 5px;
+    box-sizing: border-box;
   }
 
   .story {
-    padding: 5px;
+    margin-top: 100px;
+    margin-bottom: 10px;
+    padding: 20px;
     overflow: auto;
   }
 

@@ -127,7 +127,7 @@ const linksArray = [
     to: "/main",
   },
   {
-    label: "트렌드 검색",
+    label: "트렌드 조회",
     icon: <TbDeviceDesktopSearch />,
     to: "/main/trendSearch",
   },
