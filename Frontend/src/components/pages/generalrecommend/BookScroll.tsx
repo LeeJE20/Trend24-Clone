@@ -3,94 +3,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger"; // ScrollTrigger를 따로 가져옵니다.
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-interface BookInfo {
-  bookId: number;
-  product_id: number;
-  search_keyword: string;
-  total_click_count: number;
-  total_order_count: number;
-  total_order_amount: number;
-  contents: string;
-  product_name: string;
-  sale_price: number;
-  category_name: string;
-  total_purchase_count: number;
-  keywords: string[];
-}
-
-const BookContainer = styled.div`
-  height: 60vmin;
-  width: 45vmin;
-  min-width: 150px;
-  min-height: 200px;
-  position: relative;
-  transform-style: preserve-3d;
-  perspective: 1200px;
-`;
-
-const BookPageFrontCover = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 2%;
-  transform-origin: 0% 50%;
-`;
-
-const BookPageBackCover = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 2%;
-  transform-origin: 100% 50%;
-`;
-
-const BookPage = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 2%;
-  transform-origin: 0% 50%;
-  transform-style: preserve-3d;
-`;
-
-const PageContent = styled.div`
-  height: 90%;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  background-color: white;
-  box-sizing: border-box;
-`;
-
-const BookPageFront = styled.div`
-  height: 95%;
-  width: 95%;
-  position: absolute;
-  top: 2.5%;
-  left: 2%;
-  backface-visibility: hidden;
-`;
-
-const BookPageBack = styled.div`
-  height: 95%;
-  width: 95%;
-  position: absolute;
-  top: 2.5%;
-  left: 2%;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
-`;
+import { BookType } from "../../../constants/Type/Type";
 
 interface BookScrollProps {
   back: () => void;
-  bookInfo: BookInfo | null;
+  bookInfo: BookType | null;
 }
 
 const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
@@ -158,15 +75,15 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
       <BookPage ref={(el) => (bookPageRefs.current[1] = el)}>
         <BookPageFront style={{ backgroundColor: "white" }}>
           <PageContent>
-            <h1>{bookInfo?.product_name}</h1>
-            <p>카테고리: {bookInfo?.category_name}</p>
+            <h1>{bookInfo?.productName}</h1>
+            <p>카테고리: {bookInfo?.categoryName}</p>
             <p>1페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
           <PageContent>
             <h1>가격</h1>
-            <p>{bookInfo?.sale_price}원</p>
+            <p>{bookInfo?.salePrice}원</p>
             <p>2페이지</p>
           </PageContent>
         </BookPageBack>
@@ -176,14 +93,14 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
         <BookPageFront style={{ backgroundColor: "white" }}>
           <PageContent>
             <h1>책 소개</h1>
-            <p>{bookInfo?.contents}</p>
+            <p className="story">{bookInfo?.contents}</p>
             <p>3페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
           <PageContent>
             <h1>검색어</h1>
-            <p>{bookInfo?.search_keyword}</p>
+            <p>{bookInfo?.searchKeyword}</p>
             <p>4페이지</p>
           </PageContent>
         </BookPageBack>
@@ -192,14 +109,14 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
         <BookPageFront style={{ backgroundColor: "white" }}>
           <PageContent>
             <h1>클릭수</h1>
-            <p>{bookInfo?.total_click_count}회</p>
+            <p>{bookInfo?.totalClickCount}회</p>
             <p>5페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
           <PageContent>
             <h1>구매수</h1>
-            <p>{bookInfo?.total_order_count}회</p>
+            <p>{bookInfo?.totalOrderCount}회</p>
             <p>6페이지</p>
           </PageContent>
         </BookPageBack>
@@ -209,16 +126,14 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
           <PageContent>
             <h1>키워드</h1>
             <p>{bookInfo?.keywords.join(", ")}</p>
-            <p>7페이지</p>
+            <p className="page">7페이지</p>
           </PageContent>
         </BookPageFront>
         <BookPageBack style={{ backgroundColor: "white" }}>
           <PageContent>
-            <PageContent>
-              <p>The End</p>
-              <button onClick={toggleBack}>돌아가기</button>
-              <button onClick={gotoPersonal}>나의 책</button>
-            </PageContent>
+            <p>The End</p>
+            <button onClick={toggleBack}>돌아가기</button>
+            <button onClick={gotoPersonal}>나의 책</button>
           </PageContent>
         </BookPageBack>
       </BookPage>
@@ -233,5 +148,108 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
     </BookContainer>
   );
 };
+
+const BookContainer = styled.div`
+  height: 60vmin;
+  width: 45vmin;
+  min-width: 150px;
+  min-height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+`;
+
+const BookPageFrontCover = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 2%;
+  transform-origin: 0% 50%;
+`;
+
+const BookPageBackCover = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 2%;
+  transform-origin: 100% 50%;
+`;
+
+const BookPage = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 2%;
+  transform-origin: 0% 50%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PageContent = styled.div`
+  border: 3px solid #c588e952;
+  height: 90%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  box-sizing: border-box;
+  h1 {
+    font-size: 4rem;
+  }
+  p {
+    font-size: 2rem;
+  }
+
+  .story {
+    padding: 5px;
+    overflow: auto;
+  }
+
+  button {
+    font-size: 2rem;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #c3adc78e;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+`;
+
+const BookPageFront = styled.div`
+  height: 95%;
+  width: 95%;
+  position: absolute;
+  top: 2.5%;
+  left: 2%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BookPageBack = styled.div`
+  height: 95%;
+  width: 95%;
+  position: absolute;
+  top: 2.5%;
+  left: 2%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default Book;

@@ -1,234 +1,15 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { GeneralDummyBookList } from "../../../constants/DummyData/GeneralRecommendDummy";
-import { GeneralDummyBookListData } from "../../../constants/DummyData/GeneralRecommendDummy";
-import BookDetail from "./BookDetail";
 import BookScroll from "./BookScroll";
-import Example from "./WordCloudComponent";
+import WordCloudComponent from "./WordCloudComponent";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import { postBookClick, getWordCloudData } from "../../../apis/anonymous";
 import React from "react";
+import ScrollIcon from "../../common/scroll/ScrollIcon";
+import { BookType } from "../../../constants/Type/Type";
 
-const data = {
-  status: 200,
-  message: "성공",
-  result: {
-    list: [
-      {
-        name: "ANIMAL",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "IT",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "NEWS",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "ENTERTAINMENT",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-      {
-        name: "NEWMEDIA",
-        keywords: [
-          {
-            name: "푸바오",
-            freq: 3,
-          },
-        ],
-        books: [
-          {
-            bookId: 1,
-            product_id: 101,
-            search_keyword: "리액트",
-            total_click_count: 500,
-            total_order_count: 100,
-            total_order_amount: 5000,
-            contents: "리액트에 관한 책이다.",
-            product_name: "리액트 훅 인 액션",
-            sale_price: 20,
-            category_name: "IT",
-            total_purchase_count: 50,
-            keywords: ["AI", "블록체인"],
-          },
-          {
-            bookId: 2,
-            product_id: 102,
-            search_keyword: "역사",
-            total_click_count: 300,
-            total_order_count: 80,
-            total_order_amount: 4000,
-            contents: "역사는 중요하다",
-            product_name: "역사는 흐른다",
-            sale_price: 25,
-            category_name: "역사",
-            total_purchase_count: 40,
-            keywords: ["AI", "블록체인"],
-          },
-        ],
-      },
-    ],
-  },
-};
-
-interface booksProps {
-  bookId: number;
-  product_id: number;
-  search_keyword: string;
-  total_click_count: number;
-  total_order_count: number;
-  total_order_amount: number;
-  contents: string;
-  product_name: string;
-  sale_price: number;
-  category_name: string;
-  total_purchase_count: number;
-  keywords: string[];
-}
 interface keywordsProps {
   name: string;
   freq: number;
@@ -237,22 +18,46 @@ interface keywordsProps {
 interface DataProps {
   name: string;
   keywords: keywordsProps[];
-  books: booksProps[];
+  books: BookType[];
+}
+
+interface categoryType {
+  categoryId: number;
+  categoryEngName: string;
+  categoryKorName: string;
 }
 
 const GeneralRecommendBook = () => {
   const location = useLocation();
   const [bookData, setBookData] = useState<DataProps[]>([]);
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<categoryType>();
   const bookContainerRef = useRef<HTMLDivElement>(null);
   const bookImgRef = useRef<(HTMLDivElement | null)[]>([]);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
   const [showScrollBook, setShowScrollBook] = useState<boolean>(false);
-  const [selectedBookInfo, setSelectedBookInfo] = useState<booksProps | null>(
+  const [selectedBookInfo, setSelectedBookInfo] = useState<BookType | null>(
     null
   );
+
+  // BR-03 카테고리별 키워드 및 도서 목록(워드클라우드)
+  const getwordCloud = async () => {
+    try {
+      if (category) return await getWordCloudData(category.categoryId, null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // BR-01 도서 및 키워드 클릭 수 올리기
+  const postClick = async (bookId: number) => {
+    try {
+      if (category) return await postBookClick(bookId, category.categoryId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     // gsap과 ScrollTrigger 플러그인이 로드되었는지 확인
@@ -269,7 +74,7 @@ const GeneralRecommendBook = () => {
 
     // 'keyframes' 대신 직접적인 속성 변화를 사용하여 애니메이션 정의
     tl.to(bookImgRef.current, {
-      scale: 2, // 최종적으로 도달할 스케일 값
+      // scale: 2, // 최종적으로 도달할 스케일 값
       duration: 1, // 애니메이션 지속 시간
       ease: "linear", // 애니메이션 속도 곡선
     });
@@ -314,35 +119,55 @@ const GeneralRecommendBook = () => {
   }, []);
 
   useEffect(() => {
-    const Category = location.state.title;
-    if (Category === "IT") {
-      setCategory("IT");
-    } else if (Category === "ENTERTAINMENT") {
-      setCategory("엔터테인먼트");
-    } else if (Category === "NEWMEDIA") {
-      setCategory("뉴미디어");
-    } else if (Category === "ANIMAL") {
-      setCategory("동물");
-    } else if (Category === "NEWS") {
-      setCategory("뉴스");
+    try {
+      getwordCloud().then((res) => {
+        const filterData = res.filter(
+          (element: DataProps) => element.name === category!.categoryEngName
+        );
+        setBookData(filterData);
+        console.log(filterData);
+        
+      });
+    } catch (error) {
+      console.log(error);
     }
-    setBookData(
-      data.result.list.filter((element) => element.name === Category)
-    );
+  }, [category]);
 
-    // data.result.list.forEach((element) => {
-    //   // data.result.list에 있는 요소들을 순회
-    //   if (element.name === Category) {
-    //     // 현재 페이지의 title과 일치하는 요소를 찾아서.
-    //     element.books.forEach((book) => {
-    //       // 일치하는 요소의 books를 순회
-    //       setBookTitle(book.product_name); // 책의 제목을 설정
-    //       setBookKeywords(book.keywords); // 책의 키워드를 설정
-    //     });
-    //   }
-    // });
-  }, [location.state.title]);
-  console.log(bookData);
+  useEffect(() => {
+    
+    const Category = location.state.title;
+    if (Category === "NEWS") {
+      setCategory({
+        categoryId: 1,
+        categoryEngName: "NEWS",
+        categoryKorName: "뉴스",
+      });
+    } else if (Category === "IT") {
+      setCategory({
+        categoryId: 2,
+        categoryEngName: "IT",
+        categoryKorName: "IT",
+      });
+    } else if (Category === "ANIMAL") {
+      setCategory({
+        categoryId: 3,
+        categoryEngName: "ANIMAL",
+        categoryKorName: "동물",
+      });
+    } else if (Category === "ENTERTAINMENT") {
+      setCategory({
+        categoryId: 5,
+        categoryEngName: "ENTERTAINMENT",
+        categoryKorName: "엔터테인먼트",
+      });
+    } else if (Category === "NEWMEDIA") {
+      setCategory({
+        categoryId: 6,
+        categoryEngName: "NEWMEDIA",
+        categoryKorName: "뉴미디어",
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const innerWidth = window.innerWidth;
@@ -352,7 +177,7 @@ const GeneralRecommendBook = () => {
     setHeight((innerHeight / 9) * 6);
   }, []);
 
-  const showBook = (book: booksProps) => {
+  const showBook = (book: BookType) => {
     window.scrollTo({
       top: 0,
       left: 0,
@@ -374,10 +199,17 @@ const GeneralRecommendBook = () => {
   return (
     <Con>
       <Container>
+        <ScrollWrapper>
+          <ScrollIcon />
+        </ScrollWrapper>
         <WordContainer>
-          <Titletext> {category}</Titletext>
-
-          <Example width={width} height={height} showControls={false} />
+          <TitleText> {category?.categoryKorName}</TitleText>
+          <WordCloudComponent
+            width={width}
+            height={height}
+            showControls={false}
+            wordList={bookData.length == 1 ? bookData[0].keywords : []}
+          />
         </WordContainer>
         {showScrollBook ? (
           <BookScroll back={toggleBack} bookInfo={selectedBookInfo} /> // 선택된 책의 정보를 prop으로 전달
@@ -389,14 +221,19 @@ const GeneralRecommendBook = () => {
                   {element.books.map((book, index) => (
                     <Book key={book.bookId}>
                       <BookImg ref={(el) => (bookImgRef.current[index] = el)}>
-                        <img src="https://via.placeholder.com/150" alt="book" />
+                        <img
+                          src={`https://image.yes24.com/goods/${book.productId}/XL`}
+                          alt="Book Cover"
+                        />
                       </BookImg>
                       <TextArea>
-                        <div>{book.product_name}</div>
+                        <div className="title">{book.productName}</div>
                         {book.keywords.map((keyword, index) => (
                           <div key={index}># {keyword}</div>
                         ))}
-                        <button onClick={() => showBook(book)}>책 소개</button>
+                        <div className="button" onClick={() => showBook(book)}>
+                          책 소개
+                        </div>
                       </TextArea>
                     </Book>
                   ))}
@@ -435,7 +272,7 @@ const Container = styled.div`
   contain: paint;
 `;
 
-const Titletext = styled.div`
+const TitleText = styled.div`
   width: 100%;
   height: 10%;
   display: flex;
@@ -478,7 +315,7 @@ const StyledBookContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 100vw;
+  width: 120vw;
   box-sizing: border-box;
 `;
 
@@ -488,27 +325,69 @@ const Book = styled.div`
   align-items: center;
   width: 25vw;
   height: 50vh;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff40;
+  margin: 5px;
   box-sizing: border-box;
+  text-align: center;
 `;
 
 const BookImg = styled.div`
   width: 50%;
   height: 100%;
+  box-sizing: border-box;
+
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 const TextArea = styled.div`
   width: 50%;
   height: 100%;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  margin: 5px;
+
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .button {
+    margin-top: 10px;
+    background-color: #ffffffaf;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+`;
+
+const ScrollWrapper = styled.div`
+  position: fixed;
+  top: 5%;
+  right: 0;
+  transform: translate(-50%, 0%);
+  font-size: 2rem;
+  color: #ffffff79;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default GeneralRecommendBook;

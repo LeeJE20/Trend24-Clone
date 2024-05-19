@@ -41,3 +41,34 @@ export const postBookSelect = async (questionId: number, bookId: number) => {
     console.log(error);
   }
 };
+
+// BR-01 도서 및 키워드 클릭 수 올리기
+export const postBookClick = async (bookId: number, categoryId: number) => {
+  try {
+    const res = await api.post(`/anonymous2/recommend/book/${bookId}/click`, {
+      categoryId: `${categoryId}`,
+    });
+    return res.data.result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// BR-03 카테고리별 키워드 및 도서 목록(워드클라우드)
+export const getWordCloudData = async (
+  categoryId: number,
+  date: string | null,
+  size: number = 5
+) => {
+  try {
+    let url = `/anonymous2/recommend?categoryId=${categoryId}&size=${size}`;
+    if (date !== null) {
+      url += `&date=${date}`;
+    }
+    const res = await api.get(url);
+    
+    return res.data.result.list;
+  } catch (error) {
+    console.log(error);
+  }
+};
