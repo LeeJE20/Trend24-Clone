@@ -1,6 +1,3 @@
-![Static Badge](https://img.shields.io/badge/%20-styledcomponents-white?style=plastic&logo=styledcomponents&link=https%3A%2F%2Ftrend24.live%2Fevent)
-
-
 # Project Title
 ![project title.png](readme_images/gifLogo3.gif)
 
@@ -25,9 +22,9 @@
 
 ## 프로젝트 링크
 
-![Static Badge](https://img.shields.io/badge/Service%20Web-User%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent) ![Static Badge](https://img.shields.io/badge/Service%20Web-MD%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fmain)
+[![Static Badge](https://img.shields.io/badge/Service%20Web-User%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://trend24.live) [![Static Badge](https://img.shields.io/badge/Service%20Web-MD%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fmain)](https://trend24.live/event)
 
-![Static Badge](https://img.shields.io/badge/-Figma-skyblue?style=plastic&logo=figma&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent) ![Static Badge](https://img.shields.io/badge/-ERD%20CLoud-skyblue?style=plastic&logo=icloud&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Fwww.erdcloud.com%2Fd%2FYSAe7eLdSMdbNu5w4)
+[![Static Badge](https://img.shields.io/badge/-Figma-skyblue?style=plastic&logo=figma&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://www.figma.com/file/ZI90ZvwRBuOURdbeRRrTZ3/Untitled?type=design&node-id=0%3A1&mode=dev&t=qu79zizJEmh0AxyR-1) [![Static Badge](https://img.shields.io/badge/-ERD%20CLoud-skyblue?style=plastic&logo=icloud&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Fwww.erdcloud.com%2Fd%2FYSAe7eLdSMdbNu5w4)](https://www.erdcloud.com/d/YSAe7eLdSMdbNu5w4)
 
 
 
