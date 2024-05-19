@@ -35,7 +35,7 @@ public class AnonymousQuestionController {
 
 	@Operation(summary = "QB-03 선택한 질문에 해당되는 책 리스트", description = "")
 	@GetMapping("/question/{questionId}")
-	public ApiResponse<ListDto<Book>> getBookListByQuestionId(@PathVariable("questionId") Integer questionId) {
+	public ApiResponse<ListDto<BookDto.Response>> getBookListByQuestionId(@PathVariable("questionId") Integer questionId) {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS,
 			anonymousQuestionService.getSelectQuestionBookList(questionId));
 	}
