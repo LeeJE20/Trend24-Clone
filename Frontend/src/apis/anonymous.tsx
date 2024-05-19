@@ -43,11 +43,15 @@ export const postBookSelect = async (questionId: number, bookId: number) => {
 };
 
 // BR-01 도서 및 키워드 클릭 수 올리기
-export const postBookClick = async (bookId: number, categoryId: number) => {
+export const postBookClick = async (
+  bookId: number,
+  categoryId: number,
+  keyword: string
+) => {
   try {
-    const res = await api.post(`/anonymous2/recommend/book/${bookId}/click`, {
-      categoryId: `${categoryId}`,
-    });
+    const res = await api.post(
+      `/anonymous2/recommend/book/${bookId}/click?category-id=${categoryId}&keywords=${keyword}`
+    );
     return res.data.result;
   } catch (error) {
     console.log(error);
@@ -66,7 +70,7 @@ export const getWordCloudData = async (
       url += `&date=${date}`;
     }
     const res = await api.get(url);
-    
+
     return res.data.result.list;
   } catch (error) {
     console.log(error);

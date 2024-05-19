@@ -3,9 +3,8 @@ import styled from "styled-components";
 import BookFilter from "../components/pages/bookSearch/BookFilter";
 import BookList from "../components/common/book/BookList";
 import { BookType, PageInfo } from "../constants/Type/Type";
-import { getSearchBook } from "../apis/searchApi";
+import { getSearchBook, getSearchBookSentence } from "../apis/searchApi";
 import { PiBooksDuotone } from "react-icons/pi";
-import { getBookLive } from "../apis/fastApi";
 
 const BookSearch = () => {
   const [bookList, setBookList] = useState<BookType[]>([]);
@@ -30,9 +29,10 @@ const BookSearch = () => {
       console.log(error);
     }
   };
+  
   const getBookLiveList = async () => {
     try {
-      return await getBookLive(searchText);
+      return await getSearchBookSentence(searchText);
     } catch (error) {
       console.log(error);
     }

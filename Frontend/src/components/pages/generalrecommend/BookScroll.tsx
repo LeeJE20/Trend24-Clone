@@ -67,7 +67,7 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
       <BookPageFrontCover
         ref={(el) => (bookPageRefs.current[0] = el)}
         style={{
-          backgroundImage: `url("https://picsum.photos/200/300")`,
+          backgroundImage: `url("https://image.yes24.com/goods/${bookInfo?.productId}/XL")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
@@ -137,14 +137,9 @@ const Book: React.FC<BookScrollProps> = ({ back, bookInfo }) => {
           </PageContent>
         </BookPageBack>
       </BookPage>
-      <BookPageBackCover
-        ref={(el) => (bookPageRefs.current[5] = el)}
-        style={{
-          backgroundImage: `url("https://picsum.photos/200/300")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      ></BookPageBackCover>
+      <BookPageBackCover ref={(el) => (bookPageRefs.current[5] = el)}>
+        <img src="/Image/Logo/logo.png"/>
+      </BookPageBackCover>
     </BookContainer>
   );
 };
@@ -169,12 +164,19 @@ const BookPageFrontCover = styled.div`
 `;
 
 const BookPageBackCover = styled.div`
+  background-color: white;
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0;
   left: 2%;
   transform-origin: 100% 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    width: 50%
+  }
 `;
 
 const BookPage = styled.div`
