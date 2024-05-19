@@ -1,8 +1,6 @@
 # Project Title
 
-<div style="background-color: black; display: inline-block;">
-    <img src="readme_images/gifLogo3.gif" alt="project title">
-</div>
+![project title.png](readme_images/gifLogo3.gif)
 
 ## 프로젝트 소개
 
