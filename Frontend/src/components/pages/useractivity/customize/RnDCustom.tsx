@@ -138,9 +138,9 @@ const RnDCustom = () => {
   };
 
   const compleCustomize = () => {
+    navigate("/main/customizePage");
     patchCustomComponents(addedList);
     patchCustomPage(title);
-    navigate("/main/customizePage");
   };
 
   const makeTempList = (componentName: string) => {

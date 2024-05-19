@@ -31,6 +31,9 @@ export const patchCustomComponents = async (
 export const getCustomComponents = async () => {
   try {
     const response = await api.get("/custom/components");
+    if (!response.data.result.customContents) {
+      return [];
+    }
     const datas = JSON.parse(
       response.data.result.customContents.replace(/'/g, '"')
     );

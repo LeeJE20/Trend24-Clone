@@ -1,6 +1,6 @@
 import { api } from "./apiConfig";
 
-export const signUp = async (name:string) => {
+export const signUp = async (name: string) => {
   try {
     const response = await api.post("/auth/signup", {
       name: `${name}`,

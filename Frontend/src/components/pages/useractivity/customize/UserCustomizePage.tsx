@@ -80,6 +80,7 @@ const UserCustomizePage: React.FC = () => {
       }
     });
   }, []);
+
   const showEditPage = () => {
     navigate("/main/custom");
   };
