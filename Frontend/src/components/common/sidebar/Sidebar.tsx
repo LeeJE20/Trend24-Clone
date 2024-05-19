@@ -73,6 +73,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const changePage = (to: string) => {
     navigate(to);
   };
+  const logout = () => {
+    window.localStorage.removeItem("accessToken"); 
+    navigate("/");
+  };
 
   return (
     <SidebarWrapper ref={sidebarRef}>
@@ -107,7 +111,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
           </NameJob>
         </ProfileDetails>
         <LogOutButton ref={logoutBtnRef}>
-          <BiLogOut />
+          <BiLogOut onClick={logout} />
         </LogOutButton>
       </ProfileWrapper>
     </SidebarWrapper>
