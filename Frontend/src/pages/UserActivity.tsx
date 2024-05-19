@@ -15,24 +15,39 @@ import KeywordViews from "../components/pages/useractivity/user/KeywordViews";
 
 const UserActivity = () => {
   const [selectedReport, setSelectedReport] = useState<string>("날짜별");
+  const [selectedLabel, setSelectedLabel] = useState<string>("날짜별");
 
   useDateReportAPI();
   useCityReportAPI();
   useDeviceReportAPI();
 
+  const handleSelectLabel = (label: string) => {
+    setSelectedReport(label);
+    setSelectedLabel(label);
+  };
+
   return (
     <PageContainer>
       <GAContentContainer>
         <SelectContainer>
-          <select
-            value={selectedReport}
-            onChange={(e) => setSelectedReport(e.target.value)}
-            aria-label="GA 보고서 선택"
+          <DateLabel
+            onClick={() => handleSelectLabel("날짜별")}
+            $isSelected={selectedLabel === "날짜별"}
           >
-            <option>날짜별</option>
-            <option>도시별</option>
-            <option>기기별</option>
-          </select>
+            날짜별
+          </DateLabel>
+          <CityLabel
+            onClick={() => handleSelectLabel("도시별")}
+            $isSelected={selectedLabel === "도시별"}
+          >
+            도시별
+          </CityLabel>
+          <DeviceLabel
+            onClick={() => handleSelectLabel("기기별")}
+            $isSelected={selectedLabel === "기기별"}
+          >
+            기기별
+          </DeviceLabel>
         </SelectContainer>
 
         {selectedReport === "날짜별" && <GADateReport />}
@@ -60,6 +75,7 @@ const GAContentContainer = styled.div`
   padding: 10px;
   flex: 1 0 0;
   width: 100%;
+  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,11 +84,45 @@ const GAContentContainer = styled.div`
 
 const SelectContainer = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 5%;
+  left: -1%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 3%;
+  height: 30%;
+`;
+
+const DateLabel = styled.div<{ $isSelected: boolean }>`
+  width: 100%;
+  height: 33%;
+  background-color: ${({ $isSelected }) => ($isSelected ? "#5f996d" : "#fff")};
+  z-index: ${({ $isSelected }) => ($isSelected ? 2 : 0)};
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+`;
+
+const CityLabel = styled.div<{ $isSelected: boolean }>`
+  width: 100%;
+  height: 33%;
+  background-color: ${({ $isSelected }) => ($isSelected ? "#5f996d" : "#fff")};
+  z-index: ${({ $isSelected }) => ($isSelected ? 2 : 0)};
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const DeviceLabel = styled.div<{ $isSelected: boolean }>`
+  width: 100%;
+  height: 33%;
+  background-color: ${({ $isSelected }) => ($isSelected ? "#5f996d" : "#fff")};
+  z-index: ${({ $isSelected }) => ($isSelected ? 2 : 0)};
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;
 
 const EventContentContainer = styled.div`

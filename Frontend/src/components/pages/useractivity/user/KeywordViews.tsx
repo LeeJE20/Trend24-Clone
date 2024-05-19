@@ -325,18 +325,25 @@ const WeeklyData = styled.div`
   width: 100%;
   height: 20%;
   box-sizing: border-box;
+  border-radius: 10px;
   border: 1px solid #c2cec5;
 `;
 
 const TableContent1 = styled.div`
   width: 100%;
   height: 20%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 2rem;
 `;
 const TableContent2 = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
+  color: ${Colors.main};
 `;
 
 const BackBtn = styled.div`
