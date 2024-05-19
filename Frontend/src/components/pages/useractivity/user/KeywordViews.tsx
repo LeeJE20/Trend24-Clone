@@ -226,7 +226,7 @@ const KeywordViews = () => {
                             ? "뉴미디어"
                             : category.trendCategoryName === "ANIMAL"
                             ? "동물"
-                            : "IT"}
+                            : "IT"}{" "}
                         </span>
                       ))}
                   </TableCell>

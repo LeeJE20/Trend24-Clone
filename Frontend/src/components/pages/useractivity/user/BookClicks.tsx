@@ -244,7 +244,7 @@ const BookClickBox = styled.div`
 `;
 
 const BookClickCount = styled.div`
-  font-size: 4rem;
+  font-size: 2.5rem;
   width: 60%;
   height: 100%;
   border-radius: 10px;
