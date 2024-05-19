@@ -7,24 +7,35 @@ interface cardType {
   cardClick: (card: questionType) => void;
 }
 
+const numbers = [1, 2, 3];
+const color = ["#9cc4e4", "#e6cbac", "#7b7b7b"];
+
+function getRandomNumber() {
+  const randomIndex = Math.floor(Math.random() * numbers.length);
+  return numbers[randomIndex];
+}
+
 const QuestionCard = ({ cardData, cardClick }: cardType) => {  
+  const random = getRandomNumber();
+
   return (
-    <Box className="card" onClick={() => cardClick(cardData)}>
+    <Box className="card" onClick={() => cardClick(cardData)} $color={color[random-1]}>
       <div className="quote">
         <FaQuoteLeft />
       </div>
       <div className="content">{cardData.questionText}</div>
-      <img className="img" src="/Image/EventPage/glass1.png" />
+      <img className="img" src={`/Image/EventPage/glass${random}.png`} />
     </Box>
   );
 };
 
-const Box = styled.div`
+const Box = styled.div<{ $color: string }>`
   width: 300px;
   height: 400px;
   border: solid 1px black;
   padding: 50px 30px;
-  background-image: linear-gradient(to bottom right, #9ce4d6, white);
+  background-image: ${({ $color }) =>
+    `linear-gradient(to bottom right, ${$color}, white)`};
   overflow: hidden;
   font-size: 2.5rem;
   align-items: center;
@@ -35,7 +46,7 @@ const Box = styled.div`
   box-sizing: border-box;
   border-radius: 30px;
   opacity: 0.7;
-  box-shadow: vinset 0px 0px 10px rgba(0, 0, 0, 0.8); 
+  box-shadow: vinset 0px 0px 10px rgba(0, 0, 0, 0.8);
   overflow: hidden;
   &:hover {
     cursor: pointer;
@@ -59,7 +70,7 @@ const Box = styled.div`
 
   &:nth-child(2n) {
     margin-top: 10px;
-    background-image: linear-gradient(to bottom right, #e6cbac, white);
+    /* background-image: linear-gradient(to bottom right, #e6cbac, white); */
   }
 
   &:nth-child(3n) {

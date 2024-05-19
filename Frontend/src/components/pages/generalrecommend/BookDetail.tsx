@@ -5,6 +5,31 @@ import styled from "styled-components";
 
 import { GeneralDummyBookList } from "../../../constants/DummyData/GeneralRecommendDummy";
 
+const BookDetail = ({ bookinfo }: { bookinfo: GeneralDummyBookList }) => {
+  const [flipped, setFlipped] = useState(false);
+  const bookInnerRef = useRef(null);
+
+  const handleBookClick = () => {
+    gsap.to(bookInnerRef.current, {
+      duration: 0.8,
+      rotateY: flipped ? "0" : "-180",
+    });
+    setFlipped(!flipped);
+  };
+
+  return (
+    <BookContainer onClick={handleBookClick}>
+      <BookInner
+        style={{ transform: flipped ? "rotateY(-180deg)" : "rotateY(0)" }}
+        ref={bookInnerRef}
+      >
+        <FrontPage>{bookinfo.title}</FrontPage>
+        <BackPage>Back Page</BackPage>
+      </BookInner>
+    </BookContainer>
+  );
+};
+
 const BookContainer = styled.div`
   position: relative;
   width: 200px;
@@ -36,29 +61,5 @@ const BackPage = styled(BookPage)`
   transform: rotateY(180deg);
 `;
 
-const BookDetail = ({ bookinfo }: { bookinfo: GeneralDummyBookList }) => {
-  const [flipped, setFlipped] = useState(false);
-  const bookInnerRef = useRef(null);
-
-  const handleBookClick = () => {
-    gsap.to(bookInnerRef.current, {
-      duration: 0.8,
-      rotateY: flipped ? "0" : "-180",
-    });
-    setFlipped(!flipped);
-  };
-
-  return (
-    <BookContainer onClick={handleBookClick}>
-      <BookInner
-        style={{ transform: flipped ? "rotateY(-180deg)" : "rotateY(0)" }}
-        ref={bookInnerRef}
-      >
-        <FrontPage>{bookinfo.title}</FrontPage>
-        <BackPage>Back Page</BackPage>
-      </BookInner>
-    </BookContainer>
-  );
-};
 
 export default BookDetail;
