@@ -59,7 +59,6 @@ const PersonalMain = ({ pageChangeClick }: PersonalMainProps) => {
       opacity: 0,
       duration: 3,
       ease: "power1.inOut",
-      
     });
     gsap.to(rocketRef.current, {
       duration: 3,
@@ -74,8 +73,10 @@ const PersonalMain = ({ pageChangeClick }: PersonalMainProps) => {
 
   return (
     <Container>
-      <Title>개인화 추천</Title>
-      <Description>Click the Rocket!!</Description>
+      <Title>추억 여행</Title>
+      <Description>
+        로켓을 눌러 우리의 추억 속으로 다시 돌아가 보아요!
+      </Description>
       <TopLeftImage
         ref={topLeftRef}
         src="/Image/EventPage/Personal/linePlanet2.png"
@@ -120,7 +121,7 @@ const Container = styled.div`
 const Title = styled.div`
   justify-content: center;
   font-weight: bold;
-  font-size: 12rem;
+  font-size: 5rem;
   color: white;
   z-index: 1;
   margin-bottom: 25px;
@@ -130,6 +131,7 @@ const Description = styled.div`
   font-size: 3rem;
   color: white;
   z-index: 1;
+  text-align: center;
 `;
 
 const CenterImage = styled.img`

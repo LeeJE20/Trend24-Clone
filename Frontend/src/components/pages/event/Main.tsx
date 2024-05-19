@@ -209,7 +209,7 @@ const Main = () => {
         {isGeneralRecommend ? (
           <GeneralContent>
             <TitleContainer>
-              <Title>일반 추천</Title>
+              <Title>트렌드별 추천</Title>
               <Title2>Click the Rocket!!</Title2>
             </TitleContainer>
             <BackGround>
@@ -366,13 +366,12 @@ const TitleContainer = styled.div`
 const Title = styled.div`
   font-size: 5rem;
   font-weight: bold;
-  flex: 2 0 0;
+  margin-bottom: 25px;
 `;
 
 const Title2 = styled.div`
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: bold;
-  flex: 1 0 0;
 `;
 
 const BackGround = styled.div`
