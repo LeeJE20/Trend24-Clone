@@ -1,3 +1,6 @@
+![Static Badge](https://img.shields.io/badge/%20-styledcomponents-white?style=plastic&logo=styledcomponents&link=https%3A%2F%2Ftrend24.live%2Fevent)
+
+
 # Project Title
 ![project title.png](readme_images/gifLogo3.gif)
 
