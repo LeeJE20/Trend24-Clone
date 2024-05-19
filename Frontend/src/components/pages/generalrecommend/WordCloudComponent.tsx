@@ -64,7 +64,6 @@ const WordCloudComponent = ({ width, height, wordList }: WordCloudProp) => {
   });
   const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
   const fixedValueGenerator = () => 0.5;
-  
 
   return (
     <WordCloudContainer>
@@ -79,21 +78,18 @@ const WordCloudComponent = ({ width, height, wordList }: WordCloudProp) => {
         random={fixedValueGenerator}
       >
         {(cloudWords) =>
-          cloudWords.map((w, i) => {
-            console.log("cloudWords", cloudWords, words);
-            return (
-              <Text
-                key={w.text}
-                fill={colors[i % colors.length]}
-                textAnchor={"middle"}
-                transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
-                fontSize={w.size}
-                fontFamily={w.font}
-              >
-                {w.text}
-              </Text>
-            );
-          })
+          cloudWords.map((w, i) => (
+            <Text
+              key={w.text}
+              fill={colors[i % colors.length]}
+              textAnchor={"middle"}
+              transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
+              fontSize={w.size}
+              fontFamily={w.font}
+            >
+              {w.text}
+            </Text>
+          ))
         }
       </Wordcloud>
     </WordCloudContainer>

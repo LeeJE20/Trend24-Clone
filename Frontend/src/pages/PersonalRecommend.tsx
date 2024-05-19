@@ -46,7 +46,6 @@ const PersonalRecommend = () => {
         start: "top top",
         endTrigger: ".image_container",
         end: "bottom bottom",
-        markers: true,
         scrub: 4,
       },
     });

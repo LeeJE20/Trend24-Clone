@@ -25,3 +25,12 @@ export const getSearchBook = async ({
     console.log(error);
   }
 };
+
+export const getSearchBookSentence = async (sentence: string) => {
+  try {
+    const response = await api.get(`/search/live?sentence=${sentence}`);
+    return response.data.result.list;
+  } catch (error) {
+    console.log(error);
+  }
+};

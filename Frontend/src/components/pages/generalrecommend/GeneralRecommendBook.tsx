@@ -51,9 +51,9 @@ const GeneralRecommendBook = () => {
   };
 
   // BR-01 도서 및 키워드 클릭 수 올리기
-  const postClick = async (bookId: number) => {
+  const postClick = async (bookId: number, keyword:string) => {
     try {
-      if (category) return await postBookClick(bookId, category.categoryId);
+      if (category) return await postBookClick(bookId, category.categoryId, keyword);
     } catch (error) {
       console.log(error);
     }
@@ -126,7 +126,6 @@ const GeneralRecommendBook = () => {
         );
         setBookData(filterData);
         console.log(filterData);
-        
       });
     } catch (error) {
       console.log(error);
@@ -134,7 +133,6 @@ const GeneralRecommendBook = () => {
   }, [category]);
 
   useEffect(() => {
-    
     const Category = location.state.title;
     if (Category === "NEWS") {
       setCategory({
@@ -196,6 +194,11 @@ const GeneralRecommendBook = () => {
     });
   };
 
+  const bookClick = (bookId:number, keyword:string[]) => {
+    const keywordStr = keyword.join(',');
+    postClick(bookId, keywordStr).then((res) => console.log(res));
+  };
+
   return (
     <Con>
       <Container>
@@ -219,7 +222,7 @@ const GeneralRecommendBook = () => {
               {bookData.map((element) => (
                 <React.Fragment key={element.name}>
                   {element.books.map((book, index) => (
-                    <Book key={book.bookId}>
+                    <Book key={book.bookId} >
                       <BookImg ref={(el) => (bookImgRef.current[index] = el)}>
                         <img
                           src={`https://image.yes24.com/goods/${book.productId}/XL`}
@@ -231,7 +234,9 @@ const GeneralRecommendBook = () => {
                         {book.keywords.map((keyword, index) => (
                           <div key={index}># {keyword}</div>
                         ))}
-                        <div className="button" onClick={() => showBook(book)}>
+                        <div className="button" onClick={() => {
+                          bookClick(book.bookId, book.keywords);
+                          showBook(book)}}>
                           책 소개
                         </div>
                       </TextArea>

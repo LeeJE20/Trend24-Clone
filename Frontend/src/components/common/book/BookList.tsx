@@ -26,7 +26,7 @@ const BookList = ({
   const [showBookContent, setShowBookContent] = useState<boolean[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selectedBookId, setSelectedBookId] = useState<number>(-1);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   // 토글 함수
@@ -43,12 +43,11 @@ const BookList = ({
 
   // 초기화 이펙트
   useEffect(() => {
+    setLoading(false);
     setShowBookContent(Array(bookList.length).fill(false));
   }, [bookList]);
 
   const bookClick = (bookId: number) => {
-    console.log(bookId);
-
     setSelectedBookId(bookId);
     setModalOpen(true);
   };
@@ -129,10 +128,17 @@ const BookList = ({
           </button>
         </Pagination>
       )}
-      {pageInfo.totalElements == 0 && (
+      {!loading && pageInfo.totalElements == 0 && (
         <NoData>
-          도서 데이터가 없습니다.
+          <img src="/Image/Logo/logo.png" />
+          <div>검색된 데이터가 없습니다.</div>
         </NoData>
+      )}
+      {loading && (
+        <Loading>
+          <img src="/Image/Logo/gifLogo3.gif" />
+          <div>책 검색중...</div>
+        </Loading>
       )}
     </Container>
   );
@@ -261,8 +267,29 @@ const Pagination = styled.div`
 `;
 
 const NoData = styled.div`
-  
-  
-`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  font-size: 3.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  img {
+    margin-bottom: 30px;
+    width: 30%;
+  }`;
+
+const Loading = styled.div`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  font-size: 4rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  img {
+    width: 40%;
+  }
+`;
 
 export default BookList;
