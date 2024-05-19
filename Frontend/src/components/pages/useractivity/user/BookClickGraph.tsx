@@ -29,7 +29,7 @@ interface BookClickDataProps {
 }
 
 interface BookClickGraphProps {
-  data: BookClickDataProps[]; // 여기서 data 타입을 DateUsersProps의 배열로 지정합니다.
+  data: BookClickDataProps[];
 }
 
 const options = {
@@ -55,12 +55,12 @@ const BookClickGraph: React.FC<BookClickGraphProps> = ({ data }) => {
     // 월(month)과 일(day)을 올바르게 포맷팅하는 함수
     const formatNumber = (num: number) => `0${num}`.slice(-2);
 
-    const today = `${year}-${formatNumber(month + 1)}-${formatNumber(day)}`;
+    // const today = `${year}-${formatNumber(month + 1)}-${formatNumber(day)}`;
     // Date 객체를 사용하여 7일 전 날짜를 정확하게 계산
-    const lastWeekDate = new Date(year, month, day - 7);
-    const lastweek = `${lastWeekDate.getFullYear()}-${formatNumber(
-      lastWeekDate.getMonth() + 1
-    )}-${formatNumber(lastWeekDate.getDate())}`;
+    // const lastWeekDate = new Date(year, month, day - 7);
+    // const lastweek = `${lastWeekDate.getFullYear()}-${formatNumber(
+    //   lastWeekDate.getMonth() + 1
+    // )}-${formatNumber(lastWeekDate.getDate())}`;
 
     const weekdates = Array.from({ length: 7 }, (_, i) => {
       const d = new Date(year, month, day - i);

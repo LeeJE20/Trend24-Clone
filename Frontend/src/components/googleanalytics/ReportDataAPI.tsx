@@ -41,6 +41,15 @@ export const useDateReportAPI = () => {
                 { name: "bounceRate" },
               ],
               dateRanges: [{ startDate: "2024-05-01", endDate: "today" }],
+              orderBys: [
+                {
+                  dimension: {
+                    orderType: "ALPHANUMERIC",
+                    dimensionName: "date",
+                  },
+                  desc: false,
+                },
+              ],
               keepEmptyRows: true,
             },
             {

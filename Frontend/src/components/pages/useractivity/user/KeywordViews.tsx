@@ -186,11 +186,11 @@ const KeywordViews = () => {
           </WeeklyData>
           <CalendarContainer>
             {weekdata.map((d) => (
-              <DayWrapper>
+              <DayWrapper key={d.date}>
                 <DayText>
                   {d.date.split("-")[1] + "/" + d.date.split("-")[2]}
                 </DayText>
-                <Day key={d.date.split("-")[2]} isCurrentDay={d.trend}>
+                <Day key={d.date.split("-")[2]} $isCurrentDay={d.trend}>
                   {d.trend ? "O" : "X"}
                 </Day>
               </DayWrapper>
@@ -371,7 +371,7 @@ const DayText = styled.div`
   font-size: 1.5rem;
 `;
 
-const Day = styled.div<{ isCurrentDay: boolean }>`
+const Day = styled.div<{ $isCurrentDay: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -379,9 +379,9 @@ const Day = styled.div<{ isCurrentDay: boolean }>`
   height: 40px;
   border-radius: 50%;
   margin: 5px;
-  background-color: ${({ isCurrentDay }) =>
-    isCurrentDay ? Colors.main : "#ccc"};
-  color: ${({ isCurrentDay }) => (isCurrentDay ? "#fff" : "#333")};
+  background-color: ${({ $isCurrentDay }) =>
+    $isCurrentDay ? Colors.main : "#ccc"};
+  color: ${({ $isCurrentDay }) => ($isCurrentDay ? "#fff" : "#333")};
   font-weight: bold;
   font-size: 1.5rem;
 `;

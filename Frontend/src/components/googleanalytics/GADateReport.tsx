@@ -70,16 +70,6 @@ const SelectBox = styled.select`
     padding: 10px;
     background-color: white;
     color: black;
-    ::selection {
-      background-color: #8da392;
-      color: white;
-    }
-
-    // SelectBox 아이템 호버 시 색상 변경
-    &:hover {
-      background-color: #8da392;
-      color: white;
-    }
   }
 
   // SelectBox 포커스 시 테두리 색상 변경

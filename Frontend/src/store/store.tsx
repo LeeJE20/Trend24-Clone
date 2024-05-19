@@ -7,6 +7,7 @@ import gaReducer from "./slices/gaSlice";
 import customPageReducer from "./slices/customPageSlice";
 import recommendReducer from "./slices/recommendSlice";
 import bookClicksReducer from "./slices/bookClicksSlice";
+import memoSlice from "./slices/memoSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     ga: gaReducer,
     recommend: recommendReducer,
     bookClicks: bookClicksReducer,
+    memo: memoSlice,
   },
 });
 

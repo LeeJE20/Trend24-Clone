@@ -64,26 +64,29 @@ import { GoGraph } from "react-icons/go";
 //   },
 // };
 
-interface weeklyClickCountProps {
-  date: string;
-  clickCount: number;
+interface WeeklyClickCountObject {
+  list: { date: string; clickCount: number }[];
 }
+
+type WeeklyClickCount =
+  | WeeklyClickCountObject
+  | { date: string; clickCount: number }[];
 
 interface booksProps {
   bookId: number;
   clickCountSum: number;
   productName: string;
   ranking: number;
-  weeklyClickCount: Array<weeklyClickCountProps>;
+  weeklyClickCount: WeeklyClickCount;
 }
 
 const BookClicks = () => {
   const [isBookClicked, setIsBookClicked] = useState(false);
   const [selectedRanking, setSelectedRanking] = useState<number | null>(null); // 선택된 도서의 랭킹을 저장하기 위한 상태
   const [selectedData, setSelectedData] = useState<
-    Array<weeklyClickCountProps>
+    { date: string; clickCount: number }[]
   >([]);
-  const [bookList, setBookList] = useState<Array<booksProps>>([]);
+  const [bookList, setBookList] = useState<booksProps[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -100,12 +103,19 @@ const BookClicks = () => {
   };
 
   useEffect(() => {
-    setSelectedData(
-      bookList?.find((book) => book.ranking === selectedRanking)
-        ?.weeklyClickCount || []
-    );
+    const book = bookList.find((book) => book.ranking === selectedRanking);
+    const weeklyClickCount = book?.weeklyClickCount || [];
+
+    // Check if weeklyClickCount is an object and convert to array if necessary
+    if (
+      !Array.isArray(weeklyClickCount) &&
+      typeof weeklyClickCount === "object"
+    ) {
+      setSelectedData(weeklyClickCount.list);
+    } else {
+      setSelectedData(weeklyClickCount);
+    }
   }, [selectedRanking, bookList]);
-  console.log(bookList);
 
   return (
     <Container>
@@ -134,7 +144,7 @@ const BookClicks = () => {
                 </BookTitleBox>
                 <BookImage
                   style={{
-                    backgroundImage: `url('https://via.placeholder.com/150')`,
+                    backgroundImage: `url('https://image.yes24.com/goods/${book?.bookId}/XL')`,
                   }}
                 ></BookImage>
                 <BookClickBox>

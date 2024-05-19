@@ -1,14 +1,52 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+
+import { setMemo } from "../../../../store/slices/memoSlice";
+import { RootState } from "../../../../store/store";
+import { useSelector, useDispatch } from "react-redux";
 
 const Memo = () => {
+  const dispatch = useDispatch();
+  const memo = useSelector((state: RootState) => state.memo.memo);
+  const [tempMemo, setTempMemo] = useState(memo);
+
+  useEffect(() => {
+    // get memo from local storage
+    const savedMemo = localStorage.getItem("memo");
+    if (savedMemo) {
+      setTempMemo(savedMemo);
+    }
+  }, []);
+
+  useEffect(() => {
+    // save memo to local storage when tempMemo changes
+    localStorage.setItem("memo", tempMemo);
+  }, [tempMemo]);
+
+  const savememo = () => {
+    // save memo to server
+    dispatch(setMemo(tempMemo));
+  };
   return (
     <Container>
-      <Title>
-        <TitleInput placeholder="제목을 입력해주세요" />
-      </Title>
       <Content>
-        <MemoInput placeholder="메모를 입력해주세요" />
+        <MemoInput
+          placeholder="메모를 입력해주세요"
+          value={tempMemo}
+          onChange={(e) => {
+            setTempMemo(e.target.value);
+          }}
+        />
       </Content>
+      <BtnBox>
+        <Btn
+          onClick={() => {
+            savememo();
+          }}
+        >
+          저장
+        </Btn>
+      </BtnBox>
     </Container>
   );
 };
@@ -28,24 +66,9 @@ const Container = styled.div`
   box-sizing: border-box; /* padding, border 포함한 크기 설정 */
 `;
 
-const Title = styled.div`
-  width: 100%;
-  margin-bottom: 20px; /* 제목과 내용 사이의 여백 */
-`;
-
 const Content = styled.div`
   width: 100%;
   height: 90%;
-`;
-
-const TitleInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 1.25rem; /* 글자 크기 */
 `;
 
 const MemoInput = styled.textarea`
@@ -57,6 +80,27 @@ const MemoInput = styled.textarea`
   box-sizing: border-box;
   font-size: 1rem; /* 글자 크기 */
   resize: none; /* 크기 조절 기능 비활성화 */
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  height: 10%;
+  box-sizing: border-box;
+`;
+
+const Btn = styled.button`
+  width: 20%;
+  height: 100%;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
 `;
 
 export default Memo;
