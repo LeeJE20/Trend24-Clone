@@ -6,10 +6,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -129,14 +131,14 @@ public class StatusService {
 		for (TopKeywordDto topKeyword: topKeywordDtos) {
 
 			StringTokenizer stringTokenizer = new StringTokenizer(topKeyword.getCategories(), ",");
-			List<StatusDto.CategoryDto> categoryDtos = new ArrayList<>();
+			Set<StatusDto.CategoryDto> categoryDtos = new HashSet<>();
 			while (stringTokenizer.hasMoreTokens()){
 				categoryDtos.add(new StatusDto.CategoryDto(stringTokenizer.nextToken()));
 			}
 
 
 			list.add(StatusDto.TopClickedKeywordsDto.builder()
-					.categories(categoryDtos)
+					.categories(categoryDtos.stream().toList())
 				.keywordName(topKeyword.getKeywordName())
 				.clickCountSum(topKeyword.getClickCountSum())
 				.build());
