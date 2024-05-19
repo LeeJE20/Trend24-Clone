@@ -83,7 +83,7 @@ const PersonalSearchBox = ({ onSearchClick }: PersonalSearchBoxProps) => {
       <HashTagTitle>다른 사람들이 많이 클릭한 도서 목록</HashTagTitle>
       <HashTagWrapper>
         {hashTagList.length !== 0 &&
-          hashTagList.map((li, idx) => (
+          hashTagList.slice(0, 10).map((li, idx) => (
             <HashTag key={idx} onClick={() => hashTagClick(li.productName)}>
               <div># {li.productName}</div>
               <div className="bookHover">
