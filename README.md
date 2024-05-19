@@ -123,7 +123,7 @@
 | Front End | ![Static Badge](https://img.shields.io/badge/%20-React-white?style=plastic&logo=react) ![Static Badge](https://img.shields.io/badge/%20-React-white?style=plastic&logo=typescript) ![Static Badge](https://img.shields.io/badge/%20-Redux%20Toolkit-violet?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-styledcomponents-white?style=plastic&logo=styledcomponents) |
 | Back End | ![Static Badge](https://img.shields.io/badge/%20-Spring%20Boot-white?style=plastic&logo=springboot) ![Static Badge](https://img.shields.io/badge/%20-Spring%20JPA-brightgreen?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-Spring%20JPA-white?style=plastic&logo=fastapi) |
 | Data | ![Static Badge](https://img.shields.io/badge/%20-Kiwi-green?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-TextRank-blue?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-SentenceBERT-green?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-Qdrant-red?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-OpenAPI-skyblue?style=plastic&logo=none) |
-| Back End | ![Static Badge](https://img.shields.io/badge/%20-Nginx-green?style=plastic&logo=nginx) ![Static Badge](https://img.shields.io/badge/%20-Docker-white?style=plastic&logo=docker) ![Static Badge](https://img.shields.io/badge/%20-Jenkins-white?style=plastic&logo=jenkins) |
+| Infra | ![Static Badge](https://img.shields.io/badge/%20-Nginx-green?style=plastic&logo=nginx) ![Static Badge](https://img.shields.io/badge/%20-Docker-white?style=plastic&logo=docker) ![Static Badge](https://img.shields.io/badge/%20-Jenkins-white?style=plastic&logo=jenkins) |
 
 
 ## 디렉토리 구조
