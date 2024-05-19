@@ -171,6 +171,10 @@ const Logo = styled.div`
     font-size: 20px;
     font-weight: 600;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const LogoDetails = styled.div`
@@ -242,6 +246,7 @@ const LinkWrapper = styled.div<{ $isActive: boolean }>`
   padding: 15px;
 
   &:hover {
+    cursor: pointer;
     background-color: ${Colors.sub1};
     color: #fff;
     transition: background-color 0.5s ease;

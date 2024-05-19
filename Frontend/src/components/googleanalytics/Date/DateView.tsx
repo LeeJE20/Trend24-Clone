@@ -25,6 +25,7 @@ const DateView = () => {
 
   return (
     <Container>
+      <Title>날짜별 조회수</Title>
       <DateViewGraph data={totalViewData} />
     </Container>
   );
@@ -38,6 +39,11 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+`;
+
+const Title = styled.h2`
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 `;
 
 export default DateView;

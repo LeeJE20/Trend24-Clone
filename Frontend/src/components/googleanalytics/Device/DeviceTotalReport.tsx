@@ -119,7 +119,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding-left: 20px;
   background: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -127,11 +127,13 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 24px;
+  font-size: 2rem;
   font-weight: 600;
   color: #333;
   width: 100%;
   height: 10%;
+  display: flex;
+  align-items: center;
 `;
 
 const Content = styled.div`
@@ -141,7 +143,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   background: #fff;
-  padding: 10px;
+  padding: 1%;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
@@ -170,7 +172,6 @@ const DropdownSelect = styled.select`
 
 const DropdownOption = styled.option`
   background-color: #fff;
-  padding: 10px 0;
 `;
 
 const Report = styled.div`
@@ -178,7 +179,7 @@ const Report = styled.div`
   height: 90%;
   border-radius: 8px;
   background: #5f996d;
-  padding: 20px;
+  padding: 3%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 `;

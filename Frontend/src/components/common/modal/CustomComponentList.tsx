@@ -3,6 +3,8 @@ import { useState } from "react"; // useState 추가
 import { useSelector } from "react-redux"; // useSelector 추가
 import { RootState } from "../../../store/store"; // RootState 추가
 
+import { FaRegWindowClose } from "react-icons/fa";
+
 import CityTotalReport from "../../googleanalytics/City/CityTotalReport";
 import CityUsers from "../../googleanalytics/City/CityUsers";
 import DateAU from "../../googleanalytics/Date/DateAU";
@@ -62,7 +64,9 @@ const CustomComponentList = ({
       <Background onClick={handleClose}></Background>
       <Container>
         <Title>
-          <button onClick={handleClose}>X</button>
+          <CloseBtn onClick={handleClose}>
+            <FaRegWindowClose className="icon" />
+          </CloseBtn>
         </Title>
         <ContentConatiner>
           {items.map((item, index) => (
@@ -123,6 +127,15 @@ const Title = styled.div`
   padding: 10px;
   box-sizing: border-box;
   width: 100%;
+`;
+
+const CloseBtn = styled.div`
+  height: 100%;
+  cursor: pointer;
+
+  .icon {
+    font-size: 3rem;
+  }
 `;
 
 const ContentConatiner = styled.div`

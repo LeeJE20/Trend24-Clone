@@ -218,7 +218,15 @@ const KeywordViews = () => {
                     {keyword.categories.length > 0 &&
                       keyword.categories.map((category, categoryIndex) => (
                         <span key={categoryIndex}>
-                          {category.trendCategoryName}
+                          {category.trendCategoryName === "NEWS"
+                            ? "뉴스"
+                            : category.trendCategoryName === "ENTERTAINMENT"
+                            ? "엔터"
+                            : category.trendCategoryName === "NEWMEDIA"
+                            ? "뉴미디어"
+                            : category.trendCategoryName === "ANIMAL"
+                            ? "동물"
+                            : "IT"}
                         </span>
                       ))}
                   </TableCell>

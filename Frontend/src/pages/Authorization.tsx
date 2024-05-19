@@ -1,9 +1,10 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { FaKey } from "react-icons/fa";
 import { signIn } from "../apis/authApi";
 import { useNavigate } from "react-router-dom";
+import { PiArrowFatLeft } from "react-icons/pi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,8 +40,23 @@ const Login = () => {
       console.log(error);
     }
   };
+
+  const gotoEvent = () => {
+    navigate("/event");
+  };
+
   return (
     <Container>
+      <GotoEventPage>
+        <EventLogo onClick={gotoEvent}>
+          <img src="/Image/Logo/gifLogo3.gif" />
+        </EventLogo>
+        <EventText>
+          <PiArrowFatLeft className="icon" />
+          클릭시
+          <br /> 추천 페이지로 이동
+        </EventText>
+      </GotoEventPage>
       <LoginFormContainer>
         <LoginFormRightSide>
           <div className="title">
@@ -96,6 +112,57 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+`;
+
+const GotoEventPage = styled.div`
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  width: 20%;
+  height: 10%;
+`;
+
+const EventLogo = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* transform: skew(20);
+   */
+  transform: rotate(-20deg);
+
+  cursor: pointer;
+
+  img {
+    height: 100%;
+  }
+`;
+
+const bounce = keyframes`
+  0%, 100% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+`;
+
+const EventText = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #001638;
+
+  .icon {
+    font-size: 4rem;
+    animation: ${bounce} 2s infinite;
+  }
 `;
 
 const LoginFormContainer = styled.div`

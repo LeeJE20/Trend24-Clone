@@ -35,15 +35,18 @@ const CityUsers = () => {
 
   return (
     <Container>
-      <Title>도시별 사용자 수</Title>
-      <select onChange={handleCityChange}>
-        <option value="전체">전체</option>
-        {cityUsers.map((data) => (
-          <option value={data.city} key={data.city}>
-            {data.city}
-          </option>
-        ))}
-      </select>
+      <Title>
+        도시별 사용자 수
+        <select onChange={handleCityChange}>
+          <option value="전체">전체</option>
+          {cityUsers.map((data) => (
+            <option value={data.city} key={data.city}>
+              {data.city}
+            </option>
+          ))}
+        </select>
+      </Title>
+
       <Content>
         {selectedCity === "전체" && <CityTotalUsersGraph data={cityUsers} />}
         {selectedCity !== "전체" && (
