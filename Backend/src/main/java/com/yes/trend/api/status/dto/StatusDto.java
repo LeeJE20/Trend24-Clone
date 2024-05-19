@@ -42,8 +42,8 @@ public class StatusDto {
 		private Integer clickCountSum;
 
 		@Builder
-		public TopClickedKeywordsDto(String categoryName, String keywordName, Long clickCountSum) {
-			this.categories.add(new CategoryDto(categoryName));
+		public TopClickedKeywordsDto(List<CategoryDto> categories, String keywordName, Long clickCountSum) {
+			this.categories = categories;
 			this.keywordName = keywordName;
 			this.clickCountSum = clickCountSum.intValue();
 		}

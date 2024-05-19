@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yes.trend.api.status.dto.StatusDto;
 import com.yes.trend.api.status.dto.TopKeywordDto;
+import com.yes.trend.api.status.repository.StatusRepository;
 import com.yes.trend.common.dto.ListDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.repository.BookRepository;
@@ -39,6 +41,7 @@ public class StatusService {
 	private final BookClickRepository bookClickRepository;
 	private final KeywordRepository keywordRepository;
 	private final KeywordClickRepository keywordClickRepository;
+	private final StatusRepository statusRepository;
 	private final BookRepository bookRepository;
 
 	public ListDto<StatusDto.WeeklyTopClickedBooksDto> getWeeklyTopClickedBooks() {
@@ -120,17 +123,27 @@ public class StatusService {
 	public ListDto<StatusDto.TopClickedKeywordsDto> getTopClickedKeyword() {
 		LocalDate startDate = LocalDate.now().minusDays(6L);
 		final int size = 5;
-		Pageable pageable = PageRequest.of(0, size);
-		List<TopKeywordDto> topKeywordDtos = keywordClickRepository.findByTopKeywordsByClickCount(startDate, pageable);
+		List<TopKeywordDto> topKeywordDtos = statusRepository.findTopKeywordClickCount(startDate, size);
 
 		List<StatusDto.TopClickedKeywordsDto> list = new ArrayList<>();
 		for (TopKeywordDto topKeyword: topKeywordDtos) {
+
+			StringTokenizer stringTokenizer = new StringTokenizer(topKeyword.getCategories(), ",");
+			List<StatusDto.CategoryDto> categoryDtos = new ArrayList<>();
+			while (stringTokenizer.hasMoreTokens()){
+				categoryDtos.add(new StatusDto.CategoryDto(stringTokenizer.nextToken()));
+			}
+
+
 			list.add(StatusDto.TopClickedKeywordsDto.builder()
-				.categoryName(topKeyword.getCategory())
+					.categories(categoryDtos)
 				.keywordName(topKeyword.getKeywordName())
 				.clickCountSum(topKeyword.getClickCountSum())
 				.build());
 		}
+
+		return new ListDto<>(list);
+	}
 
 
 	public ListDto<StatusDto.KeywordClickDto> getWeeklyKeywordClickCount(String keywordName) {
