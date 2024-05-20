@@ -46,6 +46,7 @@ const Login = () => {
     try {
       const res = await signIn(userId, password); // signIn 함수의 처리를 기다림
       localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("userName", res.name);
       setLoginSuccessModalOpen(true);
     } catch (error) {
       setLoginFailModalOpen(true);
