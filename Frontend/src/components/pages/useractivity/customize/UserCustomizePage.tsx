@@ -25,36 +25,6 @@ import EmptyFile from "../../../common/EmptyFile";
 
 import { getCustomComponents, getCustomPage } from "../../../../apis/customApi";
 
-// const data1 = {
-//   status: 200,
-//   message: "성공",
-//   result: {
-//     name: "이름",
-//   },
-// };
-
-// const data2 = {
-//   status: 200,
-//   message: "성공",
-//   result: [
-//     {
-//       componentName: "userWeeklyActivity",
-//       position: { x: 100, y: 100 },
-//       size: { width: 200, height: 200 },
-//     },
-//     {
-//       componentName: "userMonthlyActivity",
-//       position: { x: 200, y: 100 },
-//       size: { width: 100, height: 200 },
-//     },
-//     {
-//       componentName: "userDailyActivity",
-//       position: { x: 100, y: 200 },
-//       size: { width: 200, height: 100 },
-//     },
-//   ],
-// };
-
 interface ComponentProps {
   componentName: string;
   position: { x: number; y: number };
@@ -68,32 +38,38 @@ const UserCustomizePage: React.FC = () => {
     ComponentProps[]
   >([]);
 
-  useEffect(() => {
-    getCustomPage().then((res) => {
-      setPageTitle(res.name);
-    });
-    getCustomComponents().then((res) => {
-      if (Array.isArray(res)) {
-        setInitialComponentList(res);
-      } else {
-        console.error("Invalid response format:", res);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   getCustomPage().then((res) => {
+  //     setPageTitle(res.name);
+  //   });
+  //   getCustomComponents().then((res) => {
+  //     if (Array.isArray(res)) {
+  //       setInitialComponentList(res);
+  //     } else {
+  //       console.error("Invalid response format:", res);
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      getCustomComponents().then((res) => {
-        if (Array.isArray(res)) {
-          setInitialComponentList(res);
+    const fetchData = async () => {
+      try {
+        const [PageTitle, InitialComponentList] = await Promise.all([
+          getCustomPage(),
+          getCustomComponents(),
+        ]);
+        if (Array.isArray(InitialComponentList)) {
+          setPageTitle(PageTitle.name);
+          setInitialComponentList(InitialComponentList);
         } else {
-          console.error("Invalid response format:", res);
+          console.error("Invalid response format:", InitialComponentList);
         }
-      });
-      getCustomPage().then((res) => {
-        setPageTitle(res.name);
-      });
-    }, 200);
+        setPageTitle(PageTitle.name);
+      } catch (error) {
+        console.error("Error fetching custom components:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const showEditPage = () => {
