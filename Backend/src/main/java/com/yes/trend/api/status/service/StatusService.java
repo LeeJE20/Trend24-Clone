@@ -83,7 +83,7 @@ public class StatusService {
 		List<StatusDto.WeeklyTopClickedBooksDto> list = topThreeBooks.entrySet()
 			.stream()
 			.map(t -> StatusDto.WeeklyTopClickedBooksDto.builder()
-				.bookId(t.getKey().getId())
+				.bookId(t.getKey().getProductId())
 				.clickCountSum(t.getValue())
 				.productName(t.getKey().getProductName())
 				.ranking(ranking.getAndIncrement())
