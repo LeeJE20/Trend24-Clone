@@ -1,7 +1,6 @@
 package com.yes.trend.api.anonymousquestion.service;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -15,6 +14,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.yes.trend.common.dto.ListDto;
+import com.yes.trend.common.service.ExternalApiService;
 import com.yes.trend.domain.book.dto.BookDto;
 import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.book.mapper.BookMapper;
@@ -47,9 +47,9 @@ public class AnonymousQuestionService {
 		return new ListDto<>(questionList);
 	}
 
-	public ListDto<Book> getSelectQuestionBookList(Integer questionId) {
+	public ListDto<BookDto.Response> getSelectQuestionBookList(Integer questionId) {
 		List<Book> bookQuestionMapList = bookQuestionMapRepository.findBooksByQuestionId(questionId);
-		return new ListDto<>(bookQuestionMapList);
+		return new ListDto<>(bookQuestionMapList.stream().map(bookMapper::BookToDto).toList());
 	}
 
 	public ListDto<BookDto.Response> getfindBookByNameContain(String bookText) {
@@ -83,30 +83,31 @@ public class AnonymousQuestionService {
 		return true;
 	}
 
-	public ListDto<BookDto.Response> getMomoryBook(Integer bookId) {
+	public ListDto<BookDto.Response> getMomoryBook(Integer bookId, Integer questionId) {
 		Book book = bookRepository.findById(bookId)
 			.orElseThrow(() -> new NoSuchElementException("Book not found with id: " + bookId));
-		String apiUrl = pythonUrl + "/fastapi/book/momory";
+		String apiUrl = pythonUrl + "/fastapi/book/memory-real";
 		System.out.println("--------------------");
 		System.out.println(apiUrl);
 
 		UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(apiUrl)
 			.queryParam("product_id", book.getProductId())
+			.queryParam("question_id", questionId)
 			.build(true);
 		URI uri = uriBuilder.toUri();
 		Map<String, Object> result = externalApiService.sendGetRequest(uri, Map.class);
-		List<Book> bookList = new ArrayList<>();
-		List<Integer> productList = (List<Integer>)result.get("result");
 
-		for (Integer productId : productList) {
-			Book searchedBook = bookRepository.findByProductId(productId)
-				.orElse(null);
-			if (searchedBook == null) {
-				continue;
-			}
-			bookList.add(searchedBook);
-		}
-		return new ListDto<>(bookList.stream().map(bookMapper::BookToDto).toList());
+		List<Integer> productList = (List<Integer>)result.get("result");
+		List<Book> books = bookRepository.findByProductIds(productList);
+
+		// 결과를 productIds 순서대로 정렬
+		books.sort((b1, b2) -> {
+			int index1 = productList.indexOf(b1.getProductId());
+			int index2 = productList.indexOf(b2.getProductId());
+			return Integer.compare(index1, index2);
+		});
+
+		return new ListDto<>(books.stream().map(bookMapper::BookToDto).toList());
 	}
 
 }
