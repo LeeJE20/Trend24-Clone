@@ -29,36 +29,6 @@ import {
   getCustomComponents,
 } from "../../../../apis/customApi";
 
-// const data1 = {
-//   status: 200,
-//   message: "성공",
-//   result: {
-//     name: "이름",
-//   },
-// };
-
-// const data2 = {
-//   status: 200,
-//   message: "성공",
-//   result: [
-//     {
-//       componentName: "userWeeklyActivity",
-//       position: { x: 100, y: 100 },
-//       size: { width: 200, height: 200 },
-//     },
-//     {
-//       componentName: "userMonthlyActivity",
-//       position: { x: 200, y: 100 },
-//       size: { width: 100, height: 200 },
-//     },
-//     {
-//       componentName: "userDailyActivity",
-//       position: { x: 100, y: 200 },
-//       size: { width: 200, height: 100 },
-//     },
-//   ],
-// };
-
 interface CustomizedComponentListProps {
   componentName: string;
   position: { x: number; y: number };
@@ -137,10 +107,16 @@ const RnDCustom = () => {
     navigate("/main/customizePage");
   };
 
-  const compleCustomize = () => {
-    navigate("/main/customizePage");
-    patchCustomComponents(addedList);
-    patchCustomPage(title);
+  const completeCustomize = async () => {
+    try {
+      await patchCustomComponents(addedList);
+      await patchCustomPage(title);
+
+      navigate("/main/customizePage");
+    } catch (error) {
+      console.error("Error completing customization:", error);
+      // 에러 처리 로직 추가 가능
+    }
   };
 
   const makeTempList = (componentName: string) => {
@@ -216,7 +192,7 @@ const RnDCustom = () => {
             <MdOutlineCancel size={50} />
             취소
           </CancelBtn>
-          <CompleteBtn onClick={compleCustomize}>
+          <CompleteBtn onClick={completeCustomize}>
             <IoSaveOutline size={50} />
             완료
           </CompleteBtn>

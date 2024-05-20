@@ -29,7 +29,7 @@ const EmptyContainer = styled.div`
 const EmptyImg = styled.div`
   width: 50%;
   height: 80%;
-  background-image: url("/Image/Logo/Logo.png");
+  background-image: url("/Image/Logo/logo.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
