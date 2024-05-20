@@ -23,4 +23,6 @@ public interface BookRepository extends JpaRepository<Book, Integer>, QuerydslPr
 	@Query("SELECT b FROM Book b WHERE b.productId = :productId")
 	Optional<Book> findByProductId(@Param("productId") Integer productId);
 
+	@Query("SELECT b FROM Book b WHERE b.productId IN :productIds ")
+	List<Book> findByProductIds(List<Integer> productIds);
 }
