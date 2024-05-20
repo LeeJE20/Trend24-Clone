@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.yes.trend.common.dto.PageInfoDto;
 import com.yes.trend.domain.book.dto.BookDto;
+import com.yes.trend.domain.book.entity.Book;
 import com.yes.trend.domain.keyword.dto.KeywordDto;
 import com.yes.trend.domain.trendcategory.dto.TrendCategoryDto;
 
@@ -15,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 public class RecommendDto {
@@ -31,6 +34,7 @@ public class RecommendDto {
 	@Getter
 	@SuperBuilder
 	@NoArgsConstructor
+	@ToString
 	public static class BookWithKeywords extends BookDto.Response {
 		@Setter
 		private Set<String> keywords = new LinkedHashSet<>();
@@ -41,6 +45,13 @@ public class RecommendDto {
 			String contents, Integer totalPurchaseCount) {
 			super(bookId, productId, productName, categoryName, searchKeyword, totalClickCount, totalOrderCount,
 				totalOrderAmount, salePrice, contents, totalPurchaseCount);
+		}
+
+		public BookWithKeywords(Book book, List<String> keywords) {
+			super(book.getId(), book.getProductId(), book.getProductName(), book.getCategoryName(),
+				book.getSearchKeyword(), book.getTotalClickCount(), book.getTotalOrderCount(),
+				book.getTotalOrderAmount(), book.getSalePrice(), book.getContents(), book.getTotalPurchaseCount());
+			this.keywords = keywords.stream().collect(Collectors.toSet());
 		}
 	}
 
