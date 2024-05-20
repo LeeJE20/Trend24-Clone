@@ -25,7 +25,7 @@ ChartJS.register(
 
 interface BookClickDataProps {
   date: string;
-  clickCount: number;
+  count: number;
 }
 
 interface BookClickGraphProps {
@@ -74,7 +74,7 @@ const BookClickGraph: React.FC<BookClickGraphProps> = ({ data }) => {
         const weeklyData = data.find((d) => d.date === date);
         return {
           date,
-          clickCount: weeklyData ? weeklyData.clickCount : 0,
+          count: weeklyData ? weeklyData.count : 0,
         };
       })
     );
@@ -85,7 +85,7 @@ const BookClickGraph: React.FC<BookClickGraphProps> = ({ data }) => {
     datasets: [
       {
         label: "클릭 수",
-        data: weekdata.map((d) => d.clickCount),
+        data: weekdata.map((d) => d.count),
         fill: false,
         backgroundColor: "#5f996d",
         borderColor: "#5f996db0",

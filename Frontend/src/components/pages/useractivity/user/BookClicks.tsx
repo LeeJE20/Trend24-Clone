@@ -65,12 +65,12 @@ import { GoGraph } from "react-icons/go";
 // };
 
 interface WeeklyClickCountObject {
-  list: { date: string; clickCount: number }[];
+  list: { date: string; count: number }[];
 }
 
 type WeeklyClickCount =
   | WeeklyClickCountObject
-  | { date: string; clickCount: number }[];
+  | { date: string; count: number }[];
 
 interface booksProps {
   bookId: number;
@@ -84,7 +84,7 @@ const BookClicks = () => {
   const [isBookClicked, setIsBookClicked] = useState(false);
   const [selectedRanking, setSelectedRanking] = useState<number | null>(null); // 선택된 도서의 랭킹을 저장하기 위한 상태
   const [selectedData, setSelectedData] = useState<
-    { date: string; clickCount: number }[]
+    { date: string; count: number }[]
   >([]);
   const [bookList, setBookList] = useState<booksProps[]>([]);
   const dispatch = useDispatch();

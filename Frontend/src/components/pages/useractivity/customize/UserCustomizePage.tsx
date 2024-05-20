@@ -81,6 +81,21 @@ const UserCustomizePage: React.FC = () => {
     });
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      getCustomComponents().then((res) => {
+        if (Array.isArray(res)) {
+          setInitialComponentList(res);
+        } else {
+          console.error("Invalid response format:", res);
+        }
+      });
+      getCustomPage().then((res) => {
+        setPageTitle(res.name);
+      });
+    }, 200);
+  }, []);
+
   const showEditPage = () => {
     navigate("/main/custom");
   };
