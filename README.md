@@ -40,77 +40,77 @@
 
 | **로그인 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/로그인화면.gif" alt="image" width="700"></div> |
 - 등록된 아이디와 비밀번호를 통해 MD 계정에 로그인 가능합니다.
 
 | **인기 트렌드** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/인기트랜드.gif" alt="image" width="700"></div> |
 - 날짜 별 주요 키워드 확인 가능합니다.
 - 키워드에 마우스 포인터를 올리면 해당 티워드가 나온 다른 날짜를 확인 가능합니다.
 - 키워드를 틀릭하면 관련 추천 도서 및 정보를 확인 가능합니다.
 
 | **트렌드 조회** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/트랜드조회.gif" alt="image" width="700"></div> |
 - 날짜와 카테고리, 키워드를 자유롭게 선택 가능합니다.
 - 선택한 키워드와 관련된 추천 도서들을 확인 가능합니다.
 
 | **유저 통계** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저통계.gif" alt="image" width="700"></div> |
 - 웹 사용자의 이용 데이터를 그래프와 표 등으로 확인 가능합니다.
 
 | **도서 검색 - 제목으로 검색** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/도서 제목.gif" alt="image" width="700"></div> |
 - 찾고자 하는 도서의 카테고리를 선택할 수 있습니다.
 - 도서를 제목 검색을 통해 찾을 수 있습니다.
 
 | **도서 검색 - 문장으로 검색** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/도서 문장.gif" alt="image" width="700"></div> |
 - 원하는 문장을 자유롭게 작성하여 문장과 관련된 책을 검색합니다.
 
 | **서랍** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/서랍.gif" alt="image" width="700"></div> |
 - 키워드 추가를 통해 원하는 도서 서랍을 생성 가능합니다.
 - 인기 트랜드, 트랜드 조회, 도서 검색에서 저장한 도서를 확인 가능합니다.
 
 | **커스텀 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/커스텀 페이지.gif" alt="image" width="700"></div> |
 - 편집을 통해 원하는 위젯을 선택하여 자신만의 커스텀 페이지를 제작할 수 있습니다.
 
 ## 유저 페이지
 
 | **서비스 선택 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저 메인.gif" alt="image" width="700"></div> |
 - 오른쪽 메뉴바를 통해 트랜드별 추천 또는 추억 여행를 선택 가능합니다.
 - 로켓을 클릭하여 서비스 페이지에 입장 가능합니다.
 
 | **트렌드별 추천 화면 - 메인 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저 일반 메인.gif" alt="image" width="700"></div> |
 - 별을 골라 원하는 카테고리의 상세 페이지에 입장 가능합니다.
 
 | **트렌드별 추천 화면 - 상세 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저 일반 상세.gif" alt="image" width="700"></div> |
 - 워드 클라우드를 통해 카테고리의 키워드를 확인 가능합니다.
 - 키워드 추천 책 소개를 통해 책의 상세 정보를 확인 가능합니다.
 
 | **추억 여행 - 메인 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저 추억 메인.gif" alt="image" width="700"></div> |
 - 원하는 질문을 선택하여 서비스를 이용할 수 있습니다.
 - 질문에 대한 답변 도서를 제목 검색 또는 다른 사용자들의 선택 도서 목록을 통해 선택 가능합니다.
 
 | **추억 여행 - 상세 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/service_sample.png" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저 추억 상세.gif" alt="image" width="700"></div> |
 - 답변한 도서의 정보와 다른 사용자들의 답변들 중에서 유사한 도서들을 확인 가능합니다.
 
 
