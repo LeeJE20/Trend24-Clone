@@ -46,7 +46,7 @@ const BookFilter = ({
       </SearchTypeTab>
       {searchType == "live" && (
         <Search>
-          <div className="desc">자유롭게 검색하셈</div>
+          <div className="desc">자유롭게 검색해주세요.</div>
           
           <input
             type="text"

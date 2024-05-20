@@ -18,6 +18,7 @@ interface SidebarProps {
 
 function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const navigate = useNavigate();
+  const userName = localStorage.getItem("userName")
 
   const sidebarRef = useRef(null);
   const profileWrapperRef = useRef(null);
@@ -106,7 +107,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <ProfileDetails ref={profileContentRef}>
           <ProfileImage src="/Image/Logo/logo4.png" alt="profileImg" />
           <NameJob>
-            <div className="name">UserName</div>
+            <div className="name">{userName}</div>
             <div className="job">YES24 중고서점 목동점</div>
           </NameJob>
         </ProfileDetails>
