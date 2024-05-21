@@ -25,7 +25,8 @@
 
 [![Static Badge](https://img.shields.io/badge/Service%20Web-User%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://trend24.live/event) [![Static Badge](https://img.shields.io/badge/Service%20Web-MD%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fmain)](https://trend24.live)
 
-[![Static Badge](https://img.shields.io/badge/-Figma-skyblue?style=plastic&logo=figma&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://www.figma.com/file/ZI90ZvwRBuOURdbeRRrTZ3/Untitled?type=design&node-id=0%3A1&mode=dev&t=qu79zizJEmh0AxyR-1)
+[![Figma link](https://img.shields.io/badge/-Figma-skyblue?style=plastic&logo=figma&logoColor=white&logoSize=auto&cacheSeconds=3600)](https://www.figma.com/file/ZI90ZvwRBuOURdbeRRrTZ3/Untitled?type=design&node-id=0%3A1&mode=dev&t=qu79zizJEmh0AxyR-1) 
+[![API docs link](https://img.shields.io/badge/-API%20Docs-black?style=plastic&logo=notion&logoColor=white&logoSize=auto&cacheSeconds=3600)](https://forested-danthus-512.notion.site/API-87ad1f831a2744cc8dfffe5dc3d95646)
 
 
 ## ERD
