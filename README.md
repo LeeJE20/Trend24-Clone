@@ -23,13 +23,16 @@
 
 ## 프로젝트 링크
 
-[![Static Badge](https://img.shields.io/badge/Service%20Web-User%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://trend24.live) [![Static Badge](https://img.shields.io/badge/Service%20Web-MD%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fmain)](https://trend24.live/event)
+[![Static Badge](https://img.shields.io/badge/Service%20Web-User%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://trend24.live/event) [![Static Badge](https://img.shields.io/badge/Service%20Web-MD%20page-brightgreen?style=plastic&logo=googlechrome&logoColor=brightgreen&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fmain)](https://trend24.live)
 
-[![Static Badge](https://img.shields.io/badge/-Figma-skyblue?style=plastic&logo=figma&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://www.figma.com/file/ZI90ZvwRBuOURdbeRRrTZ3/Untitled?type=design&node-id=0%3A1&mode=dev&t=qu79zizJEmh0AxyR-1) [![Static Badge](https://img.shields.io/badge/-ERD%20CLoud-skyblue?style=plastic&logo=icloud&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Fwww.erdcloud.com%2Fd%2FYSAe7eLdSMdbNu5w4)](https://www.erdcloud.com/d/YSAe7eLdSMdbNu5w4)
-
-
+[![Static Badge](https://img.shields.io/badge/-Figma-skyblue?style=plastic&logo=figma&logoColor=white&logoSize=auto&cacheSeconds=3600&link=https%3A%2F%2Ftrend24.live%2Fevent)](https://www.figma.com/file/ZI90ZvwRBuOURdbeRRrTZ3/Untitled?type=design&node-id=0%3A1&mode=dev&t=qu79zizJEmh0AxyR-1)
 
 
+## ERD
+![erd.png](readme_images/erd.png)
+
+## Project Architecture
+![architecture.png](readme_images/architecture.png)
 
 ## 팀원
 ![자율 팀원 사진.png](readme_images/TeamMember.png)
@@ -120,7 +123,7 @@
 
 | 부서 | 개발 환경 및 기술 스택 |
 | :-----: | :-----:|
-| Front End | ![Static Badge](https://img.shields.io/badge/%20-React-white?style=plastic&logo=react) ![Static Badge](https://img.shields.io/badge/%20-React-white?style=plastic&logo=typescript) ![Static Badge](https://img.shields.io/badge/%20-Redux%20Toolkit-violet?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-styledcomponents-white?style=plastic&logo=styledcomponents) |
-| Back End | ![Static Badge](https://img.shields.io/badge/%20-Spring%20Boot-white?style=plastic&logo=springboot) ![Static Badge](https://img.shields.io/badge/%20-Spring%20JPA-brightgreen?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-Spring%20JPA-white?style=plastic&logo=fastapi) |
-| Data | ![Static Badge](https://img.shields.io/badge/%20-Kiwi-green?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-TextRank-blue?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-SentenceBERT-green?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-Qdrant-red?style=plastic&logo=none) ![Static Badge](https://img.shields.io/badge/%20-OpenAPI-skyblue?style=plastic&logo=none) |
-| Infra | ![Static Badge](https://img.shields.io/badge/%20-Nginx-green?style=plastic&logo=nginx) ![Static Badge](https://img.shields.io/badge/%20-Docker-white?style=plastic&logo=docker) ![Static Badge](https://img.shields.io/badge/%20-Jenkins-white?style=plastic&logo=jenkins) |
+| Front End | ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) ![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) |
+| Back End | ![Java](https://img.shields.io/badge/java:17-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/springboot:3.2.4-6DB33F?style=for-the-badge&logo=springboot&logoColor=white) ![Spring Security](https://img.shields.io/badge/spring%20security-6DB33F.svg?&style=for-the-badge&logo=springsecurity&logoColor=white) ![JPA](https://img.shields.io/badge/%20-Spring%20Data%20JPA-6DB33F?style=for-the-badge&logo=none) ![QueryDSL](https://img.shields.io/badge/querydsl:5.0.0-0078C0.svg?&style=for-the-badge) ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white) 	![Python](https://img.shields.io/badge/python:3.7-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![FastAPI](https://img.shields.io/badge/FastAPI:0.103.2-005571?style=for-the-badge&logo=fastapi) |
+| Data | ![Static Badge](https://img.shields.io/badge/%20-Kiwi-green?style=for-the-badge&logo=none) ![Static Badge](https://img.shields.io/badge/%20-TextRank-blue?style=for-the-badge&logo=none) ![Static Badge](https://img.shields.io/badge/%20-SentenceBERT-green?style=for-the-badge&logo=none) ![Static Badge](https://img.shields.io/badge/%20-Qdrant-red?style=for-the-badge&logo=none) ![Static Badge](https://img.shields.io/badge/%20-OpenAPI-skyblue?style=for-the-badge&logo=none) |
+| Infra | ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white) |
