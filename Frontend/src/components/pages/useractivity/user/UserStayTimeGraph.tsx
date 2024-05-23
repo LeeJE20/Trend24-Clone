@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const UserStayTimeGraph = () => {
+  useEffect(() => {
+    console.log("UserStayTimeGraph");
+  }, []);
   return (
     <UserStayTimeGraphContainer>
       <div>UserStayTimeGraph</div>

@@ -1,27 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { MainColor } from "../../../constants/Color";
-import { FaSearch } from "react-icons/fa";
-import { trendCategoryData } from "../../../constants/DummyData/TrendCategoryData";
+import Colors from "../../../constants/Color";
+import { FaArrowRotateLeft } from "react-icons/fa6";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css"; // css import
+import moment from "moment";
+import CustomCalendar from "../../common/calendar/CustomCalendar";
+
+interface TrendCategoryDataType {
+  trendCategoryId: number;
+  name: string;
+  keywords: keywords[];
+}
+interface keywords {
+  keywordId: number;
+  name: string;
+}
 
 interface KeywordFilterProps {
-  selectedKeyword: string[];
-  onKeywordChange: (keywords: string[]) => void;
-  onSearch: () => void;
+  selectedKeyword: keywords[];
+  trendCategoryData: TrendCategoryDataType[];
+  onKeywordChange: (keywords: keywords[]) => void;
+  onTrendDateChange: (date: string) => void;
 }
 
 const KeywordFilter = ({
   selectedKeyword,
+  trendCategoryData,
   onKeywordChange,
-  onSearch,
+  onTrendDateChange,
 }: KeywordFilterProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-
+  const [date, setDate] = useState<Date | any>(
+    moment(new Date()).subtract(1, "day").format("YYYY-MM-DD")
+  );
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const categoryClick = (category: number) => {
     setSelectedCategory(category);
   };
 
-  const keywordClick = (keyword: string) => {
+  useEffect(() => {
+    onTrendDateChange(moment(date).subtract(1, "day").format("YYYY-MM-DD"));
+  }, [date]);
+
+  const keywordClick = (keyword: keywords) => {
     if (selectedKeyword.includes(keyword)) {
       onKeywordChange(selectedKeyword.filter((kw) => kw !== keyword));
     } else {
@@ -29,31 +52,61 @@ const KeywordFilter = ({
     }
   };
 
+  const selectedKeywordClick = (keyword:keywords) => {
+    onKeywordChange(selectedKeyword.filter((kw) => kw !== keyword));
+  }
+
+  const resetKeyword = () => {
+    onKeywordChange([]);
+  };
+
+  const dateChange = (date: Date | any) => {
+    setDate(date);
+    setShowCalendar(false);
+  };
+
+
+
   return (
     <Container>
       <SelectedKeyword>
         <div className="label">선택된 키워드</div>
         <div className="keywordList">
           {selectedKeyword &&
-            selectedKeyword.map((li, idx) => <div key={idx}># {li}</div>)}
+            selectedKeyword.map((li, idx) => <div key={idx} onClick={() => selectedKeywordClick(li)}># {li.name}</div>)}
         </div>
-        <div className="searchBtn" onClick={onSearch}>
-          <div>검색</div>
-          <FaSearch />
+        <div className="calendar">
+          <div>{moment(date).format("YYYY년 MM월 DD일")}</div>
+          <FaRegCalendarAlt
+            className="icon"
+            onClick={() => setShowCalendar(!showCalendar)}
+          />
+          {showCalendar && (
+            <CalendarWrapper>
+              <CustomCalendar date={date} dateChange={dateChange} />
+            </CalendarWrapper>
+          )}
+        </div>
+        <div className="searchBtn" onClick={resetKeyword}>
+          <div>초기화</div>
+          <FaArrowRotateLeft />
         </div>
       </SelectedKeyword>
       <Category>
         <div className="label">카테고리</div>
         <div className="categoryList">
           {trendCategoryData.map((li, idx) => (
-            <div key={idx} onClick={() => categoryClick(li.trendCategoryId)}>
+            <div
+              key={idx}
+              onClick={() => categoryClick(li.trendCategoryId)}
+              className={
+                selectedCategory === li.trendCategoryId ? "selected" : ""
+              }
+            >
               {li.name}
             </div>
           ))}
         </div>
-        {/* {props.listData.map((li, idx) => (
-          <div key={idx} onClick={() => categoryClick(li)}>{li}</div>
-        ))} */}
       </Category>
       <KeywordList>
         {selectedCategory &&
@@ -62,8 +115,8 @@ const KeywordFilter = ({
             ?.keywords.map((li, idx) => (
               <KeywordItem
                 key={idx}
-                onClick={() => keywordClick(li.name)}
-                selected={selectedKeyword.includes(li.name)}
+                onClick={() => keywordClick(li)}
+                selected={selectedKeyword.includes(li)}
               >
                 # {li.name}
               </KeywordItem>
@@ -78,30 +131,31 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   flex-flow: column;
-  box-sizing: border-box;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  padding: 5px;
 `;
 
 const SelectedKeyword = styled.div`
-  height: 30%;
+  width: 100%;
+  min-height: 50px;
   display: flex;
   flex-direction: row;
   justify-items: center;
   .label {
-    width: 200px;
-    padding: 20px 5px;
-    background-color: ${MainColor};
+    min-width: 200px;
+    color: ${Colors.main};
     font-weight: bold;
-    font-size: 2.3rem;
-    color: white;
+    font-size: 2rem;
     align-content: center;
     text-align: center;
-    border-radius: 20px 10px 10px 0px;
-    margin-right: 10px;
+    border-right: solid 2px #bebebe7e;
+    margin: 5px 0px;
   }
 
   .keywordList {
     flex: 1 0 auto;
+    width: 50%;
+    flex-wrap: wrap;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -112,48 +166,65 @@ const SelectedKeyword = styled.div`
       border-radius: 30px;
 
       &:hover {
-        background-color: gray;
+        background-color: #dadada;
       }
     }
   }
 
   .searchBtn {
-    border: 1px solid black;
-    padding: 5px;
-    font-size: 2.5rem;
-    margin-right: 10px;
+    padding: 3px;
+    font-size: 2rem;
+    margin-right: 20px;
+    margin-top: 5px;
+    padding: 8px 15px;
     display: flex;
     align-items: center;
     align-self: center;
     cursor: pointer;
+    background-color: ${Colors.sub4};
+    border-radius: 10px;
 
     div {
       margin-right: 10px;
     }
 
     &:hover {
-      background-color: gray;
+      background-color: #dadada;
+    }
+  }
+  .calendar {
+    margin-top: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    .icon {
+      margin: 5px 10px;
+      font-size: 2.5rem;
+      padding: 8px;
+      background-color: ${Colors.sub4};
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: #dadada;
+      }
     }
   }
 `;
 
 const Category = styled.div`
-  height: 30%;
   display: flex;
   flex-direction: row;
+  min-height: 50px;
   .label {
     min-width: 200px;
-    background-color: ${MainColor};
+    color: ${Colors.main};
     font-weight: bold;
-    font-size: 2.3rem;
-    width: 200px;
-    padding: 20px 5px;
-    color: white;
+    font-size: 2rem;
     align-content: center;
     text-align: center;
-    border-radius: 0px 10px 10px 0px;
-    border-bottom: solid 1px white;
-    margin-right: 10px;
+    border-right: solid 2px #bebebe7e;
+    margin: 5px 0px;
   }
 
   .categoryList {
@@ -171,13 +242,17 @@ const Category = styled.div`
       border-right: solid 2px #bebebe7e;
 
       &:hover {
-        background-color: #828282;
+        background-color: ${Colors.sub4};
       }
+    }
+    .selected {
+      background-color: ${Colors.sub4};
     }
   }
 `;
 
 const KeywordList = styled.div`
+  min-height: 50px;
   flex-grow: 1;
   padding: 0px 15px;
   display: flex;
@@ -187,15 +262,26 @@ const KeywordList = styled.div`
 
 const KeywordItem = styled.div<{ selected: boolean }>`
   margin: 0px 5px;
-  padding: 10px 15px;
+  padding: 5px 15px;
   border-radius: 30px;
   box-sizing: border-box;
   cursor: pointer;
-  background-color: ${(props) => (props.selected ? "gray" : "initial")};
+  background-color: ${(props) =>
+    props.selected ? `${Colors.sub4}` : "initial"};
+  color: ${(props) => (props.selected ? "#5c5c5c" : "initial")};
 
   &:hover {
-    background-color: gray;
+    background-color: ${Colors.sub4};
   }
+`;
+
+const CalendarWrapper = styled.div`
+  position: absolute;
+  top: 45px;
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 1;
 `;
 
 export default KeywordFilter;

@@ -1,111 +1,124 @@
+import moment from "moment";
+import { useEffect } from "react";
 import styled from "styled-components";
-import { TrendRankType } from "../../../constants/DummyData/TrendRankData";
+import Colors from "../../../constants/Color";
 
 interface KeywordCalendarProps {
-  rankData: TrendRankType[];
+  rankingData: KeywordCalendarType[];
 }
 
-interface DateType {
-  dayOfWeek: string;
-  date: number;
-  inChart: boolean;
+interface KeywordCalendarType {
+  date: string;
+  ranking: number;
 }
 
-const KeywordCalendar = (props: KeywordCalendarProps) => {
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const baseDate = new Date(props.rankData[0].date);  
-  const dayOfWeek = props.rankData.map((li) => li.date.split("-")[2]);
-  const date = [...Array(7)].map(
-    (_, i) => days[(baseDate.getDay() - i + 7) % 7]
-  );
-  const inChart = props.rankData.map((li) => (li.rank > 0 ? true : false));
-
-  const CalendarObject = dayOfWeek.map((_, index) => ({
-    dayOfWeek: dayOfWeek[index],
-    date: date[index],
-    inChart: inChart[index],
-  }));
-
+const KeywordCalendar = ({ rankingData }: KeywordCalendarProps) => {
+    if (rankingData.length > 0) {
+    
   return (
     <Container>
-      <Title>키워드</Title>
-      <DateLabel>
-        {baseDate.getFullYear()}년 {baseDate.getMonth()+1}월
-      </DateLabel>
-      <CalendarWrapper>
-        {CalendarObject.map((calendar, index) => (
-          <DayList key={index} $inChart={calendar.inChart}>
-            <div className="dayOfWeek">{calendar.dayOfWeek}</div>
-            <div className="date">{calendar.date}</div>
-          </DayList>
+      <Title>
+        <div className="title">키워드</div>
+        {/* <div className="description">설명</div> */}
+      </Title>
+      <Description className="description">
+        선택한 날짜 이전 7일 동안 해당 키워드가<br/>
+        인기 트렌드 차트에 나타났는지를 확인합니다.
+      </Description>
+      {/* <DateRange>
+        {moment(rankingData[0].date).format("Y/MM/DD")} -
+        {moment(rankingData[6].date).format("Y/MM/DD")}
+      </DateRange> */}
+      <CalendarContainer>
+        {rankingData.map((day) => (
+          <DayWrapper>
+            <DayText>{moment(day.date).format("ddd")}</DayText>
+            <Day
+              key={moment(day.date).format("D")}
+              isCurrentDay={day.ranking != 0}
+            >
+              {moment(day.date).format("D")}
+            </Day>
+          </DayWrapper>
         ))}
-      </CalendarWrapper>
+      </CalendarContainer>
     </Container>
-  );
+  );}
+  else{
+    return null;
+  }
 };
 
 const Container = styled.div`
+  height: 100%;
   padding: 10px;
   margin: 5px;
   box-sizing: border-box;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-`;
-
-const DateLabel = styled.div`
-  font-size: 2rem;
-  margin-bottom: 30px;
-`;
-
-const CalendarWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  color: #005096;
   display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  flex-wrap: wrap;
-  box-sizing: border-box;
+  align-items: center;
+  margin-bottom: 5px;
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  .description {
+    font-size: 1.5rem;
+    color: gray;
+  }
+`;
+const Description = styled.div`
+  font-size: 1.5rem;
+  color: gray;
+  margin-bottom: 10px;
 `;
 
-const DayList = styled.div<{ $inChart: boolean }>`
+const DateRange = styled.p`
+  font-size: 1.6rem;
+  color: #666;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+`;
+
+const CalendarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  flex-direction: row;
+`;
+
+const DayWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DayText = styled.div`
+  font-size: 1.5rem;
+
+`;
+
+const Day = styled.div<{ isCurrentDay: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 40px;
-  height: 70px;
-  text-align: center;
+  height: 40px;
+  border-radius: 50%;
   margin: 5px;
-  cursor: pointer;
-  border-radius: 40px;
-  padding: 20px 10px;
-  background-color: ${({ $inChart }) => ($inChart ? "#224861" : "transparent")};
-  color: ${({ $inChart }) => ($inChart ? "white" : "black")};
-
-  /* &:hover {
-    background: ${({ $inChart }) => ($inChart ? "#224861" : "transparent")};
-    color: ${({ $inChart }) => ($inChart ? "white" : "black")};
-
-    .dayOfWeek {
-      color: ${({ $inChart }) => ($inChart ? "white" : "black")};
-    }
-  } */
-
-  .dayOfWeek {
-    font-size: 1em;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .date {
-    font-weight: bold;
-  }
+  background-color: ${({ isCurrentDay }) =>
+    isCurrentDay ? Colors.main : "#ccc"};
+  color: ${({ isCurrentDay }) => (isCurrentDay ? "#fff" : "#333")};
+  font-weight: bold;
+  font-size: 1.5rem;
 `;
 
 export default KeywordCalendar;

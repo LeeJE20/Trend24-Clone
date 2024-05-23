@@ -1,46 +1,58 @@
 import styled from "styled-components";
-import { MainColor } from "../../../constants/Color";
-import { trendWordType } from "../../../constants/DummyData/TrendKeywordData";
+import Colors from "../../../constants/Color";
 
 interface Props {
-  header: string;
-  columnList: trendWordType[];
-  handleKeyword: (key: string) => void;
-  handleTableClick: (idx: number | null) => void;
-  keyword: string;
-  idx: number;
+  date: string;
+  columnList: wordType[];
+  handleKeyword: (key: wordType) => void;
+  handleTableClick: (idx: string | null) => void;
+  selectedKeyword: wordType | null;
+  hoverWord: wordType|null;
+  hoverWordChange: (keword: wordType) => void;
+}
+
+interface wordType {
+  keywordId: number;
+  name: string;
+  clickCount: number;
+  ranking: number;
 }
 
 function Table({
-  header,
+  date,
   columnList,
   handleKeyword,
   handleTableClick,
-  keyword,
-  idx,
+  selectedKeyword,
+  hoverWord,
+  hoverWordChange,
 }: Props) {
-  const keywordClick = (li: string) => {
+  const keywordClick = (li: wordType) => {
     handleKeyword(li);
-    if (keyword === "") {
-      handleTableClick(idx);
-    }
-  };
 
-  const tableChange = () => {
-    handleTableClick(null);
+    if (selectedKeyword === null) {
+      handleTableClick(date);
+    }
   };
 
   return (
     <TableContainer>
-      <thead onClick={tableChange}>
+      <thead>
         <tr>
-          <th>{header}</th>
+          <th>{date}</th>
         </tr>
       </thead>
       <tbody>
         {columnList.map((li, idx) => (
-          <TableRow key={idx} $keyword={keyword} $data={li.name}>
-            <td onClick={() => keywordClick(li.name)}>{li.name}</td>
+          <TableRow
+            key={idx}
+            $hover={hoverWord?.name == li.name}
+            $selectedKeyword={selectedKeyword}
+            $currentKeyword={li.keywordId}
+          >
+            <td onMouseEnter={() => hoverWordChange(li)} onClick={() => keywordClick(li)}>
+              {li.name}
+            </td>
           </TableRow>
         ))}
       </tbody>
@@ -49,10 +61,9 @@ function Table({
 }
 
 const TableContainer = styled.table`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   width: 100%;
   min-width: 100px;
-  height: 100%;
   border-collapse: collapse;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   background-color: white;
@@ -67,7 +78,7 @@ const TableContainer = styled.table`
   th {
     position: sticky;
     top: 0;
-    background-color: ${MainColor};
+    background-color: ${Colors.main};
     color: white;
   }
 
@@ -75,25 +86,35 @@ const TableContainer = styled.table`
     height: calc(100% - 40px);
   }
 `;
+const TableRow = styled.tr<{
+  $selectedKeyword: wordType | null;
+  $currentKeyword: number;
+  $hover: boolean;
+}>`
+  background-color: ${({ $selectedKeyword, $currentKeyword }) =>
+    $selectedKeyword !== null && $selectedKeyword?.keywordId === $currentKeyword
+      ? Colors.sub1
+      : "transparent"};
 
-const TableRow = styled.tr<{ $keyword: string; $data: string }>`
-  background-color: ${({ $keyword, $data }) =>
-    $keyword === $data ? "gray" : "transparent"};
   td {
+    background-color: ${(props) => props.$hover? Colors.sub4: null};
+    transition:background-color 0.2s ease;
     &:hover {
       &:before {
         content: "";
         position: absolute;
         left: 0;
         right: 0;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: inherit;
         z-index: -1;
       }
     }
   }
 
   &:hover {
-    background-color: rgba(160, 160, 160, 0.458);
+    background-color: ${({ $selectedKeyword, $currentKeyword }) =>
+      $selectedKeyword?.keywordId !== $currentKeyword ? Colors.sub4 : "null"};
+    cursor: pointer;
   }
 `;
 

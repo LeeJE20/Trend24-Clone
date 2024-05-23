@@ -1,14 +1,84 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { GeneralDummyBookList } from "../../../constants/DummyData/GeneralRecommendDummy";
-import { GeneralDummyBookListData } from "../../../constants/DummyData/GeneralRecommendDummy";
+import BookScroll from "./BookScroll";
+import WordCloudComponent from "./WordCloudComponent";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { postBookClick, getWordCloudData } from "../../../apis/anonymous";
+import React from "react";
+import ScrollIcon from "../../common/scroll/ScrollIcon";
+import { BookType } from "../../../constants/Type/Type";
+
+interface keywordsProps {
+  name: string;
+  freq: number;
+}
+
+interface DataProps {
+  name: string;
+  keywords: keywordsProps[];
+  books: BookType[];
+}
+
+interface categoryType {
+  categoryId: number;
+  categoryEngName: string;
+  categoryKorName: string;
+}
 
 const GeneralRecommendBook = () => {
   const location = useLocation();
-  const [title, setTitle] = useState<string>("");
-  const [bookList, setBookList] = useState<GeneralDummyBookList[]>([]);
+  const [bookData, setBookData] = useState<DataProps[]>([]);
+  const [category, setCategory] = useState<categoryType>();
   const bookContainerRef = useRef<HTMLDivElement>(null);
+  const bookImgRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+
+  const [showScrollBook, setShowScrollBook] = useState<boolean>(false);
+  const [selectedBookInfo, setSelectedBookInfo] = useState<BookType | null>(
+    null
+  );
+
+  // BR-03 카테고리별 키워드 및 도서 목록(워드클라우드)
+  const getwordCloud = async () => {
+    try {
+      if (category) return await getWordCloudData(category.categoryId, null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // BR-01 도서 및 키워드 클릭 수 올리기
+  const postClick = async (bookId: number, keyword:string) => {
+    try {
+      if (category) return await postBookClick(bookId, category.categoryId, keyword);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // gsap과 ScrollTrigger 플러그인이 로드되었는지 확인
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: bookImgRef.current, // 트리거가 될 요소
+        start: "top center", // 애니메이션이 시작되는 스크롤 위치
+        end: "bottom center", // 애니메이션이 끝나는 스크롤 위치
+        scrub: 1, // 스크롤에 따라 애니메이션 지연 없이 바로 반응하도록 설정
+      },
+    });
+
+    // 'keyframes' 대신 직접적인 속성 변화를 사용하여 애니메이션 정의
+    tl.to(bookImgRef.current, {
+      // scale: 2, // 최종적으로 도달할 스케일 값
+      duration: 1, // 애니메이션 지속 시간
+      ease: "linear", // 애니메이션 속도 곡선
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,47 +119,134 @@ const GeneralRecommendBook = () => {
   }, []);
 
   useEffect(() => {
-    setTitle(location.state.title);
-    setBookList(GeneralDummyBookListData);
-  }, [location.state.title]);
+    try {
+      getwordCloud().then((res) => {
+        const filterData = res.filter(
+          (element: DataProps) => element.name === category!.categoryEngName
+        );
+        setBookData(filterData);
+        console.log(filterData);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [category]);
 
-  const showDetail = () => {
-    console.log("show detail");
-    // 책 디테일 보여줘야됨
-    // 페이지 넘기는 효과
+  useEffect(() => {
+    const Category = location.state.title;
+    if (Category === "NEWS") {
+      setCategory({
+        categoryId: 1,
+        categoryEngName: "NEWS",
+        categoryKorName: "뉴스",
+      });
+    } else if (Category === "IT") {
+      setCategory({
+        categoryId: 2,
+        categoryEngName: "IT",
+        categoryKorName: "IT",
+      });
+    } else if (Category === "ANIMAL") {
+      setCategory({
+        categoryId: 3,
+        categoryEngName: "ANIMAL",
+        categoryKorName: "동물",
+      });
+    } else if (Category === "ENTERTAINMENT") {
+      setCategory({
+        categoryId: 5,
+        categoryEngName: "ENTERTAINMENT",
+        categoryKorName: "엔터테인먼트",
+      });
+    } else if (Category === "NEWMEDIA") {
+      setCategory({
+        categoryId: 6,
+        categoryEngName: "NEWMEDIA",
+        categoryKorName: "뉴미디어",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const innerWidth = window.innerWidth;
+    const innerHeight = window.innerHeight;
+
+    setWidth((innerWidth / 16) * 6);
+    setHeight((innerHeight / 9) * 6);
+  }, []);
+
+  const showBook = (book: BookType) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    setSelectedBookInfo(book); // 선택된 책의 정보를 저장
+    setShowScrollBook(true);
+  };
+
+  const toggleBack = () => {
+    setShowScrollBook(false);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const bookClick = (bookId:number, keyword:string[]) => {
+    const keywordStr = keyword.join(',');
+    postClick(bookId, keywordStr).then((res) => console.log(res));
   };
 
   return (
     <Con>
       <Container>
+        <ScrollWrapper>
+          <ScrollIcon />
+        </ScrollWrapper>
         <WordContainer>
-          {title}
-          word cloud
+          <TitleText> {category?.categoryKorName}</TitleText>
+          <WordCloudComponent
+            width={width}
+            height={height}
+            showControls={false}
+            wordList={bookData.length == 1 ? bookData[0].keywords : []}
+          />
         </WordContainer>
-        <Section>
-          <StyledBookContainer ref={bookContainerRef}>
-            {bookList.map((book) => (
-              <Book key={book.title}>
-                <BookImg>
-                  <img src="https://via.placeholder.com/150" alt="book" />
-                </BookImg>
-                <TextArea>
-                  <div>{book.title}</div>
-                  <div>{book.keyword1}</div>
-                  <div>{book.keyword2}</div>
-                  <div>{book.keyword3}</div>
-                  <button
-                    onClick={() => {
-                      showDetail();
-                    }}
-                  >
-                    상세보기
-                  </button>
-                </TextArea>
-              </Book>
-            ))}
-          </StyledBookContainer>
-        </Section>
+        {showScrollBook ? (
+          <BookScroll back={toggleBack} bookInfo={selectedBookInfo} /> // 선택된 책의 정보를 prop으로 전달
+        ) : (
+          <Section>
+            <StyledBookContainer ref={bookContainerRef}>
+              {bookData.map((element) => (
+                <React.Fragment key={element.name}>
+                  {element.books.map((book, index) => (
+                    <Book key={book.bookId} >
+                      <BookImg ref={(el) => (bookImgRef.current[index] = el)}>
+                        <img
+                          src={`https://image.yes24.com/goods/${book.productId}/XL`}
+                          alt="Book Cover"
+                        />
+                      </BookImg>
+                      <TextArea>
+                        <div className="title">{book.productName}</div>
+                        {book.keywords.map((keyword, index) => (
+                          <div key={index}># {keyword}</div>
+                        ))}
+                        <div className="button" onClick={() => {
+                          bookClick(book.bookId, book.keywords);
+                          showBook(book)}}>
+                          책 소개
+                        </div>
+                      </TextArea>
+                    </Book>
+                  ))}
+                </React.Fragment>
+              ))}
+            </StyledBookContainer>
+          </Section>
+        )}
       </Container>
     </Con>
   );
@@ -113,13 +270,28 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: #ebf4fc;
+  background-image: url("/Image/EventPage/GeneralRecommend/generalbackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   box-sizing: border-box;
   contain: paint;
 `;
 
+const TitleText = styled.div`
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffffff;
+  box-sizing: border-box;
+`;
+
 const WordContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -148,7 +320,7 @@ const StyledBookContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 100vw;
+  width: 120vw;
   box-sizing: border-box;
 `;
 
@@ -158,23 +330,65 @@ const Book = styled.div`
   align-items: center;
   width: 25vw;
   height: 50vh;
-  padding: 10px;
-  background-color: #f9f9f9;
+  padding: 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff40;
+  margin: 5px;
   box-sizing: border-box;
+  text-align: center;
 `;
 
 const BookImg = styled.div`
   width: 50%;
   height: 100%;
+  box-sizing: border-box;
+
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 const TextArea = styled.div`
   width: 50%;
   height: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin: 5px;
+
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .button {
+    margin-top: 10px;
+    background-color: #ffffffaf;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+`;
+
+const ScrollWrapper = styled.div`
+  position: fixed;
+  top: 5%;
+  right: 0;
+  transform: translate(-50%, 0%);
+  font-size: 2rem;
+  color: #ffffff79;
   display: flex;
   flex-direction: column;
   justify-content: center;
