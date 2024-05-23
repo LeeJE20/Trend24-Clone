@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import {
-  customizedComponentListData,
-  emptyListData,
-} from "../../constants/DummyData";
+import { customizedComponentListData } from "../../constants/DummyData";
 
 interface CustomizedComponentList {
   componentName: string;

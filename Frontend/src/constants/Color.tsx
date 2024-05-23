@@ -1,11 +1,18 @@
 // export const MainColor = "#11101d";
 // export const SubColor = "#EFF3FC";
 
-export const MainColor = "#B7B3ED"
-export const PointColor = "#8286E1"
-export const ContainerBackgroundColor = "#ffffff"
-export const BackgroundColor = "#E5E6FB"
-export const SubColor1 = "#B7B3ED"
-export const SubColor2 = "#afb4fe"
-export const TextColor = "#000000"
-export const HoverColor = "#8286E1";
+const Colors = {
+  main: "#5f996d",
+  sub1: "#77a081",
+  sub2: "#8da392",
+  sub3: "#9ba09c",
+  sub4: "#c2cec5",
+  containerBackground: "#ffffff",
+  screenBackground: "#edf0ec",
+  text: "#000000",
+  hover: "#C1E1D2",
+  // F5F5F5
+};
+const Shadow = `-3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, .288)`;
+
+export default Colors;

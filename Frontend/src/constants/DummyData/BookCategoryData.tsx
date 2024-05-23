@@ -16,7 +16,6 @@ export const bookCategoryData: string[] = [
   "예술",
   "유아",
   "인문",
-  "인물",
   "자기계발",
   "자연과학",
   "잡지",
@@ -24,6 +23,4 @@ export const bookCategoryData: string[] = [
   "종교",
   "청소년",
   "IT 모바일",
-  "초등참고서",
-  "중고등참고서",
 ];

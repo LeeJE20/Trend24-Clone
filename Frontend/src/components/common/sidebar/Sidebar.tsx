@@ -6,7 +6,8 @@ import { TbDeviceDesktopSearch } from "react-icons/tb";
 import { FaChartBar, FaChartLine } from "react-icons/fa";
 import { PiBooksDuotone } from "react-icons/pi";
 import { RiArchiveDrawerFill } from "react-icons/ri";
-import { ContainerBackgroundColor, PointColor, TextColor, SubColor1 } from "../../../constants/Color";
+import { MdDashboardCustomize } from "react-icons/md";
+import Colors from "../../../constants/Color";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -17,6 +18,7 @@ interface SidebarProps {
 
 function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const navigate = useNavigate();
+  const userName = localStorage.getItem("userName")
 
   const sidebarRef = useRef(null);
   const profileWrapperRef = useRef(null);
@@ -72,12 +74,16 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const changePage = (to: string) => {
     navigate(to);
   };
+  const logout = () => {
+    window.localStorage.removeItem("accessToken"); 
+    navigate("/");
+  };
 
   return (
     <SidebarWrapper ref={sidebarRef}>
       <LogoDetails>
         <Logo ref={logoRef}>
-          <img src="/Image/Logo/Logo.png" />
+          <img src="/Image/Logo/logo.png" />
           <div>Trend24</div>
         </Logo>
         <ToggleButton ref={toggleButtonRef} onClick={toggleSidebar}>
@@ -99,14 +105,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       </NavList>
       <ProfileWrapper ref={profileWrapperRef}>
         <ProfileDetails ref={profileContentRef}>
-          <ProfileImage src="/Image/Logo/Logo.png" alt="profileImg" />
+          <ProfileImage src="/Image/Logo/logo4.png" alt="profileImg" />
           <NameJob>
-            <div className="name">UserName</div>
+            <div className="name">{userName}</div>
             <div className="job">YES24 중고서점 목동점</div>
           </NameJob>
         </ProfileDetails>
         <LogOutButton ref={logoutBtnRef}>
-          <BiLogOut />
+          <BiLogOut onClick={logout} />
         </LogOutButton>
       </ProfileWrapper>
     </SidebarWrapper>
@@ -122,7 +128,7 @@ const linksArray = [
     to: "/main",
   },
   {
-    label: "트렌드 검색",
+    label: "트렌드 조회",
     icon: <TbDeviceDesktopSearch />,
     to: "/main/trendSearch",
   },
@@ -143,7 +149,7 @@ const linksArray = [
   },
   {
     label: "커스텀페이지",
-    icon: <RiArchiveDrawerFill />,
+    icon: <MdDashboardCustomize />,
     to: "/main/customizePage",
   },
 ];
@@ -151,7 +157,7 @@ const linksArray = [
 const SidebarWrapper = styled.div`
   margin: 10px;
   border-radius: 20px;
-  background: ${ContainerBackgroundColor};
+  background: ${Colors.containerBackground};
   padding: 6px 14px;
   width: 250px;
   z-index: 99;
@@ -169,6 +175,10 @@ const Logo = styled.div`
   div {
     font-size: 20px;
     font-weight: 600;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -226,7 +236,7 @@ const NavItem = styled.li`
     background-color: white;
   }
 
-  &:last-child{
+  &:last-child {
     border-bottom: none;
   }
 `;
@@ -235,13 +245,14 @@ const LinkWrapper = styled.div<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   text-decoration: none;
-  background: ${({ $isActive }) => ($isActive ? PointColor : "transparent")};
-  color: ${({ $isActive }) => ($isActive ? "#fff" : TextColor)};
+  background: ${({ $isActive }) => ($isActive ? Colors.sub1 : "transparent")};
+  color: ${({ $isActive }) => ($isActive ? "#fff" : Colors.text)};
   border-radius: 12px;
   padding: 15px;
 
   &:hover {
-    background-color: ${PointColor};
+    cursor: pointer;
+    background-color: ${Colors.sub1};
     color: #fff;
     transition: background-color 0.5s ease;
     span,
@@ -267,8 +278,8 @@ const ProfileWrapper = styled.div`
   bottom: 0;
   left: 0;
   padding: 10px 14px;
-  background: ${SubColor1};
-  color: ${TextColor};
+  background: ${Colors.sub1};
+  color: ${Colors.text};
   height: 70px;
   width: 250px;
   box-sizing: border-box;

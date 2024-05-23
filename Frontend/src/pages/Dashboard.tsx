@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/common/sidebar/Sidebar";
 import styled from "styled-components";
-import { BackgroundColor, MainColor, PointColor } from "../constants/Color";
+import Colors from "../constants/Color";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -22,7 +22,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: ${BackgroundColor};
+  background-color: ${Colors.screenBackground};
 `;
 
 const Main = styled.main<{ $sidebarOpen: boolean }>`
@@ -30,20 +30,20 @@ const Main = styled.main<{ $sidebarOpen: boolean }>`
   height: 100%;
   flex: 1;
   box-sizing: border-box;
-  
-  ::-webkit-scrollbar{
+
+  ::-webkit-scrollbar {
     width: 10px;
-}
+  }
 
-/* 스크롤바 막대 설정*/
-::-webkit-scrollbar-thumb{
-    background-color: #b8b8b8;
-    border-radius: 30px; 
-}
+  /* 스크롤바 막대 설정*/
+  ::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 30px;
+  }
 
-::-webkit-scrollbar-track{
-	background-color: rgba(0,0,0,0);
-}
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
 `;
 
 export default Dashboard;

@@ -12,7 +12,7 @@ const Event = () => {
   return (
     <Container>
       <Logo onClick={gotoHome}>
-        <img src="/images/logo.png" alt="logo" />
+        <img src="/Image/Logo/gifLogo2.gif" alt="logo" />
       </Logo>
       <Outlet />
     </Container>
@@ -26,10 +26,14 @@ const Logo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10%;
-  width: auto;
-  background-color: #f9f9f9;
-  z-index: 99;
+  width: 9%;
+  height: auto;
+  padding: 10px;
+  z-index: 999;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Container = styled.div`
@@ -39,7 +43,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: #f9f9f9;
   box-sizing: border-box;
 `;
 

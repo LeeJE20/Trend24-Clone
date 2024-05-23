@@ -3,6 +3,20 @@ import { useState } from "react"; // useState 추가
 import { useSelector } from "react-redux"; // useSelector 추가
 import { RootState } from "../../../store/store"; // RootState 추가
 
+import { FaRegWindowClose } from "react-icons/fa";
+
+import CityTotalReport from "../../googleanalytics/City/CityTotalReport";
+import CityUsers from "../../googleanalytics/City/CityUsers";
+import DateAU from "../../googleanalytics/Date/DateAU";
+import DateBounceRate from "../../googleanalytics/Date/DateBounceRate";
+import DateTotalReport from "../../googleanalytics/Date/DateTotalReport";
+import DateUsers from "../../googleanalytics/Date/DateUsers";
+import DateView from "../../googleanalytics/Date/DateView";
+import DeviceAU from "../../googleanalytics/Device/DeviceAU";
+import DeviceTotalReport from "../../googleanalytics/Device/DeviceTotalReport";
+import DeviceUsers from "../../googleanalytics/Device/DeviceUsers";
+import Memo from "../../pages/useractivity/customize/Memo";
+
 interface CustomComponent {
   componentName: string;
   position: { x: number; y: number };
@@ -14,7 +28,7 @@ const CustomComponentList = ({
   makeTempList,
 }: {
   onClose: () => void;
-  makeTempList: (item: CustomComponent) => void;
+  makeTempList: (item: string) => void;
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number>(); // 호버된 박스의 인덱스 상태 추가
   const items = useSelector(
@@ -25,16 +39,34 @@ const CustomComponentList = ({
     onClose();
   };
 
-  const handleSave = (item: CustomComponent) => {
+  const handleSave = (item: string) => {
     makeTempList(item);
     onClose();
   };
 
+  // 각 componentName에 대응하는 컴포넌트를 정의합니다.
+  const componentMap: { [key: string]: JSX.Element } = {
+    CityTotalReport: <CityTotalReport />,
+    CityUsers: <CityUsers />,
+    DateAU: <DateAU />,
+    DateBounceRate: <DateBounceRate />,
+    DateTotalReport: <DateTotalReport />,
+    DateUsers: <DateUsers />,
+    DateView: <DateView />,
+    DeviceAU: <DeviceAU />,
+    DeviceTotalReport: <DeviceTotalReport />,
+    DeviceUsers: <DeviceUsers />,
+    Memo: <Memo />,
+  };
+
   return (
-    <Background onClick={handleClose}>
+    <>
+      <Background onClick={handleClose}></Background>
       <Container>
         <Title>
-          <button onClick={handleClose}>X</button>
+          <CloseBtn onClick={handleClose}>
+            <FaRegWindowClose className="icon" />
+          </CloseBtn>
         </Title>
         <ContentConatiner>
           {items.map((item, index) => (
@@ -46,17 +78,19 @@ const CustomComponentList = ({
               <Box
                 $isHovered={hoveredIndex === index} // 현재 박스가 호버 상태인지 여부 전달
               >
-                {item.componentName}
+                {componentMap[item.componentName]}
               </Box>
               {hoveredIndex === index && (
-                <PlusButton onClick={() => handleSave(item)}>+</PlusButton>
+                <PlusButton onClick={() => handleSave(item.componentName)}>
+                  +
+                </PlusButton>
               )}
               {/* 현재 박스가 호버 상태이면 + 버튼 표시 */}
             </BoxContainer>
           ))}
         </ContentConatiner>
       </Container>
-    </Background>
+    </>
   );
 };
 
@@ -95,9 +129,19 @@ const Title = styled.div`
   width: 100%;
 `;
 
+const CloseBtn = styled.div`
+  height: 100%;
+  cursor: pointer;
+
+  .icon {
+    font-size: 3rem;
+  }
+`;
+
 const ContentConatiner = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: row;
   width: 100%;
   height: 90%;
   overflow: auto;
@@ -108,6 +152,10 @@ const ContentConatiner = styled.div`
 
 const BoxContainer = styled.div`
   position: relative;
+  justify-items: center;
+  display: flex;
+  width: 25vw;
+  height: 20vh;
 `;
 
 const Box = styled.div<{ $isHovered: boolean }>`
@@ -115,10 +163,8 @@ const Box = styled.div<{ $isHovered: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #000;
   width: 100%;
   height: 100%;
-
   opacity: ${(props) =>
     props.$isHovered ? "0.2" : "1"}; // 호버 상태에 따라 불투명도 조절
   transition: 0.2s;
