@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -111,23 +109,27 @@ public class SecurityConfig {
 
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedOrigins(allowedOrigins);
-		corsConfiguration.setAllowedMethods(List.of(
-			HttpMethod.GET.name(),
-			HttpMethod.POST.name(),
-			HttpMethod.PUT.name(),
-			HttpMethod.PATCH.name(),
-			HttpMethod.DELETE.name(),
-			HttpMethod.OPTIONS.name()
-		));
 
-		corsConfiguration.setAllowedHeaders(List.of(
-			HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
-			HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
-			HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
-			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
-			HttpHeaders.CONTENT_TYPE,
-			HttpHeaders.AUTHORIZATION
-		));
+		// corsConfiguration.setAllowedMethods(List.of(
+		// 	HttpMethod.GET.name(),
+		// 	HttpMethod.POST.name(),
+		// 	HttpMethod.PUT.name(),
+		// 	HttpMethod.PATCH.name(),
+		// 	HttpMethod.DELETE.name(),
+		// 	HttpMethod.OPTIONS.name()
+		// ));
+
+		// corsConfiguration.setAllowedHeaders(List.of(
+		// 	HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
+		// 	HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
+		// 	HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
+		// 	HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
+		// 	HttpHeaders.CONTENT_TYPE,
+		// 	HttpHeaders.ACCEPT,
+		// 	HttpHeaders.AUTHORIZATION
+		// ));
+		corsConfiguration.setAllowedMethods(List.of("*"));  // 모든 메서드 허용
+		corsConfiguration.setAllowedHeaders(List.of("*"));  // 모든 헤더 허용
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfiguration);

@@ -29,4 +29,9 @@ public class Keyword extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private TrendCategory category;
+
+	public void addClickCount(Keyword keyword) {
+		Integer count = this.getClickCount() + 1;
+		this.clickCount = count;
+	}
 }
