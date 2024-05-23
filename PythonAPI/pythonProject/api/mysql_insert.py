@@ -183,6 +183,17 @@ class Mysql_Manager():
             result = cursor.fetchall()
             return result
 
+    def select_book_by_id(self, book_id):
+        with self.connection.cursor() as cursor:
+            # book_id를 이용하여 해당 책 정보를 조회하는 SQL 쿼리 작성
+            sql = f"SELECT * FROM book WHERE product_id = %s"
+
+            # SQL 쿼리 실행
+            cursor.execute(sql, (book_id,))
+
+            # 결과 가져오기
+            result = cursor.fetchone()
+            return result
 
 #         sql = "SELECT id FROM platform WHERE name = %s"
 #

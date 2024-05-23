@@ -6,6 +6,7 @@ from typing import Union
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from requests import Request
 from starlette.responses import JSONResponse
 
@@ -22,6 +23,19 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+    "https://trend24.live"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Qdrant setting
 # loaded_embeddings_topic = np.load("qdrant/embeddings_topic.npy")  # 경로
@@ -52,7 +66,7 @@ async def universal_exception_handler(request: Request, exc: Exception):
     )
 
 
-@app.get("/fastapi")
+@app.get("/fastapi/")
 def read_root():
     return {"Hello": "World"}
 
@@ -86,6 +100,28 @@ def live_keyword_searching(search_sentence: Union[str, None] = None):
 
     return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
 
+@app.get("/fastapi/book/live/v2/springboot")
+def live_keyword_searching_v2_for_springboot(search_sentence: Union[str, None] = None):
+    logger.info(f"search_sentence=[{search_sentence}]")
+
+    if (search_sentence == None or len(search_sentence.strip()) == 0):
+        return dto.ApiResponse(status=400, message="검색어를 입력해주세요.", result=search_sentence)
+
+    response = search.live_keyword_searching_v2_for_springboot(search_sentence)
+
+    return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
+
+@app.get("/fastapi/book/live/v2/api-test")
+def live_keyword_searching_v2_for_api_test(search_sentence: Union[str, None] = None):
+    logger.info(f"search_sentence=[{search_sentence}]")
+
+    if (search_sentence == None or len(search_sentence.strip()) == 0):
+        return dto.ApiResponse(status=400, message="검색어를 입력해주세요.", result=search_sentence)
+
+    response = search.live_keyword_searching_v2_for_api_test(search_sentence)
+
+    return dto.ApiResponse(status=200, message="live_keyword_searching 성공", result=response)
+
 
 @app.get("/fastapi/book/momory")
 def memorial_book_searching(product_id: Union[int] = None, top_k: Union[int] = None):
@@ -95,3 +131,15 @@ def memorial_book_searching(product_id: Union[int] = None, top_k: Union[int] = N
     response = search.memorial_book_searching(product_id, top_k)
 
     return dto.ApiResponse(status=200, message="memorial_book_searching 성공", result=response)
+
+
+@app.get("/fastapi/book/memory-real")
+def memorial_book_searching(product_id: Union[int] = None, question_id: Union[int] = None, top_k: Union[int] = 30):
+    logger.info(f"product_id=[{product_id}]")
+    if top_k == None or top_k <= 0:
+        top_k = 30
+    print(f"product_id=[{product_id}] question_id=[{question_id}] tok_k=[{top_k}]", flush=True)
+    response = search.memorial_book_searching_real_service(product_id, question_id, top_k)
+    print(f"response={response}", flush=True)
+
+    return dto.ApiResponse(status=200, message="memorial_book_searching_real_service 성공", result=response)

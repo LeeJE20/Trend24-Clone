@@ -30,8 +30,20 @@ public class StatusController {
 
 	@Operation(summary = "UA-02-1 도서 누적 클릭수 리스트", description = "")
 	@GetMapping("/books/{bookId}")
-	public ApiResponse<ListDto<StatusDto.ClickDto>> WeeklyBookClicked(@PathVariable Integer bookId) {
+	public ApiResponse<ListDto<StatusDto.BookClickDto>> getWeeklyBookClicked(@PathVariable Integer bookId) {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, statusService.getWeeklyBookClickCount(bookId));
+	}
+
+	@Operation(summary = "UA-03 키워드 누적 클릭수 리스트", description = "")
+	@GetMapping("/keywords")
+	public ApiResponse<ListDto<StatusDto.TopClickedKeywordsDto>> getTopClickedKeyword() {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, statusService.getTopClickedKeyword());
+	}
+
+	@Operation(summary = "UA-03-1 키워드 누적 클릭수 리스트", description = "")
+	@GetMapping("/keywords/{keywordName}")
+	public ApiResponse<ListDto<StatusDto.KeywordClickDto>> getWeeklyKeywordClicked(@PathVariable String keywordName) {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, statusService.getWeeklyKeywordClickCount(keywordName));
 	}
 
 }

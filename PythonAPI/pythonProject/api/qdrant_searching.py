@@ -95,13 +95,74 @@ class QdrantSearcher:
             return results
         return []
 
-# # 사용 예
-# searcher = QdrantSearcher()
-#
-# print(searcher.find_memorial_book(496))
+    def search_book_id_real_service(self, book_id, question_id):
+        response = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=[0.5] * 512,
+            query_filter=Filter(
+                must=[FieldCondition(key="book_id", match=MatchValue(value=book_id))]
+            ),
+            with_vectors=True,
+            search_params=SearchParams(hnsw_ef=2000000),
+            limit=1,
+        )
 
-# embeddings = np.load("../embeddings_qdrant_search_items1.npy")
-# print('Searching start')
-# results = searcher.search_items(embeddings[0], search_texts[0])
-# searcher.print_results(results)
-# # print(results)
+        if response:
+            vector_id = response[0].id
+            payload = response[0].payload
+
+            # memory_category가 존재하지 않거나, new_value가 없다면 추가
+            if 'memory_category' not in payload:
+                payload['memory_category'] = [question_id]
+                update_required = True
+            elif question_id not in payload['memory_category']:
+                payload['memory_category'].append(question_id)
+                update_required = True
+            else:
+                update_required = False
+
+            # 필요한 경우 업데이트
+            if update_required:
+                self.client.set_payload(
+                    collection_name=self.collection_name,
+                    payload=payload,
+                    points=[vector_id]
+                )
+                print(f"Updated memory_category for book_id {book_id} with value {question_id}")
+            else:
+                print(f"No update needed for book_id {book_id}, value {question_id} already present")
+
+        else:
+            print(f"No data found for book_id {book_id}")
+
+        return response
+
+    # For Fast API
+    def search_meorial_books_real_service(self, my_book, question_id, top_k=5):
+        search_result = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=my_book.vector,
+            limit=top_k,
+            query_filter=Filter(
+                must=[
+                    FieldCondition(key="memory_category", match=MatchValue(value=question_id))
+                ]
+            ),
+        )
+
+        reponse_book_id = []
+
+        for result in search_result[1:]:
+            reponse_book_id.append(result.id)
+
+        return reponse_book_id
+
+    # For Fast API
+    def find_memorial_book_real_service(self, book_id, question_id, top_k=30):
+        my_book = self.search_book_id_real_service(book_id, question_id)
+
+        if len(my_book) is not 0:
+            results = self.search_meorial_books_real_service(my_book[0], question_id, top_k + 1)
+
+            return results
+        return []
