@@ -62,12 +62,12 @@
 
 | **유저 통계** |
 | :-----: |
-| <div align="center"><img src="readme_images/유저통계.gif" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/유저통계2.gif" alt="image" width="700"></div> |
 - 웹 사용자의 이용 데이터를 그래프와 표 등으로 확인 가능합니다.
 
 | **도서 검색 - 제목으로 검색** |
 | :-----: |
-| <div align="center"><img src="readme_images/도서 제목.gif" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/도서 검색.gif" alt="image" width="700"></div> |
 - 찾고자 하는 도서의 카테고리를 선택할 수 있습니다.
 - 도서를 제목 검색을 통해 찾을 수 있습니다.
 
@@ -78,13 +78,13 @@
 
 | **서랍** |
 | :-----: |
-| <div align="center"><img src="readme_images/서랍.gif" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/서랍2.gif" alt="image" width="700"></div> |
 - 키워드 추가를 통해 원하는 도서 서랍을 생성 가능합니다.
 - 인기 트랜드, 트랜드 조회, 도서 검색에서 저장한 도서를 확인 가능합니다.
 
 | **커스텀 페이지** |
 | :-----: |
-| <div align="center"><img src="readme_images/커스텀 페이지.gif" alt="image" width="700"></div> |
+| <div align="center"><img src="readme_images/커스텀 페이지2.gif" alt="image" width="700"></div> |
 - 편집을 통해 원하는 위젯을 선택하여 자신만의 커스텀 페이지를 제작할 수 있습니다.
 
 ## 유저 페이지
