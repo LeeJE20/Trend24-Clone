@@ -1,4 +1,4 @@
-# Project Title
+# Trend24
 
 ![project title.png](readme_images/gifLogo3.gif)
 
