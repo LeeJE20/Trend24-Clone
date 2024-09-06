@@ -36,7 +36,11 @@
 ![architecture.png](readme_images/architecture.png)
 
 ## 팀원
-![자율 팀원 사진.png](readme_images/TeamMember.png)
+| <a href="https://github.com/LeeJE20"><img src="https://github.com/LeeJE20.png" width="120"/></a> | <a href="https://github.com/woori0214"><img src="https://github.com/woori0214.png" width="120"/></a> | <a href="https://github.com/Minah7"><img src="https://github.com/Minah7.png" width="120"/></a> | <a href="https://github.com/CactusKK"><img src="https://github.com/CactusKK.png" width="120"/></a> | <a href="https://github.com/horororok"><img src="https://github.com/horororok.png" width="120"/></a> | <a href="https://github.com/Jiwon119"><img src="https://github.com/Jiwon119.png" width="120"/></a> |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [LeeJE20](https://github.com/LeeJE20) | [woori0214](https://github.com/woori0214) | [Minah7](https://github.com/Minah7) | [CactusKK](https://github.com/CactusKK) | [horororok](https://github.com/horororok) | [Jiwon119](https://github.com/Jiwon119) |
+| 팀장, 백엔드 | 백엔드 | 백엔드 | 백엔드 | 프론트엔드 | 프론트엔드 |
+| 인프라 | AI, 발표 | 인프라, 발표 | AI, Jira 담당 | 서기 | UCC |
 
 # 서비스 및 기능 소개
 
